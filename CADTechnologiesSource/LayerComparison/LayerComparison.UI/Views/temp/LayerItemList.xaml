@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="LayerComparison.UI.Views.temp.LayerItemList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LayerComparison.UI.Views.temp"
+             xmlns:views ="clr-namespace:LayerComparison.UI.Views"
+             xmlns:ViewModels="clr-namespace:LayerComparison.Core.ViewModels;assembly=LayerComparison.Core"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid
+        DataContext="{x:Static ViewModels:MainPageViewModel.Instance}"
+        Background="Transparent">
+        <VirtualizingStackPanel>
+            <ItemsControl
+                ItemsSource="{Binding LayerControls, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <views:LayerItem Margin="10"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </VirtualizingStackPanel>
+    </Grid>
+</UserControl>

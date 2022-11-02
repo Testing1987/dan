@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{58C15EAB-4A02-4BDD-8E7B-E30511872770}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Alignment_mdi</RootNamespace>
+    <AssemblyName>SolarSlope</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgdbrep.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AecBaseMgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\AecBaseMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\C3D\AeccDbMgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Map.Platform">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\Autodesk.Map.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ManagedMapApi, Version=23.0.30.11, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\ManagedMapApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Foundation">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Foundation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Geometry">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.PlatformBase">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="_Functions.cs" />
+    <Compile Include="Cogo_points_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cogo_points_form.designer.cs">
+      <DependentUpon>Cogo_points_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jig_Classes.cs" />
+    <Compile Include="tcpl_tools_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tcpl_tools_form.designer.cs">
+      <DependentUpon>tcpl_tools_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Profile_creator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Profile_creator.designer.cs">
+      <DependentUpon>Profile_creator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Slope_analizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Slope_analizer.designer.cs">
+      <DependentUpon>Slope_analizer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Slope_modifier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Slope_modifier.designer.cs">
+      <DependentUpon>Slope_modifier.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ZZCommand_class.cs" />
+    <Compile Include="Slope_blank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Slope_blank.designer.cs">
+      <DependentUpon>Slope_blank.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="_Profiler_main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_Profiler_main.designer.cs">
+      <DependentUpon>_Profiler_main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SolarSlope_main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SolarSlope_main.designer.cs">
+      <DependentUpon>SolarSlope_main.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Cogo_points_form.resx">
+      <DependentUpon>Cogo_points_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tcpl_tools_form.resx">
+      <DependentUpon>tcpl_tools_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profile_creator.resx">
+      <DependentUpon>Profile_creator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Slope_analizer.resx">
+      <DependentUpon>Slope_analizer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Slope_blank.resx">
+      <DependentUpon>Slope_blank.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Slope_modifier.resx">
+      <DependentUpon>Slope_modifier.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_Profiler_main.resx">
+      <DependentUpon>_Profiler_main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SolarSlope_main.resx">
+      <DependentUpon>SolarSlope_main.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="close.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

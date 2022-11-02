@@ -1,0 +1,1949 @@
+﻿<Base:BasePage
+    x:Class="LayerComparison.UI.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LayerComparison.UI.Views"
+    xmlns:Base="clr-namespace:CADTechnologiesSource.LayerComparison.UI.Base"
+    xmlns:LayerComparisonCoreViewModels="clr-namespace:LayerComparison.Core.ViewModels;assembly=LayerComparison.Core"
+    xmlns:tempviews ="clr-namespace:LayerComparison.UI.Views.temp"
+    mc:Ignorable="d"
+    d:DesignHeight="540"
+    d:DesignWidth="1000">
+
+    <!--Create References To Styles-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/DataGrids.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/TabControls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--Main Parent-->
+    <Grid
+        DataContext="{x:Static LayerComparisonCoreViewModels:MainPageViewModel.Instance}"
+        Background="{StaticResource DarkBackgroundBrush}">
+        <!--Main Page Grid Layout-->
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--Title Bar and Back Button-->
+        <Border
+            Grid.Row="0"
+            Height="75"
+            BorderBrush="Black"
+            BorderThickness="0 0 0 1">
+            <StackPanel
+                Orientation="Horizontal">
+                <!--Back Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Margin="0"
+                    Width="100"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding BackCommand}"
+                    ToolTip="Return to the Start Page.">
+                    <!--Button Icon and Text-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Text="{StaticResource FontAwesomeHomeIcon}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Start Page"
+                                Margin="0"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+                <!--Advanced Comparisons Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Margin="0"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding NavigateToAdvancedCommand}"
+                    ToolTip="Show advanced comparisons.">
+                    <!--Button Icon and Text-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Text="{StaticResource FontAwesomeMagic}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Advanced Comparisons"
+                                Margin="0"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!--Tab Control-->
+        <TabControl
+            Grid.Row="1"
+            Style="{StaticResource MainTabControlStyle}"
+            SelectedIndex="{Binding MainPageTabIndex}">
+            <!--Style Tab-->
+            <TabItem
+                Header="Style">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--Source drawing text and path-->
+                        <RowDefinition
+                            Height="Auto" />
+                        <!--Listview of target drawings-->
+                        <RowDefinition
+                            Height="*" />
+                        <!--Buttons-->
+                        <RowDefinition
+                            Height="75" />
+                    </Grid.RowDefinitions>
+                    <!--Textblocks for source drawing and path-->
+                    <StackPanel
+                        Grid.Row="0"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Margin="20 10 0 10"
+                            VerticalAlignment="Bottom"
+                            Foreground="{StaticResource PrimaryBlueBrush}"
+                            Background="{StaticResource DarkBackgroundBrush}"
+                            Text="Source drawing: "
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            FontSize="{StaticResource FontSizeLarge}" />
+                        <TextBlock
+                            Margin="3 10 0 10"
+                            VerticalAlignment="Bottom"
+                            Background="{StaticResource DarkBackgroundBrush}"
+                            Text="{Binding SourceDrawing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            FontSize="{StaticResource FontSizeBase}" />
+                    </StackPanel>
+                    <!--Style listview that displays target drawings-->
+                    <ScrollViewer
+                        VerticalScrollBarVisibility="Auto"
+                        Grid.Row="1">
+                        <ListView
+                            Margin="20 0 0 0"
+                            BorderBrush="Transparent"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsSource="{Binding TargetDrawings, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            SelectedItem="{Binding SelectedTargetDrawing, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                            <ListView.Template>
+                                <ControlTemplate>
+                                    <ItemsPresenter />
+                                </ControlTemplate>
+                            </ListView.Template>
+                        </ListView>
+
+
+                    </ScrollViewer>
+                    <!--Style Buttons-->
+                    <Border
+                        BorderBrush="Black"
+                        BorderThickness="0 1 0 0"
+                        Grid.Row="2">
+                        <!--Buttons Stackpanel-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="Auto" />
+                                <ColumnDefinition
+                                    Width="*" />
+                                <ColumnDefinition
+                                    Width="Auto" />
+                                <ColumnDefinition
+                                    Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <!--Set Source Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Width="100"
+                                    Height="75"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding SetSourceDrawingCommand}"
+                                    ToolTip="Select the drawing used as the basis of the layer style. Target drawings will be compared against this source..">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Margin="0 0 0 5"
+                                                Text="{StaticResource FontAwesomeRocket}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Set source"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <!--Add Drawings Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding AddTargetDrawingCommand}"
+                                    ToolTip="Add drawings to this comparison.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Margin="0 0 0 5"
+                                                Text="{StaticResource FontAwesomePlus}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Add targets"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <!--Remove Drawings Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding RemoveTargetDrawingCommand}"
+                                    ToolTip="Remove drawings from this comparison.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Margin="0 0 0 5"
+                                                Text="{StaticResource FontAwesomeMinus}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Remove targets"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <!--Open Target Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding OpenSelectedTargetDrawingCommand}"
+                                    ToolTip="Opens the selected target drawing.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Margin="0 0 0 5"
+                                                Grid.Row="0"
+                                                Text="{StaticResource FontAwesomeOpen}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Open target"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <!--Save Comparison Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding SaveCommand}"
+                                    ToolTip="Saves the comparison.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Margin="0 0 0 5"
+                                                Grid.Row="0"
+                                                Text="{StaticResource FontAwesomeSave}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Save comparison"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+
+                            </StackPanel>
+                            <!--Reconcile Layers Button-->
+                            <Button
+                                Grid.Column="2"
+                                Style="{StaticResource HighlightingIconButton}"
+                                Margin="0"
+                                Height="75"
+                                Width="100"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding LayerReconcileCommand}"
+                                ToolTip="Reconcile all layers in the source drawing and all target drawings.">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition
+                                            Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch">
+                                        <TextBlock
+                                            Margin="0 0 0 5"
+                                            Grid.Row="0"
+                                            Text="{StaticResource FontAwesomeSave}"
+                                            FontSize="{StaticResource FontSizeSubTitle}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Foreground="{StaticResource PrimaryBlueBrush}"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Center" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Text="Reconcile Layers"
+                                            Margin="0"
+                                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                            FontSize="{StaticResource FontSizeCaption}"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+
+                            <!--Apply Visretain Button-->
+                            <Button
+                                Grid.Column="3"
+                                Style="{StaticResource HighlightingIconButton}"
+                                Margin="0"
+                                Height="75"
+                                Width="100"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding VisretainCommand}"
+                                ToolTip="Turns ON Visretain on the target drawings.">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition
+                                            Height="Auto" />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Stretch">
+                                        <TextBlock
+                                            Margin="0 0 0 5"
+                                            Grid.Row="0"
+                                            Text="{StaticResource FontAwesomeSave}"
+                                            FontSize="{StaticResource FontSizeSubTitle}"
+                                            FontFamily="{StaticResource FontAwesomeSolid}"
+                                            Foreground="{StaticResource PrimaryBlueBrush}"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Center" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Text="Apply Visretain"
+                                            Margin="0"
+                                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                            FontSize="{StaticResource FontSizeCaption}"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!--Review Tab-->
+            <TabItem
+                Header="Review And Compare">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--Info Text-->
+                        <RowDefinition
+                            Height="Auto" />
+                        <!--Datagrid-->
+                        <RowDefinition
+                            Height="*" />
+                        <!--Buttons-->
+                        <RowDefinition
+                            Height="75" />
+                    </Grid.RowDefinitions>
+                    
+                    <!--Textblocks for source drawing and path-->
+                    <StackPanel
+                        Grid.Row="1"
+                        Orientation="Horizontal">
+                    </StackPanel>
+
+                    <!--Style Review Grid--><!--
+                    <ScrollViewer Grid.Row="1" HorizontalAlignment="Left" VerticalScrollBarVisibility="Hidden">
+                        <tempviews:LayerItemList />
+                    </ScrollViewer>-->
+                    
+                    <DataGrid
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        AutoGenerateColumns="False"
+                        Grid.Row="1"
+                        Margin="0 10 0 0"
+                        Style="{StaticResource MMDataGrid}"
+                        ItemsSource="{Binding SourceDrawingLayers}"
+                        GridLinesVisibility="None"
+                        CanUserAddRows="False"
+                        CanUserDeleteRows="False"
+                        IsReadOnly="True"
+                        FontSize="16">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Header="Layer Name"
+                                Binding="{Binding Name}" />
+                            <DataGridTextColumn
+                                Header="On"
+                                Binding="{Binding OnOff}" />
+                            <DataGridTextColumn
+                                Header="Freeze"
+                                Binding="{Binding Freeze}" />
+                            <DataGridTextColumn
+                                Header="Color"
+                                Binding="{Binding Color}" />
+                            <DataGridTextColumn
+                                Header="Linetype"
+                                Binding="{Binding Linetype}" />
+                            <DataGridTextColumn
+                                Header="Lineweight"
+                                Binding="{Binding Lineweight}" />
+                            <DataGridTextColumn
+                                Header="Transparency"
+                                Binding="{Binding Transparency}" />
+                            <DataGridTextColumn
+                                Header="Plot"
+                                Binding="{Binding Plot}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--Buttons-->
+                    <Border
+                        Grid.Row="2"
+                        BorderBrush="Black"
+                        BorderThickness="0 1 0 0">
+                        <!--Review Tab Buttons-->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="Auto" />
+                                <ColumnDefinition
+                                    Width="*" />
+                                <ColumnDefinition
+                                    Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <!--Back Button-->
+                                <!--<Button
+                                    Grid.Column="1"
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Right"
+                                    Command="{Binding NavigateToStyleCommand}"
+                                    ToolTip="Go to the previous step.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Margin="0 0 0 5"
+                                                Grid.Row="0"
+                                                Text="{StaticResource FontAwesomeArrowLeft}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Back"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>-->
+                                <!--Reload Style Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Left"
+                                    Command="{Binding ReviewLayerStyleCommand}"
+                                    ToolTip="Reload the source drawing and display the layer settings.">
+                                    <!--Button Icon and Text-->
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Grid.Row="0"
+                                                Text="{StaticResource FontAwesomeLayerGroup}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Reload style"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <!--Open Source Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{Binding OpenSourceDrawingCommand}"
+                                    ToolTip="Opens the source drawing.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Margin="0 0 0 5"
+                                                Grid.Row="0"
+                                                Text="{StaticResource FontAwesomeOpen}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Open source"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                                <!--Compare Button-->
+                                <Button
+                                    Style="{StaticResource HighlightingIconButton}"
+                                    Margin="0"
+                                    Height="75"
+                                    Width="100"
+                                    VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Left"
+                                    Command="{Binding CompareCommand}"
+                                    ToolTip="Compares all target drawings to the source drawing and produces a conflict report.">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition
+                                                Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel
+                                            Grid.Row="1"
+                                            HorizontalAlignment="Stretch">
+                                            <TextBlock
+                                                Margin="0 0 0 5"
+                                                Grid.Row="0"
+                                                Text="{StaticResource FontAwesomeCopy}"
+                                                FontSize="{StaticResource FontSizeSubTitle}"
+                                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Text="Compare"
+                                                Margin="0"
+                                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                                FontSize="{StaticResource FontSizeCaption}"
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <!--Conflicts By Type Tab-->
+            <TabItem
+                Header="Conflicts">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--Info Text-->
+                        <RowDefinition
+                            Height="Auto" />
+                        <!--Datagrid-->
+                        <RowDefinition
+                            Height="*" />
+                    </Grid.RowDefinitions>
+                    <!--Textblocks for source drawing and path-->
+                    <StackPanel
+                        Grid.Row="0"
+                        Orientation="Horizontal">
+                    </StackPanel>
+
+                    <!--Conflicts By Type Table Control-->
+                    <TabControl
+                        Style="{StaticResource MainTabControlStyle}"
+                        Grid.Row="1"
+                        Margin="0 10 0 0"
+                        SelectedIndex="{Binding SelectedConflictTabIndex}">
+                        <TabControl.Resources>
+                            <Style
+                                TargetType="{x:Type TabPanel}">
+                                <Setter
+                                    Property="HorizontalAlignment"
+                                    Value="Center" />
+                            </Style>
+                        </TabControl.Resources>
+
+                        <!--On/Off Conflict Report -->
+                        <TabItem
+                            Header="On/Off">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+
+                                <!--On/Off Conflict Grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding OnOffConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding OnOff}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourceOnOff}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding OnOffConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Grid.Column="0"
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolveOnOffConflictsCommand}"
+                                            ToolTip="Attempt to resolve all on/off layer settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all on/off conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Grid.Column="1"
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve on/off layer settings on the selected items that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected on/off conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                        
+                                        <!--Time Run Info-->
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Grid.Column="3">
+                                            <TextBlock
+                                                VerticalAlignment="Bottom"
+                                                HorizontalAlignment="Right"
+                                                Margin="5"
+                                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                                FontFamily="Segoe UI SemiBold"
+                                                Text="{Binding ElapsedTime, FallbackValue=Duration}" />
+                                        </StackPanel>
+                                        
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </TabItem>
+
+                        <!--Freeze Conflict Report-->
+                        <TabItem
+                            Header="Freeze">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+
+                                <!--Freeze Conflict Data Grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding FreezeConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding Freeze}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourceFreeze}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding FreezeConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolveFreezeThawConflictsCommand}"
+                                            ToolTip="Attempt to resolve all layer freeze settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all freeze Conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve freeze/thaw settings on the selected items that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected freeze conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Color Conflict Report-->
+                        <TabItem
+                            Header="Color">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+
+                                <!--Color Conflicts Grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding ColorConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding Color}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourceColor}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding ColorConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolveColorConflictsCommand}"
+                                            ToolTip="Attempt to resolve all layer color settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all color conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve layer color settings that conflict with the source drawing on the items currently selected.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected color conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Linetype Conflict Report-->
+                        <TabItem
+                            Header="Linetype">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+                                <!--Linetype Conflict Data Grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding LinetypeConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding Linetype}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourceLinetype}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding LinetypeConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolveLinetypeConflictsCommand}"
+                                            ToolTip="Attempt to resolve all layer linetype settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all linetype conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve layer linetype settings on the selected items that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected linetype conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Lineweight Conflict Report-->
+                        <TabItem
+                            Header="Lineweight">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+
+                                <!--Lineweight Conflict Grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding LineweightConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding Lineweight}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourceLineweight}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding LineweightConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolveLineweightConflictsCommand}"
+                                            ToolTip="Attempt to resolve all layer lineweight settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all lineweight conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve layer lineweight settings on the selected items that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected lineweight conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Transparency Conflict Report-->
+                        <TabItem
+                            Header="Transparency">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+
+                                <!--Transparency Conflict Data Grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding TransparencyConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding Transparency}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourceTransparency}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding TransparencyConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolveTransparencyConflictsCommand}"
+                                            ToolTip="Attempt to resolve all layer transparency settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all transparency conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve layer transparency settings on the selected items that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected transparency conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Plot Conflict Report-->
+                        <TabItem
+                            Header="Plot">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+                                <!--Plot conflicts Data grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding PlotConflictLayers}"
+                                    SelectedItem="{Binding SelectedConflict}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding Name}" />
+                                        <DataGridTextColumn
+                                            Header="Drawing Setting"
+                                            Binding="{Binding Plot}" />
+                                        <DataGridTextColumn
+                                            Header="Source Setting"
+                                            Binding="{Binding SourcePlot}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding PlotConflictsCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <!--Fix All Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding ResolvePlotConflictsCommand}"
+                                            ToolTip="Attempt to resolve all layer plot settings that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeGlobe}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve all plot conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+
+                                        <!--Fix Selected Button-->
+                                        <Button
+                                            Style="{StaticResource HighlightingIconButton}"
+                                            Margin="0"
+                                            Width="210"
+                                            VerticalAlignment="Stretch"
+                                            HorizontalAlignment="Stretch"
+                                            CommandParameter="{Binding SelectedConflict}"
+                                            Command="{Binding ResolveSelectedConflictCommand}"
+                                            ToolTip="Attempt to resolve layer plot settings on the selected items that conflict with the source drawing.">
+                                            <!--Button Icon and Text-->
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition />
+                                                    <RowDefinition
+                                                        Height="Auto" />
+                                                    <RowDefinition />
+                                                </Grid.RowDefinitions>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    HorizontalAlignment="Stretch">
+                                                    <TextBlock
+                                                        Grid.Row="0"
+                                                        Text="{StaticResource FontAwesomeWrench}"
+                                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Text="Resolve selected plot conflicts"
+                                                        Margin="0"
+                                                        FontSize="{StaticResource FontSizeCaption}"
+                                                        VerticalAlignment="Bottom"
+                                                        HorizontalAlignment="Center" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Extra Layers Conflict Report-->
+                        <TabItem
+                            Header="Extra Layers">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+                                <!--Extra layers conflicts Data grid-->
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding ExtraLayers}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Drawing Path"
+                                            Binding="{Binding DrawingPath}" />
+                                        <DataGridTextColumn
+                                            Header="Extra Layer Name"
+                                            Binding="{Binding Name}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding ExtraLayersCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+                                    <!--Buttons-->
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="10 0 0 0"
+                                            VerticalAlignment="Center"
+                                            Text="Extra layer issues cannot be fixed automatically. Please review the drawings and take the appropriate action." />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
+                        <!--Missing Layers Conflict Report ***DISABLED BECAUSE ITS SLOW***-->
+                        <TabItem
+                            Header="Missing Layers">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition
+                                        Height="*" />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition
+                                        Height="75" />
+                                </Grid.RowDefinitions>
+
+                                <!--MIssing layers conflicts Data grid-->
+
+                                <DataGrid
+                                    Grid.Row="0"
+                                    VirtualizingStackPanel.IsVirtualizing="True"
+                                    AutoGenerateColumns="False"
+                                    Margin="20 10 0 0"
+                                    Style="{StaticResource MMDataGrid}"
+                                    ItemsSource="{Binding MissingLayers}"
+                                    GridLinesVisibility="None"
+                                    CanUserAddRows="False"
+                                    CanUserDeleteRows="False"
+                                    IsReadOnly="True"
+                                    FontSize="{StaticResource FontSizeLarge}">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Header="Layer Name"
+                                            Binding="{Binding SourceLayerName}" />
+                                        <DataGridTextColumn
+                                            Header="Missing From"
+                                            Binding="{Binding TargetDrawingPath}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+
+                                <!--Conflict Count-->
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="5 5 0 5"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding MissingLayersCount}"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeBase}" />
+
+                                <!--Buttons bar-->
+
+                                <Border
+                                    Grid.Row="2"
+                                    BorderBrush="Black"
+                                    BorderThickness="0 1 0 0">
+
+                                    <!--Buttons-->
+
+                                    <StackPanel
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="10 0 0 0"
+                                            VerticalAlignment="Center"
+                                            Text="Missing layer issues cannot be fixed automatically. Please review the drawings and take the appropriate action." />
+                                    </StackPanel>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Base:BasePage>

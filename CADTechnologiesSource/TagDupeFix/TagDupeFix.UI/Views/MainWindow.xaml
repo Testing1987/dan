@@ -1,0 +1,474 @@
+﻿<Window x:Class="TagDupeFix.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ViewModels="clr-namespace:TagDupeFix.UI.ViewModels"
+        xmlns:local="clr-namespace:TagDupeFix.UI.Views"
+        mc:Ignorable="d"
+        Title="Tag Dupe Fix" Height="450" Width="800">
+
+    <!--Create References To Styles-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/DataGrids.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/TabControls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid
+        DataContext="{x:Static ViewModels:MainWindow_TDF_ViewModel.Instance}"
+        Background="{StaticResource DarkBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <!--Find and Replace Info-->
+            <RowDefinition
+                Height="Auto" />
+            <!--Drawings-->
+            <RowDefinition
+                Height="*" />
+            <!--Buttons-->
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Find/Replace Data-->
+        <Border
+            Grid.Row="0"
+            Margin="0 5 0 0"
+            BorderBrush="Black"
+            BorderThickness="0 0 0 1">
+            <Grid Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--Header Text-->
+                <Grid
+                    Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="Auto" />
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                </Grid>
+
+                <!--Find-->
+                <Grid
+                    Grid.Row="1"
+                    Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="75" />
+                        <ColumnDefinition
+                            Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Text="Find:" />
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="0 0 25 0"
+                        HorizontalAlignment="Stretch"
+                        Foreground="Black"
+                        Text="{Binding FindText,
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}" />
+                </Grid>
+
+                <!--Replace-->
+                <Grid
+                    Grid.Row="2"
+                    Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="75" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Text="Replace:" />
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="0 0 25 0"
+                        Foreground="Black"
+                        HorizontalAlignment="Stretch"
+                        Text="{Binding ReplaceText,
+                                               UpdateSourceTrigger=PropertyChanged,
+                                               Mode=TwoWay}" />
+                </Grid>
+
+                <!--Note-->
+                <TextBlock
+                    Grid.Row="3"
+                    Margin="80 0 0 0"
+                    Text="*Find text is case-sensitive." />
+
+                <!--Combobox-->
+                <Grid
+                    Grid.Row="4"
+                    Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="75" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        HorizontalAlignment="Left"
+                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                        FontSize="{StaticResource FontSizeLarge}"
+                        Text="Search in:" />
+                    <ComboBox
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        ItemsSource="{Binding SearchParameters,
+                                                             UpdateSourceTrigger=PropertyChanged,
+                                                             Mode=TwoWay}"
+                        SelectedValue="{Binding SelectedParameter,
+                                                             UpdateSourceTrigger=PropertyChanged,
+                                                             Mode=TwoWay}"
+                        SelectedIndex="{Binding ComboboxIndex,
+                                                                UpdateSourceTrigger=PropertyChanged,
+                                                                Mode=TwoWay}" />
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!--Added Drawings Listview-->
+        <ScrollViewer
+            VerticalScrollBarVisibility="Auto"
+            Grid.Row="1">
+            <ListView
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="5"
+                BorderBrush="Black"
+                Background="{StaticResource DarkBackgroundBrush}"
+                BorderThickness="0"
+                ItemsSource="{Binding AddedDrawings,
+                                                         UpdateSourceTrigger=PropertyChanged,
+                                                         Mode=TwoWay}"
+                SelectedItem="{Binding SelectedDrawing,
+                                                         UpdateSourceTrigger=PropertyChanged,
+                                                         Mode=TwoWay}">
+                <ListView.Template>
+                    <ControlTemplate>
+                        <ItemsPresenter />
+                    </ControlTemplate>
+                </ListView.Template>
+            </ListView>
+        </ScrollViewer>
+
+        <!--Buttons-->
+        <Border
+            Grid.Row="2"
+            BorderBrush="Black"
+            BorderThickness="0 1 0 0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <!--Add Column-->
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <!--Remove Column-->
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <!--Remove All Column-->
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <!--Open Column-->
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <!--Info Column-->
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <!--Spacer-->
+                    <ColumnDefinition
+                        Width="*" />
+                    <!--Repalce Column-->
+                    <ColumnDefinition
+                        Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--Add Drawings Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Grid.Column="0"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"
+                    Command="{Binding AddDrawingCommand}"
+                    ToolTip="Add a drawing to the list.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0 0 0 5"
+                                Text="{StaticResource FontAwesomePlus}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Add drawing"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+                <!--Remove Drawings Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Grid.Column="1"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"
+                    Command="{Binding RemoveDrawingCommand}"
+                    ToolTip="Remove the selected drawing from the list.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0 0 0 5"
+                                Text="{StaticResource FontAwesomeMinus}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Remove Drawing"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+                <!--Remove All Drawings Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Grid.Column="2"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"
+                    Command="{Binding RemoveAllDrawingsCommand}"
+                    ToolTip="Remove all drawings from the list.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0 0 0 5"
+                                Text="{StaticResource FontAwesomeWindowClose}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Remove All"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+                <!--Open Drawings Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Grid.Column="3"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"
+                    Command="{Binding OpenDrawingCommand}"
+                    ToolTip="Open the selected drawing from the list.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0 0 0 5"
+                                Text="{StaticResource FontAwesomeOpen}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Open Selected"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+                <!--ATTSYNC Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Grid.Column="4"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ATTSYNCCommand}"
+                    ToolTip="Open Each Drawing and ATTSYNC the given block.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0 0 0 5"
+                                Text="{StaticResource FontAwesomeRedoAlt}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="AttSync"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+
+                <!--Replace Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Grid.Column="5"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ReplaceTextCommand}"
+                    ToolTip="Finds and fixes duplicate tags.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="0 0 0 5"
+                                Text="{StaticResource FontAwesomeRocket}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Fix dupes"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

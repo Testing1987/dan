@@ -1,0 +1,502 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C411EF93-FC74-422F-8613-CD8BA143AB44}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Alignment_mdi</RootNamespace>
+    <AssemblyName>Agen</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgdbrep.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Map.Platform">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\Autodesk.Map.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ManagedMapApi">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\ManagedMapApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\14.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Foundation">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Foundation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Geometry">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.PlatformBase">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="000Functions.cs" />
+    <Compile Include="Agen_00_main_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Agen_00_main_form.designer.cs">
+      <DependentUpon>Agen_00_main_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_01A_Segments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_01A_Segments.designer.cs">
+      <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_19_IMAGERY.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_19_IMAGERY.Designer.cs">
+      <DependentUpon>AGEN_19_IMAGERY.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Contours_labeler_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Contours_labeler_form.designer.cs">
+      <DependentUpon>Contours_labeler_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_01_ProjectSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_01_ProjectSetup.designer.cs">
+      <DependentUpon>AGEN_01_ProjectSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_02A_custom_band.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_02A_custom_band.designer.cs">
+      <DependentUpon>AGEN_02A_custom_band.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_02B_extra_VP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_02B_extra_VP.designer.cs">
+      <DependentUpon>AGEN_02B_extra_VP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_02_ViewPortsettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_02_ViewPortsettings.designer.cs">
+      <DependentUpon>AGEN_02_ViewPortsettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_03_TBLK_Attributes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_03_TBLK_Attributes.designer.cs">
+      <DependentUpon>AGEN_03_TBLK_Attributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_04_SheetIndex.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_04_SheetIndex.designer.cs">
+      <DependentUpon>AGEN_04_SheetIndex.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_05A_Layer_alias.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_05A_Layer_alias.designer.cs">
+      <DependentUpon>AGEN_05A_Layer_alias.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_05B_CrossingScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_05B_CrossingScan.designer.cs">
+      <DependentUpon>AGEN_05B_CrossingScan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_05C_CrossingDraw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_05C_CrossingDraw.designer.cs">
+      <DependentUpon>AGEN_05C_CrossingDraw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_06A_ProfileScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_06A_ProfileScan.designer.cs">
+      <DependentUpon>AGEN_06A_ProfileScan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_06B_Profiledraw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_06B_Profiledraw.designer.cs">
+      <DependentUpon>AGEN_06B_Profiledraw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_06C_crossing_list.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_06C_crossing_list.designer.cs">
+      <DependentUpon>AGEN_06C_crossing_list.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_07A_Owner_Scan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_07A_Owner_Scan.designer.cs">
+      <DependentUpon>AGEN_07A_Owner_Scan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_07B_Owner_Draw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_07B_Owner_Draw.designer.cs">
+      <DependentUpon>AGEN_07B_Owner_Draw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_08_MaterialScanAndDraw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_08_MaterialScanAndDraw.designer.cs">
+      <DependentUpon>AGEN_08_MaterialScanAndDraw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_09A_custom_band_scan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_09A_custom_band_scan.designer.cs">
+      <DependentUpon>AGEN_09A_custom_band_scan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_09B_custom_band_draw.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_09B_custom_band_draw.designer.cs">
+      <DependentUpon>AGEN_09B_custom_band_draw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_09_MaterialCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_09_MaterialCount.designer.cs">
+      <DependentUpon>AGEN_09_MaterialCount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_10_SheetGeneration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_10_SheetGeneration.designer.cs">
+      <DependentUpon>AGEN_10_SheetGeneration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_01B_Station_equations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_01B_Station_equations.designer.cs">
+      <DependentUpon>AGEN_01B_Station_equations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_18_layer_purge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_18_layer_purge.Designer.cs">
+      <DependentUpon>AGEN_18_layer_purge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_17_vp2poly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_17_vp2poly.Designer.cs">
+      <DependentUpon>AGEN_17_vp2poly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_16_Toolz.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_16_Toolz.Designer.cs">
+      <DependentUpon>AGEN_16_Toolz.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_dwg_selection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_dwg_selection.designer.cs">
+      <DependentUpon>AGEN_dwg_selection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer_Controller_main_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer_Controller_main_form.designer.cs">
+      <DependentUpon>Layer_Controller_main_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Igen_02_Inquiry_Tool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Igen_02_Inquiry_Tool.designer.cs">
+      <DependentUpon>Igen_02_Inquiry_Tool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_13_band_analyze.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_13_band_analyze.designer.cs">
+      <DependentUpon>AGEN_13_band_analyze.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_14_band_filter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_14_band_filter.designer.cs">
+      <DependentUpon>AGEN_14_band_filter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_15_Tools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_15_Tools.designer.cs">
+      <DependentUpon>AGEN_15_Tools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_blank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_blank.designer.cs">
+      <DependentUpon>AGEN_blank.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_processing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_processing.designer.cs">
+      <DependentUpon>AGEN_processing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Igen_00_main_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Igen_00_main_form.designer.cs">
+      <DependentUpon>Igen_00_main_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Igen_01_GeoDataTables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Igen_01_GeoDataTables.designer.cs">
+      <DependentUpon>Igen_01_GeoDataTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Igen_blank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Igen_blank.designer.cs">
+      <DependentUpon>Igen_blank.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jig_Classes.cs" />
+    <Compile Include="Layer_Controller_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer_Controller_form.designer.cs">
+      <DependentUpon>Layer_Controller_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_01C_CL_tools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_01C_CL_tools.designer.cs">
+      <DependentUpon>AGEN_01C_CL_tools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ws1_Class.cs" />
+    <Compile Include="ZZCommand_class.cs" />
+    <Compile Include="Igen__Start_Page_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Igen__Start_Page_form.designer.cs">
+      <DependentUpon>Igen__Start_Page_form.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Agen_00_main_form.resx">
+      <DependentUpon>Agen_00_main_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_01A_Segments.resx">
+      <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_19_IMAGERY.resx">
+      <DependentUpon>AGEN_19_IMAGERY.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Contours_labeler_form.resx">
+      <DependentUpon>Contours_labeler_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_01_ProjectSetup.resx">
+      <DependentUpon>AGEN_01_ProjectSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_02A_custom_band.resx">
+      <DependentUpon>AGEN_02A_custom_band.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_02B_extra_VP.resx">
+      <DependentUpon>AGEN_02B_extra_VP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_02_ViewPortsettings.resx">
+      <DependentUpon>AGEN_02_ViewPortsettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_03_TBLK_Attributes.resx">
+      <DependentUpon>AGEN_03_TBLK_Attributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_04_SheetIndex.resx">
+      <DependentUpon>AGEN_04_SheetIndex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_05A_Layer_alias.resx">
+      <DependentUpon>AGEN_05A_Layer_alias.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_05B_CrossingScan.resx">
+      <DependentUpon>AGEN_05B_CrossingScan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_05C_CrossingDraw.resx">
+      <DependentUpon>AGEN_05C_CrossingDraw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_06A_ProfileScan.resx">
+      <DependentUpon>AGEN_06A_ProfileScan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_06B_Profiledraw.resx">
+      <DependentUpon>AGEN_06B_Profiledraw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_06C_crossing_list.resx">
+      <DependentUpon>AGEN_06C_crossing_list.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_07A_Owner_Scan.resx">
+      <DependentUpon>AGEN_07A_Owner_Scan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_07B_Owner_Draw.resx">
+      <DependentUpon>AGEN_07B_Owner_Draw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_08_MaterialScanAndDraw.resx">
+      <DependentUpon>AGEN_08_MaterialScanAndDraw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_09A_custom_band_scan.resx">
+      <DependentUpon>AGEN_09A_custom_band_scan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_09B_custom_band_draw.resx">
+      <DependentUpon>AGEN_09B_custom_band_draw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_09_MaterialCount.resx">
+      <DependentUpon>AGEN_09_MaterialCount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_10_SheetGeneration.resx">
+      <DependentUpon>AGEN_10_SheetGeneration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_01B_Station_equations.resx">
+      <DependentUpon>AGEN_01B_Station_equations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_18_layer_purge.resx">
+      <DependentUpon>AGEN_18_layer_purge.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_17_vp2poly.resx">
+      <DependentUpon>AGEN_17_vp2poly.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_16_Toolz.resx">
+      <DependentUpon>AGEN_16_Toolz.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_dwg_selection.resx">
+      <DependentUpon>AGEN_dwg_selection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer_Controller_main_form.resx">
+      <DependentUpon>Layer_Controller_main_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Igen_02_Inquiry_Tool.resx">
+      <DependentUpon>Igen_02_Inquiry_Tool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_13_band_analyze.resx">
+      <DependentUpon>AGEN_13_band_analyze.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_14_band_filter.resx">
+      <DependentUpon>AGEN_14_band_filter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_15_Tools.resx">
+      <DependentUpon>AGEN_15_Tools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_blank.resx">
+      <DependentUpon>AGEN_blank.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_processing.resx">
+      <DependentUpon>AGEN_processing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Igen_00_main_form.resx">
+      <DependentUpon>Igen_00_main_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Igen_01_GeoDataTables.resx">
+      <DependentUpon>Igen_01_GeoDataTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Igen_blank.resx">
+      <DependentUpon>Igen_blank.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer_Controller_form.resx">
+      <DependentUpon>Layer_Controller_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_01C_CL_tools.resx">
+      <DependentUpon>AGEN_01C_CL_tools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Igen__Start_Page_form.resx">
+      <DependentUpon>Igen__Start_Page_form.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selectbluexs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Target.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\X_Icon_New_Small.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,551 @@
+﻿<Window
+    x:Class="MLineBlockAttributeEditor.UI.Views.MainWindow_MLineBlockAttributeEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:local="clr-namespace:MLineBlockAttributeEditor.UI.Views"
+    xmlns:vm="clr-namespace:MLineBlockAttributeEditor.Core.ViewModels;assembly=MLineBlockAttributeEditor.Core"
+    mc:Ignorable="d"
+    WindowStartupLocation="CenterScreen"
+    SizeToContent="Width"
+    MinWidth="416"
+    MinHeight="540"
+    Title="Quick Attribute Editor">
+    <!--Create References To Styles-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!--Main Body-->
+    <Grid
+        DataContext="{x:Static vm:MainWindow_MLBED_VM.Instance }"
+        Background="{StaticResource DarkBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Text Viewer-->
+        <Grid
+            Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--Top Grid for Textbox and Selection Controls-->
+            <Grid
+                Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="*" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--Text info for the selected block-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Row="0">
+                    <!--Block name label-->
+                    <Label
+                        Content="Block Name:" />
+                    <Label
+                        Content="{Binding SelectedBlockName, FallbackValue='No selection'}" />
+                    <!--Block object id label-->
+                    <Label
+                        Content="Object ID:" />
+                    <Label
+                        Content="{Binding SelectedBlockObjectIDString, FallbackValue='No selection'}" />
+                </StackPanel>
+
+                <Grid
+                    Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--Selected Attribute Tag ComboBox-->
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="5 0 0 0"
+                        Orientation="Vertical">
+                        <TextBlock
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 5 0 0"
+                            Text="Selected Attribute: " />
+                        <ComboBox
+                            ItemsSource="{Binding BlockAttributeData}"
+                            DisplayMemberPath="Tag"
+                            SelectedValuePath="Tag"
+                            SelectedValue="{Binding SelectedTagOnComboBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedIndex="{Binding TagComboBoxSelectedIndex,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0 5 0 0"
+                            HorizontalAlignment="Left"
+                            Height="25"
+                            Width="200"
+                            FontFamily="{StaticResource SegoeUI_Regular}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger
+                                    EventName="SelectionChanged">
+                                    <i:InvokeCommandAction
+                                        Command="{Binding AttributeSelectionChangedCommand}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
+                    <!--Text Box for user to type-->
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="5"
+                        VerticalScrollBarVisibility="Auto"
+                        AcceptsReturn="True"
+                        IsReadOnly="False"
+                        Foreground="Black"
+                        FontSize="{StaticResource FontSizeTitle}"
+                        IsEnabled="{Binding TextBoxEnabled}"
+                        Text="{Binding AttributeTextString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger
+                                EventName="KeyUp">
+                                <i:InvokeCommandAction
+                                    Command="{Binding UpdateAttributeTextValuesCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </Grid>
+
+                <!--Block and Attribute selection options-->
+
+                <StackPanel
+                    Orientation="Horizontal"
+                    Grid.Row="2">
+                    <!--Select Block-->
+                    <Button
+                        Style="{StaticResource HighlightingIconButton}"
+                        Margin="0"
+                        Width="100"
+                        Height="75"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding SelectBlockCommand}"
+                        ToolTip="Select the block you wish to edit.">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Stretch">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="0 0 0 5"
+                                    Text="{StaticResource FontAwesomeEdit}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Text="Select block"
+                                    Margin="0"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeCaption}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--Apply Width Factor-->
+                    <Button
+                        Style="{StaticResource HighlightingIconButton}"
+                        Margin="0"
+                        Width="100"
+                        Height="75"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding UpdateAttributeWidthFactorCommand}"
+                        ToolTip="Apply width factor changes to the selected block attribute reference.">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Stretch">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="0 0 0 5"
+                                    Text="{StaticResource FontAwesomeSync}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Text="Apply width"
+                                    Margin="0"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeCaption}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--Mask Attribute-->
+                    <Button
+                        Style="{StaticResource HighlightingIconButton}"
+                        Margin="0"
+                        Width="100"
+                        Height="75"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding ApplyBackgroundMaskCommand}"
+                        ToolTip="Toggle a simple background mask to the selected attribute.">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Stretch">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="0 0 0 5"
+                                    Text="{StaticResource FontAwesomeMagic}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Text="Toggle Mask"
+                                    Margin="0"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeCaption}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                    <!--Clear-->
+                    <Button
+                        Style="{StaticResource HighlightingIconButton}"
+                        Margin="0"
+                        Width="100"
+                        Height="75"
+                        VerticalAlignment="Stretch"
+                        HorizontalAlignment="Stretch"
+                        Command="{Binding ClearCommand}"
+                        ToolTip="Clears out the current block selection.">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <StackPanel
+                                Grid.Row="1"
+                                HorizontalAlignment="Stretch">
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="0 0 0 5"
+                                    Text="{StaticResource FontAwesomeInfoCircle}"
+                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Text="Clear"
+                                    Margin="0"
+                                    FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                    FontSize="{StaticResource FontSizeCaption}"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!--Attribute Propety Controls-->
+        <Grid
+            Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border
+                Grid.Row="0"
+                BorderThickness="0 1 0 0"
+                BorderBrush="Black">
+                <StackPanel
+                    Orientation="Vertical">
+
+                    <!--Width Factor-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Width Factor" />
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Width="75"
+                            Height="20"
+                            Foreground="Black"
+                            Text="{Binding AttributeWidthFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                    <!--Rotation-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Rotation" />
+                        <Label
+                            VerticalContentAlignment="Center"
+                            Width="75"
+                            Height="25"
+                            Foreground="Black"
+                            Content="{Binding AttributeRotation}" />
+                    </StackPanel>
+                    <!--Height-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Height" />
+                        <Label
+                            Width="75"
+                            Height="25"
+                            VerticalContentAlignment="Center"
+                            Foreground="Black"
+                            Content="{Binding AttributeTextHeight}" />
+                    </StackPanel>
+                    <!--Layer-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Layer" />
+                        <Label
+                            VerticalContentAlignment="Center"
+                            Height="25"
+                            Width="200"
+                            Content="{Binding AttributeLayer}" />
+                    </StackPanel>
+                    <!--Color-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Color" />
+                        <Label
+                            Width="200"
+                            Height="25"
+                            Content="{Binding AttributeColor}" />
+
+                    </StackPanel>
+                    <!--Linetype-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Linetype" />
+                        <Label
+                            VerticalContentAlignment="Center"
+                            Content="{Binding AttributeLinetype}"
+                            Width="200"
+                            Height="25" />
+                    </StackPanel>
+                    <!--Lineweight-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Lineweight" />
+                        <Label
+                            Width="200"
+                            Height="25"
+                            Content="{Binding AttributeLineWeightString}" />
+                    </StackPanel>
+                    <!--Justification-->
+                    <StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Justification" />
+                        <Label
+                            Width="200"
+                            Height="25"
+                            Content="{Binding AttributeJustificationString}" />
+                    </StackPanel>
+                    <!--Background Mask-->
+                    <!--<StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <CheckBox
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Height="25"
+                                Content="Background Mask"
+                                Foreground="White"
+                                IsChecked="{Binding AttributeBackgroundFill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger
+                                        EventName="Checked">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding BackgroundMaskCheckChanged}" />
+                                    </i:EventTrigger>
+                                    <i:EventTrigger
+                                        EventName="Unchecked">
+                                        <i:InvokeCommandAction
+                                            Command="{Binding BackgroundMaskCheckChanged}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+
+                            </CheckBox>
+
+                        </StackPanel>
+                    </StackPanel>-->
+                    <!--Background Mask Factor-->
+                    <!--<StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Width="100"
+                            Margin="0 0 10 0"
+                            Text="Mask Scale Factor" />
+                        <TextBox
+                            VerticalContentAlignment="Center"
+                            Width="75"
+                            Height="20"
+                            Foreground="Black"
+                            Text="{Binding AttributeBackroundMaskScaleFactor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>-->
+                    <!--Use Background Color-->
+                    <!--<StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <CheckBox
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Height="25"
+                                Content="Use Background Color"
+                                Foreground="White"
+                                IsChecked="{Binding AttributeUseBackgroundColor}" />
+                        </StackPanel>
+                    </StackPanel>-->
+                    <!--Background Mask Color-->
+                    <!--<StackPanel
+                        Margin="5 0 0 0"
+                        Height="30"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            x:Name="textblock_mask_background_color"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Margin="0 0 10 0"
+                            Text="Mask Background Color" />
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <Label
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                Height="25"
+                                Content="{Binding AttributeBackgroundFillColorString}" />
+                        </StackPanel>
+                    </StackPanel>-->
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

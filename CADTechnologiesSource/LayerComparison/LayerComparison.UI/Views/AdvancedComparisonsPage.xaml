@@ -1,0 +1,965 @@
+﻿<Base:BasePage
+    x:Class="LayerComparison.UI.Views.AdvancedComparisonsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:Base="clr-namespace:CADTechnologiesSource.LayerComparison.UI.Base"
+    xmlns:local="clr-namespace:LayerComparison.UI.Views"
+    xmlns:LayerComparisonCoreViewModels="clr-namespace:LayerComparison.Core.ViewModels;assembly=LayerComparison.Core"
+    mc:Ignorable="d"
+    d:DesignHeight="800"
+    d:DesignWidth="1200">
+
+    <!--Create References To Styles-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/DataGrids.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/TabControls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--Main Body-->
+    <Grid
+        DataContext="{x:Static LayerComparisonCoreViewModels:MainPageViewModel.Instance}"
+        Background="{StaticResource DarkBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--Textblocks for source drawing and path-->
+        <Border
+            Grid.Row="0"
+            BorderBrush="Black"
+            BorderThickness="1">
+
+            <!--Buttons-->
+            <StackPanel
+                Orientation="Horizontal">
+                <!--Main Page Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Margin="0"
+                    Width="100"
+                    Height="75"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    Command="{Binding NavigateToMainCommand}"
+                    ToolTip="Return to the basic comparisons page.">
+                    <!--Button Icon and Text-->
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Grid.Row="0"
+                                Text="{StaticResource FontAwesomeAngleLeft}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Basic Mode"
+                                Margin="0"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+                <!--Viewport Conflicts Button-->
+                <Button
+                    Style="{StaticResource HighlightingIconButton}"
+                    Margin="0"
+                    Height="75"
+                    Width="110"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Left"
+                    Command="{Binding CompareViewportCommand}"
+                    ToolTip="Finds viewport override confclits based on viewport center location.">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition
+                                Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel
+                            Grid.Row="1"
+                            HorizontalAlignment="Stretch">
+                            <TextBlock
+                                Margin="0 0 0 5"
+                                Grid.Row="0"
+                                Text="{StaticResource FontAwesomeSaveAs}"
+                                FontSize="{StaticResource FontSizeSubTitle}"
+                                FontFamily="{StaticResource FontAwesomeSolid}"
+                                Foreground="{StaticResource PrimaryBlueBrush}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                            <TextBlock
+                                Grid.Row="1"
+                                Text="Compare viewports"
+                                Margin="0"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeCaption}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!--Conflicts By Type Table Control-->
+        <TabControl
+            Style="{StaticResource MainTabControlStyle}"
+            Grid.Row="1"
+            Margin="0 10 0 0"
+            SelectedIndex="{Binding SelectedAdvancedTabIndex}">
+            <TabControl.Resources>
+                <Style
+                    TargetType="{x:Type TabPanel}">
+                    <Setter
+                        Property="HorizontalAlignment"
+                        Value="Left" />
+                </Style>
+            </TabControl.Resources>
+            <!--Source Drawing Viewport Override Review Tab-->
+            <TabItem
+                Header="Source Drawing Viewport Settings">
+                <DataGrid
+                    Grid.Row="0"
+                    VirtualizingStackPanel.IsVirtualizing="True"
+                    AutoGenerateColumns="False"
+                    Margin="20 10 20 10"
+                    Style="{StaticResource MMDataGrid}"
+                    ItemsSource="{Binding SourceDrawingViewportLayers}"
+                    SelectedItem=""
+                    GridLinesVisibility="None"
+                    CanUserAddRows="False"
+                    CanUserDeleteRows="False"
+                    IsReadOnly="True"
+                    FontSize="{StaticResource FontSizeLarge}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn
+                            Header="Viewport"
+                            Binding="{Binding ViewportLayer}" />
+                        <DataGridTextColumn
+                            Header="Layer Name"
+                            Binding="{Binding Name}" />
+                        <DataGridTextColumn
+                            Header="Viewport Freeze/Thaw"
+                            Binding="{Binding ViewportFreeze}" />
+                        <DataGridTextColumn
+                            Header="Viewport Color"
+                            Binding="{Binding ViewportColor}" />
+                        <DataGridTextColumn
+                            Header="Viewport Linetype"
+                            Binding="{Binding ViewportLinetype}" />
+                        <DataGridTextColumn
+                            Header="Viewport Lineweight"
+                            Binding="{Binding ViewportLineweight}" />
+                        <DataGridTextColumn
+                            Header="Viewport Transparency"
+                            Binding="{Binding ViewportTransparency}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!--Conflicts By Viewport Tab-->
+            <TabItem
+                Header="Conflicts By Viewport">
+                <TabControl
+                    Grid.Row="0"
+                    SelectedIndex="{Binding SelectedViewportConflictTabIndex}"
+                    Style="{StaticResource MainTabControlStyle}">
+                    <!--Viewport Freeze Conflicts-->
+                    <TabItem
+                        Header="Viewport Freeze/Thaw">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+                                    Height="*" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="75" />
+                            </Grid.RowDefinitions>
+                            <!--Viewport Freeze/Thaw Conflicts-->
+                            <DataGrid
+                                x:Name="freeze_thaw_conflict_grid"
+                                Grid.Row="0"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                AutoGenerateColumns="False"
+                                Margin="20 10 0 0"
+                                Style="{StaticResource MMDataGrid}"
+                                ItemsSource="{Binding ViewportFreezeConflictLayers}"
+                                SelectedItem="{Binding SelectedViewportConflict}"
+                                GridLinesVisibility="None"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                IsReadOnly="True"
+                                FontSize="{StaticResource FontSizeLarge}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Drawing"
+                                        Binding="{Binding DrawingPath}" />
+                                    <DataGridTextColumn
+                                        Header="Viewport Layer"
+                                        Binding="{Binding ViewportLayer}" />
+                                    <DataGridTextColumn
+                                        Header="Layer Name"
+                                        Binding="{Binding Name}" />
+                                    <DataGridTextColumn
+                                        Header="Target Viewport Setting"
+                                        Binding="{Binding ViewportFreeze}" />
+                                    <DataGridTextColumn
+                                        Header="Source Viewport Setting"
+                                        Binding="{Binding SourceViewportFreeze}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <!--Conflict Count-->
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="5 5 0 5"
+                                VerticalAlignment="Center"
+                                Text="{Binding ViewportFreezeConflictsCount}"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeBase}" />
+                            <!--Buttons bar-->
+                            <Border
+                                Grid.Row="2"
+                                BorderBrush="Black"
+                                BorderThickness="0 1 0 0">
+                                <!--Buttons-->
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <!--Fix All Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding ResolveViewportFreezeConflictsCommand}"
+                                        ToolTip="Attempt to resolve all freeze/thaw viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeGlobe}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve all freeze/thaw viewport override conflicts"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <!--Fix Selected Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        CommandParameter="{Binding SelectedViewportConflict}"
+                                        Command="{Binding ResolveSelectedViewportConflictCommand}"
+                                        ToolTip="Attempt to resolve the selected freeze/thaw viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeWrench}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve selected freeze/thaw viewport override conflicts"
+                                                    TextWrapping="Wrap"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <!--Remove Selected Item Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="75"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        CommandParameter="{Binding SelectedViewportConflict}"
+                                        Command="{Binding ResolveSelectedViewportConflictCommand}"
+                                        ToolTip="Remove the selected conflict.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeMinus}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Remove conflict"
+                                                    TextWrapping="Wrap"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </TabItem>
+                    <!--Viewport Color Conflicts-->
+                    <TabItem
+                        Header="Viewport Color">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+                                    Height="*" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="75" />
+                            </Grid.RowDefinitions>
+                            <!--Viewport Color Conflicts Grid-->
+                            <DataGrid
+                                Grid.Row="0"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                AutoGenerateColumns="False"
+                                Margin="20 10 0 0"
+                                Style="{StaticResource MMDataGrid}"
+                                ItemsSource="{Binding ViewportColorConflictLayers}"
+                                SelectedItem="{Binding SelectedViewportConflict}"
+                                GridLinesVisibility="None"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                IsReadOnly="True"
+                                FontSize="{StaticResource FontSizeLarge}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Drawing"
+                                        Binding="{Binding DrawingPath}" />
+                                    <DataGridTextColumn
+                                        Header="Viewport Layer"
+                                        Binding="{Binding ViewportLayer}" />
+                                    <DataGridTextColumn
+                                        Header="Layer Name"
+                                        Binding="{Binding Name}" />
+                                    <DataGridTextColumn
+                                        Header="Target Viewport Setting"
+                                        Binding="{Binding ViewportColor}" />
+                                    <DataGridTextColumn
+                                        Header="Source Viewport Setting"
+                                        Binding="{Binding SourceViewportColor}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <!--Conflict Count-->
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="5 5 0 5"
+                                VerticalAlignment="Center"
+                                Text="{Binding ViewportColorConflictsCount}"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeBase}" />
+                            <!--Buttons bar-->
+                            <Border
+                                Grid.Row="2"
+                                BorderBrush="Black"
+                                BorderThickness="0 1 0 0">
+                                <!--Buttons-->
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <!--Fix All Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding ResolveViewportColorConflictsCommand}"
+                                        ToolTip="Attempt to resolve all color viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeGlobe}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve all color viewport override conflicts"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <!--Fix Selected Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        CommandParameter="{Binding SelectedViewportConflict}"
+                                        Command="{Binding ResolveSelectedViewportConflictCommand}"
+                                        ToolTip="Attempt to resolve the selected color viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeWrench}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve selected color viewport override conflicts"
+                                                    TextWrapping="Wrap"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                    </TabItem>
+                    <!--Viewport Linetype Conflicts-->
+                    <TabItem
+                        Header="Viewport Linetype">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+                                    Height="*" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="75" />
+                            </Grid.RowDefinitions>
+                            <!--Viewport Linetype Conflict Grid-->
+                            <DataGrid
+                                Grid.Row="0"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                AutoGenerateColumns="False"
+                                Margin="20 10 0 0"
+                                Style="{StaticResource MMDataGrid}"
+                                ItemsSource="{Binding ViewportLinetypeConflictLayers}"
+                                SelectedItem="{Binding SelectedViewportConflict}"
+                                GridLinesVisibility="None"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                IsReadOnly="True"
+                                FontSize="{StaticResource FontSizeLarge}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Drawing"
+                                        Binding="{Binding DrawingPath}" />
+                                    <DataGridTextColumn
+                                        Header="Viewport Layer"
+                                        Binding="{Binding ViewportLayer}" />
+                                    <DataGridTextColumn
+                                        Header="Layer Name"
+                                        Binding="{Binding Name}" />
+                                    <DataGridTextColumn
+                                        Header="Target Viewport Setting"
+                                        Binding="{Binding ViewportLinetype}" />
+                                    <DataGridTextColumn
+                                        Header="Source Viewport Setting"
+                                        Binding="{Binding SourceViewportLinetype}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <!--Conflict Count-->
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="5 5 0 5"
+                                VerticalAlignment="Center"
+                                Text="{Binding ViewportLinetypeConflictsCount}"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeBase}" />
+                            <!--Buttons bar-->
+                            <Border
+                                Grid.Row="2"
+                                BorderBrush="Black"
+                                BorderThickness="0 1 0 0">
+                                <!--Buttons-->
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <!--Fix All Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding ResolveViewportLinetypeConflictsCommand}"
+                                        ToolTip="Attempt to resolve all linetype viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeGlobe}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve all linetype viewport override conflicts"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <!--Fix Selected Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        CommandParameter="{Binding SelectedViewportConflict}"
+                                        Command="{Binding ResolveSelectedViewportConflictCommand}"
+                                        ToolTip="Attempt to resolve the selected linetype viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeWrench}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve selected linetype viewport override conflicts"
+                                                    TextWrapping="Wrap"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                    </TabItem>
+                    <!--Viewport Lineweight Conflicts-->
+                    <TabItem
+                        Header="Viewport Lineweight">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+                                    Height="*" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="75" />
+                            </Grid.RowDefinitions>
+                            <!--Viewport Lineweight Conflicts Grid-->
+                            <DataGrid
+                                Grid.Row="0"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                AutoGenerateColumns="False"
+                                Margin="20 10 0 0"
+                                Style="{StaticResource MMDataGrid}"
+                                ItemsSource="{Binding ViewportLineweightConflictLayers}"
+                                SelectedItem="{Binding SelectedViewportConflict}"
+                                GridLinesVisibility="None"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                IsReadOnly="True"
+                                FontSize="{StaticResource FontSizeLarge}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Drawing"
+                                        Binding="{Binding DrawingPath}" />
+                                    <DataGridTextColumn
+                                        Header="Viewport Layer"
+                                        Binding="{Binding ViewportLayer}" />
+                                    <DataGridTextColumn
+                                        Header="Layer Name"
+                                        Binding="{Binding Name}" />
+                                    <DataGridTextColumn
+                                        Header="Target Viewport Setting"
+                                        Binding="{Binding ViewportLineweight}" />
+                                    <DataGridTextColumn
+                                        Header="Source Viewport Setting"
+                                        Binding="{Binding SourceViewportLineweight}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <!--Conflict Count-->
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="5 5 0 5"
+                                VerticalAlignment="Center"
+                                Text="{Binding ViewportLineweightConflictsCount}"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeBase}" />
+                            <!--Buttons bar-->
+                            <Border
+                                Grid.Row="2"
+                                BorderBrush="Black"
+                                BorderThickness="0 1 0 0">
+                                <!--Buttons-->
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <!--Fix All Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding ResolveViewportLineweightConflictsCommand}"
+                                        ToolTip="Attempt to resolve all lineweight viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeGlobe}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve all lineweight viewport override conflicts"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <!--Fix Selected Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        CommandParameter="{Binding SelectedViewportConflict}"
+                                        Command="{Binding ResolveSelectedViewportConflictCommand}"
+                                        ToolTip="Attempt to resolve the selected lineweight viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeWrench}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve selected lineweight viewport override conflicts"
+                                                    TextWrapping="Wrap"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                    </TabItem>
+                    <!--Viewport Transparency Conflicts-->
+                    <TabItem
+                        Header="Viewport Transparency">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+                                    Height="*" />
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="75" />
+                            </Grid.RowDefinitions>
+                            <!--Viewport Transparency Conflicts Grid-->
+                            <DataGrid
+                                Grid.Row="0"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                AutoGenerateColumns="False"
+                                Margin="20 10 0 0"
+                                Style="{StaticResource MMDataGrid}"
+                                ItemsSource="{Binding ViewportTransparencyConflictLayers}"
+                                SelectedItem="{Binding SelectedViewportConflict}"
+                                GridLinesVisibility="None"
+                                CanUserAddRows="False"
+                                CanUserDeleteRows="False"
+                                IsReadOnly="True"
+                                FontSize="{StaticResource FontSizeLarge}">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn
+                                        Header="Drawing"
+                                        Binding="{Binding DrawingPath}" />
+                                    <DataGridTextColumn
+                                        Header="Viewport Layer"
+                                        Binding="{Binding ViewportLayer}" />
+                                    <DataGridTextColumn
+                                        Header="Layer Name"
+                                        Binding="{Binding Name}" />
+                                    <DataGridTextColumn
+                                        Header="Target Viewport Setting"
+                                        Binding="{Binding ViewportTransparency}" />
+                                    <DataGridTextColumn
+                                        Header="Source Viewport Setting"
+                                        Binding="{Binding SourceViewportTransparency}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <!--Conflict Count-->
+                            <TextBlock
+                                Grid.Row="1"
+                                Margin="5 5 0 5"
+                                VerticalAlignment="Center"
+                                Text="{Binding ViewportTransparencyConflictsCount}"
+                                FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                FontSize="{StaticResource FontSizeBase}" />
+                            <!--Buttons bar-->
+                            <Border
+                                Grid.Row="2"
+                                BorderBrush="Black"
+                                BorderThickness="0 1 0 0">
+                                <!--Buttons-->
+                                <StackPanel
+                                    Orientation="Horizontal">
+                                    <!--Fix All Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        Command="{Binding ResolveViewportTransparencyConflictsCommand}"
+                                        ToolTip="Attempt to resolve all transparency viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeGlobe}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve all transparency viewport override conflicts"
+                                                    TextWrapping="WrapWithOverflow"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                    <!--Fix Selected Button-->
+                                    <Button
+                                        Style="{StaticResource HighlightingIconButton}"
+                                        Margin="0"
+                                        Width="210"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalAlignment="Stretch"
+                                        CommandParameter="{Binding SelectedViewportConflict}"
+                                        Command="{Binding ResolveSelectedViewportConflictCommand}"
+                                        ToolTip="Attempt to resolve the selected transparency viewport overrides that conflict with the same viewport on the source drawing.">
+                                        <!--Button Icon and Text-->
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition
+                                                    Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                HorizontalAlignment="Stretch">
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Text="{StaticResource FontAwesomeWrench}"
+                                                    FontSize="{StaticResource FontSizeSubTitle}"
+                                                    FontFamily="{StaticResource FontAwesomeSolid}"
+                                                    Foreground="{StaticResource PrimaryBlueBrush}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                                <TextBlock
+                                                    Grid.Row="1"
+                                                    Text="Resolve selected transparency viewport override conflicts"
+                                                    TextWrapping="Wrap"
+                                                    Margin="0"
+                                                    FontSize="{StaticResource FontSizeCaption}"
+                                                    VerticalAlignment="Bottom"
+                                                    HorizontalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Base:BasePage>

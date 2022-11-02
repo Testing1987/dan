@@ -1,0 +1,363 @@
+﻿<Window
+    x:Class="LineTypeBuilderCAD.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:LineTypeBuilderCAD"
+    xmlns:vm="clr-namespace:LineTypeBuilderCAD.Viewmodels"
+    mc:Ignorable="d"
+    Title="Linetype Builder"
+    Background="#2A2A2A"
+    Width="400"
+    Height="620">
+    <Grid
+        DataContext="{x:Static vm:MainWindowViewModel.LTBuilderInstance}">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Name and Description-->
+        <Border
+            BorderBrush="Black"
+            BorderThickness="0 0 0 1">
+            <StackPanel>
+                <Grid
+                    Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="120" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Foreground="White"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Linetype Name" />
+                    <TextBox
+                        x:Name="textbox_LTname"
+                        Grid.Column="1"
+                        Width="200"
+                        Height="20"
+                        HorizontalAlignment="Left"
+                        Text="{Binding LinetypeName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="Black">
+                    </TextBox>
+                </Grid>
+
+                <Grid
+                    Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="120" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Foreground="White"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"
+                        Text="Description" />
+                    <TextBox
+                        x:Name="textbox_LTDesc"
+                        Grid.Column="1"
+                        Width="200"
+                        Height="20"
+                        HorizontalAlignment="Left"
+                        Text="{Binding LinetypeDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="Black">
+                    </TextBox>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!--Builder-->
+        <Border
+            Grid.Row="1"
+            BorderBrush="Black"
+            BorderThickness="0 0 0 1">
+            <ScrollViewer
+                VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!--Style-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Style" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Width="100"
+                            HorizontalAlignment="Left"
+                            SelectedIndex="{Binding SelectedLinetypeIndex}"
+                            SelectedValue="{Binding SelectedLinetypeStyle}">
+                            <ComboBoxItem
+                                Content="Aligned" />
+                            <ComboBoxItem
+                                Content="Rotated" />
+                        </ComboBox>
+                    </Grid>
+
+                    <!--Dash Length-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="First Dash Length" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding DashLength, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Margin-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Pre-Text Dash/Space" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding TextMargin, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ToolTip="Enter a positive number for a dash, or a negative number to create a space."
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Contents-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Text Contents" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding TextContents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ToolTip="Enter the text that will comprise the linetype."
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Style-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Text Style" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding TextStyle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ToolTip="usually keep this as standard unless you KNOW what you're changing it to and why."
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Scale-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Text Scale" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding TextScale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Rotation-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Text Rotation" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding TextRotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Horizontal Offset-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Text Horiz. Offset" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding HorizontalOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Text Vertical Offset-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="White"
+                            Text="Text Vert. Offset" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Text="{Binding VerticalOffset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Foreground="Black">
+                        </TextBox>
+                    </Grid>
+
+                    <!--Distance Between Dashes-->
+                    <Grid
+                        Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="120" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Text="Post-Text Dash/Space"
+                            Foreground="White"
+                            TextWrapping="Wrap" />
+                        <TextBox
+                            Grid.Column="1"
+                            Width="100"
+                            Height="20"
+                            HorizontalAlignment="Left"
+                            Foreground="Black"
+                            Text="{Binding DashSpacing, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            ToolTip="Enter a positive number for a dash, or a negative number to create a space.">
+                        </TextBox>
+                    </Grid>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!--Result-->
+        <Border
+            Grid.Row="2"
+            BorderBrush="Black"
+            BorderThickness="0">
+            <Grid
+                Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--Name and Description-->
+
+                <!--Definition-->
+                <StackPanel
+                    Grid.Row="1"
+                    Orientation="Horizontal">
+
+                    <Button
+                        Command="{Binding CopyToClipboardCommand}"
+                        Background="Transparent"
+                        Margin="0 10 5 5"
+                        HorizontalAlignment="Left"
+                        Height="30"
+                        Width="100"
+                        Foreground="White"
+                        Content="Copy" />
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

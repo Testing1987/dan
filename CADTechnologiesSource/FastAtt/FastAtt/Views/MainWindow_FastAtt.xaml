@@ -1,0 +1,486 @@
+﻿<Window
+    x:Class="FastAtt.Views.MainWindow_FastAtt"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:FastAtt.Views"
+    xmlns:vm="clr-namespace:FastAtt.ViewModels"
+    mc:Ignorable="d"
+    Foreground="White"
+    Title="Fast Att"
+    Height="650"
+    Width="600">
+
+    <!--Create References To Styles-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="Styles/Fonts.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid
+        DataContext="{x:Static vm:MainWindow_FastAtt_ViewModel.instance}"
+        Background="{StaticResource DarkBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!--Title-->
+        <Border
+            BorderBrush="Black"
+            BorderThickness="0 0 0 1"
+            Grid.Row="0">
+            <Label
+                Margin="10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Foreground="{StaticResource PrimaryBlueBrush}"
+                FontFamily="Roboto"
+                FontWeight="Regular"
+                FontSize="18"
+                Content="Fast Attribute" />
+        </Border>
+
+        <!--Main Body-->
+        <ScrollViewer
+            Grid.Row="1"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--Attribute Settings-->
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Margin="5">
+
+                    <!--Mode-->
+                    <Label
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="18"
+                        Content="Mode" />
+
+                    <CheckBox
+                        IsChecked="{Binding Invisible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"
+                        Content="Invisible"
+                        Foreground="White"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14" />
+
+                    <CheckBox
+                        IsChecked="{Binding Constant, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"
+                        Content="Constant"
+                        Foreground="White"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14" />
+
+                    <CheckBox
+                        IsChecked="{Binding Verify, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"
+                        Content="Verify"
+                        Foreground="White"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14" />
+
+                    <CheckBox
+                        IsChecked="{Binding Preset, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"
+                        Content="Preset"
+                        Foreground="White"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14" />
+
+                    <CheckBox
+                        IsChecked="{Binding LockPosition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"
+                        Content="Lock Position"
+                        Foreground="White"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14" />
+
+                    <CheckBox
+                        IsChecked="{Binding MultipleLines, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="5"
+                        Content="Multiple Lines"
+                        Foreground="White"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14" />
+                </StackPanel>
+
+                <!--Insertion Point-->
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Margin="10">
+
+                    <!--Insertion point-->
+                    <Label
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="18"
+                        Content="Insertion Point" />
+
+                    <!--Specify On Screen-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <CheckBox
+                            IsChecked="{Binding SpecifyInsertionInApp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0 0 5 0"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Specify Insertion Point" />
+                    </StackPanel>
+
+                    <!--Coordinates-->
+                    <!--X-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="X:" />
+                        <TextBox
+                            IsEnabled="{Binding SpecifyInsertionInApp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding InsertX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="Black"
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Z-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Y:" />
+                        <TextBox
+                            IsEnabled="{Binding SpecifyInsertionInApp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding InsertY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="Black"
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Z-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Z:" />
+                        <TextBox
+                            IsEnabled="{Binding SpecifyInsertionInApp, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding InsertZ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="Black"
+                            Width="150" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!--Tag Prompt and Values-->
+                <StackPanel
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Margin="10">
+
+                    <Label
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="18"
+                        Content="Attribute" />
+
+                    <!--Tag-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Tag:" />
+                        <TextBox
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="Black"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Tag, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=tag}"
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Note-->
+                    <TextBlock
+                        Margin="10"
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="14"
+                        Foreground="{StaticResource PrimaryBlueBrush}"
+                        Text="*The attrubute prompt and default value will iterate numerically based on the tag."
+                        TextWrapping="Wrap" />
+                    <!--Prompt-->
+                    <StackPanel
+                        Visibility="Collapsed"
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Prompt:" />
+                        <TextBox
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Value-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Visibility="Collapsed"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Value:" />
+                        <TextBox
+                            Width="150" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!--Text Settings-->
+                <StackPanel
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    Margin="10">
+
+                    <Label
+                        FontFamily="Roboto"
+                        FontWeight="Regular"
+                        FontSize="18"
+                        Content="Text Settings" />
+
+                    <!--Justification-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Justification" />
+                        <ComboBox
+                            Name="justifybox"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Background="{StaticResource DarkBackgroundBrush}"
+                            VerticalContentAlignment="Center"
+                            ItemsSource="{Binding Justifications, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding SelectedJustification, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Text Style-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Text Style" />
+                        <ComboBox
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            VerticalContentAlignment="Center"
+                            ItemsSource="{Binding TextStyles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            SelectedItem="{Binding SelectedTextStyle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Annotative-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <CheckBox
+                            IsChecked="{Binding Annotative, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            Content="Annotative" />
+                    </StackPanel>
+
+                    <!--Text Height-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            Content="Text Height" />
+                        <TextBox
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="Black"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding TextHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Height="{Binding ElementName=justifybox, Path=ActualHeight}"
+                            Width="150" />
+                    </StackPanel>
+
+                    <!--Rotation-->
+                    <StackPanel
+                        Orientation="Horizontal"
+                        Margin="5">
+                        <Label
+                            Margin="0 0 5 0"
+                            Width="100"
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="White"
+                            VerticalAlignment="Center"
+                            Content="Rotation" />
+                        <TextBox
+                            FontFamily="Roboto"
+                            FontWeight="Regular"
+                            FontSize="14"
+                            Foreground="Black"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding Rotation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Height="{Binding ElementName=justifybox, Path=ActualHeight}"
+                            Width="150" />
+                    </StackPanel>
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <!--Run Command-->
+        <Border
+            Grid.Row="3"
+            BorderBrush="Black"
+            BorderThickness="0 1 0 0">
+            <Button
+                Style="{StaticResource HighlightingIconButton}"
+                Margin="0"
+                Height="75"
+                Width="100"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Command="{Binding RunCommand}"
+                ToolTip="Place attribute definitions.">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition
+                            Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch">
+                        <TextBlock
+                            Margin="0 0 0 5"
+                            Grid.Row="0"
+                            Text="{StaticResource FontAwesomeRocket}"
+                            FontSize="{StaticResource FontSizeSubTitle}"
+                            FontFamily="{StaticResource FontAwesomeSolid}"
+                            Foreground="{StaticResource PrimaryBlueBrush}"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Text="Create"
+                            Margin="0"
+                            FontFamily="Roboto"
+                            FontSize="{StaticResource FontSizeLarge}"
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Grid>
+            </Button>
+        </Border>
+
+    </Grid>
+</Window>

@@ -1,0 +1,707 @@
+If IsNothing(Data_table_Sheet) = False Then
+                                            If Data_table_Sheet.Rows.Count > 0 Then
+
+
+
+
+
+
+                                                Dim Nr_previous As Integer = -1
+                                                Dim Station_previous As Double = -1
+                                                Dim Match2_previous As Double = -1
+
+                                                Dim Line_viewport_previous As New Line
+
+                                                For i = 0 To Data_table_Sheet.Rows.Count - 1
+                                                    If IsDBNull(Data_table_Sheet.Rows(i).Item("STATION")) = False Then
+                                                        Dim Station As Double = Data_table_Sheet.Rows(i).Item("STATION")
+
+
+
+
+
+
+
+
+                                                        Dim Point_PS As New Point3d(0, 0, 0)
+                                                        Dim Match1_for_Length As Double = 0
+                                                        Dim Station_prev_for_Length As Double = 0
+
+                                                        If IsNothing(Data_table_Matchlines) = False Then
+                                                            If Data_table_Matchlines.Rows.Count > 0 Then
+
+                                                                Dim Start1 As New Point3d
+                                                                Dim End1 As New Point3d
+                                                                Dim Match1 As Double = 0
+                                                                Dim Match2 As Double = 0
+
+                                                                For j = 0 To Data_table_Matchlines.Rows.Count - 1
+                                                                    If IsDBNull(Data_table_Matchlines.Rows(j).Item("STATION1")) = False And IsDBNull(Data_table_Matchlines.Rows(j).Item("STATION2")) = False Then
+                                                                        Dim M1 As Double = 0
+                                                                        Dim M2 As Double = 0
+                                                                        M1 = Data_table_Matchlines.Rows(j).Item("STATION1")
+                                                                        M2 = Data_table_Matchlines.Rows(j).Item("STATION2")
+                                                                        Nr_rand = Nr_rand + 1
+
+                                                                        If Station <= M2 And Station >= M1 Then
+
+
+
+                                                                            If IsDBNull(Data_table_Matchlines.Rows(j).Item("X1")) = False And IsDBNull(Data_table_Matchlines.Rows(j).Item("Y1")) = False Then
+                                                                                If IsDBNull(Data_table_Matchlines.Rows(j).Item("X2")) = False And IsDBNull(Data_table_Matchlines.Rows(j).Item("Y2")) = False Then
+                                                                                    Start1 = New Point3d(Data_table_Matchlines.Rows(j).Item("X1"), Data_table_Matchlines.Rows(j).Item("Y1"), 0)
+                                                                                    End1 = New Point3d(Data_table_Matchlines.Rows(j).Item("X2"), Data_table_Matchlines.Rows(j).Item("Y2"), 0)
+
+                                                                                    If IsNothing(PolyCL3D) = False Then
+
+                                                                                        Start1 = PolyCL.GetClosestPointTo(Start1, Vector3d.ZAxis, False)
+                                                                                        End1 = PolyCL.GetClosestPointTo(End1, Vector3d.ZAxis, False)
+                                                                                        Dim Param1 As Double = PolyCL.GetParameterAtPoint(Start1)
+                                                                                        Dim Param2 As Double = PolyCL.GetParameterAtPoint(End1)
+
+                                                                                        Dim Point1 As New Point3d
+                                                                                        Point1 = PolyCL3D.GetPointAtParameter(Param1)
+                                                                                        Dim Point2 As New Point3d
+                                                                                        Point2 = PolyCL3D.GetPointAtParameter(Param2)
+
+                                                                                        If PolyCL3D.GetPointAtDist(M1).GetVectorTo(Point2).Length < PolyCL3D.GetPointAtDist(M1).GetVectorTo(Point1).Length Then
+                                                                                            Dim ttt As New Point3d
+                                                                                            ttt = Start1
+                                                                                            Start1 = End1
+                                                                                            End1 = ttt
+                                                                                        End If
+
+                                                                                    Else
+                                                                                        If PolyCL.GetPointAtDist(M1).GetVectorTo(End1).Length < PolyCL.GetPointAtDist(M1).GetVectorTo(Start1).Length Then
+                                                                                            Dim ttt As New Point3d
+                                                                                            ttt = Start1
+                                                                                            Start1 = End1
+                                                                                            End1 = ttt
+                                                                                        End If
+                                                                                    End If
+
+
+
+                                                                                    If j - 1 >= 0 Then
+
+                                                                                        Line_viewport_previous = New Line(New Point3d(Data_table_Matchlines.Rows(j - 1).Item("X1"), Data_table_Matchlines.Rows(j - 1).Item("Y1"), 0), _
+                                                                                                                          New Point3d(Data_table_Matchlines.Rows(j - 1).Item("X2"), Data_table_Matchlines.Rows(j - 1).Item("Y2"), 0))
+                                                                                    End If
+
+
+                                                                                    Match2 = M2
+                                                                                    Match1 = M1
+                                                                                    Match1_for_Length = M1
+
+                                                                                    Exit For
+                                                                                End If
+                                                                            End If
+                                                                        End If
+                                                                    End If
+                                                                Next
+
+                                                                If Nr_previous <> Nr_rand Then
+
+                                                                    If Not Match2_previous = -1 Then
+                                                                        Dim XAmount2 As Double
+
+                                                                        Dim Point_on_polyM2 As New Point3d
+                                                                        If IsNothing(PolyCL3D) = False Then
+                                                                            Dim Point_on_polyM2_3D As New Point3d
+                                                                            If Match2_previous > PolyCL3D.Length Then
+                                                                                Match2_previous = PolyCL3D.Length
+                                                                            End If
+                                                                            Point_on_polyM2_3D = PolyCL3D.GetPointAtDist(Match2_previous)
+                                                                            Point_on_polyM2 = New Point3d(Point_on_polyM2_3D.X, Point_on_polyM2_3D.Y, 0)
+                                                                        Else
+
+                                                                            If Match2_previous > PolyCL.Length Then
+                                                                                Match2_previous = PolyCL.Length
+                                                                            End If
+
+                                                                            Point_on_polyM2 = PolyCL.GetPointAtDist(Match2_previous)
+                                                                        End If
+
+
+                                                                        Dim Point_on_lineM2 As New Point3d
+                                                                        Point_on_lineM2 = Line_viewport_previous.GetClosestPointTo(Point_on_polyM2, Vector3d.ZAxis, False)
+
+                                                                        If IsNothing(Line_viewport_previous) = False Then
+                                                                            XAmount2 = Line_viewport_previous.StartPoint.GetVectorTo(Point_on_lineM2).Length
+                                                                        End If
+
+
+
+                                                                        Dim Point_for_M2_UP As New Point3d
+
+                                                                        If RadioButton_Left_right.Checked = True Then
+                                                                            Point_for_M2_UP = New Point3d(Start_point_for_bands.X + XAmount2, Start_point_for_bands.Y - ((Nr_rand - 1) * Bands_Y_spacing), 0)
+                                                                            If Point_for_M2_UP.X - Xprev < Min_dist Then
+                                                                                Point_for_M2_UP = New Point3d(Xprev + Min_dist, Start_point_for_bands.Y - ((Nr_rand - 1) * Bands_Y_spacing), 0)
+                                                                            End If
+                                                                        Else
+                                                                            Point_for_M2_UP = New Point3d(Start_point_for_bands.X - XAmount2, Start_point_for_bands.Y - ((Nr_rand - 1) * Bands_Y_spacing), 0)
+
+                                                                            If Xprev - Point_for_M2_UP.X < Min_dist Then
+                                                                                Point_for_M2_UP = New Point3d(Xprev - Min_dist, Start_point_for_bands.Y - ((Nr_rand - 1) * Bands_Y_spacing), 0)
+                                                                            End If
+                                                                        End If
+
+
+                                                                        Dim LinieM2 As New Line(Point_for_M2_UP, _
+                                                                                                New Point3d(Point_for_M2_UP.X, Point_for_M2_UP.Y + Line_len, 0))
+                                                                        If Not ComboBox_layers.Text = "" Then
+                                                                            LinieM2.Layer = ComboBox_layers.Text
+                                                                        End If
+
+                                                                        BTrecord.AppendEntity(LinieM2)
+                                                                        Trans1.AddNewlyCreatedDBObject(LinieM2, True)
+
+
+                                                                        Dim Line_list_split_for_M2 As New Specialized.StringCollection
+
+                                                                        If ComboBox_object_data_tract.Text = "" Then
+                                                                            If LineList.Contains(",") = True And LineList.Contains("&") = True Then
+                                                                                Dim Split1() As String = LineList.Split(",")
+                                                                                For k = 0 To Split1.Length - 1
+                                                                                    If LineList.Contains("&") = True Then
+                                                                                        Dim Split2() As String = LineList.Split("&")
+                                                                                        For s = 0 To Split2.Length - 1
+                                                                                            Dim Valoare As String = Split2(s)
+                                                                                            Valoare = Remove_spaces_start_end(Valoare)
+                                                                                            If Valoare.Length > 0 Then Line_list_split_for_M2.Add(Valoare)
+                                                                                        Next
+                                                                                    Else
+                                                                                        Dim Valoare As String = Split1(k)
+                                                                                        Valoare = Remove_spaces_start_end(Valoare)
+                                                                                        If Valoare.Length > 0 Then Line_list_split_for_M2.Add(Valoare)
+                                                                                    End If
+                                                                                Next
+                                                                            Else
+                                                                                If LineList.Contains(",") = True Then
+                                                                                    Dim Split1() As String = LineList.Split(",")
+                                                                                    For k = 0 To Split1.Length - 1
+                                                                                        Dim Valoare As String = Split1(k)
+                                                                                        Valoare = Remove_spaces_start_end(Valoare)
+                                                                                        If Valoare.Length > 0 Then Line_list_split_for_M2.Add(Valoare)
+                                                                                    Next
+                                                                                Else
+                                                                                    If LineList.Contains("&") = True Then
+                                                                                        Dim Split1() As String = LineList.Split("&")
+                                                                                        For k = 0 To Split1.Length - 1
+                                                                                            Dim Valoare As String = Split1(k)
+                                                                                            Valoare = Remove_spaces_start_end(Valoare)
+                                                                                            If Valoare.Length > 0 Then Line_list_split_for_M2.Add(Valoare)
+                                                                                        Next
+                                                                                    Else
+                                                                                        Line_list_split_for_M2.Add(LineList)
+                                                                                    End If
+                                                                                End If
+                                                                            End If
+                                                                        Else
+                                                                            Line_list_split_for_M2.Add(LineList)
+                                                                        End If
+
+
+
+                                                                        Dim Y_top As Double = Start_point_for_bands.Y + Line_len / 2 - ((Nr_rand - 1) * Bands_Y_spacing) + (Line_list_split_for_M2.Count - 1) * Block_width / 2
+
+
+
+
+                                                                        Dim X_Left As Double
+                                                                        If RadioButton_Left_right.Checked = True Then
+                                                                            X_Left = Point_for_M2_UP.X - (Point_for_M2_UP.X - Xprev) / 2 - (Line_list_split_for_M2.Count - 1) * Block_width / 2
+                                                                        Else
+                                                                            X_Left = Point_for_M2_UP.X + (Xprev - Point_for_M2_UP.X) / 2 - (Line_list_split_for_M2.Count - 1) * Block_width / 2
+                                                                        End If
+
+                                                                        If RadioButton_use_block.Checked = True Then
+                                                                            For j = 0 To Line_list_split_for_M2.Count - 1
+
+                                                                                Dim Colectie_atrib_value As New Specialized.StringCollection
+                                                                                Dim Colectie_atrib_name As New Specialized.StringCollection
+                                                                                Colectie_atrib_value.Add(Line_list_split_for_M2(j))
+                                                                                Colectie_atrib_name.Add(ComboBox_line_list_attribute.Text)
+
+                                                                                If Not ComboBox_object_data_tract.Text = "" And Not ComboBox_TRACT_attribute.Text = "" Then
+                                                                                    Colectie_atrib_value.Add(Tract)
+                                                                                    Colectie_atrib_name.Add(ComboBox_TRACT_attribute.Text)
+                                                                                End If
+
+
+                                                                                If Not ComboBox_LENGTH_attribute.Text = "" Then
+
+                                                                                    Colectie_atrib_value.Add(Abs(Station_previous - Match1) & "'")
+                                                                                    Colectie_atrib_name.Add(ComboBox_LENGTH_attribute.Text)
+
+                                                                                End If
+
+
+                                                                                Dim Block_ins As New Point3d
+
+                                                                                If Abs(Xprev - Point_for_M2_UP.X) <= Max_dist_rotation Then
+                                                                                    Block_ins = New Point3d(X_Left + j * Block_width, Point_for_M2_UP.Y + Line_len / 2, 0)
+                                                                                Else
+                                                                                    If RadioButton_Left_right.Checked = True Then
+                                                                                        Block_ins = New Point3d(Point_for_M2_UP.X - (Point_for_M2_UP.X - Xprev) / 2, Y_top - j * Block_width, 0)
+                                                                                    Else
+                                                                                        Block_ins = New Point3d(Point_for_M2_UP.X + (Xprev - Point_for_M2_UP.X) / 2, Y_top - j * Block_width, 0)
+                                                                                    End If
+                                                                                End If
+
+
+                                                                                Dim Block1 As BlockReference
+                                                                                Block1 = InsertBlock_with_multiple_atributes("", ComboBox_blocks.Text, Block_ins, Block_scale, BTrecord, ComboBox_layers.Text, Colectie_atrib_name, Colectie_atrib_value)
+
+                                                                                If Abs(Xprev - Point_for_M2_UP.X) <= Max_dist_rotation Then
+                                                                                    Block1.Rotation = PI / 2
+                                                                                End If
+
+                                                                                If IsDBNull(Data_table_Sheet.Rows(i).Item("ROAD")) = False Then
+                                                                                    Dim rot_road As Double = Data_table_Sheet.Rows(i).Item("ROAD")
+                                                                                    Block1.Rotation = rot_road
+                                                                                End If
+
+
+                                                                            Next
+                                                                        End If
+
+
+                                                                        If RadioButton_use_mtext.Checked = True Then
+                                                                            Dim Point_txt As New Point3d
+                                                                            If RadioButton_Left_right.Checked = True Then
+                                                                                Point_txt = New Point3d(Point_for_M2_UP.X - (Point_for_M2_UP.X - Xprev) / 2, Start_point_for_bands.Y + Line_len / 2, 0)
+                                                                            Else
+                                                                                Point_txt = New Point3d(Point_for_M2_UP.X + (Xprev - Point_for_M2_UP.X) / 2, Start_point_for_bands.Y + Line_len / 2, 0)
+                                                                            End If
+
+                                                                            Dim Mtext_line_list_M2 As New MText
+                                                                            Mtext_line_list_M2.Contents = LineList
+                                                                            Mtext_line_list_M2.TextHeight = CDbl(TextBox_mtext_height.Text)
+                                                                            Mtext_line_list_M2.Location = Point_txt
+                                                                            Mtext_line_list_M2.Rotation = 0
+                                                                            If Layer_table.Has(ComboBox_layers_for_Mtext.Text) = True Then
+                                                                                Mtext_line_list_M2.Layer = ComboBox_layers_for_Mtext.Text
+                                                                            End If
+                                                                            Mtext_line_list_M2.Attachment = AttachmentPoint.MiddleCenter
+                                                                            Dim ObjId1 As TextStyleTableRecord
+                                                                            If Text_style_table.Has(ComboBox_text_style_mtext.Text) = True Then
+                                                                                ObjId1 = Text_style_table(ComboBox_text_style_mtext.Text).GetObject(OpenMode.ForRead)
+                                                                                Mtext_line_list_M2.TextStyleId = ObjId1.ObjectId
+                                                                            End If
+                                                                            BTrecord.AppendEntity(Mtext_line_list_M2)
+                                                                            Trans1.AddNewlyCreatedDBObject(Mtext_line_list_M2, True)
+                                                                        End If
+
+
+
+
+                                                                        If RadioButton_use_block.Checked = True Then
+                                                                            Dim MtextM2 As New MText
+                                                                            MtextM2.Location = New Point3d(Point_for_M2_UP.X - Text_offset_ptr_blocks, Start_point_for_bands.Y - ((Nr_rand - 1) * Bands_Y_spacing) + Text_offset_ptr_blocks, 0)
+                                                                            MtextM2.TextHeight = Mtext_height
+                                                                            MtextM2.Rotation = Mtext_rotation
+                                                                            If Layer_table.Has(ComboBox_layers.Text) = True Then
+                                                                                MtextM2.Layer = ComboBox_layers.Text
+                                                                            End If
+
+                                                                            Dim ContinutMtext As String
+
+                                                                            If CheckBox_use_equation1.Checked = True Then
+                                                                                If Match2_previous > Equation_station1 Then
+                                                                                    If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                                        ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Match2_previous + Equation_value1, 0) & "}"
+                                                                                    Else
+                                                                                        ContinutMtext = Get_chainage_feet_from_double(Match2_previous + Equation_value1, 0)
+                                                                                    End If
+
+                                                                                Else
+                                                                                    If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                                        ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Match2_previous, 0) & "}"
+                                                                                    Else
+                                                                                        ContinutMtext = Get_chainage_feet_from_double(Match2_previous, 0)
+                                                                                    End If
+                                                                                End If
+
+
+                                                                            Else
+                                                                                If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                                    ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Match2_previous, 0) & "}"
+                                                                                Else
+                                                                                    ContinutMtext = Get_chainage_feet_from_double(Match2_previous, 0)
+                                                                                End If
+
+                                                                            End If
+
+
+
+
+                                                                            MtextM2.Contents = ContinutMtext
+
+                                                                            MtextM2.Attachment = AttachmentPoint.BottomLeft
+                                                                            Dim ObjId2 As TextStyleTableRecord
+                                                                            If Text_style_table.Has(ComboBox_text_style.Text) = True Then
+                                                                                ObjId2 = Text_style_table(ComboBox_text_style.Text).GetObject(OpenMode.ForRead)
+                                                                                MtextM2.TextStyleId = ObjId2.ObjectId
+                                                                            End If
+                                                                            BTrecord.AppendEntity(MtextM2)
+                                                                            Trans1.AddNewlyCreatedDBObject(MtextM2, True)
+                                                                        End If
+                                                                    End If
+
+                                                                    Nr_previous = Nr_rand
+                                                                    Xprev = Start_point_for_bands.X
+
+
+
+                                                                    Match2_previous = Match2
+
+                                                                    Dim LinieM1 As New Line(New Point3d(Start_point_for_bands.X, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing), 0), _
+                                                                                            New Point3d(Start_point_for_bands.X, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing) + Line_len, 0))
+
+                                                                    If Not ComboBox_layers.Text = "" Then
+                                                                        LinieM1.Layer = ComboBox_layers.Text
+                                                                    End If
+                                                                    BTrecord.AppendEntity(LinieM1)
+                                                                    Trans1.AddNewlyCreatedDBObject(LinieM1, True)
+
+                                                                    Dim Band_text As New DBText
+                                                                    Band_text.Layer = "NO PLOT"
+                                                                    If RadioButton_Left_right.Checked = True Then
+
+                                                                        Band_text.Justify = AttachmentPoint.MiddleRight
+                                                                        Band_text.AlignmentPoint = New Point3d(Start_point_for_bands.X - 5 * Mtext_height, Start_point_for_bands.Y + Line_len / 2 - (Nr_rand * Bands_Y_spacing), 0)
+                                                                    Else
+
+                                                                        Band_text.Justify = AttachmentPoint.MiddleLeft
+                                                                        Band_text.AlignmentPoint = New Point3d(Start_point_for_bands.X + 5 * Mtext_height, Start_point_for_bands.Y + Line_len / 2 - (Nr_rand * Bands_Y_spacing), 0)
+                                                                    End If
+
+                                                                    Band_text.TextString = CStr(Nr_rand + 1)
+                                                                    Band_text.Height = 7.5 * Mtext_height
+
+                                                                    BTrecord.AppendEntity(Band_text)
+                                                                    Trans1.AddNewlyCreatedDBObject(Band_text, True)
+
+
+
+                                                                    If RadioButton_use_block.Checked = True Then
+                                                                        Dim MtextM1 As New MText
+                                                                        MtextM1.Location = New Point3d(Start_point_for_bands.X - Text_offset_ptr_blocks, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing) + Text_offset_ptr_blocks, 0)
+                                                                        MtextM1.TextHeight = Mtext_height
+                                                                        MtextM1.Rotation = Mtext_rotation
+                                                                        If Layer_table.Has(ComboBox_layers.Text) = True Then
+                                                                            MtextM1.Layer = ComboBox_layers.Text
+                                                                        End If
+
+                                                                        Dim ContinutMtext As String
+
+                                                                        If CheckBox_use_equation1.Checked = True Then
+                                                                            If Match2_previous > Equation_station1 Then
+                                                                                If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                                    ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Match1 + Equation_value1, 0) & "}"
+                                                                                Else
+                                                                                    ContinutMtext = Get_chainage_feet_from_double(Match1 + Equation_value1, 0)
+                                                                                End If
+
+                                                                            Else
+                                                                                If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                                    ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Match1, 0) & "}"
+                                                                                Else
+                                                                                    ContinutMtext = Get_chainage_feet_from_double(Match1, 0)
+                                                                                End If
+                                                                            End If
+
+
+                                                                        Else
+                                                                            If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                                ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Match1, 0) & "}"
+                                                                            Else
+                                                                                ContinutMtext = Get_chainage_feet_from_double(Match1, 0)
+                                                                            End If
+
+                                                                        End If
+
+
+
+                                                                        MtextM1.Contents = ContinutMtext
+
+
+                                                                        MtextM1.Attachment = AttachmentPoint.BottomLeft
+                                                                        Dim ObjId2 As TextStyleTableRecord
+                                                                        If Text_style_table.Has(ComboBox_text_style.Text) = True Then
+                                                                            ObjId2 = Text_style_table(ComboBox_text_style.Text).GetObject(OpenMode.ForRead)
+                                                                            MtextM1.TextStyleId = ObjId2.ObjectId
+                                                                        End If
+                                                                        BTrecord.AppendEntity(MtextM1)
+                                                                        Trans1.AddNewlyCreatedDBObject(MtextM1, True)
+                                                                    End If
+
+
+
+                                                                End If
+
+                                                                Prev_STA_for_LEngth = Station_previous
+
+
+                                                                Station_previous = Station
+
+                                                                Dim X_aligned As Double = 0
+
+                                                                Dim Point_MS As New Point3d
+
+                                                                If IsNothing(PolyCL3D) = False Then
+                                                                    Dim Point1 As New Point3d
+                                                                    Point1 = PolyCL3D.GetPointAtDist(Station)
+                                                                    Point_MS = New Point3d(Point1.X, Point1.Y, 0)
+
+                                                                Else
+                                                                    If Station > PolyCL.Length Then
+                                                                        Station = PolyCL.Length
+                                                                    End If
+                                                                    Point_MS = PolyCL.GetPointAtDist(Station)
+                                                                End If
+
+                                                                Dim Viewport_line As New Line(Start1, End1)
+                                                                Dim Dist_from_match As Double = -1.1111
+                                                                Dim Point_on_line As New Point3d
+                                                                Point_on_line = Viewport_line.GetClosestPointTo(Point_MS, Vector3d.ZAxis, False)
+                                                                If IsNothing(Point_on_line) = False Then
+                                                                    Dist_from_match = Viewport_line.StartPoint.GetVectorTo(Point_on_line).Length
+                                                                End If
+                                                                Dim Val1 As Double = Station - Match1
+                                                                If Not Dist_from_match = -1.1111 Then
+                                                                    Val1 = Dist_from_match
+                                                                End If
+
+
+
+
+                                                                If RadioButton_Left_right.Checked = True Then
+                                                                    Point_PS = New Point3d(Start_point_for_bands.X + Val1, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing), 0)
+                                                                    If Point_PS.X - Xprev < Min_dist Then
+                                                                        Point_PS = New Point3d(Xprev + Min_dist, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing), 0)
+                                                                    End If
+                                                                Else
+                                                                    Point_PS = New Point3d(Start_point_for_bands.X - Val1, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing), 0)
+
+                                                                    If Xprev - Point_PS.X < Min_dist Then
+                                                                        Point_PS = New Point3d(Xprev - Min_dist, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing), 0)
+                                                                    End If
+                                                                End If
+
+                                                            End If
+                                                        End If
+
+
+
+                                                        Dim Linie1 As New Line(New Point3d(Point_PS.X, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing), 0), New Point3d(Point_PS.X, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing) + Line_len, 0))
+                                                        If Not ComboBox_layers.Text = "" Then
+                                                            Linie1.Layer = ComboBox_layers.Text
+                                                        End If
+                                                        BTrecord.AppendEntity(Linie1)
+                                                        Trans1.AddNewlyCreatedDBObject(Linie1, True)
+
+                                                        If RadioButton_use_block.Checked = True Then
+                                                            Dim Mtext1 As New MText
+                                                            Mtext1.Location = New Point3d(Point_PS.X - Text_offset_ptr_blocks, Start_point_for_bands.Y - (Nr_rand * Bands_Y_spacing) + Text_offset_ptr_blocks, 0)
+                                                            Mtext1.TextHeight = Mtext_height
+                                                            Mtext1.Rotation = Mtext_rotation
+                                                            If Layer_table.Has(ComboBox_layers.Text) = True Then
+                                                                Mtext1.Layer = ComboBox_layers.Text
+                                                            End If
+
+
+                                                            Dim ContinutMtext As String
+
+                                                            If CheckBox_use_equation1.Checked = True Then
+                                                                If Match2_previous > Equation_station1 Then
+                                                                    If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                        ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Station + Equation_value1, 0) & "}"
+                                                                    Else
+                                                                        ContinutMtext = Get_chainage_feet_from_double(Station + Equation_value1, 0)
+                                                                    End If
+
+                                                                Else
+                                                                    If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                        ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Station, 0) & "}"
+                                                                    Else
+                                                                        ContinutMtext = Get_chainage_feet_from_double(Station, 0)
+                                                                    End If
+                                                                End If
+
+
+                                                            Else
+                                                                If IsNumeric(TextBox_textwidth.Text) = True Then
+                                                                    ContinutMtext = "{\W" & TextBox_textwidth.Text & ";" & Get_chainage_feet_from_double(Station, 0) & "}"
+                                                                Else
+                                                                    ContinutMtext = Get_chainage_feet_from_double(Station, 0)
+                                                                End If
+
+                                                            End If
+
+
+
+                                                            Mtext1.Contents = ContinutMtext
+
+
+
+                                                            Mtext1.Attachment = AttachmentPoint.BottomLeft
+                                                            Dim ObjId2 As TextStyleTableRecord
+                                                            If Text_style_table.Has(ComboBox_text_style.Text) = True Then
+                                                                ObjId2 = Text_style_table(ComboBox_text_style.Text).GetObject(OpenMode.ForRead)
+                                                                Mtext1.TextStyleId = ObjId2.ObjectId
+                                                            End If
+
+
+                                                            BTrecord.AppendEntity(Mtext1)
+                                                            Trans1.AddNewlyCreatedDBObject(Mtext1, True)
+
+                                                            Dim Line_list_split As New Specialized.StringCollection
+
+
+                                                            If ComboBox_TRACT_attribute.Text = "" Then
+                                                                If LineList.Contains(",") = True And LineList.Contains("&") = True Then
+                                                                    Dim Split1() As String = LineList.Split(",")
+                                                                    For k = 0 To Split1.Length - 1
+                                                                        If LineList.Contains("&") = True Then
+                                                                            Dim Split2() As String = LineList.Split("&")
+                                                                            For s = 0 To Split2.Length - 1
+                                                                                Dim Valoare As String = Split2(s)
+                                                                                Valoare = Remove_spaces_start_end(Valoare)
+                                                                                If Valoare.Length > 0 Then Line_list_split.Add(Valoare)
+                                                                            Next
+                                                                        Else
+                                                                            Dim Valoare As String = Split1(k)
+                                                                            Valoare = Remove_spaces_start_end(Valoare)
+                                                                            If Valoare.Length > 0 Then Line_list_split.Add(Valoare)
+                                                                        End If
+                                                                    Next
+                                                                Else
+                                                                    If LineList.Contains(",") = True Then
+                                                                        Dim Split1() As String = LineList.Split(",")
+                                                                        For k = 0 To Split1.Length - 1
+                                                                            Dim Valoare As String = Split1(k)
+                                                                            Valoare = Remove_spaces_start_end(Valoare)
+                                                                            If Valoare.Length > 0 Then Line_list_split.Add(Valoare)
+                                                                        Next
+                                                                    Else
+                                                                        If LineList.Contains("&") = True Then
+                                                                            Dim Split1() As String = LineList.Split("&")
+                                                                            For k = 0 To Split1.Length - 1
+                                                                                Dim Valoare As String = Split1(k)
+                                                                                Valoare = Remove_spaces_start_end(Valoare)
+                                                                                If Valoare.Length > 0 Then Line_list_split.Add(Valoare)
+                                                                            Next
+                                                                        Else
+                                                                            Line_list_split.Add(LineList)
+                                                                        End If
+                                                                    End If
+                                                                End If
+                                                            Else
+                                                                Line_list_split.Add(LineList)
+                                                            End If
+
+
+
+                                                            Dim Y_top As Double = Point_PS.Y + Line_len / 2 + (Line_list_split.Count - 1) * Block_width / 2
+
+                                                            Dim X_Left As Double
+                                                            If RadioButton_Left_right.Checked = True Then
+                                                                X_Left = Point_PS.X - (Point_PS.X - Xprev) / 2 - (Line_list_split.Count - 1) * Block_width / 2
+                                                            Else
+                                                                X_Left = Point_PS.X + (Xprev - Point_PS.X) / 2 - (Line_list_split.Count - 1) * Block_width / 2
+                                                            End If
+
+                                                            For j = 0 To Line_list_split.Count - 1
+
+                                                                Dim Colectie_atrib_value As New Specialized.StringCollection
+                                                                Dim Colectie_atrib_name As New Specialized.StringCollection
+                                                                Colectie_atrib_value.Add(Line_list_split(j))
+                                                                Colectie_atrib_name.Add(ComboBox_line_list_attribute.Text)
+
+                                                                If Not ComboBox_object_data_tract.Text = "" And Not ComboBox_TRACT_attribute.Text = "" Then
+                                                                    Colectie_atrib_value.Add(Tract)
+                                                                    Colectie_atrib_name.Add(ComboBox_TRACT_attribute.Text)
+                                                                End If
+
+                                                                If Not ComboBox_LENGTH_attribute.Text = "" Then
+                                                                    If i = 0 Then
+
+                                                                        Colectie_atrib_value.Add(Abs(Station) & "'")
+                                                                        Colectie_atrib_name.Add(ComboBox_LENGTH_attribute.Text)
+
+                                                                    End If
+                                                                    If i > 0 Then
+                                                                        Dim Ammount1 As Double = Round(Station - Prev_STA_for_LEngth, 0)
+
+                                                                        If Prev_STA_for_LEngth < Match1_for_Length And Station > Match1_for_Length Then
+                                                                            Ammount1 = Round(Station - Match1_for_Length, 0)
+                                                                        End If
+                                                                        Colectie_atrib_value.Add(Abs(Ammount1) & "'")
+                                                                        Colectie_atrib_name.Add(ComboBox_LENGTH_attribute.Text)
+
+                                                                    End If
+                                                                End If
+
+                                                                Dim Block_ins As New Point3d
+
+                                                                If Abs(Xprev - Point_PS.X) <= Max_dist_rotation Then
+                                                                    Block_ins = New Point3d(X_Left + j * Block_width, Y_top, 0)
+                                                                Else
+                                                                    If RadioButton_Left_right.Checked = True Then
+                                                                        Block_ins = New Point3d(Point_PS.X - (Point_PS.X - Xprev) / 2, Y_top - j * Block_width, 0)
+                                                                    Else
+                                                                        Block_ins = New Point3d(Point_PS.X + (Xprev - Point_PS.X) / 2, Y_top - j * Block_width, 0)
+                                                                    End If
+                                                                End If
+
+
+                                                                Dim Block1 As BlockReference
+                                                                Block1 = InsertBlock_with_multiple_atributes("", ComboBox_blocks.Text, Block_ins, Block_scale, BTrecord, ComboBox_layers.Text, Colectie_atrib_name, Colectie_atrib_value)
+
+                                                                If Abs(Xprev - Point_PS.X) <= Max_dist_rotation Then
+                                                                    Block1.Rotation = PI / 2
+                                                                End If
+
+                                                                If IsDBNull(Data_table_Sheet.Rows(i).Item("ROAD")) = False Then
+                                                                    Dim rot_road As Double = Data_table_Sheet.Rows(i).Item("ROAD")
+                                                                    Block1.Rotation = rot_road
+                                                                End If
+
+                                                            Next
+                                                        End If
+
+                                                        If RadioButton_use_mtext.Checked = True Then
+                                                            Dim Point_txt As New Point3d
+                                                            If RadioButton_Left_right.Checked = True Then
+                                                                Point_txt = New Point3d(Point_PS.X - (Point_PS.X - Xprev) / 2, Point_PS.Y + Line_len / 2, 0)
+                                                            Else
+                                                                Point_txt = New Point3d(Point_PS.X + (Xprev - Point_PS.X) / 2, Point_PS.Y + Line_len / 2, 0)
+                                                            End If
+
+                                                            Dim Mtext_ll As New MText
+                                                            Mtext_ll.Contents = LineList
+                                                            Mtext_ll.TextHeight = CDbl(TextBox_mtext_height.Text)
+                                                            Mtext_ll.Location = Point_txt
+                                                            Mtext_ll.Rotation = 0
+                                                            If Layer_table.Has(ComboBox_layers_for_Mtext.Text) = True Then
+                                                                Mtext_ll.Layer = ComboBox_layers_for_Mtext.Text
+                                                            End If
+                                                            Mtext_ll.Attachment = AttachmentPoint.MiddleCenter
+                                                            Dim ObjId1 As TextStyleTableRecord
+                                                            If Text_style_table.Has(ComboBox_text_style_mtext.Text) = True Then
+                                                                ObjId1 = Text_style_table(ComboBox_text_style_mtext.Text).GetObject(OpenMode.ForRead)
+                                                                Mtext_ll.TextStyleId = ObjId1.ObjectId
+                                                            End If
+                                                            BTrecord.AppendEntity(Mtext_ll)
+                                                            Trans1.AddNewlyCreatedDBObject(Mtext_ll, True)
+                                                        End If
+
+                                                        Xprev = Point_PS.X
+                                                    End If
+                                                Next
+                                            End If
+
+                                        End If

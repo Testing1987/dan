@@ -1,0 +1,42 @@
+﻿<CodeSnippets
+    xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>
+        Block_preview
+      </Title>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[        
+               BlockReference Block1 = (BlockReference)Trans1.GetObject(Id1, OpenMode.ForRead);
+                if (Block1 != null)
+                  {
+                                            BlockTableRecord BlockTrec = null;
+
+                                            if (Block1.IsDynamicBlock == true)
+                                            {
+                                                BlockTrec = (BlockTableRecord)Trans1.GetObject(Block1.DynamicBlockTableRecord, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+                                            }
+                                            else
+                                            {
+                                                BlockTrec = (BlockTableRecord)Trans1.GetObject(Block1.BlockTableRecord, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+                                            }
+
+                                            if (BlockTrec.HasPreviewIcon == true)
+                                            {
+                                                System.Drawing.Bitmap Image1 = BlockTrec.PreviewIcon;
+                                                Image1.GetThumbnailImage(button_refresh_grid.Width, button_refresh_grid.Height, null, new IntPtr());
+                                                button_refresh_grid.BackgroundImage = Image1;
+                     }
+                                            else
+                                            {
+                                                Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.SendStringToExecute("._blockicon" + "\r\n", true, false, false);
+                                            }
+        ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

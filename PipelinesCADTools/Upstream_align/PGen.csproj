@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{597CE4FD-648D-46F6-9314-7D02D7BCC4D9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Alignment_mdi</RootNamespace>
+    <AssemblyName>Pgen</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\acdbmgdbrep.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Map.Platform">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\Map\Autodesk.Map.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ManagedMapApi">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\Map\ManagedMapApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Foundation">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\Map\OSGeo.MapGuide.Foundation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Geometry">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\Map\OSGeo.MapGuide.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.PlatformBase">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2017\Map\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pgen_3_vp_2MS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pgen_3_vp_2MS.designer.cs">
+      <DependentUpon>Pgen_3_vp_2MS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer_sync1 .cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer_sync1 .designer.cs">
+      <DependentUpon>Layer_sync1 .cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layer_sync_MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Layer_sync_MainForm.designer.cs">
+      <DependentUpon>Layer_sync_MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PGen_0_MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PGen_0_MainForm.designer.cs">
+      <DependentUpon>PGen_0_MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pgen_1_prof_gen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pgen_1_prof_gen.designer.cs">
+      <DependentUpon>Pgen_1_prof_gen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pgen_2_prof_hydr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pgen_2_prof_hydr.designer.cs">
+      <DependentUpon>Pgen_2_prof_hydr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pgen_4_prof_gen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pgen_4_prof_gen.designer.cs">
+      <DependentUpon>Pgen_4_prof_gen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Slicer_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Slicer_form.designer.cs">
+      <DependentUpon>Slicer_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="slopes_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="slopes_form.designer.cs">
+      <DependentUpon>slopes_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ZZCommand_class.cs" />
+    <Compile Include="001_Functions_pgen.cs" />
+    <Compile Include="Jig_Classes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pgen_3_vp_2MS.resx">
+      <DependentUpon>Pgen_3_vp_2MS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer_sync1 .resx">
+      <DependentUpon>Layer_sync1 .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Layer_sync_MainForm.resx">
+      <DependentUpon>Layer_sync_MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PGen_0_MainForm.resx">
+      <DependentUpon>PGen_0_MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pgen_1_prof_gen.resx">
+      <DependentUpon>Pgen_1_prof_gen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pgen_2_prof_hydr.resx">
+      <DependentUpon>Pgen_2_prof_hydr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pgen_4_prof_gen.resx">
+      <DependentUpon>Pgen_4_prof_gen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Slicer_form.resx">
+      <DependentUpon>Slicer_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="slopes_form.resx">
+      <DependentUpon>slopes_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dwg.png" />
+    <Content Include="filter.png" />
+    <Content Include="red-cross1.png" />
+    <Content Include="red_dot2.png" />
+    <None Include="Resources\check.png" />
+    <Content Include="save_as.png" />
+    <Content Include="xl.png" />
+    <Content Include="xl2.png" />
+    <None Include="plus-icon.png" />
+    <None Include="X_Icon_New_Small.png" />
+    <None Include="Resources\path5638.png" />
+    <None Include="refresh-xxl.png" />
+    <None Include="savesmall.png" />
+    <None Include="XLtoDWG.png" />
+    <None Include="selectbluexs.png" />
+    <None Include="Target.png" />
+    <None Include="check.png" />
+    <None Include="DWGtoXL.png" />
+    <None Include="blue-arrow-move.png" />
+    <Content Include="label_icon.png" />
+    <Content Include="lbl2.png" />
+    <Content Include="old_code.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

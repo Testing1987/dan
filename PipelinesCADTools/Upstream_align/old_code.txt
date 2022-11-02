@@ -1,0 +1,1549 @@
+public static string get_template(string SheetName)
+        {
+
+            string Template_file_name = "";
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                Template_file_name = W1.Cells[1, 2].value2;
+            }
+
+            if (System.IO.File.Exists(Template_file_name) == false)
+            {
+
+                MessageBox.Show(Template_file_name + " does not exist");
+                Template_file_name = "";
+
+            }
+
+            return Template_file_name;
+
+        }
+
+        public static string get_output_folder(string SheetName)
+        {
+
+            string Output_folder = "";
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                Output_folder = W1.Cells[2, 2].value2;
+                if (Output_folder.Substring(Output_folder.Length - 1, 1) != "\\")
+                {
+                    Output_folder = Output_folder + "\\";
+                }
+
+            }
+
+            if (System.IO.Directory.Exists(Output_folder) == false)
+            {
+
+                MessageBox.Show(Output_folder + " does not exist");
+                Output_folder = "";
+
+            }
+
+            return Output_folder;
+
+        }
+
+        public static string get_new_file_name(string SheetName)
+        {
+
+            string new_file_name = "";
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                new_file_name = W1.Cells[3, 2].value2;
+            }
+
+
+            return new_file_name;
+
+        }
+
+        private static string get_First_name_old(string SheetName)
+        {
+
+            string First_name = "";
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                First_name = get_new_file_name(SheetName) + Convert.ToString(W1.Cells[4, 2].value2);
+            }
+
+
+            return First_name;
+
+        }
+
+        public static int get_increment(string SheetName)
+        {
+
+            int Increment = 1;
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[5, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    Increment = Convert.ToInt32(Txt);
+                }
+            }
+
+
+            return Increment;
+
+        }
+
+        public static double get_Viewport_X_PS(string SheetName)
+        {
+
+            double X_PS = 0;
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[6, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    X_PS = Convert.ToDouble(Txt);
+                }
+            }
+
+
+            return X_PS;
+
+        }
+
+        public static double get_Viewport_Y_PS(string SheetName)
+        {
+            double Y_PS = 0;
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[7, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    Y_PS = Convert.ToDouble(Txt);
+                }
+            }
+            return Y_PS;
+        }
+
+        public static double get_Viewport_width(string SheetName)
+        {
+            double Width = 0;
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[8, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    Width = Convert.ToDouble(Txt);
+                }
+            }
+            return Width;
+        }
+
+        public static double get_Viewport_height(string SheetName)
+        {
+            double height = 0;
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[9, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    height = Convert.ToDouble(Txt);
+                }
+            }
+            return height;
+        }
+
+        public static double get_Viewport_scale(string SheetName)
+        {
+            double Scale = 0;
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[10, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    Scale = Convert.ToDouble(Txt);
+                }
+            }
+            return Scale;
+        }
+
+        public static double get_North_Arrow_X_PS(string SheetName)
+        {
+
+            double X_PS = 0;
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[13, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    X_PS = Convert.ToDouble(Txt);
+                }
+            }
+
+
+            return X_PS;
+
+        }
+
+        public static double get_North_Arrow_Y_PS(string SheetName)
+        {
+            double Y_PS = 0;
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[14, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    Y_PS = Convert.ToDouble(Txt);
+                }
+            }
+            return Y_PS;
+        }
+
+        public static double get_North_Arrow_Scale(string SheetName)
+        {
+            double Scale1 = 0;
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                string Txt = Convert.ToString(W1.Cells[15, 2].value2);
+                if (IsNumeric(Txt) == true)
+                {
+                    Scale1 = Convert.ToDouble(Txt);
+                }
+            }
+            return Scale1;
+        }
+
+        public static string get_North_Arrow_BlockName(string SheetName)
+        {
+            string Name1 = "";
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                Name1 = Convert.ToString(W1.Cells[16, 2].value2);
+
+            }
+            return Name1;
+        }
+
+		
+        public static void Transfer_to_current_excel_Data_table_old(System.Data.DataTable Data_table, string SheetName)
+        {
+
+            if (Data_table != null)
+            {
+                if (Data_table.Rows.Count > 0)
+                {
+                    int NrR = Data_table.Rows.Count;
+                    int NrC = Data_table.Columns.Count;
+
+
+                    Object[,] values = new object[NrR + 1, NrC];
+                    for (int i = 0; i < NrR; ++i)
+                    {
+                        for (int j = 0; j < NrC; ++j)
+                        {
+                            if (Data_table.Rows[i][j] != DBNull.Value)
+                            {
+                                values[i + 1, j] = Data_table.Rows[i][j];
+                            }
+                        }
+                    }
+                    for (int j = 0; j < NrC; ++j)
+                    {
+                        values[0, j] = Data_table.Columns[j].ColumnName;
+                    }
+                    Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+                    if (W1 == null)
+                    {
+                        MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+                    }
+                    else
+                    {
+                        Microsoft.Office.Interop.Excel.Range range0 = W1.Range[W1.Columns[1], W1.Columns[NrC]];
+                        range0.ClearContents();
+
+                        Microsoft.Office.Interop.Excel.Range range1 = W1.Range[W1.Cells[1, 1], W1.Cells[NrR + 1, NrC]];
+                        range1.Cells.NumberFormat = "@";
+                        range1.Value2 = values;
+                    }
+                }
+            }
+        }
+
+		
+        private static String get_PolyCL_objectID_old(string SheetName)
+        {
+
+            string OBjID = "a";
+
+            Microsoft.Office.Interop.Excel.Worksheet W1 = Get_active_worksheet_from_Excel_by_name(SheetName);
+            if (W1 == null)
+            {
+                MessageBox.Show("There is no " + SheetName + " in the current excel spreadsheet");
+            }
+            else
+            {
+                OBjID = W1.Cells[2, 1].value2;
+            }
+
+            return OBjID;
+
+
+        }
+
+
+		        public static String get_PolyCL_objectID_from_centerline_file(String File1)
+        {
+            try
+            {
+                if (System.IO.File.Exists(File1) == false)
+                {
+                    MessageBox.Show("the sheet centerline file does not exists\r\n" + File1);
+                    return null;
+                }
+
+                Microsoft.Office.Interop.Excel.Application Excel1 = new Microsoft.Office.Interop.Excel.Application();
+                if (Excel1 == null)
+                {
+                    MessageBox.Show("PROBLEM WITH EXCEL!");
+                    return null;
+                }
+                Excel1.Visible = true;
+                Microsoft.Office.Interop.Excel.Workbook Workbook1 = Excel1.Workbooks.Open(File1);
+                Microsoft.Office.Interop.Excel.Worksheet W1 = Workbook1.Worksheets[1];
+
+                string ObjectID = "";
+
+                try
+                {
+                    ObjectID = W1.Cells[2, 1].value2;
+
+
+
+                    Workbook1.Close();
+                    Excel1.Quit();
+                }
+                catch (System.Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.Message);
+
+                }
+                finally
+                {
+                    if (W1 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W1);
+                    if (Workbook1 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workbook1);
+                    if (Excel1 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
+                }
+                return ObjectID;
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+
+            }
+            return null;
+        }
+
+		 private void button_cl_intersector()
+        {
+            if (Freeze_operations == false)
+            {
+                try
+                {
+
+                    System.Data.DataTable Data_Table_intersections = new System.Data.DataTable();
+                    Data_Table_intersections.Columns.Add(Col_station, typeof(double));
+                    Data_Table_intersections.Columns.Add(Col_station_eq, typeof(double));
+                    Data_Table_intersections.Columns.Add(Col_Layer_name, typeof(String));
+                    Data_Table_intersections.Columns.Add(Col_ObjType, typeof(String));
+                    Data_Table_intersections.Columns.Add(Col_x, typeof(double));
+                    Data_Table_intersections.Columns.Add(Col_y, typeof(double));
+                    Data_Table_intersections.Columns.Add(Col_z, typeof(double));
+
+
+
+                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+                    Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                    Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+
+                    ObjectId[] Empty_array = null;
+                    Editor1.SetImpliedSelection(Empty_array);
+                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+
+
+                    using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                    {
+                        Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1;
+                        Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Object_Prompt = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
+                        Object_Prompt.MessageForAdding = "\nSelect centerline:";
+
+
+                        Object_Prompt.SingleOnly = true;
+                        Rezultat1 = Editor1.GetSelection(Object_Prompt);
+
+                        if (Rezultat1.Status == Autodesk.AutoCAD.EditorInput.PromptStatus.OK)
+                        {
+                            if (Rezultat1 != null)
+                            {
+                                Freeze_operations = true;
+
+                                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                                {
+                                    Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable1 = (Autodesk.AutoCAD.DatabaseServices.BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (Autodesk.AutoCAD.DatabaseServices.BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+
+                                    Entity Ent1 = (Entity)Trans1.GetObject(Rezultat1.Value[0].ObjectId, OpenMode.ForWrite);
+                                    double Z = 0;
+
+                                    if (radioButton_3D_station.Checked == false)
+                                    {
+                                        Poly2D = Ent1 as Polyline;
+                                        if (Poly2D == null)
+                                        {
+                                            MessageBox.Show("you did not selected a 2D polyline");
+                                            Freeze_operations = false;
+                                            return;
+                                        }
+                                        Z = Poly2D.Elevation;
+
+                                    }
+                                    else
+                                    {
+                                        Poly3D = Ent1 as Polyline3d;
+                                        if (Poly3D == null)
+                                        {
+                                            MessageBox.Show("you did not selected a 3D polyline");
+                                            Freeze_operations = false;
+                                            return;
+                                        }
+                                        Poly2D = Functions.Creaza_poly2d_from_3d(Poly3D);
+
+                                    }
+
+                                    if (CheckBox_scan_points.Checked == false && checkBox_scan_blocks.Checked == false)
+                                    {
+                                        Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+
+                                        System.Collections.Specialized.StringCollection Nume_tables = new System.Collections.Specialized.StringCollection();
+
+                                        LayerTable Layer_table = Trans1.GetObject(ThisDrawing.Database.LayerTableId, OpenMode.ForRead) as LayerTable;
+
+                                        Nume_tables = Tables1.GetTableNames();
+                                        int Primul_index = -1;
+
+                                        foreach (ObjectId ObjID in BTrecord)
+                                        {
+                                            Entity Ent_intersection = Trans1.GetObject(ObjID, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead) as Entity;
+
+                                            if (Ent_intersection != null)
+                                            {
+                                                LayerTableRecord Layer_rec = Trans1.GetObject(Layer_table[Ent_intersection.Layer], OpenMode.ForRead) as LayerTableRecord;
+
+                                                if (Ent_intersection is Curve && Ent_intersection.ObjectId != Ent1.ObjectId && Layer_rec.IsOff == false && Layer_rec.IsFrozen == false)
+                                                {
+
+                                                    Curve Curba_int = Ent_intersection as Curve;
+                                                    String ObjType = "";
+
+                                                    if (Curba_int is Polyline)
+                                                    {
+                                                        Polyline Poly2 = (Polyline)Curba_int;
+                                                        Poly2D.Elevation = Poly2.Elevation;
+                                                        ObjType = "polyline";
+                                                    }
+                                                    if (Curba_int is Line)
+                                                    {
+                                                        Line Line2 = (Line)Curba_int;
+                                                        Poly2D.Elevation = Line2.StartPoint.Z;
+                                                        ObjType = "line";
+                                                    }
+
+                                                    if (Curba_int is Arc)
+                                                    {
+                                                        Arc Arc2 = (Arc)Curba_int;
+                                                        Poly2D.Elevation = Arc2.Center.Z;
+                                                        ObjType = "arc";
+                                                    }
+
+                                                    if (Curba_int is Ellipse)
+                                                    {
+                                                        Ellipse Ellipsa2 = (Ellipse)Curba_int;
+                                                        Poly2D.Elevation = Ellipsa2.Center.Z;
+                                                        ObjType = "ellipse";
+                                                    }
+
+                                                    if (Curba_int is Spline)
+                                                    {
+                                                        Spline spl = Curba_int as Spline;
+                                                        Poly2D.Elevation = spl.StartPoint.Z;
+                                                        ObjType = "spline";
+                                                    }
+
+                                                    if (Curba_int is Polyline3d)
+                                                    {
+                                                        Polyline3d P3 = Curba_int as Polyline3d;
+                                                        Curba_int = Functions.Creaza_poly2d_from_3d(P3);
+                                                        ObjType = "3dpolyline";
+                                                    }
+                                                    if (Curba_int is Circle)
+                                                    {
+                                                        Circle C2 = (Circle)Curba_int;
+                                                        Poly2D.Elevation = C2.Center.Z;
+                                                        ObjType = "circle";
+                                                    }
+
+                                                    Point3dCollection Col_int = new Point3dCollection();
+                                                    Col_int = Functions.Intersect_on_both_operands(Curba_int, Poly2D);
+
+                                                    if (Col_int.Count > 0)
+                                                    {
+                                                        for (int index = 0; index < Col_int.Count; ++index)
+                                                        {
+
+                                                            Point3d Point_on_poly2d = new Point3d();
+                                                            Point3d Point_on_poly = new Point3d();
+                                                            double Station_grid = 0;
+
+                                                            Point_on_poly2d = Poly2D.GetClosestPointTo(Col_int[index], Vector3d.ZAxis, true);
+                                                            double Param2d = Poly2D.GetParameterAtPoint(Point_on_poly2d);
+
+
+
+                                                            if (radioButton_3D_station.Checked == true)
+                                                            {
+
+                                                                if (Math.Round(Poly2D.GetDistanceAtParameter(Param2d), 4) == Math.Round(Poly2D.Length, 4))
+                                                                {
+                                                                    Param2d = Poly3D.EndParam;
+                                                                }
+
+                                                                Station_grid = Poly3D.GetDistanceAtParameter(Param2d);
+                                                                Point_on_poly = Poly3D.GetPointAtDist(Station_grid);
+
+                                                            }
+                                                            else
+                                                            {
+                                                                Poly2D.Elevation = Z;
+                                                                Station_grid = Poly2D.GetDistanceAtParameter(Param2d);
+                                                                Point_on_poly = Poly2D.GetPointAtDist(Station_grid);
+
+                                                            }
+
+
+                                                            Data_Table_intersections.Rows.Add();
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_x] = Point_on_poly.X;
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_y] = Point_on_poly.Y;
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_z] = Point_on_poly.Z;
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_station] = Station_grid;
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_station_eq] = Station_grid + Functions.Get_equation_value(Station_grid, Data_table_station_equation);
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_Layer_name] = Ent_intersection.Layer;
+                                                            Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Col_ObjType] = ObjType;
+
+
+                                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tables1.GetObjectRecords(Convert.ToUInt32(0), Ent_intersection.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, false))
+                                                            {
+                                                                if (Records1 != null)
+                                                                {
+                                                                    if (Records1.Count > 0)
+                                                                    {
+
+                                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                                        {
+                                                                            Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Record1.TableName];
+
+                                                                            int IndexT = Nume_tables.IndexOf(Record1.TableName);
+                                                                            if (Primul_index == -1)
+                                                                            {
+                                                                                Primul_index = IndexT;
+                                                                            }
+
+                                                                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                                            for (int k = 0; k < Record1.Count; ++k)
+                                                                            {
+                                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                                                String Prefix_nume = "";
+                                                                                if (IndexT != Primul_index)
+                                                                                {
+                                                                                    Prefix_nume = IndexT.ToString() + "_";
+                                                                                }
+
+                                                                                String Nume_field = Prefix_nume + Field_def1.Name;
+                                                                                String Valoare_field = Record1[k].StrValue;
+
+                                                                                if (Data_Table_intersections.Columns.Contains(Nume_field) == false)
+                                                                                {
+                                                                                    Data_Table_intersections.Columns.Add(Nume_field, typeof(String));
+                                                                                }
+                                                                                if (Valoare_field.Replace(" ", "") != "")
+                                                                                {
+                                                                                    Data_Table_intersections.Rows[Data_Table_intersections.Rows.Count - 1][Nume_field] = Valoare_field;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        Trans1.Dispose();
+                                    }
+                                }
+                            }
+
+                           (Data_Table_intersections);
+
+                            if (checkBox_scan_blocks.Checked == true || CheckBox_scan_points.Checked == true)
+                            {
+                                calculate_elevations_from_points_and_blocks(Poly2D);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Done");
+                            }
+
+                        }
+                    }
+                    MessageBox.Show("Done");
+                    ThisDrawing.Editor.WriteMessage("\nCommand:");
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                Freeze_operations = false;
+            }
+
+        }
+
+		 private void old_button_browser_centerline_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog fbd = new OpenFileDialog())
+            {
+                fbd.Multiselect = false;
+                fbd.Filter = "excel files (*.xlsx)|*.xlsx";
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    textBox_centerline_file.Text = fbd.FileName;
+                }
+            }
+        }
+
+        private void old_button_browser_sheet_index_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog fbd = new OpenFileDialog())
+            {
+                fbd.Multiselect = false;
+                fbd.Filter = "excel files (*.xlsx)|*.xlsx";
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    textBox_sheet_index_file.Text = fbd.FileName;
+                }
+            }
+        }
+
+        private void old_button_browser_graph_prof_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog fbd = new OpenFileDialog())
+            {
+                fbd.Multiselect = false;
+                fbd.Filter = "excel files (*.xlsx)|*.xlsx";
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    textBox_graph_profile_file.Text = fbd.FileName;
+                }
+            }
+        }
+
+        private void old_button_browser_centerline_new_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog fbd = new SaveFileDialog())
+            {
+                fbd.Filter = "Excel files (*.xlsx)|*.xlsx";
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (System.IO.File.Exists(fbd.FileName) == false)
+                    {
+                        Creaza_new_empty_excel_file(fbd.FileName, cl_excel_name);
+                        textBox_centerline_file.Text = fbd.FileName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("File exists\r\nOperation aborted\r\nSpecify another name.....");
+                        Freeze_operations = false;
+                        return;
+
+                    }
+
+                }
+
+            }
+        }
+
+        private void old_button_browser_sheet_index_new_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog fbd = new SaveFileDialog())
+            {
+                fbd.Filter = "Excel files (*.xlsx)|*.xlsx";
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (System.IO.File.Exists(fbd.FileName) == false)
+                    {
+                        Creaza_new_empty_excel_file(fbd.FileName, shindex_excel_name);
+                        textBox_sheet_index_file.Text = fbd.FileName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("File exists\r\nOperation aborted\r\nSpecify another name.....");
+                        Freeze_operations = false;
+                        return;
+                    }
+
+                }
+
+            }
+        }
+
+        private void old_button_browser_graph_prof_new_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog fbd = new SaveFileDialog())
+            {
+                fbd.Filter = "Excel files (*.xlsx)|*.xlsx";
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    if (System.IO.File.Exists(fbd.FileName) == false)
+                    {
+                        Creaza_new_empty_excel_file(fbd.FileName, prof_excel_name);
+                        textBox_graph_profile_file.Text = fbd.FileName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("File exists\r\nOperation aborted\r\nSpecify another name.....");
+                        Freeze_operations = false;
+                        return;
+                    }
+
+                }
+
+            }
+        }
+		        private void dataGridView_xrefs_Click(object sender, EventArgs e)
+        {
+
+
+            Type t = e.GetType();
+            if (t.Equals(typeof(MouseEventArgs)))
+            {
+                MouseEventArgs mouse = (MouseEventArgs)e;
+                if (mouse.Button == MouseButtons.Right)
+                {
+                    if (System.IO.Directory.Exists(textBox_basefiles_folder.Text) == true)
+                    {
+                        if (Data_table_basefiles == null)
+                        {
+                            ContextMenuStrip2.Show(Cursor.Position);
+                            ContextMenuStrip2.Visible = true;
+                        }
+                        else
+                        {
+                            if (Data_table_basefiles.Rows.Count == 0)
+                            {
+                                ContextMenuStrip2.Show(Cursor.Position);
+                                ContextMenuStrip2.Visible = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please indicate the folder containg the basefiles");
+                    }
+
+
+                }
+            }
+            else
+            {
+                ContextMenuStrip2.Visible = false;
+            }
+
+        }
+
+		                                    if (Data_table_basefiles != null)
+                                    {
+                                        if (Data_table_basefiles.Rows.Count > 0)
+                                        {
+                                            Functions.Creaza_layer_on_database(New_doc.Database, "XREF", 7, true);
+                                            BlockTableRecord BtrecordMS = Functions.get_modelspace(Trans2, New_doc.Database);
+                                            BtrecordMS.UpgradeOpen();
+                                            using (BlockTable BlockT2 = (BlockTable)Trans2.GetObject(New_doc.Database.BlockTableId, OpenMode.ForWrite))
+                                            {
+                                                for (int j = 0; j < Data_table_basefiles.Rows.Count; ++j)
+                                                {
+                                                    string Path1 = Data_table_basefiles.Rows[j][0].ToString();
+                                                    string Nume_xref = System.IO.Path.GetFileNameWithoutExtension(Path1);
+
+                                                    if (System.IO.File.Exists(Path1) == true)
+                                                    {
+                                                        if (BlockT2.Has(Nume_xref) == true)
+                                                        {
+                                                            do
+                                                            {
+                                                                if (Nume_xref.Substring(Nume_xref.Length - 2, 1) == "_" && Functions.IsNumeric(Nume_xref.Substring(Nume_xref.Length - 1, 1)) == true)
+                                                                {
+                                                                    int nr1 = Convert.ToInt32(Nume_xref.Substring(Nume_xref.Length - 1, 1));
+                                                                    Nume_xref = Nume_xref.Substring(Nume_xref.Length - 1, 1) + (nr1 + 1).ToString();
+                                                                }
+                                                                else
+                                                                {
+                                                                    Nume_xref = Nume_xref + "_1";
+                                                                }
+                                                            } while (BlockT2.Has(Nume_xref) == true);
+                                                        }
+
+
+                                                        ObjectId xrefid = New_doc.Database.AttachXref(Path1, Nume_xref);
+                                                        using (BlockReference Xref1 = new BlockReference(new Point3d(0, 0, 0), xrefid))
+                                                        {
+                                                            Xref1.Layer = "XREF";
+                                                            BtrecordMS.AppendEntity(Xref1);
+                                                            Trans2.AddNewlyCreatedDBObject(Xref1, true);
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+
+
+                                        }
+                                    }
+
+									   private void button_insert_prop_band_Click(object sender, EventArgs e)
+        {
+            Functions.Kill_excel();
+
+            if (Functions.Get_no_of_workbooks_from_Excel() > 0)
+            {
+                MessageBox.Show("Please close your excel files");
+                return;
+            }
+
+            if (comboBox_prop_block.Text == "")
+            {
+                MessageBox.Show("you did not specified property block name");
+                Freeze_operations = false;
+                return;
+            }
+
+            this.WindowState = FormWindowState.Minimized;
+            if (Freeze_operations == false)
+            {
+                Freeze_operations = true;
+
+                if (System.IO.Directory.Exists(textBox_project_database_folder.Text) == true)
+                {
+                    string ProjF = textBox_project_database_folder.Text;
+                    if (ProjF.Substring(ProjF.Length - 1, 1) != "\\")
+                    {
+                        ProjF = ProjF + "\\";
+                    }
+
+
+                    string fisier_prop = ProjF + property_excel_name;
+
+                    if (System.IO.File.Exists(fisier_prop) == false)
+                    {
+                        Freeze_operations = false;
+                        MessageBox.Show("the property data file does not exist");
+                        return;
+                    }
+
+                    string fisier_si = ProjF + shindex_excel_name;
+
+                    if (System.IO.File.Exists(fisier_si) == false)
+                    {
+                        Freeze_operations = false;
+                        MessageBox.Show("the sheet index data file does not exist");
+                        return;
+                    }
+
+                    string fisier_cl = ProjF + cl_excel_name;
+
+                    if (System.IO.File.Exists(fisier_cl) == false)
+                    {
+                        Freeze_operations = false;
+                        MessageBox.Show("the sheet index data file does not exist");
+                        return;
+                    }
+
+                    Data_Table_properties = Load_existing_property(fisier_prop);
+                    Data_table_Sheet_Index = Load_existing_sheet_index(fisier_si);
+                    Data_table_centerline = Load_existing_centerline(fisier_cl);
+
+                }
+                else
+                {
+                    Freeze_operations = false;
+                    MessageBox.Show("the project folder does not exist");
+                    return;
+                }
+
+                if (Data_Table_properties.Rows.Count == 0)
+                {
+                    Freeze_operations = false;
+                    MessageBox.Show("the property file does not have any data");
+                    return;
+                }
+
+                if (Data_table_Sheet_Index.Rows.Count == 0)
+                {
+                    Freeze_operations = false;
+                    MessageBox.Show("the sheet index file does not have any data");
+                    return;
+                }
+
+                if (Data_table_centerline.Rows.Count == 0)
+                {
+                    Freeze_operations = false;
+                    MessageBox.Show("the centerline file does not have any data");
+                    return;
+                }
+
+                string Sta1 = "Sta1";
+                string Sta2 = "Sta2";
+
+                string mm1 = "M1";
+                string mm2 = "M2";
+
+                string ll1 = "LineList";
+                string oo1 = "Owner";
+
+                String Pageno = "Page";
+                string Rect_len = "RectangleML";
+
+                string stretch_val = "StrechVal";
+                string BandL = "BandL";
+                string DeltaX_col = "DeltaX";
+                string stretch_val_orig = "StrechValoriginal";
+
+                System.Data.DataTable Data_table_compiled = new System.Data.DataTable();
+                Data_table_compiled.Columns.Add(Col_dwg_name, typeof(string));
+                Data_table_compiled.Columns.Add(Sta1, typeof(double));
+                Data_table_compiled.Columns.Add(Sta2, typeof(double));
+                Data_table_compiled.Columns.Add(ll1, typeof(string));
+                Data_table_compiled.Columns.Add(oo1, typeof(string));
+                Data_table_compiled.Columns.Add(Pageno, typeof(int));
+
+                Data_table_compiled.Columns.Add(Rect_len, typeof(double));
+
+
+                Data_table_compiled.Columns.Add(BandL, typeof(double));
+
+                Data_table_compiled.Columns.Add(DeltaX_col, typeof(double));
+
+                Data_table_compiled.Columns.Add(mm1, typeof(double));
+                Data_table_compiled.Columns.Add(mm2, typeof(double));
+
+                Data_table_compiled.Columns.Add(stretch_val, typeof(double));
+                Data_table_compiled.Columns.Add(stretch_val_orig, typeof(double));
+
+                try
+                {
+                    Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                    Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+                    using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
+                    {
+                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                        {
+                            Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                            Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as BlockTableRecord;
+                            string Block_name = comboBox_prop_block.Text;
+                            if (BlockTable_data1.Has(Block_name) == false)
+                            {
+                                MessageBox.Show("the block name you specified does not belong to the current drawing");
+                                Freeze_operations = false;
+                                return;
+                            }
+
+
+                            Build_3d_2d_poly(Trans1, BTrecord, Data_table_centerline);
+
+
+                            double Min_dist = 0;
+                            BlockReference BR1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "", Block_name, new Point3d(0, 0, 0), 1, 0, "0", new System.Collections.Specialized.StringCollection(), new System.Collections.Specialized.StringCollection());
+                            Min_dist = Functions.Get_distance1_block(BR1);
+                            BR1.Erase();
+
+                            Functions.Creaza_layer(layer_no_plot, 30, false);
+
+                            for (int i = 0; i < Data_Table_properties.Rows.Count; ++i)
+                            {
+                                int m_start = 0;
+                                bool Boolean_go_to_check_s1_s2 = false;
+
+                                if (Data_Table_properties.Rows[i][Col_2DSta1] != DBNull.Value && Data_Table_properties.Rows[i][Col_2DSta2] != DBNull.Value)
+                                {
+                                    double Station1 = Convert.ToDouble(Data_Table_properties.Rows[i][Col_2DSta1]);
+                                    double Station2 = Convert.ToDouble(Data_Table_properties.Rows[i][Col_2DSta2]);
+                                    String Parcelid = "NoData";
+                                    String Owner1 = "NoData";
+                                    if (Data_Table_properties.Rows[i][Col_Owner] != DBNull.Value)
+                                    {
+                                        Owner1 = Data_Table_properties.Rows[i][Col_Owner].ToString();
+                                    }
+                                    if (Data_Table_properties.Rows[i][Col_Linelist] != DBNull.Value)
+                                    {
+                                        Parcelid = Data_Table_properties.Rows[i][Col_Linelist].ToString();
+                                    }
+
+                                    L123:
+                                    for (int j = m_start; j < Data_table_Sheet_Index.Rows.Count; ++j)
+                                    {
+                                        if (Data_table_Sheet_Index.Rows[j][Col_M1] != DBNull.Value && Data_table_Sheet_Index.Rows[j][Col_M2] != DBNull.Value)
+                                        {
+                                            double M1 = Convert.ToDouble(Data_table_Sheet_Index.Rows[j][Col_M1]);
+                                            double M2 = Convert.ToDouble(Data_table_Sheet_Index.Rows[j][Col_M2]);
+
+                                            if (M2 <= M1)
+                                            {
+                                                Freeze_operations = false;
+                                                MessageBox.Show("End Station is smaller than Start Station on row " + (j).ToString() + "\r\n" + shindex_excel_name);
+                                                return;
+                                            }
+
+                                            if (M2 > Poly3D.Length)
+                                            {
+                                                if (Math.Abs(M2 - Poly3D.Length) < 0.99)
+                                                {
+                                                    M2 = Poly3D.Length;
+                                                }
+                                                else
+                                                {
+                                                    Freeze_operations = false;
+                                                    MessageBox.Show("End Station is bigger than poly length on row " + (j).ToString() + "\r\n" + shindex_excel_name);
+                                                    return;
+                                                }
+                                            }
+
+
+                                            Point3d pm1 = Poly3D.GetPointAtDist(M1);
+                                            Point3d pm2 = Poly3D.GetPointAtDist(M2);
+
+
+                                            Line Linie_M1_M2 = new Line(new Point3d(pm1.X, pm1.Y, 0), new Point3d(pm2.X, pm2.Y, 0));
+
+                                            //double ml_len = new Point3d(pm1.X, pm1.Y, 0).DistanceTo(new Point3d(pm2.X, pm2.Y, 0));
+
+
+
+                                            //double ScaleF = ml_len / (M2 - M1);
+
+                                            if (Boolean_go_to_check_s1_s2 == true)
+                                            {
+                                                if (Math.Round(Station1, 0) == Math.Round(Station2, 0))
+                                                {
+                                                    goto LS12end;
+                                                }
+                                                goto LS1S2;
+                                            }
+
+
+                                            if (M1 <= Station1 && M2 <= Station2 && M1 <= Station2 && M2 > Station1)
+                                            {
+
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                double stretch01 = Pt1.DistanceTo(pm2) * Vw_scale;
+                                                double deltax1 = Pt1.DistanceTo(pm1) * Vw_scale;
+
+                                                Data_table_compiled.Rows.Add();
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Col_dwg_name] = Data_table_Sheet_Index.Rows[j][Col_dwg_name];
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta1] = Station1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta2] = M2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][ll1] = Parcelid;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][oo1] = Owner1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Pageno] = j + 1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm1] = M1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm2] = M2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Rect_len] = Linie_M1_M2.Length * Vw_scale;
+                                                //Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = (M2 - Station1) * ScaleF;
+                                               // Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = (M2 - Station1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][BandL] = Linie_M1_M2.Length * Vw_scale;
+                                               // Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = (Station1 - M1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = deltax1;
+
+                                                Station1 = M2;
+
+                                                m_start = j + 1;
+                                                Boolean_go_to_check_s1_s2 = true;
+                                                goto L123;
+                                            }
+
+                                            if (Station1 >= M1 && Station2 <= M2 && Station1 < M2)
+                                            {
+
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(Poly3D.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                                double stretch01 = Pt1.DistanceTo(Pt2) * Vw_scale;
+                                                double deltax1 = Pt1.DistanceTo(pm1) * Vw_scale;
+
+                                                Data_table_compiled.Rows.Add();
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Col_dwg_name] = Data_table_Sheet_Index.Rows[j][Col_dwg_name];
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta1] = Station1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta2] = Station2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][ll1] = Parcelid;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][oo1] = Owner1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Pageno] = j + 1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm1] = M1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm2] = M2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Rect_len] = Linie_M1_M2.Length * Vw_scale;
+                                               // Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = (Station2 - Station1) * ScaleF;
+                                                // Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = (Station2 - Station1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][BandL] = Linie_M1_M2.Length * Vw_scale;
+                                                //Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = (Station1 - M1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = deltax1;
+
+                                                j = Data_table_Sheet_Index.Rows.Count;
+                                                goto LS12end;
+                                            }
+                                            LS1S2:
+                                            if (Station1 >= M1 && Station2 <= M2 && Station1 < M2)
+                                            {
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(Poly3D.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                                double stretch01 = Pt1.DistanceTo(Pt2) * Vw_scale;
+                                                double deltax1 = Pt1.DistanceTo(pm1) * Vw_scale;
+
+                                                Data_table_compiled.Rows.Add();
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Col_dwg_name] = Data_table_Sheet_Index.Rows[j][Col_dwg_name];
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta1] = Station1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta2] = Station2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][ll1] = Parcelid;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][oo1] = Owner1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Pageno] = j + 1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm1] = M1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm2] = M2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Rect_len] = Linie_M1_M2.Length * Vw_scale;
+                                                //Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = (Station2 - Station1) * ScaleF;
+                                                //Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = (Station2 - Station1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][BandL] = Linie_M1_M2.Length * Vw_scale;
+                                                //Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = (Station1 - M1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = deltax1;
+                                                j = Data_table_Sheet_Index.Rows.Count;
+                                                goto LS12end;
+                                            }
+                                            else if (Station1 < M2 && Station1 >= M1)
+                                            {
+
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                double stretch01 = Pt1.DistanceTo(pm2) * Vw_scale;
+                                                double deltax1 = Pt1.DistanceTo(pm1) * Vw_scale;
+
+                                                Data_table_compiled.Rows.Add();
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Col_dwg_name] = Data_table_Sheet_Index.Rows[j][Col_dwg_name];
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta1] = Station1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Sta2] = M2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][ll1] = Parcelid;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][oo1] = Owner1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Pageno] = j + 1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm1] = M1;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][mm2] = M2;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][Rect_len] = Linie_M1_M2.Length * Vw_scale;
+                                               // Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = (M2 - Station1) * ScaleF;
+                                                //Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = (M2 - Station1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][stretch_val_orig] = stretch01;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][BandL] = Linie_M1_M2.Length * Vw_scale;
+                                               // Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = (Station1 - M1) * ScaleF;
+                                                Data_table_compiled.Rows[Data_table_compiled.Rows.Count - 1][DeltaX_col] = deltax1;
+                                                Station1 = M2;
+
+                                                m_start = j + 1;
+                                                Boolean_go_to_check_s1_s2 = true;
+                                                goto L123;
+                                            }
+                                        }
+                                    }
+                                    LS12end:
+                                    string xx = "";
+                                }
+                            }
+
+
+
+                            // Functions.Transfer_datatable_to_new_excel_spreadsheet(Data_table_compiled);
+
+                            int Pagep = -1;
+
+                            if (Data_table_compiled != null)
+                            {
+                                for (int i = 0; i < Data_table_compiled.Rows.Count; ++i)
+                                {
+                                    int Page1 = Convert.ToInt32(Data_table_compiled.Rows[i][Pageno]);
+                                    double ml_len = Convert.ToDouble(Data_table_compiled.Rows[i][Rect_len]);
+                                    string dwg_name = Data_table_compiled.Rows[i][Col_dwg_name].ToString();
+                                    double strech1 = Convert.ToDouble(Data_table_compiled.Rows[i][stretch_val]);
+                                    double Diff = Min_dist - strech1;
+                                    if (Diff > 0)
+                                    {
+                                        Data_table_compiled.Rows[i][stretch_val] = Min_dist;
+
+                                        for (int j = 0; j < Data_table_compiled.Rows.Count; ++j)
+                                        {
+                                            int Page2 = Convert.ToInt32(Data_table_compiled.Rows[j][Pageno]);
+                                            double deltax2 = Convert.ToDouble(Data_table_compiled.Rows[j][DeltaX_col]);
+                                            double band_len2 = Convert.ToDouble(Data_table_compiled.Rows[j][BandL]);
+
+                                            if (Page1 == Page2)
+                                            {
+                                                Data_table_compiled.Rows[j][BandL] = band_len2 + Diff;
+
+                                                if (i < j)
+                                                {
+                                                    Data_table_compiled.Rows[j][DeltaX_col] = deltax2 + Diff;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (Page1 != Pagep)
+                                    {
+                                        Polyline vp_vw1 = new Polyline();
+
+                                        vp_vw1.AddVertexAt(0, new Point2d(Point0_prop.X - Vw_prop_width / 2, Point0_prop.Y - (Page1 - 1) * Band_Separation), 0, 0, 0);
+                                        vp_vw1.AddVertexAt(1, new Point2d(Point0_prop.X + Vw_prop_width / 2, Point0_prop.Y - (Page1 - 1) * Band_Separation), 0, 0, 0);
+                                        vp_vw1.AddVertexAt(2, new Point2d(Point0_prop.X + Vw_prop_width / 2, Point0_prop.Y - Vw_prop_height - (Page1 - 1) * Band_Separation), 0, 0, 0);
+                                        vp_vw1.AddVertexAt(3, new Point2d(Point0_prop.X - Vw_prop_width / 2, Point0_prop.Y - Vw_prop_height - (Page1 - 1) * Band_Separation), 0, 0, 0);
+
+                                        vp_vw1.Closed = true;
+                                        vp_vw1.Layer = layer_no_plot;
+                                        vp_vw1.ColorIndex = 3;
+                                        BTrecord.AppendEntity(vp_vw1);
+                                        Trans1.AddNewlyCreatedDBObject(vp_vw1, true);
+
+                                        Polyline vp_vw2 = new Polyline();
+
+                                        vp_vw2.AddVertexAt(0, new Point2d(Point0_prop.X - ml_len / 2, Point0_prop.Y - (Page1 - 1) * Band_Separation), 0, 0, 0);
+                                        vp_vw2.AddVertexAt(1, new Point2d(Point0_prop.X + ml_len / 2, Point0_prop.Y - (Page1 - 1) * Band_Separation), 0, 0, 0);
+                                        vp_vw2.AddVertexAt(2, new Point2d(Point0_prop.X + ml_len / 2, Point0_prop.Y - Vw_prop_height - (Page1 - 1) * Band_Separation), 0, 0, 0);
+                                        vp_vw2.AddVertexAt(3, new Point2d(Point0_prop.X - ml_len / 2, Point0_prop.Y - Vw_prop_height - (Page1 - 1) * Band_Separation), 0, 0, 0);
+
+                                        vp_vw2.Closed = true;
+                                        vp_vw2.Layer = layer_no_plot;
+                                        vp_vw2.ColorIndex = 1;
+                                        BTrecord.AppendEntity(vp_vw2);
+                                        Trans1.AddNewlyCreatedDBObject(vp_vw2, true);
+
+                                        MText Band_label = new MText();
+                                        Band_label.Contents = dwg_name;
+                                        Band_label.TextHeight = Vw_prop_height / 3;
+                                        Band_label.Rotation = 0;
+                                        Band_label.Attachment = AttachmentPoint.MiddleLeft;
+                                        Band_label.Location = new Point3d(Point0_prop.X - Vw_prop_width / 2, Point0_prop.Y - Vw_prop_height / 2 - (Page1 - 1) * Band_Separation, 0);
+                                        Band_label.Layer = layer_no_plot;
+                                        BTrecord.AppendEntity(Band_label);
+                                        Trans1.AddNewlyCreatedDBObject(Band_label, true);
+                                        Pagep = Page1;
+                                    }
+
+
+                                }
+
+
+                                // Functions.Transfer_datatable_to_new_excel_spreadsheet(Data_table_compiled);
+
+                                for (int i = 0; i < Data_table_compiled.Rows.Count; ++i)
+                                {
+                                    double Station1 = Convert.ToDouble(Data_table_compiled.Rows[i][Sta1]);
+                                    double Station2 = Convert.ToDouble(Data_table_compiled.Rows[i][Sta2]);
+                                    double M1 = Convert.ToDouble(Data_table_compiled.Rows[i][mm1]);
+                                    double M2 = Convert.ToDouble(Data_table_compiled.Rows[i][mm2]);
+                                    int Page1 = Convert.ToInt32(Data_table_compiled.Rows[i][Pageno]);
+                                    string Owner1 = Data_table_compiled.Rows[i][oo1].ToString();
+                                    string Linelist = Data_table_compiled.Rows[i][ll1].ToString();
+
+                                    double ml_len = Convert.ToDouble(Data_table_compiled.Rows[i][Rect_len]);
+                                    double band_len = Convert.ToDouble(Data_table_compiled.Rows[i][BandL]);
+                                    double Diff = (band_len - ml_len) / 2;
+                                    double deltax = Convert.ToDouble(Data_table_compiled.Rows[i][DeltaX_col]);
+
+                                    Point3d InsPt = new Point3d(Point0_prop.X - ml_len / 2 - Diff + deltax, Point0_prop.Y - Vw_prop_height - (Page1 - 1) * Band_Separation, 0);
+
+                                    String S1 = Functions.Get_chainage_feet_from_double(Station1, 0);
+                                    String S2 = Functions.Get_chainage_feet_from_double(Station2, 0);
+
+                                    String L1 = Convert.ToString(Math.Round(Station2, 0) - Math.Round(Station1, 0)) + "'";
+
+                                    System.Collections.Specialized.StringCollection Colectie_nume_atribute = new System.Collections.Specialized.StringCollection();
+                                    System.Collections.Specialized.StringCollection Colectie_valori = new System.Collections.Specialized.StringCollection();
+
+                                    Colectie_nume_atribute.Add(comboBox_prop_atr_sta1.Text);
+                                    Colectie_valori.Add(S1);
+
+                                    Colectie_nume_atribute.Add(comboBox_prop_atr_sta2.Text);
+                                    Colectie_valori.Add(S2);
+
+                                    Colectie_nume_atribute.Add(comboBox_prop_atr_owner.Text);
+                                    Colectie_valori.Add(Owner1);
+
+                                    Colectie_nume_atribute.Add(comboBox_prop_atr_linelist.Text);
+                                    Colectie_valori.Add(Linelist);
+
+                                    Colectie_nume_atribute.Add(comboBox_prop_atr_distance.Text);
+                                    Colectie_valori.Add(L1);
+
+                                    BlockReference Block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "", Block_name, InsPt, 1, 0, "0", Colectie_nume_atribute, Colectie_valori);
+
+
+                                    double strech1 = Convert.ToDouble(Data_table_compiled.Rows[i][stretch_val]);
+                                    Functions.Stretch_block(Block1, "Distance1", strech1);
+
+                                }
+                            }
+
+                            //Functions.Transfer_datatable_to_new_excel_spreadsheet(Data_table_compiled);
+                            Poly2D.Erase();
+                            Poly3D.Erase();
+                            Trans1.Commit();
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+
+                Freeze_operations = false;
+            }
+            this.WindowState = FormWindowState.Normal;
+        }
+
+		bool int1 = false;
+
+                                                if (int1 == true)
+                                                {
+                                                    Point3dCollection Colint = Functions.Intersect_on_both_operands(Curba0, Curba1);
+                                                    if (Colint.Count > 0)
+                                                    {
+                                                        bool Add = true;
+                                                        int idx = 0;
+                                                        Point3d Point00 = Curba0.GetPointAtParameter(0);
+                                                        Point3d Point01 = Curba1.GetPointAtParameter(0);
+
+                                                        Point00 = new Point3d(Math.Round(Point00.X, 3), Math.Round(Point00.Y, 3), 0);
+                                                        Point01 = new Point3d(Math.Round(Point01.X, 3), Math.Round(Point01.Y, 3), 0);
+
+                                                        if (Point00 != Point01)
+                                                        {
+                                                            dt1.Rows.Add();
+                                                            dt1.Rows[idx][Col1] = 0;
+                                                            dt1.Rows[idx][Col3] = 0;
+                                                            dt1.Rows[idx][Col5] = Point01.X;
+                                                            dt1.Rows[idx][Col6] = Point01.Y;
+                                                            Add = false;
+                                                        }
+
+
+                                                        for (int i = 0; i < Colint.Count; ++i)
+                                                        {
+                                                            Point3d Pt0 = Colint[i];
+                                                            double P0 = Curba0.GetParameterAtPoint(Pt0);
+                                                            double P1 = Curba1.GetParameterAtPoint(Pt0);
+
+                                                            if (Add == true)
+                                                            {
+
+
+                                                                double B0 = -123.123;
+
+                                                                if (Math.Round(P0, 2) == Math.Round(P0, 0))
+                                                                {
+                                                                    if (P0 + 1 < Curba0.NumberOfVertices - 1)
+                                                                    {
+                                                                        Point3d P001 = Curba0.GetPointAtParameter(P0);
+                                                                        Point3d P002 = Curba0.GetPointAtParameter(P0 + 1);
+                                                                        B0 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                    }
+
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    Point3d P001 = Curba0.GetPointAtParameter(Math.Floor(P0));
+                                                                    Point3d P002 = Curba0.GetPointAtParameter(Math.Ceiling(P0));
+                                                                    B0 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                }
+
+                                                                double B1 = -123.123;
+
+                                                                if (Math.Round(P1, 2) == Math.Round(P1, 0))
+                                                                {
+                                                                    if (P1 + 1 < Curba0.NumberOfVertices - 1)
+                                                                    {
+                                                                        Point3d P001 = Curba1.GetPointAtParameter(P1);
+                                                                        Point3d P002 = Curba1.GetPointAtParameter(P1 + 1);
+                                                                        B1 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                    }
+
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    Point3d P001 = Curba1.GetPointAtParameter(Math.Floor(P1));
+                                                                    Point3d P002 = Curba1.GetPointAtParameter(Math.Ceiling(P1));
+                                                                    B1 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                }
+
+
+                                                                if (Math.Round(B0, 2) != Math.Round(B1, 2))
+                                                                {
+
+                                                                    dt1.Rows.Add();
+                                                                    dt1.Rows[idx][Col1] = Curba0.GetDistAtPoint(Pt0);
+                                                                    dt1.Rows[idx][Col3] = Curba1.GetDistAtPoint(Pt0);
+                                                                    dt1.Rows[idx][Col5] = Pt0.X;
+                                                                    dt1.Rows[idx][Col6] = Pt0.Y;
+                                                                    Add = false;
+                                                                }
+
+
+                                                            }
+                                                            else
+                                                            {
+                                                                double B0 = -123.123;
+
+                                                                if (Math.Round(P0, 2) == Math.Round(P0, 0))
+                                                                {
+                                                                    if (P0 - 1 > 0)
+                                                                    {
+                                                                        Point3d P001 = Curba0.GetPointAtParameter(P0 - 1);
+                                                                        Point3d P002 = Curba0.GetPointAtParameter(P0);
+                                                                        B0 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                    }
+
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    Point3d P001 = Curba0.GetPointAtParameter(Math.Floor(P0));
+                                                                    Point3d P002 = Curba0.GetPointAtParameter(Math.Ceiling(P0));
+                                                                    B0 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                }
+
+                                                                double B1 = -123.123;
+
+                                                                if (Math.Round(P1, 2) == Math.Round(P1, 0))
+                                                                {
+                                                                    if (P1 - 1 > 0)
+                                                                    {
+                                                                        Point3d P001 = Curba1.GetPointAtParameter(P1 - 1);
+                                                                        Point3d P002 = Curba1.GetPointAtParameter(P1);
+                                                                        B1 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                    }
+
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    Point3d P001 = Curba1.GetPointAtParameter(Math.Floor(P1));
+                                                                    Point3d P002 = Curba1.GetPointAtParameter(Math.Ceiling(P1));
+                                                                    B1 = Functions.GET_Bearing_rad(P001.X, P001.Y, P002.X, P002.Y);
+                                                                }
+
+
+                                                                if (Math.Round(B0, 2) != Math.Round(B1, 2))
+                                                                {
+
+                                                                    dt1.Rows[idx][Col2] = Curba0.GetDistAtPoint(Pt0);
+                                                                    dt1.Rows[idx][Col4] = Curba1.GetDistAtPoint(Pt0);
+                                                                    dt1.Rows[idx][Col7] = Pt0.X;
+                                                                    dt1.Rows[idx][Col8] = Pt0.Y;
+                                                                    idx = idx + 1;
+                                                                    Add = true;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }

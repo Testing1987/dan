@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matl_Design", "Matl_Design\Matl_Design.csproj", "{B8F41F88-3815-406D-837A-04B4BF9F0B62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatTabControl", "..\FlatTabControl_src\FlatTabControl\FlatTabControl.csproj", "{96002CA1-D295-4ED5-9B08-92346C1BFA18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96002CA1-D295-4ED5-9B08-92346C1BFA18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96002CA1-D295-4ED5-9B08-92346C1BFA18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96002CA1-D295-4ED5-9B08-92346C1BFA18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96002CA1-D295-4ED5-9B08-92346C1BFA18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4845927F-A0C5-4394-AD85-40C988998B91}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://aisueprd-flb002:8080/tfs/holyoke
+		SccProjectUniqueName0 = ..\\FlatTabControl_src\\FlatTabControl\\FlatTabControl.csproj
+		SccProjectName0 = ../FlatTabControl_src/FlatTabControl
+		SccLocalPath0 = ..\\FlatTabControl_src\\FlatTabControl
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = Matl_Design\\Matl_Design.csproj
+		SccProjectName2 = Matl_Design
+		SccLocalPath2 = Matl_Design
+	EndGlobalSection
+EndGlobal

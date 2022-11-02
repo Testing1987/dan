@@ -1,0 +1,218 @@
+
+for (int i = 0; i < WS_clean_poly.NumberOfVertices; ++i)
+
+{
+
+
+
+
+                                Line Line_WS1 = null;
+                                Line Line_WS2 = null;
+
+                                if (i == 0)
+                                {
+                                    Line_WS1 = new Line(WS_poly.GetPoint3dAt(0), WS_poly.GetPoint3dAt(WS_clean_poly.NumberOfVertices - 1));
+                                }
+                                else
+                                {
+                                    Line_WS1 = new Line(WS_poly.GetPoint3dAt(i), WS_poly.GetPoint3dAt(i - 1));
+                                }
+
+                                if (i == WS_clean_poly.NumberOfVertices - 1)
+                                {
+                                    Line_WS2 = new Line(WS_poly.GetPoint3dAt(WS_clean_poly.NumberOfVertices - 1), WS_poly.GetPoint3dAt(0));
+                                }
+                                else
+                                {
+                                    Line_WS2 = new Line(WS_poly.GetPoint3dAt(i), WS_poly.GetPoint3dAt(i + 1));
+                                }
+
+
+
+                                if (Line_WS1 != null & Line_WS2 != null)
+                                {
+                                    double Param_cleaned_i = PolyCL_cleaned.GetParameterAtPoint(PolyCL_cleaned.GetClosestPointTo(Line_WS1.StartPoint, Vector3d.ZAxis, false));
+                                    double Param_cleaned_0 = PolyCL_cleaned.GetParameterAtPoint(PolyCL_cleaned.GetClosestPointTo(Line_WS1.EndPoint, Vector3d.ZAxis, false));
+                                    double Param_cleaned_2 = PolyCL_cleaned.GetParameterAtPoint(PolyCL_cleaned.GetClosestPointTo(Line_WS2.EndPoint, Vector3d.ZAxis, false));
+                                    if (Math.Floor(Param_cleaned_i) == Math.Floor(Param_cleaned_0) & Math.Floor(Param_cleaned_i) == Math.Floor(Param_cleaned_2))
+                                    {
+
+
+                                        Point3d Point_WS = Line_WS1.StartPoint;
+                                        Point3d Point_CL = PolyCL_MS.GetClosestPointTo(Point_WS, Vector3d.ZAxis, false);
+
+                                        Point3d Point_WS_L = Poly_easement_L.GetClosestPointTo(Point_WS, Vector3d.ZAxis, false);
+                                        Point3d Point_WS_R = Poly_easement_R.GetClosestPointTo(Point_WS, Vector3d.ZAxis, false);
+
+                                        Line CL_WS = new Line(Point_WS, Point_CL);
+                                        Line WS_L = new Line(Point_WS, Point_WS_L);
+                                        Line WS_R = new Line(Point_WS, Point_WS_R);
+
+
+
+
+                                        Data_Table_WS.Rows.Add();
+                                        Data_Table_WS.Rows[j]["X"] = Math.Round(Point_WS.X, Rounding_no);
+                                        Data_Table_WS.Rows[j]["Y"] = Math.Round(Point_WS.Y, Rounding_no);
+                                        Data_Table_WS.Rows[j]["STA"] = Math.Round(PolyCL_MS.GetDistAtPoint(Point_CL), Rounding_no);
+                                        if (Side_of_WS == "L")
+                                        {
+                                            Data_Table_WS.Rows[j]["OFFSET"] = Math.Round(WS_L.Length, Rounding_no);
+                                        }
+                                        if (Side_of_WS == "R")
+                                        {
+                                            Data_Table_WS.Rows[j]["OFFSET"] = Math.Round(WS_R.Length, Rounding_no);
+                                        }
+
+                                        if (Side_of_WS == "")
+                                        {
+                                            Data_Table_WS.Rows[j]["OFFSET"] = Math.Round(CL_WS.Length, Rounding_no);
+                                            BDY_WS = "CL";
+                                        }
+                                        j = j + 1;
+
+                                    }
+
+                                    if (Math.Floor(Param_cleaned_0) != Math.Floor(Param_cleaned_2))
+                                    {
+
+                                        double Param_CL_cleaned_defl = Math.Round(Param_cleaned_i, 0);
+
+
+
+                                        Line Line_CL1 = new Line(PolyCL_cleaned.GetPointAtParameter(Param_CL_cleaned_defl), PolyCL_cleaned.GetPointAtParameter(Param_CL_cleaned_defl - 1));
+                                        Line Line_CL2 = new Line(PolyCL_cleaned.GetPointAtParameter(Param_CL_cleaned_defl), PolyCL_cleaned.GetPointAtParameter(Param_CL_cleaned_defl + 1));
+
+                                        double Bearing1 = Math.Round(Workspace_Band.Functions.GET_Bearing_rad(Line_WS1.StartPoint.X, Line_WS1.StartPoint.Y, Line_WS1.EndPoint.X, Line_WS1.EndPoint.Y), 2);
+                                        double BearingC1 = Math.Round(Workspace_Band.Functions.GET_Bearing_rad(Line_CL1.StartPoint.X, Line_CL1.StartPoint.Y, Line_CL1.EndPoint.X, Line_CL1.EndPoint.Y), 2);
+
+                                        double Bearing2 = Math.Round(Workspace_Band.Functions.GET_Bearing_rad(Line_WS2.StartPoint.X, Line_WS2.StartPoint.Y, Line_WS2.EndPoint.X, Line_WS2.EndPoint.Y), 2);
+                                        double BearingC2 = Math.Round(Workspace_Band.Functions.GET_Bearing_rad(Line_CL2.StartPoint.X, Line_CL2.StartPoint.Y, Line_CL2.EndPoint.X, Line_CL2.EndPoint.Y), 2);
+
+                                        bool is_equal1 = false;
+                                        bool is_equal2 = false;
+
+                                        if (Bearing1 == BearingC1 | Bearing1 == BearingC1 + Math.PI | Bearing1 + Math.PI == BearingC1)
+                                        {
+                                            is_equal1 = true;
+                                        }
+
+                                        if (Bearing1 == BearingC2 | Bearing1 == BearingC2 + Math.PI | Bearing1 + Math.PI == BearingC2)
+                                        {
+                                            is_equal1 = true;
+                                        }
+
+
+                                        if (Bearing2 == BearingC1 | Bearing2 == BearingC1 + Math.PI | Bearing2 + Math.PI == BearingC1)
+                                        {
+                                            is_equal2 = true;
+                                        }
+
+                                        if (Bearing2 == BearingC2 | Bearing2 == BearingC2 + Math.PI | Bearing2 + Math.PI == BearingC2)
+                                        {
+                                            is_equal2 = true;
+                                        }
+
+
+
+
+
+
+
+                                        if (is_equal1 == true & is_equal2 == true)
+                                        {
+                                            Point3d Point_WS = Line_WS1.StartPoint;
+                                            Point3d Point_CL = PolyCL_MS.GetClosestPointTo(Point_WS, Vector3d.ZAxis, false);
+
+                                            Point3d Point_WS_L = Poly_easement_L.GetClosestPointTo(Point_WS, Vector3d.ZAxis, false);
+                                            Point3d Point_WS_R = Poly_easement_R.GetClosestPointTo(Point_WS, Vector3d.ZAxis, false);
+
+                                            Line CL_WS = new Line(Point_WS, Point_CL);
+                                            Line WS_L = new Line(Point_WS, Point_WS_L);
+                                            Line WS_R = new Line(Point_WS, Point_WS_R);
+
+
+
+
+                                            Data_Table_WS.Rows.Add();
+                                            Data_Table_WS.Rows[j]["X"] = Math.Round(Point_WS.X, Rounding_no);
+                                            Data_Table_WS.Rows[j]["Y"] = Math.Round(Point_WS.Y, Rounding_no);
+
+                                            double Param_CL_i = PolyCL_MS.GetParameterAtPoint(PolyCL_MS.GetClosestPointTo(PolyCL_cleaned.GetPointAtParameter(Math.Round(Param_cleaned_i, 0)), Vector3d.ZAxis, false));
+
+                                            double Param_CL_0 = PolyCL_MS.GetParameterAtPoint(PolyCL_MS.GetClosestPointTo(PolyCL_cleaned.GetPointAtParameter(Math.Round(Param_cleaned_0, 0)), Vector3d.ZAxis, false));
+
+                                            if (Param_cleaned_i > Param_cleaned_0 & Math.Ceiling(Param_cleaned_i) == Math.Ceiling(Param_cleaned_0))
+                                            {
+                                                Param_CL_i = Math.Ceiling(Param_CL_i);
+                                            }
+
+                                            if (Param_cleaned_i > Param_cleaned_0 & Math.Floor(Param_cleaned_i) == Math.Ceiling(Param_cleaned_0))
+                                            {
+                                                Param_CL_i = Math.Floor(Param_CL_i);
+                                            }
+
+
+                                            if (Param_cleaned_i < Param_cleaned_0 & Math.Floor(Param_cleaned_i) == Math.Floor(Param_cleaned_0))
+                                            {
+                                                Param_CL_i = Math.Floor(Param_CL_i);
+                                            }
+
+                                            if (Param_cleaned_i < Param_cleaned_0 & Math.Ceiling(Param_cleaned_i) == Math.Floor(Param_cleaned_0))
+                                            {
+                                                Param_CL_i = Math.Ceiling(Param_CL_i);
+                                            }
+
+
+
+                                            Data_Table_WS.Rows[j]["STA"] = Math.Round(PolyCL_MS.GetDistanceAtParameter(Param_CL_i), Rounding_no);
+
+
+                                            if (Side_of_WS == "L")
+                                            {
+                                                Data_Table_WS.Rows[j]["OFFSET"] = Math.Round(WS_L.Length, Rounding_no);
+                                            }
+                                            if (Side_of_WS == "R")
+                                            {
+                                                Data_Table_WS.Rows[j]["OFFSET"] = Math.Round(WS_R.Length, Rounding_no);
+                                            }
+
+                                            if (Side_of_WS == "")
+                                            {
+                                                Data_Table_WS.Rows[j]["OFFSET"] = Math.Round(CL_WS.Length, Rounding_no);
+                                                BDY_WS = "CL";
+                                            }
+                                            j = j + 1;
+
+                                        }
+
+
+
+                                    }
+
+
+                                }
+
+
+
+
+
+
+                            }
+
+
+
+
+
+							                            if (i == 2)
+                            {
+                                MLeader Mlead1 = Workspace_Band.Functions.Mleader_Create_without_UCS_transform(Line_CL2.StartPoint, Convert.ToString(Station1), 5, 2, 2, 0, 10);
+                                Mlead1.ColorIndex = 1;
+                                MLeader Mlead2 = Workspace_Band.Functions.Mleader_Create_without_UCS_transform(Line_CL2.EndPoint, Convert.ToString(BearingC2), 5, 2, 2, 0, 10);
+                                Mlead2.ColorIndex = 2;
+
+                                MLeader Mlead3 = Workspace_Band.Functions.Mleader_Create_without_UCS_transform(Line_Easm2.StartPoint, Convert.ToString(Station1), 5, 2, 2, 0, -10);
+                                Mlead3.ColorIndex = 1;
+                                MLeader Mlead4 = Workspace_Band.Functions.Mleader_Create_without_UCS_transform(Line_Easm2.EndPoint, Convert.ToString(Bearing2), 5, 2, 2, 0, -20);
+                                Mlead4.ColorIndex = 2;
+                            }

@@ -1,0 +1,84 @@
+﻿<UserControl
+    x:Class="LayerComparison.UI.Views.RecentItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:LayerComparison.UI.Views"
+    xmlns:designmodels="clr-namespace:LayerComparison.Core.DesignModels;assembly=LayerComparison.Core"
+    mc:Ignorable="d">
+
+    <!--Create References To Styles-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/DataGrids.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/TabControls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--Main Body-->
+    <Button
+        d:DataContext="{x:Static designmodels:RecentItemDesignModel.DesignModel}"
+        Command="{Binding Command}"
+        Margin="1"
+        Padding="1"
+        Style="{StaticResource BorderlessButton}"
+        Background="Transparent"
+        ToolTip="{Binding Path}">
+        
+        <!--Content-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <!--Image-->
+                <ColumnDefinition
+                    Width="Auto" />
+                <!--Content-->
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <!--Font Awesome Icon-->
+            <Label
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                FontSize="{StaticResource FontSizeBase}"
+                Content="{StaticResource FontAwesomeOpen}"
+                Foreground="{StaticResource PrimaryBlueBrush}"/>
+
+            <!--Title and path of Recent Item-->
+            <StackPanel
+                VerticalAlignment="Center"
+                Grid.Column="1">
+                <!--Title-->
+                <TextBlock
+                    Grid.Row="0"
+                    Padding="0"
+                    Margin="5 5 0 5"
+                    FontSize="{StaticResource FontSizeBase}"
+                    Text="{Binding FileName}"
+                    TextTrimming="CharacterEllipsis"/>
+                <!--Path-->
+                <TextBlock
+                    Grid.Row="1"
+                    Padding="0"
+                    Margin="5 0 0 0"
+                    FontSize="{StaticResource FontSizeCaption}"
+                    Text="{Binding Path}"
+                    TextTrimming="CharacterEllipsis"
+                    Foreground="DimGray" />
+            </StackPanel>
+
+        </Grid>
+    </Button>
+
+</UserControl>

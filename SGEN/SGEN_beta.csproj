@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C0DE2CE0-3BDE-4797-BE0A-8EC5AA13206E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Alignment_mdi</RootNamespace>
+    <AssemblyName>SGEN</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgdbrep">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgdbrep.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="AcMPolygonMGD">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\AcMPolygonMGD.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Map.Platform">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\Autodesk.Map.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ManagedMapApi">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\ManagedMapApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\Windows\assembly\GAC_MSIL\Microsoft.Office.Interop.Excel\15.0.0.0__71e9bce111e9429c\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Foundation">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Foundation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Geometry">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.PlatformBase">
+      <HintPath>..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="00_SGEN_Main_Form,.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="00_SGEN_Main_Form,.designer.cs">
+      <DependentUpon>00_SGEN_Main_Form,.cs</DependentUpon>
+    </Compile>
+    <Compile Include="09_Scales_form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="09_Scales_form.designer.cs">
+      <DependentUpon>09_Scales_form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_01A_Segments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_01A_Segments.designer.cs">
+      <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SGEN_Form_Blank.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SGEN_Form_Blank.designer.cs">
+      <DependentUpon>SGEN_Form_Blank.cs</DependentUpon>
+    </Compile>
+    <Compile Include="07_SGEN_Labels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="07_SGEN_Labels.designer.cs">
+      <DependentUpon>07_SGEN_Labels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="06_SGEN_geoManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="06_SGEN_geoManager.designer.cs">
+      <DependentUpon>06_SGEN_geoManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="08_SGEN_Shape_Export.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="08_SGEN_Shape_Export.designer.cs">
+      <DependentUpon>08_SGEN_Shape_Export.cs</DependentUpon>
+    </Compile>
+    <Compile Include="05_SGEB_Titleblock_Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="05_SGEB_Titleblock_Manager.designer.cs">
+      <DependentUpon>05_SGEB_Titleblock_Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Jig_Classes.cs" />
+    <Compile Include="zLAUNCH.cs" />
+    <Compile Include="_functions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="03_SGEN_Sheet_Index.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03_SGEN_Sheet_Index.designer.cs">
+      <DependentUpon>03_SGEN_Sheet_Index.cs</DependentUpon>
+    </Compile>
+    <Compile Include="04_SGEN_Drawing_Creation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="04_SGEN_Drawing_Creation.Designer.cs">
+      <DependentUpon>04_SGEN_Drawing_Creation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="01_SGEN_Settings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01_SGEN_Settings.Designer.cs">
+      <DependentUpon>01_SGEN_Settings.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="00_SGEN_Main_Form,.resx">
+      <DependentUpon>00_SGEN_Main_Form,.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="09_Scales_form.resx">
+      <DependentUpon>09_Scales_form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_01A_Segments.resx">
+      <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SGEN_Form_Blank.resx">
+      <DependentUpon>SGEN_Form_Blank.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="07_SGEN_Labels.resx">
+      <DependentUpon>07_SGEN_Labels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="06_SGEN_geoManager.resx">
+      <DependentUpon>06_SGEN_geoManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="08_SGEN_Shape_Export.resx">
+      <DependentUpon>08_SGEN_Shape_Export.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="05_SGEB_Titleblock_Manager.resx">
+      <DependentUpon>05_SGEB_Titleblock_Manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="03_SGEN_Sheet_Index.resx">
+      <DependentUpon>03_SGEN_Sheet_Index.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="04_SGEN_Drawing_Creation.resx">
+      <DependentUpon>04_SGEN_Drawing_Creation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01_SGEN_Settings.resx">
+      <DependentUpon>01_SGEN_Settings.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\selectbluexs.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

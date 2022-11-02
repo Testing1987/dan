@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="SharedProjectFile_SccProperties">
+    <SharedProjectFile_ProjectGuid>{92ea2a59-2292-4702-83d7-67e3bed2aeb3}</SharedProjectFile_ProjectGuid>
+    <SharedProjectFile_SccProjectName>SAK</SharedProjectFile_SccProjectName>
+    <SharedProjectFile_SccAuxPath>SAK</SharedProjectFile_SccAuxPath>
+    <SharedProjectFile_SccLocalPath>SAK</SharedProjectFile_SccLocalPath>
+    <SharedProjectFile_SccProvider>SAK</SharedProjectFile_SccProvider>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b6327d2c-18d3-4fc8-904b-b2d4be51c8c4</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>CADTechnologiesSource.All</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AnnotationHelpers\AdvancedAnnotationHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AnnotationHelpers\AnnotationDelegates.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AnnotationHelpers\BasicAnnotationHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutoCADHelpers\DatabaseHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutoCADHelpers\ColorHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutoCADHelpers\DocumentHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutoCADHelpers\DrawingSettingHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutoCADHelpers\SynchronizeBlockAttributes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\BaseValueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\BaseViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\ParameterizedRelayCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Base\RelayCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)AutoCADHelpers\StyleHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\AddCommonAnnoScales.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\LeftJustified.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\MaskMLeaders.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\MaskMText.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\MTextToATTDef.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\OverlapCheck.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\PLineLinetypeEnabler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\PointsCommands.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\RemoveTextFormatting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\ScrambledEggs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\SetWidthFactor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Commands\TabsToDWG.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringHelpers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\BlockAttributeModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\LayerModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PlanBuilderTBLKModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PolylineModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TargetDrawingModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\TextStyleModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\ViewportLayerModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PropertyHelpers\AcColors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PropertyHelpers\AcOsnaps.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Savers\StreamLabelsWPF.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TransactionHelpers\TransactionMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Savers\AttWidthFactor.cs" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,384 @@
+﻿        private void button_LOAD_DATA_background_worker(object sender, EventArgs e)
+        {
+            if (Freeze_operations == false)
+            {
+                if (this.comboBox_layers_blocks_geomanager.Text == "" | this.comboBox_od_existing_tables.Text == "")
+                {
+                    MessageBox.Show("Please select a layer and an object data table!");
+                    return;
+
+                }
+                bool Update_data = true;
+
+                if (DataGridView_data.RowCount > 0)
+                {
+                    if (MessageBox.Show("You have not applied changes. Any changes made to the object data table will not be saved! Do you wish to continue?", "WARNING", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.No)
+                    {
+                        Update_data = false;
+                    }
+                }
+
+                if (Update_data == true)
+                {
+
+                    Freeze_operations = true;
+                    try
+                    {
+                        DataGridView_data.DataSource = null;
+                        DataGridView_data.Refresh();
+                        textBox_no_rows.Text = "";
+                        textBox_no_od_2.Text = "";
+                        textBox_no_od_zero.Text = "";
+                        textBox_no_tables.Text = "";
+                        textBox_no_wrong_od.Text = "";
+
+                        Data_table_OD_attrib_existing = new System.Data.DataTable();
+                        Correct_table = comboBox_od_existing_tables.Text;
+                        Correct_layer = comboBox_layers_blocks_geomanager.Text;
+                        {
+                            List_red = new List<int>();
+                            List_yellow = new List<int>();
+                            List_blue = new List<int>();
+                            List_red_objId = new List<string>();
+                            List_yellow_objId = new List<string>();
+                            List_blue_objId = new List<string>();
+
+                            List_all_objId = new List<string>();
+                            List_update_objId = new List<ObjectId>();
+                            List_update_row_index = new List<int>();
+
+
+                            Data_table_OD_attrib_existing.Columns.Add("OBJECT_ID", typeof(ObjectId));
+                            Data_table_OD_attrib_existing.Columns.Add("OD_TABLE_COUNT", typeof(int));
+                            Data_table_OD_attrib_existing.Columns.Add("OBJECT_TYPE", typeof(String));
+                            Data_table_OD_attrib_existing.Columns.Add("BLOCK_NAME", typeof(String));
+
+                            List_of_tables_on_layer = new List<string>();
+
+
+                            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+
+                            //Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+
+
+
+                            using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
+                            {
+                                // Configure a BackgroundWorker to perform your long running operation.
+                                BackgroundWorker Background_worker1 = new BackgroundWorker();
+                                Background_worker1.DoWork += new DoWorkEventHandler(DoWork_in_background);
+                                Background_worker1.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+                                // Start the worker.
+                                Background_worker1.RunWorkerAsync();
+                                // Display the loading form.
+                                Processing_form = new MMGeoTools.Form_processing();
+                                Processing_form.ShowDialog(this);
+                            }
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    Freeze_operations = false;
+                }
+            }
+        }
+
+        private void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            // Retrieve the result pass from bg_DoWork() if any.
+            // Note, you may need to cast it to the desired data type.
+            object result = e.Result;
+
+
+            Processing_form.Invoke(new System.Action(() =>
+            {
+                Processing_form.Close();
+            }));
+
+
+            if (Data_table_OD_attrib_existing.Rows.Count > 0)
+            {
+
+                string no_lines = "";
+                DataGridView_data.Invoke(new System.Action(() =>
+                {
+
+
+                    DataGridView_data.DataSource = Data_table_OD_attrib_existing;
+
+                    DataGridView_data.Columns[0].ReadOnly = true;
+                    DataGridView_data.Columns[0].DefaultCellStyle.BackColor = Color.LightGray;
+                    DataGridView_data.Columns[1].ReadOnly = true;
+                    DataGridView_data.Columns[1].DefaultCellStyle.BackColor = Color.LightGray;
+                    DataGridView_data.Columns[2].ReadOnly = true;
+                    DataGridView_data.Columns[2].DefaultCellStyle.BackColor = Color.LightGray;
+                    DataGridView_data.Columns[3].ReadOnly = true;
+                    DataGridView_data.Columns[3].DefaultCellStyle.BackColor = Color.LightGray;
+
+
+                    for (int k = 4; k < DataGridView_data.ColumnCount; ++k)
+                    {
+                        string Column_name = DataGridView_data.Columns[k].Name;
+                        if (Column_name.ToUpper() == "FEATID" | Column_name.ToUpper() == "MMID" | Column_name.ToUpper() == "HMMID")
+                        {
+                            DataGridView_data.Columns[k].ReadOnly = true;
+                            DataGridView_data.Columns[k].DefaultCellStyle.BackColor = Color.LightGray;
+                        }
+                    }
+
+                    DataGridView_data.AllowUserToAddRows = false;
+                    DataGridView_OD_data_Sorted(sender, e);
+                    DataGridView_data.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+                    no_lines = DataGridView_data.Rows.Count.ToString();
+
+                    if (List_red.Count > 0)
+                    {
+                        for (int k = 0; k < List_red.Count; ++k)
+                        {
+                            DataGridView_data.Rows[List_red[k]].DefaultCellStyle.BackColor = Color.Red;
+                        }
+                    }
+
+                    if (List_yellow.Count > 0)
+                    {
+                        for (int k = 0; k < List_yellow.Count; ++k)
+                        {
+                            DataGridView_data.Rows[List_yellow[k]].DefaultCellStyle.BackColor = Color.Yellow;
+                        }
+                    }
+
+                    if (List_blue.Count > 0)
+                    {
+                        for (int k = 0; k < List_blue.Count; ++k)
+                        {
+                            DataGridView_data.Rows[List_blue[k]].DefaultCellStyle.BackColor = Color.SkyBlue;
+                        }
+                    }
+
+
+
+                }));
+
+                textBox_no_rows.Invoke(new System.Action(() =>
+                {
+                    textBox_no_rows.Text = no_lines;
+                }));
+
+
+                textBox_no_od_2.Invoke(new System.Action(() =>
+                {
+                    textBox_no_od_2.Text = List_red.Count.ToString();
+                }));
+
+                textBox_no_od_zero.Invoke(new System.Action(() =>
+                {
+                    textBox_no_od_zero.Text = List_yellow.Count.ToString();
+                }));
+                textBox_no_wrong_od.Invoke(new System.Action(() =>
+                {
+                    textBox_no_wrong_od.Text = List_blue.Count.ToString();
+                }));
+                textBox_no_tables.Invoke(new System.Action(() =>
+                {
+                    textBox_no_tables.Text = List_of_tables_on_layer.Count.ToString();
+
+                }));
+
+
+
+
+
+
+
+
+
+
+            }
+
+        }
+		  private void DoWork_in_background(object sender, DoWorkEventArgs e)
+        {
+
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+
+            //Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+
+
+
+            using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
+            {
+                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                {
+                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+                    Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+
+
+                    Autodesk.Gis.Map.ObjectData.Table Tabla1;
+
+                    if (Tables1.IsTableDefined(Correct_table) == true)
+                    {
+                        Tabla1 = Tables1[Correct_table];
+
+
+                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                        for (int i = 0; i < Field_defs1.Count; ++i)
+                        {
+                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                            string Nume_field = Field_def1.Name;
+
+
+                            if (Data_table_OD_attrib_existing.Columns.Contains(Nume_field) == false)
+                            {
+                                Data_table_OD_attrib_existing.Columns.Add(Nume_field, typeof(String));
+
+                            }
+                        }
+
+                    }
+
+                    else
+                    {
+                        MessageBox.Show("Please reload your OD tables!");
+                        Freeze_operations = false;
+                        return;
+
+                    }
+
+
+
+                    System.Collections.Specialized.StringCollection Nume_tables = new System.Collections.Specialized.StringCollection();
+                    Nume_tables = Tables1.GetTableNames();
+
+                    int Id_od = 0;
+
+                    foreach (ObjectId Obj_ID1 in BTrecord)
+                    {
+                        Entity Ent1 = (Entity)Trans1.GetObject(Obj_ID1, OpenMode.ForRead);
+                        if (Ent1 != null)
+                        {
+                            Boolean Add_to_table = false;
+
+
+                            if (Ent1.Layer == Correct_layer)
+                            {
+                                Add_to_table = true;
+                            }
+
+
+
+                            if (Add_to_table == true)
+                            {
+
+                                bool Correct_table_exists = false;
+
+
+                                Data_table_OD_attrib_existing.Rows.Add();
+
+
+                                Data_table_OD_attrib_existing.Rows[Id_od]["OBJECT_ID"] = Ent1.ObjectId;
+                                Data_table_OD_attrib_existing.Rows[Id_od]["OD_TABLE_COUNT"] = 0;
+
+                                string Type1 = Ent1.GetType().ToString();
+                                Type1 = Type1.Replace("Autodesk.AutoCAD.DatabaseServices.", "");
+                                Data_table_OD_attrib_existing.Rows[Id_od]["OBJECT_TYPE"] = Type1;
+
+                                List_all_objId.Add(Ent1.ObjectId.ToString());
+
+
+
+                                if (Tables1.IsTableDefined(Correct_table) == true)
+                                {
+                                    Autodesk.Gis.Map.ObjectData.Table Tabla0 = Tables1[Correct_table];
+                                    using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla0.GetObjectTableRecords(Convert.ToUInt32(0), Ent1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, false))
+                                    {
+                                        if (Records1 != null)
+                                        {
+                                            if (Records1.Count > 0)
+                                            {
+                                                Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla0.FieldDefinitions;
+
+                                                foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                {
+                                                    for (int i = 0; i < Record1.Count; ++i)
+                                                    {
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                                        string Nume_field = Field_def1.Name;
+                                                        String Valoare1 = Record1[i].StrValue;
+                                                        Data_table_OD_attrib_existing.Rows[Id_od][Nume_field] = Valoare1;
+
+
+                                                    }
+                                                }
+
+                                                if (List_of_tables_on_layer.Contains(Correct_table) == false) List_of_tables_on_layer.Add(Correct_table);
+                                                Correct_table_exists = true;
+                                            }
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Please reload your OD tables!");
+                                    Freeze_operations = false;
+                                    return;
+                                }
+
+                                for (int k = 0; k < Nume_tables.Count; k = k + 1)
+                                {
+                                    if (Tables1.IsTableDefined(Nume_tables[k]) == true)
+                                    {
+                                        Autodesk.Gis.Map.ObjectData.Table Tabla2 = Tables1[Nume_tables[k]];
+                                        using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla2.GetObjectTableRecords(Convert.ToUInt32(0), Ent1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, false))
+                                        {
+                                            if (Records1 != null)
+                                            {
+                                                if (Records1.Count > 0)
+                                                {
+                                                    Data_table_OD_attrib_existing.Rows[Id_od]["OD_TABLE_COUNT"] = Convert.ToInt32(Data_table_OD_attrib_existing.Rows[Id_od]["OD_TABLE_COUNT"]) + 1;
+                                                    if (List_of_tables_on_layer.Contains(Nume_tables[k]) == false)
+                                                    {
+                                                        List_of_tables_on_layer.Add(Nume_tables[k]);
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (Convert.ToInt32(Data_table_OD_attrib_existing.Rows[Id_od]["OD_TABLE_COUNT"]) > 1)
+                                {
+
+                                    List_red.Add(Id_od);
+                                    List_red_objId.Add(Ent1.ObjectId.ToString());
+                                }
+
+                                if (Convert.ToInt32(Data_table_OD_attrib_existing.Rows[Id_od]["OD_TABLE_COUNT"]) == 0)
+                                {
+
+                                    List_yellow.Add(Id_od);
+                                    List_yellow_objId.Add(Ent1.ObjectId.ToString());
+                                }
+                                if (Convert.ToInt32(Data_table_OD_attrib_existing.Rows[Id_od]["OD_TABLE_COUNT"]) >= 1 & Correct_table_exists == false)
+                                {
+
+                                    List_blue.Add(Id_od);
+                                    List_blue_objId.Add(Ent1.ObjectId.ToString());
+                                }
+                                Id_od = Id_od + 1;
+                            }
+                        }
+                    }
+
+                    Trans1.Commit();
+
+
+                }
+            }
+        }

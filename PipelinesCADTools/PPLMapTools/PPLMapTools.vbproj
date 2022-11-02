@@ -1,0 +1,626 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7CB57499-0ED6-48B2-A2C9-101ACCB327F8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PPLMapTools</RootNamespace>
+    <AssemblyName>PPLMapTools</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>Windows</MyType>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\..\..\..\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\</OutputPath>
+    <DocumentationFile>PPLMapTools.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>PPLMapTools.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="accoremgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\accoremgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acdbmgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acdbmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Autodesk.Map.Platform, Version=20.0.200.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\Autodesk.Map.Platform.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Interop.ACSMCOMPONENTS20Lib">
+      <HintPath>..\..\..\..\Visual Studio 2015\Projects\PipelinesCADTools\Platt_generator\obj\Debug\Interop.ACSMCOMPONENTS20Lib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.AXDBLib">
+      <HintPath>..\..\..\..\Visual Studio 2015\Projects\PipelinesCADTools\Platt_generator\obj\Debug\Interop.AXDBLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="ManagedMapApi">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\ManagedMapApi.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 11.0\Visual Studio Tools for Office\PIA\Office14\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Foundation">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Foundation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.Geometry">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.Geometry.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="OSGeo.MapGuide.PlatformBase">
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\bin\GisPlatform\OSGeo.MapGuide.PlatformBase.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="3d_clamp_Form.designer.vb">
+      <DependentUpon>3d_clamp_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="3d_clamp_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="3d_Ubolt_form.designer.vb">
+      <DependentUpon>3d_Ubolt_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="3d_Ubolt_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alignment_engineering_Form.designer.vb">
+      <DependentUpon>Alignment_engineering_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Alignment_engineering_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alignment_material_worksheet_form.designer.vb">
+      <DependentUpon>Alignment_material_worksheet_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Alignment_material_worksheet_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alignment_w2XL_Form.designer.vb">
+      <DependentUpon>Alignment_w2XL_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Alignment_w2XL_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Area_Form.Designer.vb">
+      <DependentUpon>Area_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Area_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="atsync_Module.vb" />
+    <Compile Include="Block_layout_insert_Form.designer.vb">
+      <DependentUpon>Block_layout_insert_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Block_layout_insert_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chainage_operations_form.designer.vb">
+      <DependentUpon>Chainage_operations_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Chainage_operations_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chainage_to_graph_form.designer.vb">
+      <DependentUpon>Chainage_to_graph_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Chainage_to_graph_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chainage_to_polyline_form.designer.vb">
+      <DependentUpon>Chainage_to_polyline_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Chainage_to_polyline_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Commands_class_plain_autocad.vb" />
+    <Compile Include="Coordinate_systems_in_Excel.designer.vb">
+      <DependentUpon>Coordinate_systems_in_Excel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Coordinate_systems_in_Excel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Crossing_Band_Form.Designer.vb">
+      <DependentUpon>Crossing_Band_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Crossing_Band_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Easement_builder_Form.Designer.vb">
+      <DependentUpon>Easement_builder_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Easement_builder_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Multiple_drawings_change_form.Designer.vb">
+      <DependentUpon>Multiple_drawings_change_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Multiple_drawings_change_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Standard_Styles_form.Designer.vb">
+      <DependentUpon>Standard_Styles_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Standard_Styles_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Survey_band_form.designer.vb">
+      <DependentUpon>Survey_band_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Survey_band_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dimension_change_form.designer.vb">
+      <DependentUpon>Dimension_change_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dimension_change_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="heavy_wall_csf_Form.designer.vb">
+      <DependentUpon>heavy_wall_csf_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="heavy_wall_csf_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Field_bend_form.designer.vb">
+      <DependentUpon>Field_bend_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Field_bend_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FIND_REPLACE_Form.designer.vb">
+      <DependentUpon>FIND_REPLACE_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FIND_REPLACE_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fitting_elbow_form.designer.vb">
+      <DependentUpon>fitting_elbow_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="fitting_elbow_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Functions.vb" />
+    <Compile Include="HDD-Form.designer.vb">
+      <DependentUpon>HDD-Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="HDD-Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Intersection_Form.Designer.vb">
+      <DependentUpon>Intersection_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Intersection_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Jig_Class.vb" />
+    <Compile Include="jig_dim_Class.vb" />
+    <Compile Include="Jig_highlight_poly_Class.vb" />
+    <Compile Include="Length_of_pipe_Form.designer.vb">
+      <DependentUpon>Length_of_pipe_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Length_of_pipe_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Material_calc_for_alignment_Form.designer.vb">
+      <DependentUpon>Material_calc_for_alignment_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Material_calc_for_alignment_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="New_chainage_calc_from_excel.designer.vb">
+      <DependentUpon>New_chainage_calc_from_excel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="New_chainage_calc_from_excel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Object_data_tools_form.Designer.vb">
+      <DependentUpon>Object_data_tools_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Object_data_tools_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Object_data_to_block_Form.Designer.vb">
+      <DependentUpon>Object_data_to_block_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Object_data_to_block_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Point_insertor_form.designer.vb">
+      <DependentUpon>Point_insertor_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Point_insertor_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="profiler3d-form.designer.vb">
+      <DependentUpon>profiler3d-form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="profiler3d-form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Profiler_convertor_form.designer.vb">
+      <DependentUpon>Profiler_convertor_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Profiler_convertor_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Profiler_from_excel_Form.designer.vb">
+      <DependentUpon>Profiler_from_excel_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Profiler_from_excel_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PROFILE_CHECK_Form.designer.vb">
+      <DependentUpon>PROFILE_CHECK_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PROFILE_CHECK_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Protection_fence_form.Designer.vb">
+      <DependentUpon>Protection_fence_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Protection_fence_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Read_from_acad_w_excel_form.designer.vb">
+      <DependentUpon>Read_from_acad_w_excel_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Read_from_acad_w_excel_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Rechainage_Form.designer.vb">
+      <DependentUpon>Rechainage_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Rechainage_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="References_from_excel_form.designer.vb">
+      <DependentUpon>References_from_excel_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="References_from_excel_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RW_Builder.designer.vb">
+      <DependentUpon>RW_Builder.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RW_Builder.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Commands_class_map.vb" />
+    <Compile Include="Split_deflection_form.designer.vb">
+      <DependentUpon>Split_deflection_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Split_deflection_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Split_deflection_for_stress_form.designer.vb">
+      <DependentUpon>Split_deflection_for_stress_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Split_deflection_for_stress_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SURVEY_TOOLS_FORM.Designer.vb">
+      <DependentUpon>SURVEY_TOOLS_FORM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SURVEY_TOOLS_FORM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Table_to_excel_form.designer.vb">
+      <DependentUpon>Table_to_excel_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Table_to_excel_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="text2mtext_Form.designer.vb">
+      <DependentUpon>text2mtext_Form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="text2mtext_Form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Text_2_attributes_form.designer.vb">
+      <DependentUpon>Text_2_attributes_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Text_2_attributes_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="text_2_excel_form.Designer.vb">
+      <DependentUpon>text_2_excel_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="text_2_excel_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transcanada_layers_form.designer.vb">
+      <DependentUpon>Transcanada_layers_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Transcanada_layers_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Viewports_along_graph_form.designer.vb">
+      <DependentUpon>Viewports_along_graph_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Viewports_along_graph_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Viewport_to_poly_form.designer.vb">
+      <DependentUpon>Viewport_to_poly_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Viewport_to_poly_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Workspace_band_form.designer.vb">
+      <DependentUpon>Workspace_band_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Workspace_band_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WORKSPACE_FORM.designer.vb">
+      <DependentUpon>WORKSPACE_FORM.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WORKSPACE_FORM.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="_network_location_class.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="3d_clamp_Form.resx">
+      <DependentUpon>3d_clamp_Form.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="3d_Ubolt_form.resx">
+      <DependentUpon>3d_Ubolt_form.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Alignment_engineering_Form.resx">
+      <DependentUpon>Alignment_engineering_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Alignment_material_worksheet_form.resx">
+      <DependentUpon>Alignment_material_worksheet_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Alignment_w2XL_Form.resx">
+      <DependentUpon>Alignment_w2XL_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Area_Form.resx">
+      <DependentUpon>Area_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Block_layout_insert_Form.resx">
+      <DependentUpon>Block_layout_insert_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chainage_operations_form.resx">
+      <DependentUpon>Chainage_operations_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chainage_to_graph_form.resx">
+      <DependentUpon>Chainage_to_graph_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chainage_to_polyline_form.resx">
+      <DependentUpon>Chainage_to_polyline_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Coordinate_systems_in_Excel.resx">
+      <DependentUpon>Coordinate_systems_in_Excel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Crossing_Band_Form.resx">
+      <DependentUpon>Crossing_Band_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Easement_builder_Form.resx">
+      <DependentUpon>Easement_builder_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Multiple_drawings_change_form.resx">
+      <DependentUpon>Multiple_drawings_change_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Standard_Styles_form.resx">
+      <DependentUpon>Standard_Styles_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Survey_band_form.resx">
+      <DependentUpon>Survey_band_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dimension_change_form.resx">
+      <DependentUpon>Dimension_change_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="heavy_wall_csf_Form.resx">
+      <DependentUpon>heavy_wall_csf_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Field_bend_form.resx">
+      <DependentUpon>Field_bend_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FIND_REPLACE_Form.resx">
+      <DependentUpon>FIND_REPLACE_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fitting_elbow_form.resx">
+      <DependentUpon>fitting_elbow_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HDD-Form.resx">
+      <DependentUpon>HDD-Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Intersection_Form.resx">
+      <DependentUpon>Intersection_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Length_of_pipe_Form.resx">
+      <DependentUpon>Length_of_pipe_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Material_calc_for_alignment_Form.resx">
+      <DependentUpon>Material_calc_for_alignment_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="New_chainage_calc_from_excel.resx">
+      <DependentUpon>New_chainage_calc_from_excel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Object_data_tools_form.resx">
+      <DependentUpon>Object_data_tools_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Object_data_to_block_Form.resx">
+      <DependentUpon>Object_data_to_block_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Point_insertor_form.resx">
+      <DependentUpon>Point_insertor_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="profiler3d-form.resx">
+      <DependentUpon>profiler3d-form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profiler_convertor_form.resx">
+      <DependentUpon>Profiler_convertor_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profiler_from_excel_Form.resx">
+      <DependentUpon>Profiler_from_excel_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PROFILE_CHECK_Form.resx">
+      <DependentUpon>PROFILE_CHECK_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Protection_fence_form.resx">
+      <DependentUpon>Protection_fence_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Read_from_acad_w_excel_form.resx">
+      <DependentUpon>Read_from_acad_w_excel_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Rechainage_Form.resx">
+      <DependentUpon>Rechainage_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="References_from_excel_form.resx">
+      <DependentUpon>References_from_excel_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RW_Builder.resx">
+      <DependentUpon>RW_Builder.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Split_deflection_form.resx">
+      <DependentUpon>Split_deflection_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Split_deflection_for_stress_form.resx">
+      <DependentUpon>Split_deflection_for_stress_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SURVEY_TOOLS_FORM.resx">
+      <DependentUpon>SURVEY_TOOLS_FORM.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Table_to_excel_form.resx">
+      <DependentUpon>Table_to_excel_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="text2mtext_Form.resx">
+      <DependentUpon>text2mtext_Form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text_2_attributes_form.resx">
+      <DependentUpon>Text_2_attributes_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="text_2_excel_form.resx">
+      <DependentUpon>text_2_excel_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transcanada_layers_form.resx">
+      <DependentUpon>Transcanada_layers_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewports_along_graph_form.resx">
+      <DependentUpon>Viewports_along_graph_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Viewport_to_poly_form.resx">
+      <DependentUpon>Viewport_to_poly_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Workspace_band_form.resx">
+      <DependentUpon>Workspace_band_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WORKSPACE_FORM.resx">
+      <DependentUpon>WORKSPACE_FORM.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="map_export.cs" />
+    <Content Include="Viewports_along_graph_SKETCH.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

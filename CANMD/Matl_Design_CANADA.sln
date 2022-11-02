@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CANMD", "CANMD\CANMD.csproj", "{B8F41F88-3815-406D-837A-04B4BF9F0B62}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8F41F88-3815-406D-837A-04B4BF9F0B62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75745193-4998-4599-9690-BA00690295D8}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://aisueprd-flb002:8080/tfs/holyoke
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = CANMD\\CANMD.csproj
+		SccProjectName1 = CANMD
+		SccLocalPath1 = CANMD
+	EndGlobalSection
+EndGlobal

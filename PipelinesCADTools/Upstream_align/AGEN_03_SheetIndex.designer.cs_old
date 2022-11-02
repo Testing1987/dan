@@ -1,0 +1,614 @@
+﻿namespace Alignment_mdi
+{
+    partial class AGEN_SheetIndex
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.label61 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.button_build_Cl_ML = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.button_fill_gaps = new System.Windows.Forms.Button();
+            this.button_adjust_rectangle = new System.Windows.Forms.Button();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label62 = new System.Windows.Forms.Label();
+            this.label58 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.button_rebuild_matchline_rectangles = new System.Windows.Forms.Button();
+            this.button_Round_matchlines = new System.Windows.Forms.Button();
+            this.label57 = new System.Windows.Forms.Label();
+            this.textBox_rounding_matchline = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.radioButton_3D_station = new System.Windows.Forms.RadioButton();
+            this.checkBox_station_equations = new System.Windows.Forms.CheckBox();
+            this.radioButton_2d_station = new System.Windows.Forms.RadioButton();
+            this.TextBox_matchline_length = new System.Windows.Forms.TextBox();
+            this.button_draw_Viewport_templates = new System.Windows.Forms.Button();
+            this.button_place_rectangles = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.dataGridView_sheet_index = new System.Windows.Forms.DataGridView();
+            this.button_load_CL_to_excel = new System.Windows.Forms.Button();
+            this.panel_read_centerline_to_excel = new System.Windows.Forms.Panel();
+            this.checkBox_csf = new System.Windows.Forms.CheckBox();
+            this.panel9.SuspendLayout();
+            this.panel8.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_sheet_index)).BeginInit();
+            this.panel_read_centerline_to_excel.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.label61);
+            this.panel9.Controls.Add(this.label60);
+            this.panel9.Controls.Add(this.label59);
+            this.panel9.Controls.Add(this.label3);
+            this.panel9.Controls.Add(this.button_build_Cl_ML);
+            this.panel9.Location = new System.Drawing.Point(369, 467);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(219, 135);
+            this.panel9.TabIndex = 129;
+            // 
+            // label61
+            // 
+            this.label61.AutoSize = true;
+            this.label61.BackColor = System.Drawing.Color.Transparent;
+            this.label61.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label61.ForeColor = System.Drawing.Color.Crimson;
+            this.label61.Location = new System.Drawing.Point(3, 99);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(57, 14);
+            this.label61.TabIndex = 102;
+            this.label61.Text = "and table";
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.BackColor = System.Drawing.Color.Transparent;
+            this.label60.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label60.ForeColor = System.Drawing.Color.Crimson;
+            this.label60.Location = new System.Drawing.Point(3, 84);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(194, 14);
+            this.label60.TabIndex = 101;
+            this.label60.Text = "sheet indexes present in drawing";
+            // 
+            // label59
+            // 
+            this.label59.AutoSize = true;
+            this.label59.BackColor = System.Drawing.Color.Transparent;
+            this.label59.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label59.ForeColor = System.Drawing.Color.Crimson;
+            this.label59.Location = new System.Drawing.Point(3, 69);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(167, 14);
+            this.label59.TabIndex = 100;
+            this.label59.Text = "*This will replace any current";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label3.Location = new System.Drawing.Point(3, 8);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(202, 16);
+            this.label3.TabIndex = 99;
+            this.label3.Text = "Recover Geometry From Excel";
+            // 
+            // button_build_Cl_ML
+            // 
+            this.button_build_Cl_ML.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_build_Cl_ML.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_build_Cl_ML.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_build_Cl_ML.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_build_Cl_ML.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_build_Cl_ML.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_build_Cl_ML.ForeColor = System.Drawing.Color.White;
+            this.button_build_Cl_ML.Location = new System.Drawing.Point(3, 27);
+            this.button_build_Cl_ML.Name = "button_build_Cl_ML";
+            this.button_build_Cl_ML.Size = new System.Drawing.Size(72, 30);
+            this.button_build_Cl_ML.TabIndex = 18;
+            this.button_build_Cl_ML.Text = "Recover";
+            this.button_build_Cl_ML.UseVisualStyleBackColor = false;
+            this.button_build_Cl_ML.Click += new System.EventHandler(this.button_build_Cl_ML_Click);
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Controls.Add(this.label7);
+            this.panel8.Controls.Add(this.button_fill_gaps);
+            this.panel8.Controls.Add(this.button_adjust_rectangle);
+            this.panel8.Location = new System.Drawing.Point(370, 300);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(219, 161);
+            this.panel8.TabIndex = 128;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label7.Location = new System.Drawing.Point(3, 4);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(101, 16);
+            this.label7.TabIndex = 99;
+            this.label7.Text = "Adjust Indexes";
+            // 
+            // button_fill_gaps
+            // 
+            this.button_fill_gaps.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_fill_gaps.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_fill_gaps.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_fill_gaps.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_fill_gaps.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_fill_gaps.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_fill_gaps.ForeColor = System.Drawing.Color.White;
+            this.button_fill_gaps.Location = new System.Drawing.Point(3, 25);
+            this.button_fill_gaps.Name = "button_fill_gaps";
+            this.button_fill_gaps.Size = new System.Drawing.Size(125, 30);
+            this.button_fill_gaps.TabIndex = 18;
+            this.button_fill_gaps.Text = "Replace Indexes";
+            this.button_fill_gaps.UseVisualStyleBackColor = false;
+            this.button_fill_gaps.Click += new System.EventHandler(this.button_Fill_gaps_Click);
+            // 
+            // button_adjust_rectangle
+            // 
+            this.button_adjust_rectangle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_adjust_rectangle.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_adjust_rectangle.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_adjust_rectangle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_adjust_rectangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_adjust_rectangle.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_adjust_rectangle.ForeColor = System.Drawing.Color.White;
+            this.button_adjust_rectangle.Location = new System.Drawing.Point(3, 61);
+            this.button_adjust_rectangle.Name = "button_adjust_rectangle";
+            this.button_adjust_rectangle.Size = new System.Drawing.Size(125, 30);
+            this.button_adjust_rectangle.TabIndex = 17;
+            this.button_adjust_rectangle.Text = "Adjust Vertically";
+            this.button_adjust_rectangle.UseVisualStyleBackColor = false;
+            this.button_adjust_rectangle.Click += new System.EventHandler(this.button_adjust_rectangle_Click);
+            // 
+            // panel7
+            // 
+            this.panel7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel7.Controls.Add(this.label62);
+            this.panel7.Controls.Add(this.label58);
+            this.panel7.Controls.Add(this.label12);
+            this.panel7.Controls.Add(this.button_rebuild_matchline_rectangles);
+            this.panel7.Controls.Add(this.button_Round_matchlines);
+            this.panel7.Controls.Add(this.label57);
+            this.panel7.Controls.Add(this.textBox_rounding_matchline);
+            this.panel7.Location = new System.Drawing.Point(596, 300);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(360, 302);
+            this.panel7.TabIndex = 127;
+            // 
+            // label62
+            // 
+            this.label62.AutoSize = true;
+            this.label62.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label62.ForeColor = System.Drawing.Color.White;
+            this.label62.Location = new System.Drawing.Point(261, 31);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(18, 14);
+            this.label62.TabIndex = 122;
+            this.label62.Text = "ft.";
+            // 
+            // label58
+            // 
+            this.label58.AutoSize = true;
+            this.label58.BackColor = System.Drawing.Color.Transparent;
+            this.label58.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label58.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label58.Location = new System.Drawing.Point(3, 5);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(143, 16);
+            this.label58.TabIndex = 121;
+            this.label58.Text = "Fine Tune Matchlines";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(3, 30);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(186, 14);
+            this.label12.TabIndex = 119;
+            this.label12.Text = "Round Matchlines to the Nearest";
+            // 
+            // button_rebuild_matchline_rectangles
+            // 
+            this.button_rebuild_matchline_rectangles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_rebuild_matchline_rectangles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_rebuild_matchline_rectangles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_rebuild_matchline_rectangles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_rebuild_matchline_rectangles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_rebuild_matchline_rectangles.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_rebuild_matchline_rectangles.ForeColor = System.Drawing.Color.White;
+            this.button_rebuild_matchline_rectangles.Location = new System.Drawing.Point(6, 130);
+            this.button_rebuild_matchline_rectangles.Name = "button_rebuild_matchline_rectangles";
+            this.button_rebuild_matchline_rectangles.Size = new System.Drawing.Size(76, 30);
+            this.button_rebuild_matchline_rectangles.TabIndex = 18;
+            this.button_rebuild_matchline_rectangles.Text = "Redraw";
+            this.button_rebuild_matchline_rectangles.UseVisualStyleBackColor = false;
+            this.button_rebuild_matchline_rectangles.Click += new System.EventHandler(this.button_rebuild_matchline_rectangles_Click);
+            // 
+            // button_Round_matchlines
+            // 
+            this.button_Round_matchlines.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_Round_matchlines.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_Round_matchlines.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_Round_matchlines.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_Round_matchlines.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_Round_matchlines.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_Round_matchlines.ForeColor = System.Drawing.Color.White;
+            this.button_Round_matchlines.Location = new System.Drawing.Point(6, 55);
+            this.button_Round_matchlines.Name = "button_Round_matchlines";
+            this.button_Round_matchlines.Size = new System.Drawing.Size(76, 30);
+            this.button_Round_matchlines.TabIndex = 18;
+            this.button_Round_matchlines.Text = "Round";
+            this.button_Round_matchlines.UseVisualStyleBackColor = false;
+            this.button_Round_matchlines.Click += new System.EventHandler(this.button_Round_matchlines_Click);
+            // 
+            // label57
+            // 
+            this.label57.AutoSize = true;
+            this.label57.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label57.ForeColor = System.Drawing.Color.White;
+            this.label57.Location = new System.Drawing.Point(3, 113);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(350, 14);
+            this.label57.TabIndex = 120;
+            this.label57.Text = "Redraw sheet indexes in model space based on table updates";
+            // 
+            // textBox_rounding_matchline
+            // 
+            this.textBox_rounding_matchline.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.textBox_rounding_matchline.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_rounding_matchline.ForeColor = System.Drawing.Color.White;
+            this.textBox_rounding_matchline.Location = new System.Drawing.Point(195, 28);
+            this.textBox_rounding_matchline.Name = "textBox_rounding_matchline";
+            this.textBox_rounding_matchline.Size = new System.Drawing.Size(60, 20);
+            this.textBox_rounding_matchline.TabIndex = 118;
+            this.textBox_rounding_matchline.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label11.Location = new System.Drawing.Point(12, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(223, 16);
+            this.label11.TabIndex = 125;
+            this.label11.Text = "Review Created Sheet Index Data";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.panel_read_centerline_to_excel);
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.panel4);
+            this.panel2.Controls.Add(this.TextBox_matchline_length);
+            this.panel2.Controls.Add(this.button_draw_Viewport_templates);
+            this.panel2.Controls.Add(this.button_place_rectangles);
+            this.panel2.Controls.Add(this.label13);
+            this.panel2.Location = new System.Drawing.Point(15, 300);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(348, 302);
+            this.panel2.TabIndex = 126;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.BackColor = System.Drawing.Color.Transparent;
+            this.label6.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold);
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label6.Location = new System.Drawing.Point(6, 5);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(104, 16);
+            this.label6.TabIndex = 98;
+            this.label6.Text = "Create Indexes";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.radioButton_3D_station);
+            this.panel4.Controls.Add(this.checkBox_station_equations);
+            this.panel4.Controls.Add(this.radioButton_2d_station);
+            this.panel4.Location = new System.Drawing.Point(6, 26);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(140, 69);
+            this.panel4.TabIndex = 117;
+            // 
+            // radioButton_3D_station
+            // 
+            this.radioButton_3D_station.AutoSize = true;
+            this.radioButton_3D_station.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_3D_station.ForeColor = System.Drawing.Color.White;
+            this.radioButton_3D_station.Location = new System.Drawing.Point(3, 25);
+            this.radioButton_3D_station.Name = "radioButton_3D_station";
+            this.radioButton_3D_station.Size = new System.Drawing.Size(38, 18);
+            this.radioButton_3D_station.TabIndex = 19;
+            this.radioButton_3D_station.Text = "3D";
+            this.radioButton_3D_station.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_station_equations
+            // 
+            this.checkBox_station_equations.AutoSize = true;
+            this.checkBox_station_equations.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_station_equations.ForeColor = System.Drawing.Color.White;
+            this.checkBox_station_equations.Location = new System.Drawing.Point(3, 49);
+            this.checkBox_station_equations.Name = "checkBox_station_equations";
+            this.checkBox_station_equations.Size = new System.Drawing.Size(125, 18);
+            this.checkBox_station_equations.TabIndex = 160;
+            this.checkBox_station_equations.Text = "Station equations ";
+            this.checkBox_station_equations.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_2d_station
+            // 
+            this.radioButton_2d_station.AutoSize = true;
+            this.radioButton_2d_station.Checked = true;
+            this.radioButton_2d_station.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_2d_station.ForeColor = System.Drawing.Color.White;
+            this.radioButton_2d_station.Location = new System.Drawing.Point(3, 2);
+            this.radioButton_2d_station.Name = "radioButton_2d_station";
+            this.radioButton_2d_station.Size = new System.Drawing.Size(38, 18);
+            this.radioButton_2d_station.TabIndex = 19;
+            this.radioButton_2d_station.TabStop = true;
+            this.radioButton_2d_station.Text = "2D";
+            this.radioButton_2d_station.UseVisualStyleBackColor = true;
+            // 
+            // TextBox_matchline_length
+            // 
+            this.TextBox_matchline_length.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.TextBox_matchline_length.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.TextBox_matchline_length.ForeColor = System.Drawing.Color.White;
+            this.TextBox_matchline_length.Location = new System.Drawing.Point(6, 104);
+            this.TextBox_matchline_length.Name = "TextBox_matchline_length";
+            this.TextBox_matchline_length.Size = new System.Drawing.Size(140, 20);
+            this.TextBox_matchline_length.TabIndex = 28;
+            this.TextBox_matchline_length.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
+            // 
+            // button_draw_Viewport_templates
+            // 
+            this.button_draw_Viewport_templates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_draw_Viewport_templates.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_draw_Viewport_templates.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_draw_Viewport_templates.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_draw_Viewport_templates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_draw_Viewport_templates.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold);
+            this.button_draw_Viewport_templates.ForeColor = System.Drawing.Color.White;
+            this.button_draw_Viewport_templates.Location = new System.Drawing.Point(228, 249);
+            this.button_draw_Viewport_templates.Name = "button_draw_Viewport_templates";
+            this.button_draw_Viewport_templates.Size = new System.Drawing.Size(115, 48);
+            this.button_draw_Viewport_templates.TabIndex = 16;
+            this.button_draw_Viewport_templates.Text = "Draw Viewport Templates";
+            this.button_draw_Viewport_templates.UseVisualStyleBackColor = false;
+            this.button_draw_Viewport_templates.Click += new System.EventHandler(this.button_draw_Viewport_templates_Click);
+            // 
+            // button_place_rectangles
+            // 
+            this.button_place_rectangles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_place_rectangles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_place_rectangles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_place_rectangles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_place_rectangles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_place_rectangles.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_place_rectangles.ForeColor = System.Drawing.Color.White;
+            this.button_place_rectangles.Location = new System.Drawing.Point(6, 130);
+            this.button_place_rectangles.Name = "button_place_rectangles";
+            this.button_place_rectangles.Size = new System.Drawing.Size(140, 39);
+            this.button_place_rectangles.TabIndex = 16;
+            this.button_place_rectangles.Text = "Draw";
+            this.button_place_rectangles.UseVisualStyleBackColor = false;
+            this.button_place_rectangles.Click += new System.EventHandler(this.button_place_rectangles_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label13.ForeColor = System.Drawing.Color.White;
+            this.label13.Location = new System.Drawing.Point(152, 106);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(113, 14);
+            this.label13.TabIndex = 27;
+            this.label13.Text = "Linear ft. per sheet";
+            // 
+            // dataGridView_sheet_index
+            // 
+            this.dataGridView_sheet_index.AllowUserToAddRows = false;
+            this.dataGridView_sheet_index.AllowUserToDeleteRows = false;
+            this.dataGridView_sheet_index.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridView_sheet_index.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.dataGridView_sheet_index.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dataGridView_sheet_index.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_sheet_index.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView_sheet_index.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView_sheet_index.GridColor = System.Drawing.Color.LightGray;
+            this.dataGridView_sheet_index.Location = new System.Drawing.Point(15, 30);
+            this.dataGridView_sheet_index.Name = "dataGridView_sheet_index";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_sheet_index.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView_sheet_index.RowHeadersVisible = false;
+            this.dataGridView_sheet_index.Size = new System.Drawing.Size(941, 264);
+            this.dataGridView_sheet_index.TabIndex = 124;
+            this.dataGridView_sheet_index.VirtualMode = true;
+            // 
+            // button_load_CL_to_excel
+            // 
+            this.button_load_CL_to_excel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_load_CL_to_excel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_load_CL_to_excel.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_load_CL_to_excel.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_load_CL_to_excel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_load_CL_to_excel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_load_CL_to_excel.ForeColor = System.Drawing.Color.White;
+            this.button_load_CL_to_excel.Location = new System.Drawing.Point(3, 3);
+            this.button_load_CL_to_excel.Name = "button_load_CL_to_excel";
+            this.button_load_CL_to_excel.Size = new System.Drawing.Size(140, 39);
+            this.button_load_CL_to_excel.TabIndex = 16;
+            this.button_load_CL_to_excel.Text = "Read Centerline";
+            this.button_load_CL_to_excel.UseVisualStyleBackColor = false;
+            this.button_load_CL_to_excel.Click += new System.EventHandler(this.button_place_read_centerline_Click);
+            // 
+            // panel_read_centerline_to_excel
+            // 
+            this.panel_read_centerline_to_excel.Controls.Add(this.button_load_CL_to_excel);
+            this.panel_read_centerline_to_excel.Controls.Add(this.checkBox_csf);
+            this.panel_read_centerline_to_excel.Location = new System.Drawing.Point(3, 175);
+            this.panel_read_centerline_to_excel.Name = "panel_read_centerline_to_excel";
+            this.panel_read_centerline_to_excel.Size = new System.Drawing.Size(152, 75);
+            this.panel_read_centerline_to_excel.TabIndex = 123;
+            // 
+            // checkBox_csf
+            // 
+            this.checkBox_csf.AutoSize = true;
+            this.checkBox_csf.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_csf.ForeColor = System.Drawing.Color.White;
+            this.checkBox_csf.Location = new System.Drawing.Point(7, 48);
+            this.checkBox_csf.Name = "checkBox_csf";
+            this.checkBox_csf.Size = new System.Drawing.Size(71, 18);
+            this.checkBox_csf.TabIndex = 160;
+            this.checkBox_csf.Text = "use CSF";
+            this.checkBox_csf.UseVisualStyleBackColor = true;
+            // 
+            // AGEN_SheetIndex
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(62)))), ((int)(((byte)(66)))));
+            this.ClientSize = new System.Drawing.Size(968, 605);
+            this.Controls.Add(this.panel9);
+            this.Controls.Add(this.panel8);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.dataGridView_sheet_index);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Name = "AGEN_SheetIndex";
+            this.Text = "AGENSheetIndex";
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_sheet_index)).EndInit();
+            this.panel_read_centerline_to_excel.ResumeLayout(false);
+            this.panel_read_centerline_to_excel.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button_build_Cl_ML;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button button_fill_gaps;
+        private System.Windows.Forms.Button button_adjust_rectangle;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button button_rebuild_matchline_rectangles;
+        private System.Windows.Forms.Button button_Round_matchlines;
+        private System.Windows.Forms.Label label57;
+        private System.Windows.Forms.TextBox textBox_rounding_matchline;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.RadioButton radioButton_3D_station;
+        private System.Windows.Forms.CheckBox checkBox_station_equations;
+        private System.Windows.Forms.RadioButton radioButton_2d_station;
+        private System.Windows.Forms.TextBox TextBox_matchline_length;
+        private System.Windows.Forms.Button button_draw_Viewport_templates;
+        private System.Windows.Forms.Button button_place_rectangles;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.DataGridView dataGridView_sheet_index;
+        private System.Windows.Forms.Button button_load_CL_to_excel;
+        private System.Windows.Forms.Panel panel_read_centerline_to_excel;
+        private System.Windows.Forms.CheckBox checkBox_csf;
+    }
+}

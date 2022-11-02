@@ -1,0 +1,396 @@
+﻿<UserControl
+    x:Class="BlockManager.UI.Views.BlockItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:BlockManager.UI.Views"
+    xmlns:vm="clr-namespace:BlockManager.UI.ViewModels"
+    mc:Ignorable="d">
+
+    <!--Create References To FontAwesome-->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!--Main Body-->
+    <Border
+        BorderBrush="Black"
+        BorderThickness="0"
+        Height="350"
+        Width="500"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True"
+        Background="#252526"
+        Visibility="{Binding MyVisibility}"
+        Margin="20"
+        CornerRadius="3">
+        <Border.Effect>
+            <DropShadowEffect
+                Opacity=".7"
+                ShadowDepth="10"
+                BlurRadius="8" />
+        </Border.Effect>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--Top Block Info-->
+            <Border
+                Padding="10"
+                Grid.Row="0"
+                BorderBrush="Black"
+                BorderThickness="0 0 0 1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="*" />
+                        <ColumnDefinition
+                            Width="100" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Basic block info-->
+                    <StackPanel
+                        Grid.Column="0">
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="Segoe UI SemiBold"
+                            FontSize="14"
+                            Text="{Binding Drawing}"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Margin="5"
+                            Foreground="#2196F3"
+                            FontFamily="Segoe UI Bold"
+                            FontSize="14"
+                            Text="{Binding BlockName}"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+
+                    <!--Saved Date-->
+                    <StackPanel
+                        Grid.Column="1">
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="Segoe UI SemiBold"
+                            FontSize="14"
+                            Text="Last Saved:"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Margin="5"
+                            Foreground="#2196F3"
+                            FontFamily="Segoe UI Bold"
+                            FontSize="14"
+                            Text="{Binding SavedDateTime}"
+                            TextWrapping="Wrap"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!--Attributes-->
+            <Border
+                Grid.Row="1"
+                Margin="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition
+                            Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--Attributes List-->
+                    <ScrollViewer
+                        Grid.Row="1"
+                        VerticalScrollBarVisibility="Auto">
+                        <ItemsControl
+                            ItemsSource="{Binding Path=AttributesList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:AttributeItem />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <!--Buttons-->
+                    <Border
+                        Grid.Column="1"
+                        BorderBrush="Black"
+                        BorderThickness="1 0 0 0">
+                        <Grid
+                            Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <!--Update Button-->
+                            <Button
+                                Grid.Row="0"
+                                Width="75"
+                                Foreground="White"
+                                BorderBrush="Black"
+                                BorderThickness="0"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding UpdateCommand}"
+                                ToolTip="Update this block and save the drawing.">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition
+                                            Height="*" />
+                                        <RowDefinition
+                                            Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Text="{StaticResource FontAwesomeEdit}"
+                                        Foreground="#2196F3"
+                                        Margin="0"
+                                        FontSize="24"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Update"
+                                        Foreground="White"
+                                        Margin="0"
+                                        FontFamily="Segoe UI Semi Bold"
+                                        FontSize="14"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center" />
+                                </Grid>
+                                <Button.Style>
+                                    <Style
+                                        TargetType="{x:Type Button}">
+                                        <Setter
+                                            Property="Background"
+                                            Value="Transparent" />
+                                        <Setter
+                                            Property="Margin"
+                                            Value="0" />
+                                        <Setter
+                                            Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate
+                                                    TargetType="{x:Type Button}">
+                                                    <Border
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        x:Name="border"
+                                                        Background="{TemplateBinding Background}">
+                                                        <ContentPresenter
+                                                            VerticalAlignment="Stretch"
+                                                            HorizontalAlignment="Stretch" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger
+                                                Property="IsMouseOver"
+                                                Value="True">
+                                                <Setter
+                                                    Property="Background"
+                                                    Value="#3F3F40" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+                            <!--Open Button-->
+                            <Button
+                                Grid.Row="1"
+                                Width="75"
+                                BorderBrush="Black"
+                                BorderThickness="0"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding OpenCommand}"
+                                ToolTip="Open the drawing.">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition
+                                            Height="*" />
+                                        <RowDefinition
+                                            Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Text="{StaticResource FontAwesomeOpen}"
+                                        Foreground="#2196F3"
+                                        Margin="0"
+                                        FontSize="24"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Open"
+                                        Margin="0"
+                                        FontFamily="Segoe UI Semi Bold"
+                                        FontSize="14"
+                                        Foreground="White"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center" />
+                                </Grid>
+                                <Button.Style>
+                                    <Style
+                                        TargetType="{x:Type Button}">
+                                        <Setter
+                                            Property="Background"
+                                            Value="Transparent" />
+                                        <Setter
+                                            Property="Margin"
+                                            Value="0" />
+                                        <Setter
+                                            Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate
+                                                    TargetType="{x:Type Button}">
+                                                    <Border
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        x:Name="border"
+                                                        Background="{TemplateBinding Background}">
+                                                        <ContentPresenter
+                                                            VerticalAlignment="Stretch"
+                                                            HorizontalAlignment="Stretch" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger
+                                                Property="IsMouseOver"
+                                                Value="True">
+                                                <Setter
+                                                    Property="Background"
+                                                    Value="#3F3F40" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+
+                            <!--Zoom Button-->
+                            <Button
+                                Grid.Row="2"
+                                Width="75"
+                                BorderBrush="Black"
+                                BorderThickness="0 0 0 0"
+                                VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ZoomCommand}"
+                                ToolTip="Open the drawing and zoom to the block represented by this control.">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition
+                                            Height="*" />
+                                        <RowDefinition
+                                            Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Text="{StaticResource FontAwesomeCompass}"
+                                        Foreground="#2196F3"
+                                        Margin="0"
+                                        FontSize="24"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Zoom"
+                                        Margin="0"
+                                        FontFamily="Segoe UI Semi Bold"
+                                        FontSize="14"
+                                        Foreground="White"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center" />
+                                </Grid>
+                                <Button.Style>
+                                    <Style
+                                        TargetType="{x:Type Button}">
+                                        <Setter
+                                            Property="Background"
+                                            Value="Transparent" />
+                                        <Setter
+                                            Property="Margin"
+                                            Value="0" />
+                                        <Setter
+                                            Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate
+                                                    TargetType="{x:Type Button}">
+                                                    <Border
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        x:Name="border"
+                                                        Background="{TemplateBinding Background}">
+                                                        <ContentPresenter
+                                                            VerticalAlignment="Stretch"
+                                                            HorizontalAlignment="Stretch" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger
+                                                Property="IsMouseOver"
+                                                Value="True">
+                                                <Setter
+                                                    Property="Background"
+                                                    Value="#3F3F40" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </Grid>
+
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!--Location Data-->
+            <Border
+                BorderBrush="Black"
+                BorderThickness="0 1 0 0"
+                Grid.Row="2">
+                <TextBlock
+                    Margin="5"
+                    Foreground="#2196F3"
+                    FontFamily="Segoe UI Bold"
+                    FontSize="14"
+                    Text="{Binding BlockLocation}"
+                    TextWrapping="Wrap"
+                    TextTrimming="CharacterEllipsis" />
+            </Border>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,306 @@
+﻿<Window
+    x:Class="BlockManagerTest.UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:BlockManager.UI.Views;assembly=BlockManager.UI"
+    xmlns:local="clr-namespace:BlockManagerTest.UI"
+    mc:Ignorable="d"
+    Title="MainWindow"
+    Height="800"
+    Width="1200">
+    <!--Create References To Styles-->
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Colors.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Buttons.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/FontAwesomeStrings.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/Fonts.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/DataGrids.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/CADTechnologiesSource.UIResources;component/Styles/TabControls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid
+        Background="{StaticResource HighlightedSemiDarkBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <!--Buttons-->
+            <RowDefinition
+                Height="Auto" />
+            <!--Filters-->
+            <RowDefinition
+                Height="Auto" />
+            <!--Content-->
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--Work Area-->
+        <Grid
+            Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Drawing list-->
+            <Border
+                Background="{StaticResource DarkBackgroundBrush}"
+                BorderThickness="0 0 1 0"
+                BorderBrush="Black"
+                Grid.Column="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="50" />
+                        <RowDefinition
+                            Height="*" />
+                    </Grid.RowDefinitions>
+                    <!--Buttons Bar-->
+                    <Grid
+                        Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition
+                                Width="*" />
+                            <ColumnDefinition
+                                Width="*" />
+                            <ColumnDefinition
+                                Width="*" />
+                            <ColumnDefinition
+                                Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <!--Add Button-->
+                        <Button
+                            Grid.Column="0"
+                            BorderBrush="Black"
+                            BorderThickness="1 0 0 0"
+                            Style="{StaticResource HighlightingIconButton}"
+                            Margin="0"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding RemoveTargetDrawingCommand}"
+                            ToolTip="Refresh the content of the block attributes.">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch">
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Margin="0 0 0 5"
+                                        Text="{StaticResource FontAwesomePlus}"
+                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Add"
+                                        Margin="0"
+                                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                        FontSize="{StaticResource FontSizeCaption}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <!--Remove Button-->
+                        <Button
+                            Grid.Column="1"
+                            BorderBrush="Black"
+                            BorderThickness="1 0 0 0"
+                            Style="{StaticResource HighlightingIconButton}"
+                            Margin="0"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding RemoveTargetDrawingCommand}"
+                            ToolTip="Refresh the content of the block attributes.">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch">
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Margin="0 0 0 5"
+                                        Text="{StaticResource FontAwesomeMinus}"
+                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Remove"
+                                        Margin="0"
+                                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                        FontSize="{StaticResource FontSizeCaption}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <!--Clear Button-->
+                        <Button
+                            Grid.Column="2"
+                            BorderBrush="Black"
+                            BorderThickness="1 0 0 0"
+                            Style="{StaticResource HighlightingIconButton}"
+                            Margin="0"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding RemoveTargetDrawingCommand}"
+                            ToolTip="Refresh the content of the block attributes.">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch">
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Margin="0 0 0 5"
+                                        Text="{StaticResource FontAwesomeWindowClose}"
+                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Clear"
+                                        Margin="0"
+                                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                        FontSize="{StaticResource FontSizeCaption}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                        <!--Save Button-->
+                        <Button
+                            Grid.Column="3"
+                            BorderBrush="Black"
+                            BorderThickness="1 0 0 0"
+                            Style="{StaticResource HighlightingIconButton}"
+                            Margin="0"
+                            VerticalAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding RemoveTargetDrawingCommand}"
+                            ToolTip="Refresh the content of the block attributes.">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition
+                                        Height="Auto" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <StackPanel
+                                    Grid.Row="1"
+                                    HorizontalAlignment="Stretch">
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Margin="0 0 0 5"
+                                        Text="{StaticResource FontAwesomeSave}"
+                                        FontSize="{StaticResource FontSizeSubTitle}"
+                                        FontFamily="{StaticResource FontAwesomeSolid}"
+                                        Foreground="{StaticResource PrimaryBlueBrush}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Text="Save"
+                                        Margin="0"
+                                        FontFamily="{StaticResource SegoeUI_SemiBold}"
+                                        FontSize="{StaticResource FontSizeCaption}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Center" />
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </Grid>
+
+                    <StackPanel
+                        Grid.Row="1">
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            Text="75621-00-ML-02-001.dwg" />
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            Text="75621-00-ML-02-002.dwg" />
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            Text="75621-00-ML-02-003.dwg" />
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            Text="75621-00-ML-02-004.dwg" />
+                        <TextBlock
+                            Margin="5"
+                            Foreground="White"
+                            FontFamily="{StaticResource SegoeUI_SemiBold}"
+                            Text="75621-00-ML-02-005.dwg" />
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+
+            <GridSplitter
+                Grid.Column="1"
+                Width="5" />
+
+            <Grid
+                Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="*" />
+                </Grid.RowDefinitions>
+
+                <!--Block Area-->
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                    Grid.Row="0">
+                    <WrapPanel
+                        Orientation="Horizontal">
+
+                    </WrapPanel>
+                </ScrollViewer>
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

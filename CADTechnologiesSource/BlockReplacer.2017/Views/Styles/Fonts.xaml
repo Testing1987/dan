@@ -1,0 +1,76 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--Create References To Styles-->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary
+            Source="Colors.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <!--Material Design Fonts-->
+    <FontFamily
+        x:Key="FontAwesomeSolid">pack://application:,,,/BlockInserter;component/Views/Styles/ImportedFonts/#Material Icons</FontFamily>
+
+    <!--Font Sizes-->
+    <sys:Double
+        x:Key="FontSizeCaption">12</sys:Double>
+    <sys:Double
+        x:Key="FontSizeBase">14</sys:Double>
+    <sys:Double
+        x:Key="FontSizeLarge">16</sys:Double>
+    <sys:Double
+        x:Key="FontSizeSubTitle">20</sys:Double>
+    <sys:Double
+        x:Key="FontSizeTitle">24</sys:Double>
+    <sys:Double
+        x:Key="FontSizeSubHeader">34</sys:Double>
+    <sys:Double
+        x:Key="FontSizeHeader">46</sys:Double>
+
+    <!--Base style settings that will affect most controls unless explicitly overwritten in the XAML either directly or by a style assigned to a control-->
+    <!--Font Style that will affect most controls-->
+    <Style
+        TargetType="{x:Type Control}"
+        x:Key="BaseStyle">
+        <Setter
+            Property="FontFamily"
+            Value="Roboto" />
+        <Setter
+            Property="Foreground"
+            Value="White" />
+    </Style>
+
+    <!--Text Block Font Style because Text Blocks are special-->
+    <Style
+        TargetType="{x:Type TextBlock}">
+        <Setter
+            Property="FontFamily"
+            Value="Roboto" />
+        <Setter
+            Property="Foreground"
+            Value="White" />
+    </Style>
+
+    <!--globally assigns the control types listed below a style which is "based on" the base style outlined above-->
+    <Style
+        TargetType="{x:Type ToolTip}"
+        BasedOn="{StaticResource BaseStyle}">
+        <Setter
+            Property="Foreground"
+            Value="{StaticResource DarkBackgroundBrush}" />
+    </Style>
+    <Style
+        TargetType="{x:Type Button}"
+        BasedOn="{StaticResource BaseStyle}" />
+    <Style
+        TargetType="{x:Type Label}"
+        BasedOn="{StaticResource BaseStyle}" />
+    <Style
+        TargetType="{x:Type TextBox}"
+        BasedOn="{StaticResource BaseStyle}" />
+    <Style
+        TargetType="{x:Type ListView}"
+        BasedOn="{StaticResource BaseStyle}" />
+
+</ResourceDictionary>
