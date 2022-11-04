@@ -34,7 +34,8 @@ namespace Alignment_mdi
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView_align_created = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.checkBox_multiple_layouts = new System.Windows.Forms.CheckBox();
+            this.checkBox_edit_multilayout = new System.Windows.Forms.CheckBox();
+            this.checkBox_generate_multiple_layouts = new System.Windows.Forms.CheckBox();
             this.comboBox_start = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.comboBox_end = new System.Windows.Forms.ComboBox();
@@ -112,7 +113,8 @@ namespace Alignment_mdi
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(62)))), ((int)(((byte)(66)))));
-            this.panel1.Controls.Add(this.checkBox_multiple_layouts);
+            this.panel1.Controls.Add(this.checkBox_edit_multilayout);
+            this.panel1.Controls.Add(this.checkBox_generate_multiple_layouts);
             this.panel1.Controls.Add(this.comboBox_start);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.comboBox_end);
@@ -125,17 +127,31 @@ namespace Alignment_mdi
             this.panel1.Size = new System.Drawing.Size(962, 89);
             this.panel1.TabIndex = 2041;
             // 
-            // checkBox_multiple_layouts
+            // checkBox_edit_multilayout
             // 
-            this.checkBox_multiple_layouts.AutoSize = true;
-            this.checkBox_multiple_layouts.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_multiple_layouts.ForeColor = System.Drawing.Color.White;
-            this.checkBox_multiple_layouts.Location = new System.Drawing.Point(8, 63);
-            this.checkBox_multiple_layouts.Name = "checkBox_multiple_layouts";
-            this.checkBox_multiple_layouts.Size = new System.Drawing.Size(165, 18);
-            this.checkBox_multiple_layouts.TabIndex = 2090;
-            this.checkBox_multiple_layouts.Text = "Generate multi-layout file";
-            this.checkBox_multiple_layouts.UseVisualStyleBackColor = true;
+            this.checkBox_edit_multilayout.AutoSize = true;
+            this.checkBox_edit_multilayout.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_edit_multilayout.ForeColor = System.Drawing.Color.White;
+            this.checkBox_edit_multilayout.Location = new System.Drawing.Point(297, 30);
+            this.checkBox_edit_multilayout.Name = "checkBox_edit_multilayout";
+            this.checkBox_edit_multilayout.Size = new System.Drawing.Size(210, 26);
+            this.checkBox_edit_multilayout.TabIndex = 2090;
+            this.checkBox_edit_multilayout.Text = "Edit multi-layout file";
+            this.checkBox_edit_multilayout.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_generate_multiple_layouts
+            // 
+            this.checkBox_generate_multiple_layouts.AutoSize = true;
+            this.checkBox_generate_multiple_layouts.Checked = true;
+            this.checkBox_generate_multiple_layouts.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_generate_multiple_layouts.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox_generate_multiple_layouts.ForeColor = System.Drawing.Color.White;
+            this.checkBox_generate_multiple_layouts.Location = new System.Drawing.Point(297, 2);
+            this.checkBox_generate_multiple_layouts.Name = "checkBox_generate_multiple_layouts";
+            this.checkBox_generate_multiple_layouts.Size = new System.Drawing.Size(259, 26);
+            this.checkBox_generate_multiple_layouts.TabIndex = 2090;
+            this.checkBox_generate_multiple_layouts.Text = "Generate multi-layout file";
+            this.checkBox_generate_multiple_layouts.UseVisualStyleBackColor = true;
             // 
             // comboBox_start
             // 
@@ -280,6 +296,7 @@ namespace Alignment_mdi
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.CheckBox checkBox_multiple_layouts;
+        private System.Windows.Forms.CheckBox checkBox_generate_multiple_layouts;
+        private System.Windows.Forms.CheckBox checkBox_edit_multilayout;
     }
 }

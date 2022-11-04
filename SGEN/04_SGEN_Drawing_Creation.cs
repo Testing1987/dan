@@ -114,30 +114,40 @@ namespace Alignment_mdi
                             }
                         }
 
-                        if (_SGEN_mainform.dt_sheet_index != null && _SGEN_mainform.dt_sheet_index.Rows.Count > 0)
+                        if (checkBox_edit_multilayout.Checked == true)
                         {
-
-                            bool is_found = false;
-                            for (int k = 0; k < _SGEN_mainform.dt_sheet_index.Rows.Count; ++k)
+                            Display_dt.Rows.Add();
+                            Display_dt.Rows[Display_dt.Rows.Count - 1][Col_dwg_name] = File1;
+                        }
+                        else
+                        {
+                            if (_SGEN_mainform.dt_sheet_index != null && _SGEN_mainform.dt_sheet_index.Rows.Count > 0)
                             {
-                                if (_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_dwg_name] != DBNull.Value)
+
+                                bool is_found = false;
+                                for (int k = 0; k < _SGEN_mainform.dt_sheet_index.Rows.Count; ++k)
                                 {
-                                    string nume_sheet = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_dwg_name]);
-                                    string nume_selected = System.IO.Path.GetFileNameWithoutExtension(File1);
-                                    if (nume_selected.ToLower() == nume_sheet.ToLower())
+                                    if (_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_dwg_name] != DBNull.Value)
                                     {
-                                        is_found = true;
-                                        k = _SGEN_mainform.dt_sheet_index.Rows.Count;
+                                        string nume_sheet = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_dwg_name]);
+                                        string nume_selected = System.IO.Path.GetFileNameWithoutExtension(File1);
+                                        if (nume_selected.ToLower() == nume_sheet.ToLower())
+                                        {
+                                            is_found = true;
+                                            k = _SGEN_mainform.dt_sheet_index.Rows.Count;
+                                        }
                                     }
                                 }
-                            }
 
-                            if (is_found == false) add_dwg_to_display = false;
+                                if (is_found == false) add_dwg_to_display = false;
 
-                            if (add_dwg_to_display == true)
-                            {
-                                Display_dt.Rows.Add();
-                                Display_dt.Rows[Display_dt.Rows.Count - 1][Col_dwg_name] = File1;
+                                if (add_dwg_to_display == true)
+                                {
+                                    Display_dt.Rows.Add();
+                                    Display_dt.Rows[Display_dt.Rows.Count - 1][Col_dwg_name] = File1;
+                                }
+
+
                             }
                         }
                     }
@@ -443,7 +453,7 @@ namespace Alignment_mdi
                                     seg_name = "SGEN_ALL_sheets";
                                 }
                                 string fname0 = Output_folder + _SGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_SGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-                                if (checkBox_multiple_layouts.Checked == true)
+                                if (checkBox_generate_multiple_layouts.Checked == true)
                                 {
                                     fname0 = Output_folder + seg_name + ".dwg";
                                 }
@@ -478,12 +488,20 @@ namespace Alignment_mdi
                                         Layout layout1 = Functions.get_first_layout(Trans2, New_doc.Database);
                                         layout1.UpgradeOpen();
 
-                                        if (checkBox_multiple_layouts.Checked == true) nume1 = "Sgen1234";
+                                        if (checkBox_generate_multiple_layouts.Checked == true) nume1 = "Sgen1234";
 
                                         layout1.LayoutName = nume1;
 
-                                        if (checkBox_multiple_layouts.Checked == true)
+
+                                        Functions.creaza_anno_scales(New_doc.Database);
+                                        var ocm = New_doc.Database.ObjectContextManager;
+                                        var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
+
+
+                                        if (checkBox_generate_multiple_layouts.Checked == true)
                                         {
+
+
                                             LayoutManager LayoutManager1 = (LayoutManager)Autodesk.AutoCAD.DatabaseServices.LayoutManager.Current;
                                             Functions.Creaza_layer(_SGEN_mainform.Layer_name_Main_Viewport, 4, false);
                                             for (int i = lista_generation.Count - 1; i >= 0; --i)
@@ -498,7 +516,7 @@ namespace Alignment_mdi
 
                                                 if (_SGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][col_scaleName] != DBNull.Value)
                                                 {
-                                                     scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][col_scaleName]).Replace("'", "");
+                                                    scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][col_scaleName]).Replace("'", "");
                                                     if (scalename2.Contains(":") == true)
                                                     {
                                                         string[] text_array1 = scalename2.Split(Convert.ToChar(":"));
@@ -534,32 +552,78 @@ namespace Alignment_mdi
 
                                                         #region plan view
 
-                                                        ObjectContextManager ocm = New_doc.Database.ObjectContextManager;
 
-                                                        ObjectContextCollection occ = null;
-                                                        if (ocm != null)
-                                                        {
-                                                            occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
-                                                        }
 
 
                                                         Viewport Viewport_main = Functions.Create_viewport(ms_point, ps_point_plan_view, _SGEN_mainform.Vw_width, _SGEN_mainform.Vw_height, scale2, Twist);
                                                         Viewport_main.Layer = _SGEN_mainform.Layer_name_Main_Viewport;
 
                                                         btr2.AppendEntity(Viewport_main);
+
+                                                        #region annotation implementation
+                                                        string anno_name = "xxx";
+                                                        if (Math.Round(scale2, 1) == 0.1)
+                                                        {
+                                                            anno_name = "_1:10";
+                                                        }
+                                                        if (Math.Round(scale2, 2) == 0.05)
+                                                        {
+                                                            anno_name = "_1:20";
+                                                        }
+                                                        if (Math.Round(scale2, 3) == 0.033)
+                                                        {
+                                                            anno_name = "_1:30";
+                                                        }
+                                                        if (Math.Round(scale2, 3) == 0.025)
+                                                        {
+                                                            anno_name = "_1:40";
+                                                        }
+                                                        if (Math.Round(scale2, 2) == 0.02)
+                                                        {
+                                                            anno_name = "_1:50";
+                                                        }
+                                                        if (Math.Round(scale2, 3) == 0.017)
+                                                        {
+                                                            anno_name = "_1:60";
+                                                        }
+                                                        if (Math.Round(scale2, 2) == 0.01)
+                                                        {
+                                                            anno_name = "_1:100";
+                                                        }
+                                                        if (Math.Round(scale2, 3) == 0.005)
+                                                        {
+                                                            anno_name = "_1:200";
+                                                        }
+                                                        if (Math.Round(scale2, 4) == 0.0033)
+                                                        {
+                                                            anno_name = "_1:300";
+                                                        }
+                                                        if (Math.Round(scale2, 4) == 0.0025)
+                                                        {
+                                                            anno_name = "_1:400";
+                                                        }
+                                                        if (Math.Round(scale2, 3) == 0.002)
+                                                        {
+                                                            anno_name = "_1:500";
+                                                        }
+                                                        if (Math.Round(scale2, 4) == 0.0017)
+                                                        {
+                                                            anno_name = "_1:600";
+                                                        }
+
+                                                        foreach (var context1 in occ)
+                                                        {
+                                                            if (context1.Name == anno_name)
+                                                            {
+                                                                Viewport_main.AnnotationScale = (AnnotationScale)context1;
+                                                            }
+                                                        }
+                                                        #endregion
+
                                                         Trans2.AddNewlyCreatedDBObject(Viewport_main, true);
                                                         Viewport_main.On = true;
 
 
-                                                        if (occ != null && scalename2 != "")
-                                                        {
-                                                            AnnotationScale Anno_scale = occ.GetContext(scalename2) as AnnotationScale;
-                                                            if (Anno_scale != null)
-                                                            {
-                                                                Viewport_main.AnnotationScale = Anno_scale;
-                                                            }
-
-                                                        }
 
 
 
@@ -589,7 +653,7 @@ namespace Alignment_mdi
 
                                 New_doc.CloseAndDiscard();
 
-                                if (checkBox_multiple_layouts.Checked == false)
+                                if (checkBox_generate_multiple_layouts.Checked == false)
                                 {
                                     if (_SGEN_mainform.dt_sheet_index.Rows.Count > 0)
                                     {
@@ -738,7 +802,7 @@ namespace Alignment_mdi
                                     }
                                 }
 
-                                if (checkBox_multiple_layouts.Checked == false)
+                                if (checkBox_generate_multiple_layouts.Checked == false)
                                 {
                                     dataGridView_align_created.DataSource = Display_dt;
                                     dataGridView_align_created.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -796,68 +860,245 @@ namespace Alignment_mdi
 
 
 
-                                            if (si_index >= 0)
+                                            if (si_index >= 0 || checkBox_edit_multilayout.Checked == true)
                                             {
                                                 using (Database Database2 = new Database(false, true))
                                                 {
                                                     Database2.ReadDwgFile(file1, FileOpenMode.OpenForReadAndWriteNoShare, true, "");
                                                     //System.IO.FileShare.ReadWrite, false, null);
                                                     Database2.CloseInput(true);
-
+                                                    HostApplicationServices.WorkingDatabase = Database2;
                                                     using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = Database2.TransactionManager.StartTransaction())
                                                     {
-                                                        Functions.make_first_layout_active(Trans2, Database2);
-                                                        BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
-                                                        BtrecordPS.UpgradeOpen();
-                                                        Layout Layout1 = Functions.get_first_layout(Trans2, Database2);
-                                                        Layout1.UpgradeOpen();
-                                                        Layout1.LayoutName = _SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_dwg_name].ToString();
 
 
-                                                        double scale2 = _SGEN_mainform.Vw_scale;
+                                                        Functions.creaza_anno_scales(Database2);
 
-                                                        if (_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scale] != DBNull.Value)
+
+                                                        if (checkBox_edit_multilayout.Checked == true)
                                                         {
-                                                            scale2 = Convert.ToDouble(_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scale]);
-                                                        }
+                                                            var ocm = Database2.ObjectContextManager;
+                                                            var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
 
-                                                        if (_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scaleName] != DBNull.Value)
-                                                        {
-                                                            string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scaleName]);
-                                                            if (scalename2.Contains(":") == true)
+                                                            DBDictionary Layoutdict = (DBDictionary)Trans2.GetObject(Database2.LayoutDictionaryId, OpenMode.ForRead);
+
+                                                            LayoutManager LayoutManager2 = (LayoutManager)Autodesk.AutoCAD.DatabaseServices.LayoutManager.Current;
+
+                                                            Layout Layout0 = null;
+
+                                                            foreach (DBDictionaryEntry entry in Layoutdict)
                                                             {
-                                                                string[] text_array1 = scalename2.Replace("'", "").Split(Convert.ToChar(":"));
-                                                                if (text_array1.Length == 2)
+                                                                Layout0 = (Layout)Trans2.GetObject(LayoutManager2.GetLayoutId(entry.Key), OpenMode.ForRead);
+                                                                if (Layout0.TabOrder > 0)
                                                                 {
-                                                                    string numarator = text_array1[0];
-                                                                    string numitor = text_array1[1];
-                                                                    if (Functions.IsNumeric(numarator) == true && Functions.IsNumeric(numitor) == true)
+                                                                    string layout_name = Layout0.LayoutName;
+                                                                    for (int k = 0; k < _SGEN_mainform.dt_sheet_index.Rows.Count; k++)
                                                                     {
-                                                                        double nr2 = Convert.ToDouble(numarator);
-                                                                        double nrr2 = Convert.ToDouble(numitor);
+                                                                        string si_name = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_dwg_name]);
 
-                                                                        if (nr2 > 0 && nrr2 > 0)
+                                                                        if (si_name.ToUpper() == layout_name.ToUpper())
                                                                         {
-                                                                            scale2 = nr2 / nrr2;
+                                                                            double scale2 = _SGEN_mainform.Vw_scale;
+
+                                                                            if (_SGEN_mainform.dt_sheet_index.Rows[k][col_scale] != DBNull.Value)
+                                                                            {
+                                                                                scale2 = Convert.ToDouble(_SGEN_mainform.dt_sheet_index.Rows[k][col_scale]);
+                                                                            }
+
+                                                                            if (_SGEN_mainform.dt_sheet_index.Rows[k][col_scaleName] != DBNull.Value)
+                                                                            {
+                                                                                string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[k][col_scaleName]);
+                                                                                if (scalename2.Contains(":") == true)
+                                                                                {
+                                                                                    string[] text_array1 = scalename2.Replace("'", "").Split(Convert.ToChar(":"));
+                                                                                    if (text_array1.Length == 2)
+                                                                                    {
+                                                                                        string numarator = text_array1[0];
+                                                                                        string numitor = text_array1[1];
+                                                                                        if (Functions.IsNumeric(numarator) == true && Functions.IsNumeric(numitor) == true)
+                                                                                        {
+                                                                                            double nr2 = Convert.ToDouble(numarator);
+                                                                                            double nrr2 = Convert.ToDouble(numitor);
+
+                                                                                            if (nr2 > 0 && nrr2 > 0)
+                                                                                            {
+                                                                                                scale2 = nr2 / nrr2;
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+
+
+
+                                                                            #region VP plan view
+
+
+                                                                            ms_pt = new Point3d((double)_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_x], (double)_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_y], 0);
+                                                                            double twist1 = 2 * Math.PI - (double)_SGEN_mainform.dt_sheet_index.Rows[k][_SGEN_mainform.Col_rot] * Math.PI / 180;
+
+
+                                                                            LayoutManager2.CurrentLayout = layout_name;
+                                                                            Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecordPS = Trans2.GetObject(Layout0.BlockTableRecordId, OpenMode.ForWrite) as BlockTableRecord;
+                                                                            if (BTrecordPS != null)
+                                                                            {
+                                                                                foreach (ObjectId id1 in BTrecordPS)
+                                                                                {
+                                                                                    Viewport Viewport_old = Trans2.GetObject(id1, OpenMode.ForRead) as Viewport;
+
+                                                                                    if (Viewport_old != null)
+                                                                                    {
+                                                                                        if (Viewport_old.Layer == _SGEN_mainform.Layer_name_Main_Viewport)
+                                                                                        {
+                                                                                            Viewport_old.UpgradeOpen();
+                                                                                            Viewport_old.Erase();
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                Viewport new_viewport = Functions.Create_viewport(ms_pt, new Point3d(_SGEN_mainform.Vw_ps_x, _SGEN_mainform.Vw_ps_y, 0), _SGEN_mainform.Vw_width, _SGEN_mainform.Vw_height, scale2, twist1);
+                                                                                new_viewport.Layer = _SGEN_mainform.Layer_name_Main_Viewport;
+                                                                                BTrecordPS.AppendEntity(new_viewport);
+
+                                                                                #region annotation implementation
+                                                                                string anno_name = "xxx";
+                                                                                if (Math.Round(scale2, 1) == 0.1)
+                                                                                {
+                                                                                    anno_name = "_1:10";
+                                                                                }
+                                                                                if (Math.Round(scale2, 2) == 0.05)
+                                                                                {
+                                                                                    anno_name = "_1:20";
+                                                                                }
+                                                                                if (Math.Round(scale2, 3) == 0.033)
+                                                                                {
+                                                                                    anno_name = "_1:30";
+                                                                                }
+                                                                                if (Math.Round(scale2, 3) == 0.025)
+                                                                                {
+                                                                                    anno_name = "_1:40";
+                                                                                }
+                                                                                if (Math.Round(scale2, 2) == 0.02)
+                                                                                {
+                                                                                    anno_name = "_1:50";
+                                                                                }
+                                                                                if (Math.Round(scale2, 3) == 0.017)
+                                                                                {
+                                                                                    anno_name = "_1:60";
+                                                                                }
+                                                                                if (Math.Round(scale2, 2) == 0.01)
+                                                                                {
+                                                                                    anno_name = "_1:100";
+                                                                                }
+                                                                                if (Math.Round(scale2, 3) == 0.005)
+                                                                                {
+                                                                                    anno_name = "_1:200";
+                                                                                }
+                                                                                if (Math.Round(scale2, 4) == 0.0033)
+                                                                                {
+                                                                                    anno_name = "_1:300";
+                                                                                }
+                                                                                if (Math.Round(scale2, 4) == 0.0025)
+                                                                                {
+                                                                                    anno_name = "_1:400";
+                                                                                }
+                                                                                if (Math.Round(scale2, 3) == 0.002)
+                                                                                {
+                                                                                    anno_name = "_1:500";
+                                                                                }
+                                                                                if (Math.Round(scale2, 4) == 0.0017)
+                                                                                {
+                                                                                    anno_name = "_1:600";
+                                                                                }
+
+                                                                                foreach (var context1 in occ)
+                                                                                {
+                                                                                    if (context1.Name == anno_name)
+                                                                                    {
+                                                                                        new_viewport.AnnotationScale = (AnnotationScale)context1;
+                                                                                    }
+                                                                                }
+                                                                                #endregion
+
+                                                                                Trans2.AddNewlyCreatedDBObject(new_viewport, true);
+
+                                                                                ObjectIdCollection oBJiD_COL = new ObjectIdCollection();
+                                                                                oBJiD_COL.Add(new_viewport.ObjectId);
+                                                                                DrawOrderTable DrawOrderTable2 = Trans2.GetObject(BTrecordPS.DrawOrderTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as DrawOrderTable;
+                                                                                DrawOrderTable2.MoveToBottom(oBJiD_COL);
+
+
+                                                                            }
+
+                                                                            #endregion
+
+                                                                            k = _SGEN_mainform.dt_sheet_index.Rows.Count;
+
+                                                                        }
+
+                                                                    }
+
+                                                                }
+
+                                                            }
+
+
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                            Functions.make_first_layout_active(Trans2, Database2);
+                                                            BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
+                                                            BtrecordPS.UpgradeOpen();
+
+
+                                                            double scale2 = _SGEN_mainform.Vw_scale;
+
+                                                            if (_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scale] != DBNull.Value)
+                                                            {
+                                                                scale2 = Convert.ToDouble(_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scale]);
+                                                            }
+
+                                                            if (_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scaleName] != DBNull.Value)
+                                                            {
+                                                                string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[si_index][col_scaleName]);
+                                                                if (scalename2.Contains(":") == true)
+                                                                {
+                                                                    string[] text_array1 = scalename2.Replace("'", "").Split(Convert.ToChar(":"));
+                                                                    if (text_array1.Length == 2)
+                                                                    {
+                                                                        string numarator = text_array1[0];
+                                                                        string numitor = text_array1[1];
+                                                                        if (Functions.IsNumeric(numarator) == true && Functions.IsNumeric(numitor) == true)
+                                                                        {
+                                                                            double nr2 = Convert.ToDouble(numarator);
+                                                                            double nrr2 = Convert.ToDouble(numitor);
+
+                                                                            if (nr2 > 0 && nrr2 > 0)
+                                                                            {
+                                                                                scale2 = nr2 / nrr2;
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
                                                             }
+
+
+
+                                                            #region VP plan view
+
+
+                                                            ms_pt = new Point3d((double)_SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_x], (double)_SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_y], 0);
+                                                            double twist1 = 2 * Math.PI - (double)_SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_rot] * Math.PI / 180;
+
+                                                            Creaza_viewport_on_alignment_on_existing(Database2, _SGEN_mainform.Layer_name_Main_Viewport, ms_pt,
+                                                                                                                            new Point3d(_SGEN_mainform.Vw_ps_x, _SGEN_mainform.Vw_ps_y, 0),
+                                                                                                                            _SGEN_mainform.Vw_width, _SGEN_mainform.Vw_height, scale2, twist1);
+
+                                                            #endregion
                                                         }
 
 
-
-                                                        #region VP plan view
-
-
-                                                        ms_pt = new Point3d((double)_SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_x], (double)_SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_y], 0);
-                                                        double twist1 = 2 * Math.PI - (double)_SGEN_mainform.dt_sheet_index.Rows[si_index][_SGEN_mainform.Col_rot] * Math.PI / 180;
-
-                                                        Creaza_viewport_on_alignment_on_existing(Database2, _SGEN_mainform.Layer_name_Main_Viewport, ms_pt,
-                                                                                                                        new Point3d(_SGEN_mainform.Vw_ps_x, _SGEN_mainform.Vw_ps_y, 0),
-                                                                                                                        _SGEN_mainform.Vw_width, _SGEN_mainform.Vw_height, scale2, twist1);
-
-                                                        #endregion
 
 
 
@@ -909,64 +1150,217 @@ namespace Alignment_mdi
 
 
 
-        private void Creaza_viewport_on_alignment_on_existing(Database Database2, string Layer_name_Viewport, Point3d MSpoint, Point3d PSpoint, double width1, double height1, double scale1, double twist1,string scalename2="")
+        private void Creaza_viewport_on_alignment_on_existing(Database Database2, string Layer_name_Viewport, Point3d MSpoint, Point3d PSpoint, double width1, double height1, double scale1, double twist1, int layout_index = 1, string layout_name = "xxx")
         {
             HostApplicationServices.WorkingDatabase = Database2;
             Functions.Creaza_layer_on_database(Database2, Layer_name_Viewport, 4, false);
 
             using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = Database2.TransactionManager.StartTransaction())
             {
-                Functions.make_first_layout_active(Trans2, Database2);
-                BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
-                BtrecordPS.UpgradeOpen();
+                
+                var ocm = Database2.ObjectContextManager;
+                var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
 
-                List<string> lista_del = new List<string>();
-                lista_del.Add(Layer_name_Viewport);
+                BlockTableRecord BtrecordPS = null;
 
-                foreach (ObjectId id1 in BtrecordPS)
+                if (checkBox_edit_multilayout.Checked == true)
                 {
-                    Viewport Viewport_old = Trans2.GetObject(id1, OpenMode.ForRead) as Viewport;
+                    Functions.make_layout_active(Trans2, Database2, layout_index);
+                    BtrecordPS = Functions.get_layout_as_paperspace(Trans2, Database2, layout_index);
 
-                    if (Viewport_old != null)
+                    if (BtrecordPS == null)
                     {
-                        if (lista_del.Contains(Viewport_old.Layer) == true)
+                        MessageBox.Show(layout_name + "\r\n" + Functions.get_layout_name(Trans2, Database2, layout_index) + "\r\nlayout index = " + layout_index.ToString() + "\r\nerror");
+                        return;
+                    }
+
+                    BtrecordPS.UpgradeOpen();
+                    List<string> lista_del = new List<string>();
+                    lista_del.Add(Layer_name_Viewport);
+
+                    foreach (ObjectId id1 in BtrecordPS)
+                    {
+                        Viewport Viewport_old = Trans2.GetObject(id1, OpenMode.ForRead) as Viewport;
+
+                        if (Viewport_old != null)
                         {
-                            Viewport_old.UpgradeOpen();
-                            Viewport_old.Erase();
+                            if (lista_del.Contains(Viewport_old.Layer) == true)
+                            {
+                                Viewport_old.UpgradeOpen();
+                                Viewport_old.Erase();
+                            }
                         }
                     }
-                }
-
-                ObjectContextManager ocm = Database2.ObjectContextManager;
-
-                ObjectContextCollection occ = null;
-                if (ocm != null)
-                {
-                    occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
-                }
 
 
-                Viewport new_viewport = Functions.Create_viewport(MSpoint, PSpoint, width1, height1, scale1, twist1);
-                new_viewport.Layer = Layer_name_Viewport;
-                BtrecordPS.AppendEntity(new_viewport);
-                Trans2.AddNewlyCreatedDBObject(new_viewport, true);
+                    Viewport new_viewport = Functions.Create_viewport(MSpoint, PSpoint, width1, height1, scale1, twist1);
+                    new_viewport.Layer = Layer_name_Viewport;
+                    BtrecordPS.AppendEntity(new_viewport);
 
-                if (occ != null && scalename2 != "")
-                {
-                    AnnotationScale Anno_scale = occ.GetContext(scalename2) as AnnotationScale;
-                    if (Anno_scale != null)
+                    #region annotation implementation
+                    string anno_name = "xxx";
+                    if (Math.Round(scale1, 1) == 0.1)
                     {
-                        new_viewport.AnnotationScale = Anno_scale;
+                        anno_name = "_1:10";
+                    }
+                    if (Math.Round(scale1, 2) == 0.05)
+                    {
+                        anno_name = "_1:20";
+                    }
+                    if (Math.Round(scale1, 3) == 0.033)
+                    {
+                        anno_name = "_1:30";
+                    }
+                    if (Math.Round(scale1, 3) == 0.025)
+                    {
+                        anno_name = "_1:40";
+                    }
+                    if (Math.Round(scale1, 2) == 0.02)
+                    {
+                        anno_name = "_1:50";
+                    }
+                    if (Math.Round(scale1, 3) == 0.017)
+                    {
+                        anno_name = "_1:60";
+                    }
+                    if (Math.Round(scale1, 2) == 0.01)
+                    {
+                        anno_name = "_1:100";
+                    }
+                    if (Math.Round(scale1, 3) == 0.005)
+                    {
+                        anno_name = "_1:200";
+                    }
+                    if (Math.Round(scale1, 4) == 0.0033)
+                    {
+                        anno_name = "_1:300";
+                    }
+                    if (Math.Round(scale1, 4) == 0.0025)
+                    {
+                        anno_name = "_1:400";
+                    }
+                    if (Math.Round(scale1, 3) == 0.002)
+                    {
+                        anno_name = "_1:500";
+                    }
+                    if (Math.Round(scale1, 4) == 0.0017)
+                    {
+                        anno_name = "_1:600";
                     }
 
+                    foreach (var context1 in occ)
+                    {
+                        if (context1.Name == anno_name)
+                        {
+                            new_viewport.AnnotationScale = (AnnotationScale)context1;
+                        }
+                    }
+                    #endregion
+
+                    Trans2.AddNewlyCreatedDBObject(new_viewport, true);
+
+                    ObjectIdCollection oBJiD_COL = new ObjectIdCollection();
+                    oBJiD_COL.Add(new_viewport.ObjectId);
+                    DrawOrderTable DrawOrderTable2 = Trans2.GetObject(BtrecordPS.DrawOrderTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as DrawOrderTable;
+                    DrawOrderTable2.MoveToBottom(oBJiD_COL);
+                    Trans2.Commit();
+                }
+                else
+                {
+                    Functions.make_first_layout_active(Trans2, Database2);
+                    BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
+                    BtrecordPS.UpgradeOpen();
+                    List<string> lista_del = new List<string>();
+                    lista_del.Add(Layer_name_Viewport);
+
+                    foreach (ObjectId id1 in BtrecordPS)
+                    {
+                        Viewport Viewport_old = Trans2.GetObject(id1, OpenMode.ForRead) as Viewport;
+
+                        if (Viewport_old != null)
+                        {
+                            if (lista_del.Contains(Viewport_old.Layer) == true)
+                            {
+                                Viewport_old.UpgradeOpen();
+                                Viewport_old.Erase();
+                            }
+                        }
+                    }
+
+
+                    Viewport new_viewport = Functions.Create_viewport(MSpoint, PSpoint, width1, height1, scale1, twist1);
+                    new_viewport.Layer = Layer_name_Viewport;
+                    BtrecordPS.AppendEntity(new_viewport);
+
+                    #region annotation implementation
+                    string anno_name = "xxx";
+                    if (Math.Round(scale1, 1) == 0.1)
+                    {
+                        anno_name = "_1:10";
+                    }
+                    if (Math.Round(scale1, 2) == 0.05)
+                    {
+                        anno_name = "_1:20";
+                    }
+                    if (Math.Round(scale1, 3) == 0.033)
+                    {
+                        anno_name = "_1:30";
+                    }
+                    if (Math.Round(scale1, 3) == 0.025)
+                    {
+                        anno_name = "_1:40";
+                    }
+                    if (Math.Round(scale1, 2) == 0.02)
+                    {
+                        anno_name = "_1:50";
+                    }
+                    if (Math.Round(scale1, 3) == 0.017)
+                    {
+                        anno_name = "_1:60";
+                    }
+                    if (Math.Round(scale1, 2) == 0.01)
+                    {
+                        anno_name = "_1:100";
+                    }
+                    if (Math.Round(scale1, 3) == 0.005)
+                    {
+                        anno_name = "_1:200";
+                    }
+                    if (Math.Round(scale1, 4) == 0.0033)
+                    {
+                        anno_name = "_1:300";
+                    }
+                    if (Math.Round(scale1, 4) == 0.0025)
+                    {
+                        anno_name = "_1:400";
+                    }
+                    if (Math.Round(scale1, 3) == 0.002)
+                    {
+                        anno_name = "_1:500";
+                    }
+                    if (Math.Round(scale1, 4) == 0.0017)
+                    {
+                        anno_name = "_1:600";
+                    }
+
+                    foreach (var context1 in occ)
+                    {
+                        if (context1.Name == anno_name)
+                        {
+                            new_viewport.AnnotationScale = (AnnotationScale)context1;
+                        }
+                    }
+                    #endregion
+
+                    Trans2.AddNewlyCreatedDBObject(new_viewport, true);
+                    ObjectIdCollection oBJiD_COL = new ObjectIdCollection();
+                    oBJiD_COL.Add(new_viewport.ObjectId);
+                    DrawOrderTable DrawOrderTable2 = Trans2.GetObject(BtrecordPS.DrawOrderTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as DrawOrderTable;
+                    DrawOrderTable2.MoveToBottom(oBJiD_COL);
+                    Trans2.Commit();
                 }
 
-                ObjectIdCollection oBJiD_COL = new ObjectIdCollection();
-                oBJiD_COL.Add(new_viewport.ObjectId);
-                DrawOrderTable DrawOrderTable2 = Trans2.GetObject(BtrecordPS.DrawOrderTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as DrawOrderTable;
-                DrawOrderTable2.MoveToBottom(oBJiD_COL);
 
-                Trans2.Commit();
 
             }
         }

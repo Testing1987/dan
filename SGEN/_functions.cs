@@ -122,6 +122,77 @@ namespace Alignment_mdi
 
         }
 
+
+        public static void make_layout_active(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no=1)
+        {
+            HostApplicationServices.WorkingDatabase = Database1;
+
+            DBDictionary Layoutdict = (DBDictionary)Trans1.GetObject(Database1.LayoutDictionaryId, OpenMode.ForRead);
+
+            LayoutManager LayoutManager1 = (LayoutManager)Autodesk.AutoCAD.DatabaseServices.LayoutManager.Current;
+
+            Layout Layout0 = null;
+            foreach (DBDictionaryEntry entry in Layoutdict)
+            {
+                Layout0 = (Layout)Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead);
+                if (Layout0.TabOrder == no)
+                {
+                    LayoutManager1.CurrentLayout = Layout0.LayoutName;
+                    return;
+                }
+
+            }
+           
+        }
+
+        public static string  get_layout_name(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no = 1)
+        {
+            HostApplicationServices.WorkingDatabase = Database1;
+
+            DBDictionary Layoutdict = (DBDictionary)Trans1.GetObject(Database1.LayoutDictionaryId, OpenMode.ForRead);
+
+            LayoutManager LayoutManager1 = (LayoutManager)Autodesk.AutoCAD.DatabaseServices.LayoutManager.Current;
+
+            Layout Layout0 = null;
+            foreach (DBDictionaryEntry entry in Layoutdict)
+            {
+                Layout0 = (Layout)Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead);
+                if (Layout0.TabOrder == no)
+                {
+                    return Layout0.LayoutName;
+                }
+
+            }
+
+            return "";
+
+        }
+
+        public static int no_of_paperspace_layouts(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1)
+        {
+            HostApplicationServices.WorkingDatabase = Database1;
+
+            DBDictionary Layoutdict = (DBDictionary)Trans1.GetObject(Database1.LayoutDictionaryId, OpenMode.ForRead);
+
+            LayoutManager LayoutManager1 = (LayoutManager)Autodesk.AutoCAD.DatabaseServices.LayoutManager.Current;
+
+            Layout Layout0 = null;
+            int no_of_layouts = 1;
+
+            foreach (DBDictionaryEntry entry in Layoutdict)
+            {
+                Layout0 = (Layout)Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead);
+                if (Layout0.TabOrder >1)
+                {
+                    ++no_of_layouts;
+                }
+
+            }
+
+            return no_of_layouts;
+        }
+
+
         public static void Color_border_range_inside(Microsoft.Office.Interop.Excel.Range range1, int cid)
         {
 
@@ -641,6 +712,30 @@ namespace Alignment_mdi
             return BTrecordPS;
 
 
+        }
+
+        public static Autodesk.AutoCAD.DatabaseServices.BlockTableRecord get_layout_as_paperspace(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no=1)
+        {
+
+            HostApplicationServices.WorkingDatabase = Database1;
+
+            DBDictionary Layoutdict = (DBDictionary)Trans1.GetObject(Database1.LayoutDictionaryId, OpenMode.ForRead);
+
+            LayoutManager LayoutManager1 = (LayoutManager)Autodesk.AutoCAD.DatabaseServices.LayoutManager.Current;
+
+            Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecordPS = null;
+            foreach (DBDictionaryEntry entry in Layoutdict)
+            {
+                Layout Layout0 = (Layout)Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead);
+                if (Layout0.TabOrder == no)
+                {
+                    return (BlockTableRecord)Trans1.GetObject(Layout0.BlockTableRecordId, OpenMode.ForRead);
+                }
+
+            }
+            return BTrecordPS;
+
+           
         }
 
         public static Layout get_first_layout(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1)
@@ -1694,6 +1789,54 @@ namespace Alignment_mdi
                         Combobox1.Items.Clear();
                     }
                     Trans1.Commit();
+                }
+            }
+        }
+
+        public static void creaza_anno_scales(Database Database2)
+        {
+            List<string> lista_anno_names = new List<string>();
+            List<double> lista_anno_ps = new List<double>();
+            lista_anno_names.Add("_1:10");
+            lista_anno_ps.Add(10);
+            lista_anno_names.Add("_1:20");
+            lista_anno_ps.Add(20);
+            lista_anno_names.Add("_1:30");
+            lista_anno_ps.Add(30);
+            lista_anno_names.Add("_1:40");
+            lista_anno_ps.Add(40);
+            lista_anno_names.Add("_1:50");
+            lista_anno_ps.Add(50);
+            lista_anno_names.Add("_1:60");
+            lista_anno_ps.Add(60);
+            lista_anno_names.Add("_1:100");
+            lista_anno_ps.Add(100);
+            lista_anno_names.Add("_1:200");
+            lista_anno_ps.Add(200);
+            lista_anno_names.Add("_1:300");
+            lista_anno_ps.Add(300);
+            lista_anno_names.Add("_1:400");
+            lista_anno_ps.Add(400);
+            lista_anno_names.Add("_1:500");
+            lista_anno_ps.Add(500);
+            lista_anno_names.Add("_1:600");
+            lista_anno_ps.Add(600);
+
+
+            var ocm = Database2.ObjectContextManager;
+            var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
+
+            for (int i = 0; i < lista_anno_names.Count; i++)
+            {
+                AnnotationScale ano1 = new AnnotationScale();
+                ano1.Name = lista_anno_names[i];
+                ano1.PaperUnits = 1;
+                ano1.DrawingUnits = lista_anno_ps[i];
+
+                if (occ.HasContext(ano1.Name) == false)
+                {
+                    occ.AddContext(ano1);
+
                 }
             }
         }

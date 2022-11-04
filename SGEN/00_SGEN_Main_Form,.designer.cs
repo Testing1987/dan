@@ -29,18 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(_SGEN_mainform));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Project Setup");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Sheet Index Setup");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Drawing Creation");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Titleblock Manager");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Sheet Cutter", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Data Manager");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Label Generator");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Shape Export");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Project Setup");
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Sheet Index Setup");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Drawing Creation");
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Titleblock Manager");
+            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Sheet Cutter", new System.Windows.Forms.TreeNode[] {
+            treeNode9,
+            treeNode10,
+            treeNode11,
+            treeNode12});
+            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Data Manager");
+            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Label Generator");
+            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Shape Export");
             this.panel_header = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.label_excel_info = new System.Windows.Forms.Label();
@@ -190,7 +190,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(97, 19);
             this.label16.TabIndex = 2142;
-            this.label16.Text = "v-2.0";
+            this.label16.Text = "v-2.4";
             this.label16.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // panel11
@@ -216,35 +216,35 @@
             this.treeView1.ItemHeight = 30;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.ForeColor = System.Drawing.Color.White;
-            treeNode1.Name = "NodePS";
-            treeNode1.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            treeNode1.Text = "Project Setup";
-            treeNode2.ForeColor = System.Drawing.Color.White;
-            treeNode2.Name = "NodeSI";
-            treeNode2.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode2.Text = "Sheet Index Setup";
-            treeNode3.ForeColor = System.Drawing.Color.White;
-            treeNode3.Name = "NodeDC";
-            treeNode3.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode3.Text = "Drawing Creation";
-            treeNode4.ForeColor = System.Drawing.Color.White;
-            treeNode4.Name = "NodeTBLK";
-            treeNode4.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode4.Text = "Titleblock Manager";
-            treeNode5.Name = "Node0";
-            treeNode5.Text = "Sheet Cutter";
-            treeNode6.Name = "NodeDM";
-            treeNode6.Text = "Data Manager";
-            treeNode7.Name = "NodeLG";
-            treeNode7.Text = "Label Generator";
-            treeNode8.Name = "NodeSE";
-            treeNode8.Text = "Shape Export";
+            treeNode9.ForeColor = System.Drawing.Color.White;
+            treeNode9.Name = "NodePS";
+            treeNode9.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode9.Text = "Project Setup";
+            treeNode10.ForeColor = System.Drawing.Color.White;
+            treeNode10.Name = "NodeSI";
+            treeNode10.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode10.Text = "Sheet Index Setup";
+            treeNode11.ForeColor = System.Drawing.Color.White;
+            treeNode11.Name = "NodeDC";
+            treeNode11.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode11.Text = "Drawing Creation";
+            treeNode12.ForeColor = System.Drawing.Color.White;
+            treeNode12.Name = "NodeTBLK";
+            treeNode12.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode12.Text = "Titleblock Manager";
+            treeNode13.Name = "Node0";
+            treeNode13.Text = "Sheet Cutter";
+            treeNode14.Name = "NodeDM";
+            treeNode14.Text = "Data Manager";
+            treeNode15.Name = "NodeLG";
+            treeNode15.Text = "Label Generator";
+            treeNode16.Name = "NodeSE";
+            treeNode16.Text = "Shape Export";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode6,
-            treeNode7,
-            treeNode8});
+            treeNode13,
+            treeNode14,
+            treeNode15,
+            treeNode16});
             this.treeView1.ShowLines = false;
             this.treeView1.ShowPlusMinus = false;
             this.treeView1.ShowRootLines = false;
