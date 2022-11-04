@@ -19,7 +19,7 @@ namespace BlockDeleter.CoreLogic
     public class CADAccess
     {
         /// <summary>
-        /// Creates a list of drawing files by asking the user to select them with an <see cref="OpenFileDialog"/> and returns that list.
+        /// Creates a list of drawing files by asking the user to select them with an asf<see cref="OpenFileDialog"/> and returns that list.
         /// </summary>
         /// <returns></returns>
         public IList<string> AddtoDrawingList()
