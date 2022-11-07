@@ -62,11 +62,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\PAN71158\\source\\Workspaces\\PipelinesCADTools\\CADTechnologiesSource\\FileHelper\\FileHelper\\FileHelper.csproj",
+      "projectUniqueName": "C:\\Users\\PAN71158\\source\\repos\\PipelineCADToolsFromDevOps\\CADTechnologiesSource\\FileHelper\\FileHelper\\FileHelper.csproj",
       "projectName": "FileHelper",
-      "projectPath": "C:\\Users\\PAN71158\\source\\Workspaces\\PipelinesCADTools\\CADTechnologiesSource\\FileHelper\\FileHelper\\FileHelper.csproj",
+      "projectPath": "C:\\Users\\PAN71158\\source\\repos\\PipelineCADToolsFromDevOps\\CADTechnologiesSource\\FileHelper\\FileHelper\\FileHelper.csproj",
       "packagesPath": "C:\\Users\\PAN71158\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\PAN71158\\source\\Workspaces\\PipelinesCADTools\\CADTechnologiesSource\\FileHelper\\FileHelper\\obj\\",
+      "outputPath": "C:\\Users\\PAN71158\\source\\repos\\PipelineCADToolsFromDevOps\\CADTechnologiesSource\\FileHelper\\FileHelper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -124,7 +124,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
