@@ -19464,6 +19464,124 @@ namespace Alignment_mdi
             }
         }
 
+
+        public static Polyline get_offset_polyline(Polyline poly0, double width1)
+        {
+
+            Point2dCollection col3 = new Point2dCollection();
+
+            if (poly0 != null)
+            {
+                
+
+                bool are_2_vertices = false;
+
+
+
+                if (poly0.NumberOfVertices > 2)
+                {
+                    Point2d pt0 = poly0.GetPoint2dAt(0);
+                    for (int i = 0; i < poly0.NumberOfVertices - 2; ++i)
+                    {
+                        Point2d pt1 = poly0.GetPoint2dAt(i + 1);
+                        Point2d pt2 = poly0.GetPoint2dAt(i + 2);
+                        double d1 = Math.Round(Math.Pow(Math.Pow(pt0.X - pt1.X, 2) + Math.Pow(pt0.Y - pt1.Y, 2), 0.5), 3);
+                        double d2 = Math.Round(Math.Pow(Math.Pow(pt2.X - pt1.X, 2) + Math.Pow(pt2.Y - pt1.Y, 2), 0.5), 3);
+
+                        if (d1 > 0.001 && d2 > 0.001)
+                        {
+                            Polyline poly1 = new Polyline();
+                            poly1.AddVertexAt(0, pt0, 0, 0, 0);
+                            poly1.AddVertexAt(1, pt1, 0, 0, 0);
+                            Polyline poly2 = new Polyline();
+                            poly2.AddVertexAt(0, pt1, 0, 0, 0);
+                            poly2.AddVertexAt(1, pt2, 0, 0, 0);
+
+                            DBObjectCollection col1 = poly1.GetOffsetCurves(width1);
+                            DBObjectCollection col2 = poly2.GetOffsetCurves(width1);
+
+                            Polyline poly11 = col1[0] as Polyline;
+                            if (i == 0) col3.Add(poly11.GetPoint2dAt(0));
+
+                            Polyline poly22 = col2[0] as Polyline;
+                            Point3dCollection colint = new Point3dCollection();
+
+                            poly11.IntersectWith(poly22, Intersect.ExtendBoth, colint, IntPtr.Zero, IntPtr.Zero);
+
+                            if (colint.Count > 0)
+                            {
+                                col3.Add(new Point2d(colint[0].X, colint[0].Y));
+
+                                if (i == poly0.NumberOfVertices - 3) col3.Add(poly22.GetPoint2dAt(1));
+                            }
+                            pt0 = pt1;
+                        }
+
+                    }
+                }
+                else if (poly0.NumberOfVertices == 2)
+                {
+                    are_2_vertices = true;
+                }
+                else
+                {
+                    MessageBox.Show("length of poly = 0?????");
+                }
+
+                if (col3.Count <= 1)
+                {
+                    col3.Clear();
+                    are_2_vertices = true;
+                }
+
+                if (are_2_vertices == true)
+                {
+                    Point2d pt0 = poly0.GetPoint2dAt(0);
+                    Point2d pt1 = poly0.GetPoint2dAt(poly0.NumberOfVertices - 1);
+                    double d1 = Math.Round(Math.Pow(Math.Pow(pt0.X - pt1.X, 2) + Math.Pow(pt0.Y - pt1.Y, 2), 0.5), 3);
+                    if (d1 > 0.001)
+                    {
+                        Polyline poly1 = new Polyline();
+                        poly1.AddVertexAt(0, pt0, 0, 0, 0);
+                        poly1.AddVertexAt(1, pt1, 0, 0, 0);
+                        DBObjectCollection col1 = poly1.GetOffsetCurves(width1);
+                        Polyline poly11 = col1[0] as Polyline;
+                        col3.Add(poly11.GetPoint2dAt(0));
+                        col3.Add(poly11.GetPoint2dAt(1));
+                    }
+                }
+
+
+            }
+
+            Polyline poly3 = null;
+
+            if (col3.Count > 0)
+            {
+                poly3 = new Polyline();
+                int idx = 0;
+                Point2d pt_prev = new Point2d();
+                for (int i = 0; i < col3.Count; ++i)
+                {
+                    Point2d pt1 = col3[i];
+
+                    double d1 = Math.Round(Math.Pow(Math.Pow(pt1.X - pt_prev.X, 2) + Math.Pow(pt1.Y - pt_prev.Y, 2), 0.5), 3);
+
+                    if (d1 > 0.001)
+                    {
+                        poly3.AddVertexAt(idx, pt1, 0, 0, 0);
+                        ++idx;
+                        pt_prev = pt1;
+                    }
+
+                }
+            }
+
+            return poly3;
+        }
+
+
+
     }
 
 

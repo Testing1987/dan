@@ -5629,7 +5629,7 @@ namespace Alignment_mdi
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.Message+"test");
+                MessageBox.Show(ex.Message);
             }
 
             Editor1.SetImpliedSelection(Empty_array);
