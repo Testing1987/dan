@@ -829,6 +829,9 @@ namespace Alignment_mdi
 
                         Polyline poly2d = Trans1.GetObject(Rezultat_centerline.ObjectId, OpenMode.ForWrite) as Polyline;
                         Polyline3d poly3d = Trans1.GetObject(Rezultat_centerline.ObjectId, OpenMode.ForRead) as Polyline3d;
+                        Polyline original_poly2d = poly2d.Clone() as Polyline;
+
+
 
                         if (poly2d == null)
                         {
@@ -896,7 +899,7 @@ namespace Alignment_mdi
                                 Polyline poly_int_2d = Trans1.GetObject(id1, OpenMode.ForRead) as Polyline;
                                 Polyline3d poly_int_3d = Trans1.GetObject(id1, OpenMode.ForRead) as Polyline3d;
                                 Autodesk.AutoCAD.DatabaseServices.Line line_int = Trans1.GetObject(id1, OpenMode.ForRead) as Autodesk.AutoCAD.DatabaseServices.Line;
-
+                                DBPoint dbpt1 = Trans1.GetObject(id1, OpenMode.ForRead) as DBPoint;
 
                                 Entity ent1 = Trans1.GetObject(id1, OpenMode.ForRead) as Entity;
 
@@ -1029,7 +1032,95 @@ namespace Alignment_mdi
                                         }
                                     }
 
+                                    if (dbpt1 != null)
+                                    {
+                                        dt1.Rows.Add();
+                                        dt1.Rows[dt1.Rows.Count - 1]["Type"] = "Point";
+                                        dt1.Rows[dt1.Rows.Count - 1]["Layer"] = dbpt1.Layer;
+                                        dt1.Rows[dt1.Rows.Count - 1]["X"] = dbpt1.Position.X;
+                                        dt1.Rows[dt1.Rows.Count - 1]["Y"] = dbpt1.Position.Y;
+                                        dt1.Rows[dt1.Rows.Count - 1]["Z on object"] = dbpt1.Position.Z;
+                                        Point3d pt1 = new Point3d();
+                                        double param1 = -1;
+                                        double x1 = 0;
+                                        double y1 = 0;
+                                        double x2 = 0;
+                                        double y2 = 0;
+                                        double x3 = 0;
+                                        double y3 = 0;
+                                        if (original_poly2d != null)
+                                        {
+                                            pt1 = original_poly2d.GetClosestPointTo(dbpt1.Position, Vector3d.ZAxis, false);
+                                            dt1.Rows[dt1.Rows.Count - 1]["Sta"] = original_poly2d.GetDistAtPoint(pt1);
+                                            dt1.Rows[dt1.Rows.Count - 1]["Z on CL"] = original_poly2d.Elevation;
+                                            param1 = original_poly2d.GetParameterAtPoint(pt1);
+                                            if (param1 + 1 <= original_poly2d.EndParam)
+                                            {
+                                                x1 = dbpt1.Position.X;
+                                                y1 = dbpt1.Position.Y;
+                                                x2 = pt1.X;
+                                                y1 = pt1.Y;
+                                                x3 = original_poly2d.GetPointAtParameter(param1 + 1).X;
+                                                y3 = original_poly2d.GetPointAtParameter(param1 + 1).Y;
+                                            }
+                                            else
+                                            {
+                                                x3 = dbpt1.Position.X;
+                                                y3 = dbpt1.Position.Y;
+                                                x2 = pt1.X;
+                                                y1 = pt1.Y;
+                                                x1 = original_poly2d.GetPointAtParameter(param1 - 1).X;
+                                                y1 = original_poly2d.GetPointAtParameter(param1 - 1).Y;
+                                            }
 
+                                        }
+                                        else
+                                        {
+                                            pt1 = poly2d.GetClosestPointTo(dbpt1.Position, Vector3d.ZAxis, false);
+                                            param1 = poly2d.GetParameterAtPoint(pt1);
+                                            if (param1 + 1 <= poly2d.EndParam)
+                                            {
+                                                x1 = dbpt1.Position.X;
+                                                y1 = dbpt1.Position.Y;
+                                                x2 = pt1.X;
+                                                y1 = pt1.Y;
+                                                x3 = poly2d.GetPointAtParameter(param1 + 1).X;
+                                                y3 = poly2d.GetPointAtParameter(param1 + 1).Y;
+                                            }
+                                            else
+                                            {
+                                                x3 = dbpt1.Position.X;
+                                                y3 = dbpt1.Position.Y;
+                                                x2 = pt1.X;
+                                                y1 = pt1.Y;
+                                                x1 = poly2d.GetPointAtParameter(param1 - 1).X;
+                                                y1 = poly2d.GetPointAtParameter(param1 - 1).Y;
+                                            }
+
+                                            if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+                                            dt1.Rows[dt1.Rows.Count - 1]["Sta"] = poly3d.GetDistanceAtParameter(param1);
+                                            dt1.Rows[dt1.Rows.Count - 1]["Z on CL"] = poly3d.GetPointAtParameter(param1).Z;
+
+
+                                        }
+                                        if (dt1.Columns.Contains("Offset") == false)
+                                        {
+                                            dt1.Columns.Add("Offset", typeof(string));
+                                        }
+
+                                        double dist = Math.Pow(Math.Pow(pt1.X - dbpt1.Position.X, 2) + Math.Pow(pt1.Y - dbpt1.Position.Y, 2), 0.5);
+
+
+                                        string lr = Functions.Get_deflection_side(x1,y1, x2,y2, x3, y3);
+
+                                        dt1.Rows[dt1.Rows.Count - 1]["Offset"] = Convert.ToString(dist)+" "+ lr;
+
+
+                                        Functions.add_object_data_to_datatable(dt1, Tables1, dbpt1.ObjectId);
+
+
+
+                                    }
 
 
                                 }
@@ -4707,7 +4798,7 @@ namespace Alignment_mdi
                                             dt1.Rows.Add();
                                             dt1.Rows[dt1.Rows.Count - 1][col_type] = "Polyline#" + Convert.ToString(index_polyline);
 
-                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] =  "poly1.AddVertexAt(" + Convert.ToString(j) + ", new Point2d(scale1 * " + Convert.ToString(x1) + ", scale1 *" + Convert.ToString(y1) + "), 0, 0, 0);";
+                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly1.AddVertexAt(" + Convert.ToString(j) + ", new Point2d(scale1 * " + Convert.ToString(x1) + ", scale1 *" + Convert.ToString(y1) + "), 0, 0, 0);";
 
                                             dt1.Rows[dt1.Rows.Count - 1][col_x] = x1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_y] = y1;
