@@ -2186,7 +2186,7 @@ namespace Alignment_mdi
                                                             BtrecordPS.UpgradeOpen();
                                                             Layout Layout1 = Functions.get_first_layout(Trans2, Database2);
                                                             Layout1.UpgradeOpen();
-                                                            Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_dwg_name].ToString();
+                                                            //Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_dwg_name].ToString();
 
                                                             #region delete viewport
                                                             if (checkBox_delete_vp.Checked == true)
@@ -3481,7 +3481,7 @@ namespace Alignment_mdi
                 Functions.creaza_anno_scales(Database2);
                 var ocm = Database2.ObjectContextManager;
                 var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
-
+               
 
                 Functions.make_first_layout_active(Trans2, Database2);
                 BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
@@ -3508,11 +3508,12 @@ namespace Alignment_mdi
               
                 new_viewport.Layer = Layer_name_Viewport;
                 BtrecordPS.AppendEntity(new_viewport);
-                
 
 
+
+                #region annotation implementation
                 string anno_name = "xxx";
-                if (Math.Round( scale1,1)==0.1)
+                if (Math.Round(scale1, 1) == 0.1)
                 {
                     anno_name = "_1:10";
                 }
@@ -3567,7 +3568,8 @@ namespace Alignment_mdi
                     {
                         new_viewport.AnnotationScale = (AnnotationScale)context1;
                     }
-                }
+                } 
+                #endregion
 
                 Trans2.AddNewlyCreatedDBObject(new_viewport, true);
 

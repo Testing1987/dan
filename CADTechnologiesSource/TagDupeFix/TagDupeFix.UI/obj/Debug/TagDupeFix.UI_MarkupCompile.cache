@@ -4,16 +4,21 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\
 TagDupeFix.UI
 none
 false
 DEBUG;TRACE
 
-1-587587561
+11892971807
 
+<<<<<<< HEAD
 44171167351
 24840073298
+=======
+441314142949
+17279289461
+>>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\MainWindow.xaml;
 
 True

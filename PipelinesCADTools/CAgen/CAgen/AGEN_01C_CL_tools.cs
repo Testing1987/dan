@@ -854,7 +854,7 @@ namespace Alignment_mdi
             }
             set_enable_true();
         }
-          private void button_calc_chainage_from_point_Click(object sender, EventArgs e)
+        private void button_calc_chainage_from_point_Click(object sender, EventArgs e)
         {
             int start1 = 0;
             int end1 = 0;
@@ -3826,6 +3826,78 @@ namespace Alignment_mdi
                             }
                         }
 
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Editor1.SetImpliedSelection(Empty_array);
+            Editor1.WriteMessage("\nCommand:");
+            set_enable_true();
+
+        }
+
+        private void button_create_offset_Click(object sender, EventArgs e)
+        {
+
+            ObjectId[] Empty_array = null;
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+            Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+
+            if (Functions.IsNumeric(textBox_offset.Text) == false) return;
+            double offset1 = Convert.ToDouble(textBox_offset.Text);
+
+            try
+            {
+                set_enable_false();
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+
+                        BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                        LayerTable LayerTable1 = Trans1.GetObject(ThisDrawing.Database.LayerTableId, OpenMode.ForRead) as LayerTable;
+                        TextStyleTable Text_style_table1 = Trans1.GetObject(ThisDrawing.Database.TextStyleTableId, OpenMode.ForRead) as TextStyleTable;
+
+                        Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_centerline;
+                        Autodesk.AutoCAD.EditorInput.PromptEntityOptions Prompt_centerline;
+                        Prompt_centerline = new Autodesk.AutoCAD.EditorInput.PromptEntityOptions("\nSelect the centerline:");
+                        Prompt_centerline.SetRejectMessage("\nSelect a polyline!");
+                        Prompt_centerline.AllowNone = true;
+                        Prompt_centerline.AddAllowedClass(typeof(Autodesk.AutoCAD.DatabaseServices.Polyline), false);
+                        Rezultat_centerline = ThisDrawing.Editor.GetEntity(Prompt_centerline);
+
+                        if (Rezultat_centerline.Status != PromptStatus.OK)
+                        {
+                            Editor1.SetImpliedSelection(Empty_array);
+                            Editor1.WriteMessage("\nCommand:");
+                            set_enable_true();
+                            return;
+                        }
+
+                        Polyline poly1 = Trans1.GetObject(Rezultat_centerline.ObjectId, OpenMode.ForRead) as Polyline;
+                        if (poly1 != null)
+                        {
+                            Polyline poly2 = Functions.get_offset_polyline(poly1, offset1);
+
+                            BTrecord.AppendEntity(poly2);
+                            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+                            poly2 = Functions.get_offset_polyline(poly1, -offset1);
+
+                            BTrecord.AppendEntity(poly2);
+                            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+                        }
+
+
+                        Trans1.Commit();
                     }
                 }
             }

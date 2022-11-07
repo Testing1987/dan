@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Agen_load_cl_from_xl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel_APT = new System.Windows.Forms.Panel();
             this.label36 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -113,6 +113,7 @@
             this.button_calc_2D_distance = new System.Windows.Forms.Button();
             this.button_generate_point_from_CSF = new System.Windows.Forms.Button();
             this.panel_err = new System.Windows.Forms.Panel();
+            this.button_create_offset = new System.Windows.Forms.Button();
             this.dataGridView_errors = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
@@ -128,6 +129,7 @@
             this.panel18 = new System.Windows.Forms.Panel();
             this.button_point2sta = new System.Windows.Forms.Button();
             this.button_sta2point = new System.Windows.Forms.Button();
+            this.textBox_offset = new System.Windows.Forms.TextBox();
             this.panel_APT.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel_pipe_manifest.SuspendLayout();
@@ -1321,11 +1323,33 @@
             // 
             this.panel_err.AutoScroll = true;
             this.panel_err.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_err.Controls.Add(this.textBox_offset);
+            this.panel_err.Controls.Add(this.button_create_offset);
             this.panel_err.Controls.Add(this.dataGridView_errors);
             this.panel_err.Location = new System.Drawing.Point(3, 402);
             this.panel_err.Name = "panel_err";
             this.panel_err.Size = new System.Drawing.Size(240, 139);
             this.panel_err.TabIndex = 2145;
+            // 
+            // button_create_offset
+            // 
+            this.button_create_offset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_create_offset.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.button_create_offset.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_create_offset.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_create_offset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_create_offset.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_create_offset.ForeColor = System.Drawing.Color.White;
+            this.button_create_offset.Image = ((System.Drawing.Image)(resources.GetObject("button_create_offset.Image")));
+            this.button_create_offset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_create_offset.Location = new System.Drawing.Point(3, 6);
+            this.button_create_offset.Name = "button_create_offset";
+            this.button_create_offset.Size = new System.Drawing.Size(174, 28);
+            this.button_create_offset.TabIndex = 2141;
+            this.button_create_offset.Text = "Create Double Offset";
+            this.button_create_offset.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_create_offset.UseVisualStyleBackColor = false;
+            this.button_create_offset.Click += new System.EventHandler(this.button_create_offset_Click);
             // 
             // dataGridView_errors
             // 
@@ -1337,14 +1361,14 @@
             this.dataGridView_errors.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_errors.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_errors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_errors.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_errors.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_errors.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_errors.Location = new System.Drawing.Point(3, 1);
             this.dataGridView_errors.Name = "dataGridView_errors";
@@ -1533,6 +1557,19 @@
             this.button_sta2point.UseVisualStyleBackColor = false;
             this.button_sta2point.Click += new System.EventHandler(this.button_sta2point_Click);
             // 
+            // textBox_offset
+            // 
+            this.textBox_offset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.textBox_offset.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_offset.ForeColor = System.Drawing.Color.White;
+            this.textBox_offset.Location = new System.Drawing.Point(183, 11);
+            this.textBox_offset.Name = "textBox_offset";
+            this.textBox_offset.Size = new System.Drawing.Size(45, 20);
+            this.textBox_offset.TabIndex = 2117;
+            this.textBox_offset.Text = "0.1";
+            this.textBox_offset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_offset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_integers);
+            // 
             // Agen_load_cl_from_xl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1573,6 +1610,7 @@
             this.panel19.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel_err.ResumeLayout(false);
+            this.panel_err.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_errors)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -1684,5 +1722,7 @@
         private System.Windows.Forms.TextBox textBox_zero_X;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox textBox_zero_Y;
+        private System.Windows.Forms.Button button_create_offset;
+        private System.Windows.Forms.TextBox textBox_offset;
     }
 }

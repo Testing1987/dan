@@ -130,6 +130,8 @@ namespace Alignment_mdi
             // checkBox_edit_multilayout
             // 
             this.checkBox_edit_multilayout.AutoSize = true;
+            this.checkBox_edit_multilayout.Checked = true;
+            this.checkBox_edit_multilayout.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_edit_multilayout.Font = new System.Drawing.Font("Arial", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checkBox_edit_multilayout.ForeColor = System.Drawing.Color.White;
             this.checkBox_edit_multilayout.Location = new System.Drawing.Point(297, 30);

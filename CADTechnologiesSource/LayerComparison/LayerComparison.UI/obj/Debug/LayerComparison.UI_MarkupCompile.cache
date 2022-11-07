@@ -4,16 +4,21 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.UI\obj\Debug\
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\LayerComparison\LayerComparison.UI\obj\Debug\
 LayerComparison.UI
 none
 false
 DEBUG;TRACE
 
-10-307352926
+10-1927842478
 
+<<<<<<< HEAD
 17-242064291
 271516975166
+=======
+1761885527
+20-2033634359
+>>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\AdvancedComparisonsPage.xaml;Views\LayerItem.xaml;Views\MainPage.xaml;Views\MainWindow_LayerComparison.xaml;Views\PageHost.xaml;Views\RecentItem.xaml;Views\RecentItemList.xaml;Views\StartPage.xaml;Views\StartPageGettingStartedMenu.xaml;Views\temp\LayerItemList.xaml;
 
 True

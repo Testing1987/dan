@@ -4,16 +4,21 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.UI\obj\Debug\
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.UI\obj\Debug\
 MLineBlockAttributeEditor.UI
 none
 false
 DEBUG;TRACE
 
-11429461695
+1618415324
 
+<<<<<<< HEAD
 4-355348286
 24416766049
+=======
+4516111416
+171785281995
+>>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\MainWindow_MLineBlockAttributeEditor.xaml;
 
 True

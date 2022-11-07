@@ -4,16 +4,21 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\
 LineTypeBuilderCAD
 none
 false
 DEBUG;TRACE
 
-1219584333
+11151548125
 
+<<<<<<< HEAD
 101263282018
 192095942988
+=======
+101794924451
+13-1505183044
+>>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 MainWindow.xaml;
 
 True

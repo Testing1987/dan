@@ -4,16 +4,21 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\
 GFAR.UI
 none
 false
 DEBUG;TRACE
 
-11373651516
+11797612117
 
+<<<<<<< HEAD
 4112774649
 23-531910519
+=======
+4-665179444
+16-1529619344
+>>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\MainWindow_GFAR.xaml;
 
 True

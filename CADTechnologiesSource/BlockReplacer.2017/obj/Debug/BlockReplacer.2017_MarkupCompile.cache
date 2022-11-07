@@ -4,16 +4,21 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockReplacer.2017\obj\Debug\
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\BlockReplacer.2017\obj\Debug\
 BlockReplacer._2017
 none
 false
 DEBUG;TRACE
 
-4-927387108
+4-1917243814
 
+<<<<<<< HEAD
 3-1719726047
 14525932980
+=======
+3-630027162
+14-299849255
+>>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\Styles\BaseStyles.xaml;Views\Styles\Buttons.xaml;Views\Styles\Colors.xaml;Views\Styles\Fonts.xaml;
 
 False

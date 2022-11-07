@@ -42,6 +42,7 @@ namespace Alignment_mdi
             this.button_rename_layout = new System.Windows.Forms.Button();
             this.button_select_drawings = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_layout)).BeginInit();
@@ -137,9 +138,9 @@ namespace Alignment_mdi
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.dataGridView_layout);
             this.panel2.ForeColor = System.Drawing.Color.White;
-            this.panel2.Location = new System.Drawing.Point(3, 79);
+            this.panel2.Location = new System.Drawing.Point(3, 93);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(851, 496);
+            this.panel2.Size = new System.Drawing.Size(851, 482);
             this.panel2.TabIndex = 2207;
             // 
             // dataGridView_layout
@@ -165,7 +166,7 @@ namespace Alignment_mdi
             this.dataGridView_layout.Location = new System.Drawing.Point(0, 0);
             this.dataGridView_layout.Name = "dataGridView_layout";
             this.dataGridView_layout.RowHeadersVisible = false;
-            this.dataGridView_layout.Size = new System.Drawing.Size(849, 494);
+            this.dataGridView_layout.Size = new System.Drawing.Size(849, 480);
             this.dataGridView_layout.TabIndex = 21;
             this.dataGridView_layout.TabStop = false;
             this.dataGridView_layout.VirtualMode = true;
@@ -231,11 +232,24 @@ namespace Alignment_mdi
             this.panel3.Controls.Add(this.button_rename_layout);
             this.panel3.Controls.Add(this.panel1);
             this.panel3.Controls.Add(this.panel2);
+            this.panel3.Controls.Add(this.label2);
             this.panel3.Controls.Add(this.label1);
             this.panel3.Location = new System.Drawing.Point(8, 11);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(859, 616);
             this.panel3.TabIndex = 2259;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Yellow;
+            this.label2.Location = new System.Drawing.Point(617, 76);
+            this.label2.MaximumSize = new System.Drawing.Size(260, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(227, 14);
+            this.label2.TabIndex = 2093;
+            this.label2.Text = "**** for multilayout file have the file open";
             // 
             // Toolz_form
             // 
@@ -269,5 +283,6 @@ namespace Alignment_mdi
         private System.Windows.Forms.Button button_rename_layout;
         private System.Windows.Forms.Button button_select_drawings;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label2;
     }
 }
