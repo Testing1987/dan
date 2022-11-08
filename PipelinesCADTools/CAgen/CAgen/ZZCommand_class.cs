@@ -889,9 +889,6 @@ namespace Alignment_mdi
                             }
                         }
 
-
-
-
                         foreach (ObjectId id1 in BTrecord)
                         {
                             if (col1.Contains(id1) == false)

@@ -2326,11 +2326,11 @@ namespace Alignment_mdi
                                             xp1 = Convert.ToDouble(dt_si.Rows[j]["X_End"]);
                                             yp1 = Convert.ToDouble(dt_si.Rows[j]["Y_End"]);
                                         }
-                                        double d1 = Math.Pow(Math.Pow(x1-xp1, 2)+ Math.Pow(y1-yp1, 2), 0.5);
+                                        double d1 = Math.Pow(Math.Pow(x1 - xp1, 2) + Math.Pow(y1 - yp1, 2), 0.5);
                                         double M1 = -1;
                                         if (dt_si.Rows[j][_AGEN_mainform.Col_M1] != DBNull.Value)
                                         {
-                                           M1 = Convert.ToDouble(dt_si.Rows[j][_AGEN_mainform.Col_M1]);
+                                            M1 = Convert.ToDouble(dt_si.Rows[j][_AGEN_mainform.Col_M1]);
                                         }
 
                                         if (d1 <= 0.01 && pt1_found == false)
@@ -2924,12 +2924,12 @@ namespace Alignment_mdi
                             else
                             {
                                 bool recalc_last_pt = true;
-                                if(dist1==0 && first_matchline_value>0)
+                                if (dist1 == 0 && first_matchline_value > 0)
                                 {
                                     recalc_last_pt = false;
                                     dist1 = _AGEN_mainform.Poly2D.GetDistanceAtParameter(Param1);
                                 }
-                                if(recalc_last_pt==true) last_pt = _AGEN_mainform.Poly2D.GetPointAtDist(dist1);
+                                if (recalc_last_pt == true) last_pt = _AGEN_mainform.Poly2D.GetPointAtDist(dist1);
                                 zoom_to_Point(last_pt, _AGEN_mainform.Vw_height * 1.5);
                                 Trans1.TransactionManager.QueueForGraphicsFlush();
 
@@ -5510,12 +5510,17 @@ namespace Alignment_mdi
 
                                     if (vertical_len > 0)
                                     {
-                                        Point3d pt_on_poly2 = poly2d.GetClosestPointTo(new Point3d(xc2, yc2, poly2d.Elevation), Vector3d.ZAxis, false);                                      
+                                        Point3d pt_on_poly2 = poly2d.GetClosestPointTo(new Point3d(xc2, yc2, poly2d.Elevation), Vector3d.ZAxis, false);
                                         using (Polyline poly_temp2 = new Polyline())
                                         {
                                             poly_temp2.AddVertexAt(0, new Point2d(pt_on_poly2.X, pt_on_poly2.Y), 0, 0, 0);
                                             poly_temp2.AddVertexAt(1, new Point2d(xc2, yc2), 0, 0, 0);
-                                            poly_temp2.TransformBy(Matrix3d.Scaling(vertical_len / poly_temp2.Length, poly_temp2.StartPoint));
+
+                                            if (poly_temp2.Length > 0)
+                                            {
+                                                poly_temp2.TransformBy(Matrix3d.Scaling(vertical_len / poly_temp2.Length, poly_temp2.StartPoint));
+                                            }
+
                                             xc2 = poly_temp2.EndPoint.X;
                                             yc2 = poly_temp2.EndPoint.Y;
                                         }
