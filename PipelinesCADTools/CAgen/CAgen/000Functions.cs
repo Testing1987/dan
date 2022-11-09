@@ -5420,11 +5420,16 @@ namespace Alignment_mdi
             return Data_table_xings;
         }
 
-        public static System.Data.DataTable Build_Data_table_crossings_from_excel(Microsoft.Office.Interop.Excel.Worksheet W1, int Start_row)
+        public static System.Data.DataTable Build_Data_table_crossings_from_excel(Microsoft.Office.Interop.Excel.Worksheet W1, int Start_row, bool add_extra_col = false)
         {
 
 
             System.Data.DataTable Data_table_crossing = Creaza_crossing_datatable_structure();
+            if (add_extra_col == true)
+            {
+                Data_table_crossing.Columns.Add("Pipe Size in feet", typeof(double));
+            }
+
 
             string Col1 = "G";
 
@@ -5479,6 +5484,25 @@ namespace Alignment_mdi
                 {
                     object Valoare = values[i + 1, j + 1];
                     if (Valoare == null) Valoare = DBNull.Value;
+
+                    if (Valoare != DBNull.Value)
+                    {
+                        if (add_extra_col == true)
+                        {
+                            if (j == Data_table_crossing.Columns.Count - 1)
+                            {
+                                if (IsNumeric(Convert.ToString(Valoare)) == false)
+                                {
+                                    Valoare = DBNull.Value;
+                                }
+                                else
+                                {
+                                    Valoare = Convert.ToDouble(Valoare);
+                                }
+                            }
+                        }
+                    }
+
 
                     Data_table_crossing.Rows[i][j] = Valoare;
                 }
@@ -8004,7 +8028,7 @@ namespace Alignment_mdi
         }
 
 
-        public static MLeader creaza_mleader_with_color(Autodesk.AutoCAD.Colors.Color color1,Point3d pt_ins, string continut, ObjectId style1, double texth, double delta_x, double delta_y, double lgap, double dogl, double arrow, string layer1 = "0")
+        public static MLeader creaza_mleader_with_color(Autodesk.AutoCAD.Colors.Color color1, Point3d pt_ins, string continut, ObjectId style1, double texth, double delta_x, double delta_y, double lgap, double dogl, double arrow, string layer1 = "0")
         {
 
 
@@ -8026,7 +8050,7 @@ namespace Alignment_mdi
                 mtext1.BackgroundFill = true;
                 mtext1.UseBackgroundColor = true;
                 mtext1.BackgroundScaleFactor = 1.2;
-                mtext1.Color=color1;
+                mtext1.Color = color1;
                 mtext1.TextStyleId = style1;
 
 
@@ -8048,7 +8072,7 @@ namespace Alignment_mdi
                 mleader1.DoglegLength = dogl;
 
                 mleader1.Annotative = AnnotativeStates.False;
-                mleader1.Color=color1;
+                mleader1.Color = color1;
                 mleader1.Layer = layer1;
                 BTrecord.AppendEntity(mleader1);
                 Trans1.AddNewlyCreatedDBObject(mleader1, true);
@@ -19472,7 +19496,7 @@ namespace Alignment_mdi
 
             if (poly0 != null)
             {
-                
+
 
                 bool are_2_vertices = false;
 
@@ -19580,6 +19604,37 @@ namespace Alignment_mdi
             return poly3;
         }
 
+
+        static public BlockReference InsertBlock_with_2scales(Database Database1, Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord, string NumeBlock, Point3d Insertion_point, double Scale_x, double Scale_y, double Rotation1, string Layer1)
+        {
+
+            BlockReference Block1 = null;
+
+            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = Database1.TransactionManager.StartTransaction())
+            {
+
+                BlockTable BlockTable1 = (BlockTable)Trans1.GetObject(Database1.BlockTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+                if (BlockTable1.Has(NumeBlock) == true)
+                {
+
+
+                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTR = (BlockTableRecord)Trans1.GetObject(BlockTable1[NumeBlock], OpenMode.ForRead);
+
+                    Block1 = new BlockReference(Insertion_point, BTR.ObjectId);
+                    Block1.Layer = Layer1;
+                    Block1.ScaleFactors = new Autodesk.AutoCAD.Geometry.Scale3d(Scale_x, Scale_y, 1);
+                    Block1.Rotation = Rotation1;
+                    BTrecord.AppendEntity(Block1);
+                    Trans1.AddNewlyCreatedDBObject(Block1, true);
+
+                }
+
+                Trans1.Commit();
+            }
+
+            return Block1;
+        }
 
 
     }

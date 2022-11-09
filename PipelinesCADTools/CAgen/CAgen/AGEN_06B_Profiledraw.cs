@@ -827,6 +827,11 @@ namespace Alignment_mdi
 
         }
 
+        public bool get_checkbox_pipes_value()
+        {
+            return checkBox_pipes.Checked;
+        }
+
         #region profile label
         private void button_insert_labels_on_profile_Click(object sender, EventArgs e)
         {
@@ -906,7 +911,14 @@ namespace Alignment_mdi
 
             _AGEN_mainform.tpage_processing.Show();
             _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
-            _AGEN_mainform.Data_Table_crossings = _AGEN_mainform.tpage_crossing_draw.Load_existing_crossing(fisier_cs);
+
+            bool defineste_block = false;
+            if (checkBox_pipes.Checked == true && (checkBox_cover.Checked == true || checkBox_elevation.Checked == true))
+            {
+                defineste_block = true;
+            }
+
+            _AGEN_mainform.Data_Table_crossings = _AGEN_mainform.tpage_crossing_draw.Load_existing_crossing(fisier_cs, "", defineste_block);
 
             string fisier_prof = ProjFolder + _AGEN_mainform.prof_excel_name;
             if (System.IO.File.Exists(fisier_prof) == false)
@@ -1074,6 +1086,13 @@ namespace Alignment_mdi
 
 
                                 Functions.Creaza_layer(_AGEN_mainform.layer_prof_block_labels, 2, true);
+
+                                if ((checkBox_cover.Checked == true || checkBox_elevation.Checked == true) && checkBox_pipes.Checked == true)
+                                {
+                                    Functions.Creaza_layer("Agen_symbols", 2, true);
+                                    Functions.Creaza_layer("NO PLOT", 40, false);
+                                }
+
                                 ObjectId text_style_id = Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle());
 
                                 if (Texth <= 0) Texth = 10;
@@ -1176,6 +1195,19 @@ namespace Alignment_mdi
                                         }
 
 
+                                        double vexag = 0;
+                                        if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
+                                        {
+                                            vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
+                                        }
+                                        else
+                                        {
+                                            _AGEN_mainform.tpage_processing.Hide();
+                                            set_enable_true();
+                                            MessageBox.Show("specify the profile vertical exaggeration");
+                                            return;
+                                        }
+
                                         if (lista_start.Count > 0 && lista_start.Count == lista_end.Count && lista_start.Count == lista_poly.Count)
                                         {
                                             for (int k = 0; k < lista_poly.Count; ++k)
@@ -1255,6 +1287,9 @@ namespace Alignment_mdi
                                                                 col1.Add(new Point3d(x1, Poly2d.GetPoint2dAt(0).Y, Poly2d.Elevation));
                                                             }
 
+
+
+
                                                             for (int n = 0; n < col1.Count; ++n)
                                                             {
                                                                 Point3d inspt = new Point3d();
@@ -1263,34 +1298,10 @@ namespace Alignment_mdi
 
                                                                 if (checkBox_cover.Checked == true)
                                                                 {
-                                                                    double vexag = 0;
-                                                                    if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
-                                                                    {
-                                                                        vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        _AGEN_mainform.tpage_processing.Hide();
-                                                                        set_enable_true();
-                                                                        MessageBox.Show("specify the profile vertical exaggeration");
-                                                                        return;
-                                                                    }
                                                                     inspt = new Point3d(inspt.X, inspt.Y - z * vexag, inspt.Z);
                                                                 }
                                                                 else if (checkBox_elevation.Checked == true)
                                                                 {
-                                                                    double vexag = 0;
-                                                                    if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
-                                                                    {
-                                                                        vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        _AGEN_mainform.tpage_processing.Hide();
-                                                                        set_enable_true();
-                                                                        MessageBox.Show("specify the profile vertical exaggeration");
-                                                                        return;
-                                                                    }
                                                                     inspt = new Point3d(inspt.X, inspt.Y - (z_on_cl - z) * vexag, inspt.Z);
                                                                 }
 
@@ -1354,12 +1365,63 @@ namespace Alignment_mdi
 
 
                                                                 }
-                                                                else
+                                                                else if (creaza_mleader == true && defineste_block == false)
                                                                 {
                                                                     Functions.Create_mleader_on_profile_with_database(ThisDrawing.Database, BTrecord, inspt, _AGEN_mainform.layer_prof_block_labels, mleader_descr, Texth, text_style_id);
                                                                 }
-                                                            }
+                                                                else if (defineste_block == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"] != DBNull.Value)
+                                                                    {
+                                                                        #region block creation
+                                                                        int idx1 = 1;
+                                                                        string name_of_block = "_" + display_sta_string;
+                                                                        bool exista2 = true;
 
+                                                                        do
+                                                                        {
+                                                                            if (BlockTable1.Has(name_of_block + "_" + idx1.ToString()) == false)
+                                                                            {
+                                                                                BlockTable1.UpgradeOpen();
+                                                                                using (BlockTableRecord bltrec1 = new BlockTableRecord())
+                                                                                {
+                                                                                    bltrec1.Name = name_of_block + "_" + idx1.ToString();
+
+                                                                                    double diam1 = Math.Abs(Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"]));
+                                                                                    Circle cerc1 = new Circle(new Point3d(0, -diam1 / 2, 0), Vector3d.ZAxis, diam1 / 2);
+                                                                                    cerc1.Layer = "0";
+                                                                                    bltrec1.AppendEntity(cerc1);
+
+                                                                                    MText mtext1 = new MText();
+                                                                                    mtext1.Location = new Point3d(0, -diam1, 0);
+                                                                                    mtext1.TextHeight = diam1 / 4;
+                                                                                    mtext1.Layer = "NO PLOT";
+
+                                                                                    string content1 = "xxx";
+                                                                                    if (_AGEN_mainform.Data_Table_crossings.Rows[i][6] != DBNull.Value)
+                                                                                    {
+                                                                                        content1 = display_sta_string + "\r\n"+ Convert.ToString(_AGEN_mainform.Data_Table_crossings.Rows[i][6]);
+                                                                                    }
+                                                                                    mtext1.Contents = content1;
+                                                                                    mtext1.Attachment = AttachmentPoint.TopCenter;
+                                                                                    bltrec1.AppendEntity(mtext1);
+
+                                                                                    BlockTable1.Add(bltrec1);
+                                                                                    Trans1.AddNewlyCreatedDBObject(bltrec1, true);
+                                                                                    BlockReference b1 = Functions.InsertBlock_with_2scales(ThisDrawing.Database, BTrecord, name_of_block + "_" + idx1.ToString(), inspt, Hexag, vexag, 0, "Agen_symbols");
+                                                                                    b1.ColorIndex = 256;
+                                                                                }
+                                                                                exista2 = false;
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                ++idx1;
+                                                                            }
+                                                                        } while (exista2 == true);
+                                                                        #endregion
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1367,8 +1429,6 @@ namespace Alignment_mdi
                                         }
                                     }
                                 }
-
-
                                 _AGEN_mainform.Poly3D.Erase();
                                 Trans1.Commit();
                             }

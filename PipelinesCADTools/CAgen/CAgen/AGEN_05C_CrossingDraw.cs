@@ -465,7 +465,7 @@ namespace Alignment_mdi
             _AGEN_mainform.tpage_crossing_scan.Show();
         }
 
-        public System.Data.DataTable Load_existing_crossing(string file_xing, string sheetname = "")
+        public System.Data.DataTable Load_existing_crossing(string file_xing, string sheetname = "", bool add_size_to_dt2 = false)
         {
             System.Data.DataTable dt2 = new System.Data.DataTable();
             if (System.IO.File.Exists(file_xing) == false)
@@ -540,7 +540,11 @@ namespace Alignment_mdi
 
                 try
                 {
-                    dt2 = Functions.Build_Data_table_crossings_from_excel(W1, _AGEN_mainform.Start_row_crossing + 1);
+                   
+                 
+
+
+                    dt2 = Functions.Build_Data_table_crossings_from_excel(W1, _AGEN_mainform.Start_row_crossing + 1, add_size_to_dt2);
 
                     string val1 = W1.Range["D1"].Value2;
                     if (val1 != "")
@@ -607,6 +611,8 @@ namespace Alignment_mdi
             }
             return dt2;
         }
+
+
 
         private void set_checkbox_overwrite(string texth, bool chck)
         {
