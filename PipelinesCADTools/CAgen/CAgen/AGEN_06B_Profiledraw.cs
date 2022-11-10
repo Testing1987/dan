@@ -1007,6 +1007,7 @@ namespace Alignment_mdi
                                 Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
                                 string Agen_profile_band_V2 = "Agen_profile_band_V2";
+                                string Agen_profile_band_V3 = "Agen_profile_band_V3";
 
                                 if (Tables1.IsTableDefined(Agen_profile_band_V2) == true)
                                 {
@@ -1019,6 +1020,68 @@ namespace Alignment_mdi
                                             if (Tables1.IsTableDefined(Agen_profile_band_V2) == true)
                                             {
                                                 using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
+                                                {
+
+                                                    using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), id1, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                                    {
+                                                        if (Records1.Count > 0)
+                                                        {
+                                                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                            foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                            {
+                                                                double start1 = -123.4;
+                                                                double end1 = -123.4;
+                                                                string segm1 = "123456";
+                                                                for (int i = 0; i < Record1.Count; ++i)
+                                                                {
+                                                                    Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                                                    string Nume_field = Field_def1.Name;
+                                                                    string Valoare_field = Record1[i].StrValue;
+
+                                                                    if (Nume_field.ToLower() == "beginsta")
+                                                                    {
+                                                                        if (Functions.IsNumeric(Valoare_field) == true)
+                                                                        {
+                                                                            start1 = Convert.ToDouble(Valoare_field);
+                                                                        }
+                                                                    }
+
+                                                                    if (Nume_field.ToLower() == "endsta")
+                                                                    {
+                                                                        if (Functions.IsNumeric(Valoare_field) == true)
+                                                                        {
+                                                                            end1 = Convert.ToDouble(Valoare_field);
+                                                                        }
+                                                                    }
+                                                                    if (Nume_field.ToLower() == "segment")
+                                                                    {
+                                                                        segm1 = Convert.ToString(Valoare_field);
+                                                                    }
+                                                                }
+
+                                                                string segment2 = _AGEN_mainform.tpage_setup.Get_segment_name1();
+                                                                if (_AGEN_mainform.tpage_setup.Get_segment_name1() == "not defined")
+                                                                {
+                                                                    segment2 = "";
+                                                                }
+
+                                                                if (start1 != -123.4 && end1 != 123.4 && segm1.ToLower() == segment2.ToLower())
+                                                                {
+                                                                    lista_poly.Add(id1);
+                                                                    lista_start.Add(start1);
+                                                                    lista_end.Add(end1);
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+
+                                            if (Tables1.IsTableDefined(Agen_profile_band_V3) == true)
+                                            {
+                                                using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
                                                 {
 
                                                     using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), id1, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
@@ -1400,7 +1463,7 @@ namespace Alignment_mdi
                                                                                     string content1 = "xxx";
                                                                                     if (_AGEN_mainform.Data_Table_crossings.Rows[i][6] != DBNull.Value)
                                                                                     {
-                                                                                        content1 = display_sta_string + "\r\n"+ Convert.ToString(_AGEN_mainform.Data_Table_crossings.Rows[i][6]);
+                                                                                        content1 = display_sta_string + "\r\n" + Convert.ToString(_AGEN_mainform.Data_Table_crossings.Rows[i][6]);
                                                                                     }
                                                                                     mtext1.Contents = content1;
                                                                                     mtext1.Attachment = AttachmentPoint.TopCenter;
@@ -2823,12 +2886,13 @@ namespace Alignment_mdi
             }
 
             string Agen_profile_band_V2 = "Agen_profile_band_V2";
+            string Agen_profile_band_V3 = "Agen_profile_band_V3";
             Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            if (Tables1.IsTableDefined(Agen_profile_band_V2) == false)
+            if (Tables1.IsTableDefined(Agen_profile_band_V2) == false && Tables1.IsTableDefined(Agen_profile_band_V3) == false)
             {
-                MessageBox.Show("no " + Agen_profile_band_V2 + " data table defined\r\noperation aborted", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("no " + Agen_profile_band_V3 + " data table defined\r\noperation aborted", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 set_enable_true();
                 ThisDrawing.Editor.WriteMessage("\n" + "Command:");
@@ -2977,49 +3041,97 @@ namespace Alignment_mdi
                                     double end1 = -123.4;
                                     string segm1 = "123456";
 
-                                    using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
+                                    if (Tables1.GetTableNames().Contains(Agen_profile_band_V2) == true)
                                     {
-
-                                        using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
                                         {
-                                            if (Records1.Count > 0)
+
+                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
                                             {
-                                                Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                if (Records1.Count > 0)
                                                 {
-
-                                                    for (int k = 0; k < Record1.Count; ++k)
+                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
                                                     {
-                                                        Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                        string Nume_field = Field_def1.Name;
-                                                        string Valoare_field = Record1[k].StrValue;
 
-                                                        if (Nume_field.ToLower() == "beginsta")
+                                                        for (int k = 0; k < Record1.Count; ++k)
                                                         {
-                                                            if (Functions.IsNumeric(Valoare_field) == true)
-                                                            {
-                                                                start1 = Convert.ToDouble(Valoare_field);
-                                                            }
-                                                        }
+                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                            string Nume_field = Field_def1.Name;
+                                                            string Valoare_field = Record1[k].StrValue;
 
-                                                        if (Nume_field.ToLower() == "endsta")
-                                                        {
-                                                            if (Functions.IsNumeric(Valoare_field) == true)
+                                                            if (Nume_field.ToLower() == "beginsta")
                                                             {
-                                                                end1 = Convert.ToDouble(Valoare_field);
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    start1 = Convert.ToDouble(Valoare_field);
+                                                                }
                                                             }
-                                                        }
-                                                        if (Nume_field.ToLower() == "segment")
-                                                        {
-                                                            segm1 = Convert.ToString(Valoare_field);
+
+                                                            if (Nume_field.ToLower() == "endsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    end1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+                                                            if (Nume_field.ToLower() == "segment")
+                                                            {
+                                                                segm1 = Convert.ToString(Valoare_field);
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
 
+                                            }
                                         }
                                     }
 
+                                    if (Tables1.GetTableNames().Contains(Agen_profile_band_V3) == true)
+                                    {
+                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
+                                        {
+
+                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                            {
+                                                if (Records1.Count > 0)
+                                                {
+                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                    {
+
+                                                        for (int k = 0; k < Record1.Count; ++k)
+                                                        {
+                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                            string Nume_field = Field_def1.Name;
+                                                            string Valoare_field = Record1[k].StrValue;
+
+                                                            if (Nume_field.ToLower() == "beginsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    start1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+
+                                                            if (Nume_field.ToLower() == "endsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    end1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+                                                            if (Nume_field.ToLower() == "segment")
+                                                            {
+                                                                segm1 = Convert.ToString(Valoare_field);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
                                     if (segm1.ToLower() != segm2.ToLower() || start1 == -123.4 || end1 == -123.4)
                                     {
                                         lista_ground.RemoveAt(j);
@@ -3066,46 +3178,88 @@ namespace Alignment_mdi
 
                                         double Sta_start = -123.4;
                                         double Sta_end = -123.4;
-
-                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
+                                        if (Tables1.GetTableNames().Contains(Agen_profile_band_V2) == true)
                                         {
-
-                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
                                             {
-                                                if (Records1.Count > 0)
+
+                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
                                                 {
-                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                    if (Records1.Count > 0)
                                                     {
-
-                                                        for (int k = 0; k < Record1.Count; ++k)
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
                                                         {
-                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                            string Nume_field = Field_def1.Name;
-                                                            string Valoare_field = Record1[k].StrValue;
 
-                                                            if (Nume_field.ToLower() == "beginsta")
+                                                            for (int k = 0; k < Record1.Count; ++k)
                                                             {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                                string Nume_field = Field_def1.Name;
+                                                                string Valoare_field = Record1[k].StrValue;
+
+                                                                if (Nume_field.ToLower() == "beginsta")
                                                                 {
-                                                                    Sta_start = Convert.ToDouble(Valoare_field);
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_start = Convert.ToDouble(Valoare_field);
+                                                                    }
                                                                 }
-                                                            }
 
-                                                            if (Nume_field.ToLower() == "endsta")
-                                                            {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                if (Nume_field.ToLower() == "endsta")
                                                                 {
-                                                                    Sta_end = Convert.ToDouble(Valoare_field);
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_end = Convert.ToDouble(Valoare_field);
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                }
 
+                                                }
                                             }
                                         }
+                                        if (Tables1.GetTableNames().Contains(Agen_profile_band_V3) == true)
+                                        {
+                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
+                                            {
 
+                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                                {
+                                                    if (Records1.Count > 0)
+                                                    {
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                        {
+
+                                                            for (int k = 0; k < Record1.Count; ++k)
+                                                            {
+                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                                string Nume_field = Field_def1.Name;
+                                                                string Valoare_field = Record1[k].StrValue;
+
+                                                                if (Nume_field.ToLower() == "beginsta")
+                                                                {
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_start = Convert.ToDouble(Valoare_field);
+                                                                    }
+                                                                }
+
+                                                                if (Nume_field.ToLower() == "endsta")
+                                                                {
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_end = Convert.ToDouble(Valoare_field);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
                                         double Xstart = poly_ground.StartPoint.X;
                                         double Xend = poly_ground.EndPoint.X;
                                         double Ystart = poly_ground.StartPoint.Y;

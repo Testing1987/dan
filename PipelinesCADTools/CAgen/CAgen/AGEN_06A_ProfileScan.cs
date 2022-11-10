@@ -1915,9 +1915,10 @@ namespace Alignment_mdi
                         Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
                         string Agen_profile_band = "Agen_profile_band";
                         string Agen_profile_band_V2 = "Agen_profile_band_V2";
+                        string Agen_profile_band_V3 = "Agen_profile_band_V3";
 
                         #region profile band
-                        if (Tables1.IsTableDefined(Agen_profile_band) == true || Tables1.IsTableDefined(Agen_profile_band_V2) == true)
+                        if (Tables1.IsTableDefined(Agen_profile_band) == true || Tables1.IsTableDefined(Agen_profile_band_V2) == true || Tables1.IsTableDefined(Agen_profile_band_V3) == true)
                         {
                             foreach (ObjectId id1 in BTrecord)
                             {
@@ -2033,6 +2034,63 @@ namespace Alignment_mdi
 
                                         }
                                     }
+                                    if (Tables1.IsTableDefined(Agen_profile_band_V3) == true)
+                                    {
+                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
+                                        {
+
+                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), id1, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                            {
+                                                if (Records1.Count > 0)
+                                                {
+                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                    {
+                                                        double start1 = -123.4;
+                                                        double end1 = -123.4;
+                                                        string segm1 = "123456";
+                                                        for (int i = 0; i < Record1.Count; ++i)
+                                                        {
+                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                                            string Nume_field = Field_def1.Name;
+                                                            string Valoare_field = Record1[i].StrValue;
+
+                                                            if (Nume_field.ToLower() == "beginsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    start1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+
+                                                            if (Nume_field.ToLower() == "endsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    end1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+                                                            if (Nume_field.ToLower() == "segment")
+                                                            {
+                                                                segm1 = Convert.ToString(Valoare_field);
+                                                            }
+                                                        }
+                                                        string segment1 = _AGEN_mainform.tpage_setup.Get_segment_name1();
+                                                        if (segment1 == "not defined") segment1 = "";
+                                                        if (start1 != -123.4 && end1 != 123.4 && segm1.ToLower() == segment1.ToLower())
+                                                        {
+                                                            lista_poly.Add(id1);
+                                                            lista_start.Add(start1);
+                                                            lista_end.Add(end1);
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                    }
+
 
                                 }
                             }
