@@ -1351,7 +1351,7 @@ namespace Alignment_mdi
                                                                 }
 
 
-                                                                if (creaza_block == true)
+                                                                if (creaza_block == true && defineste_block == false)
                                                                 {
                                                                     BlockReference br1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "",
                                                                               block_name, inspt, 1 / _AGEN_mainform.Vw_scale, 0, _AGEN_mainform.layer_prof_block_labels, col_atr, col_val);

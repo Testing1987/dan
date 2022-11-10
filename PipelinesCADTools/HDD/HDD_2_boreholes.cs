@@ -66,13 +66,18 @@ namespace Alignment_mdi
         public HDD_Boreholes()
         {
             InitializeComponent();
-            comboBox_scales_profile.SelectedItem = "1:60";
-            comboBox_scales_plan_view.SelectedItem = "1:100";
+            comboBox_scales.SelectedItem = "1:60";
+            //comboBox_scales_plan_view.SelectedItem = "1:100";
 
         }
 
         private void button_load_borehole_info_Click(object sender, EventArgs e)
         {
+            string col_north = "North";
+            string col_east = "East";
+            string col_lat = "Lat";
+            string col_long = "Long";
+
             try
             {
                 if (comboBox_xl1.Text != "")
@@ -207,13 +212,21 @@ namespace Alignment_mdi
 
                                         }
 
-                                        if (comboBox1.Items.Contains("LL84") == true)
-                                        {
-                                            comboBox1.SelectedIndex = comboBox1.Items.IndexOf("LL84");
-                                        }
-
                                         OSGeo.MapGuide.MgCoordinateSystem current_system = Coord_factory1.Create(string_current);
-
+                                        if (dt_point.Rows[0][col_lat] != DBNull.Value)
+                                        {
+                                            if (comboBox1.Items.Contains("LL84") == true)
+                                            {
+                                                comboBox1.SelectedIndex = comboBox1.Items.IndexOf("LL84");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (comboBox1.Items.Contains(current_system.GetCsCode()) == true)
+                                            {
+                                                comboBox1.SelectedIndex = comboBox1.Items.IndexOf(current_system.GetCsCode());
+                                            }
+                                        }
                                         if (comboBox2.Items.Contains(current_system.GetCsCode()) == true)
                                         {
                                             comboBox2.SelectedIndex = comboBox1.Items.IndexOf(current_system.GetCsCode());
@@ -334,37 +347,58 @@ namespace Alignment_mdi
                 string col_pt = "PointID";
                 string col_hole = "HoleDepth";
                 string col_elev = "Elevation";
-                string col_lat = "North";
-                string col_long = "East";
+                string col_north = "North";
+                string col_east = "East";
+                string col_lat = "Lat";
+                string col_long = "Long";
+
 
                 string A = "A";
                 string B = "B";
                 string C = "C";
                 string M = "M";
                 string N = "N";
+                string O = "O";
+                string P = "P";
+
 
                 dt_point = new System.Data.DataTable();
                 dt_point.Columns.Add(col_pt, typeof(string));
                 dt_point.Columns.Add(col_hole, typeof(double));
                 dt_point.Columns.Add(col_elev, typeof(double));
+                dt_point.Columns.Add(col_north, typeof(double));
+                dt_point.Columns.Add(col_east, typeof(double));
                 dt_point.Columns.Add(col_lat, typeof(double));
                 dt_point.Columns.Add(col_long, typeof(double));
-
                 for (int i = 1; i < dt1.Rows.Count; i++)
                 {
                     if (dt1.Rows[i][A] != DBNull.Value && dt1.Rows[i][B] != DBNull.Value &&
-                        dt1.Rows[i][C] != DBNull.Value && dt1.Rows[i][M] != DBNull.Value && dt1.Rows[i][N] != DBNull.Value &&
+                        dt1.Rows[i][C] != DBNull.Value &&
+                        ((dt1.Rows[i][M] != DBNull.Value && dt1.Rows[i][N] != DBNull.Value) ||
+                        (dt1.Rows[i][O] != DBNull.Value && dt1.Rows[i][P] != DBNull.Value)) &&
                         Functions.IsNumeric(Convert.ToString(dt1.Rows[i][B]).Replace(" ", "")) == true &&
                         Functions.IsNumeric(Convert.ToString(dt1.Rows[i][C]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt1.Rows[i][M]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt1.Rows[i][N]).Replace(" ", "")) == true)
+                       ((Functions.IsNumeric(Convert.ToString(dt1.Rows[i][M]).Replace(" ", "")) == true &&
+                        Functions.IsNumeric(Convert.ToString(dt1.Rows[i][N]).Replace(" ", "")) == true) ||
+                       (Functions.IsNumeric(Convert.ToString(dt1.Rows[i][O]).Replace(" ", "")) == true &&
+                        Functions.IsNumeric(Convert.ToString(dt1.Rows[i][P]).Replace(" ", "")) == true)))
                     {
                         dt_point.Rows.Add();
                         dt_point.Rows[dt_point.Rows.Count - 1][col_pt] = dt1.Rows[i][A];
                         dt_point.Rows[dt_point.Rows.Count - 1][col_hole] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][B]).Replace(" ", ""));
                         dt_point.Rows[dt_point.Rows.Count - 1][col_elev] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][C]).Replace(" ", ""));
-                        dt_point.Rows[dt_point.Rows.Count - 1][col_lat] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][M]).Replace(" ", ""));
-                        dt_point.Rows[dt_point.Rows.Count - 1][col_long] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][N]).Replace(" ", ""));
+                        if (dt1.Rows[i][M] != DBNull.Value && dt1.Rows[i][N] != DBNull.Value)
+                        {
+                            dt_point.Rows[dt_point.Rows.Count - 1][col_north] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][M]).Replace(" ", ""));
+                            dt_point.Rows[dt_point.Rows.Count - 1][col_east] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][N]).Replace(" ", ""));
+                        }
+
+                        if (dt1.Rows[i][O] != DBNull.Value && dt1.Rows[i][P] != DBNull.Value)
+                        {
+                            dt_point.Rows[dt_point.Rows.Count - 1][col_lat] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][O]).Replace(" ", ""));
+                            dt_point.Rows[dt_point.Rows.Count - 1][col_long] = Convert.ToDouble(Convert.ToString(dt1.Rows[i][P]).Replace(" ", ""));
+                        }
+
                     }
                 }
             }
@@ -734,26 +768,16 @@ namespace Alignment_mdi
 
                     double scale1 = 1;
 
-                    if (comboBox_scales_profile.Text.Length > 0)
+                    if (comboBox_scales.Text.Length > 0)
                     {
-                        string sc = comboBox_scales_profile.Text.Replace("1:", "");
+                        string sc = comboBox_scales.Text.Replace("1:", "");
                         if (Functions.IsNumeric(sc) == true)
                         {
                             scale1 = Convert.ToDouble(sc);
                         }
                     }
 
-                    double scale2 = 1;
-
-                    if (comboBox_scales_plan_view.Text.Length > 0)
-                    {
-                        string sc = comboBox_scales_plan_view.Text.Replace("1:", "");
-                        if (Functions.IsNumeric(sc) == true)
-                        {
-                            scale2 = Convert.ToDouble(sc);
-                        }
-                    }
-
+                    double scale2 = scale1;
 
                     Texth = Texth * scale1;
                     Texth_plan_view = Texth_plan_view * scale2;
@@ -1629,9 +1653,10 @@ namespace Alignment_mdi
                                 string col_pt = "PointID";
 
                                 string col_elev = "Elevation";
-                                string col_lat = "North";
-                                string col_long = "East";
-
+                                string col_north = "North";
+                                string col_east = "East";
+                                string col_lat = "Lat";
+                                string col_long = "Long";
 
                                 string col_depth = "Depth";
                                 string col_bottom = "Bottom";
@@ -1669,10 +1694,35 @@ namespace Alignment_mdi
 
                                     string borehole1 = Convert.ToString(dt_point.Rows[i][col_pt]).Replace(" ", "");
 
-                                    Point3d point_borhole_ll = new Point3d(Convert.ToDouble(dt_point.Rows[i][col_long]), Convert.ToDouble(dt_point.Rows[i][col_lat]), poly_cl.Elevation);
-                                    Point3d point_borhole = new Point3d(Convert.ToDouble(dt_point.Rows[i][col_long]), Convert.ToDouble(dt_point.Rows[i][col_lat]), poly_cl.Elevation);
+                                    double north1 = -1.234;
+                                    double east1 = -1.234;
+                                    double lat1 = -1.234;
+                                    double long1 = -1.234;
 
-                                    if (cs1 != "" && cs2 != "" && cs1 != cs2)
+                                    if(dt_point.Rows[i][col_long]!=DBNull.Value)
+                                    {
+                                        long1 = Convert.ToDouble(dt_point.Rows[i][col_long]);
+                                    }
+
+                                    if (dt_point.Rows[i][col_lat] != DBNull.Value)
+                                    {
+                                        lat1 = Convert.ToDouble(dt_point.Rows[i][col_lat]);
+                                    }
+
+                                    if (dt_point.Rows[i][col_north] != DBNull.Value)
+                                    {
+                                        north1 = Convert.ToDouble(dt_point.Rows[i][col_north]);
+                                    }
+
+                                    if (dt_point.Rows[i][col_east] != DBNull.Value)
+                                    {
+                                        east1 = Convert.ToDouble(dt_point.Rows[i][col_east]);
+                                    }
+
+                                    Point3d point_borhole_ll = new Point3d(long1, lat1, poly_cl.Elevation);
+                                    Point3d point_borhole = new Point3d(east1, north1, poly_cl.Elevation);
+
+                                    if (cs1 != "" && cs2 != "" && cs1 != cs2 && north1 ==-1.234)
                                     {
                                         point_borhole = Functions.Convert_coordinate_from_CS_to_new_CS(point_borhole_ll, cs1, cs2);
                                     }
@@ -2414,14 +2464,14 @@ namespace Alignment_mdi
                                                 #endregion
 
                                                 MText mt1 = new MText();
-                                                mt1.Location = new Point3d(width1/2, 0, 0);
+                                                mt1.Location = new Point3d(width1 / 2, 0, 0);
                                                 mt1.Attachment = AttachmentPoint.BottomCenter;
                                                 mt1.TextHeight = 0.2;
                                                 mt1.Contents = "LEGEND";
                                                 mt1.Layer = "0";
                                                 bltrec1.AppendEntity(mt1);
 
-                                    
+
 
 
                                                 Circle cerc_bh = new Circle(new Point3d(width1 / 2, -0.4, 0), Vector3d.ZAxis, 0.08);
@@ -2436,7 +2486,7 @@ namespace Alignment_mdi
                                                 bltrec1.AppendEntity(poly_sym);
 
                                                 MText mt3 = new MText();
-                                                mt3.Location = new Point3d(width1+0.2, -0.4, 0);
+                                                mt3.Location = new Point3d(width1 + 0.2, -0.4, 0);
                                                 mt3.Attachment = AttachmentPoint.MiddleLeft;
                                                 mt3.TextHeight = 0.08;
                                                 mt3.Contents = "BOREHOLE";
@@ -4074,7 +4124,7 @@ namespace Alignment_mdi
 
                         break;
                     case 3:
-                        for (int m = 0; m < nr_col-1; m++)
+                        for (int m = 0; m < nr_col - 1; m++)
                         {
 
                             x2 = x1 + 3 * hole + m * 4 * hole;

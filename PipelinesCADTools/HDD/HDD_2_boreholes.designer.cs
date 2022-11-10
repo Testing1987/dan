@@ -30,12 +30,12 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HDD_Boreholes));
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.comboBox_scales = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button_draw_borehole = new System.Windows.Forms.Button();
-            this.panel14 = new System.Windows.Forms.Panel();
-            this.comboBox_scales_profile = new System.Windows.Forms.ComboBox();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.textBox_th = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -61,12 +61,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label18 = new System.Windows.Forms.Label();
-            this.comboBox_scales_plan_view = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel14.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -100,6 +97,41 @@
             this.panel3.Size = new System.Drawing.Size(733, 231);
             this.panel3.TabIndex = 0;
             // 
+            // panel14
+            // 
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel14.Controls.Add(this.comboBox_scales);
+            this.panel14.Location = new System.Drawing.Point(106, 189);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(257, 37);
+            this.panel14.TabIndex = 2142;
+            // 
+            // comboBox_scales
+            // 
+            this.comboBox_scales.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.comboBox_scales.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_scales.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox_scales.ForeColor = System.Drawing.Color.White;
+            this.comboBox_scales.FormattingEnabled = true;
+            this.comboBox_scales.Items.AddRange(new object[] {
+            "1:1",
+            "1:10",
+            "1:20",
+            "1:30",
+            "1:40",
+            "1:50",
+            "1:60",
+            "1:100",
+            "1:200",
+            "1:300",
+            "1:400",
+            "1:500",
+            "1:600"});
+            this.comboBox_scales.Location = new System.Drawing.Point(6, 8);
+            this.comboBox_scales.Name = "comboBox_scales";
+            this.comboBox_scales.Size = new System.Drawing.Size(246, 21);
+            this.comboBox_scales.TabIndex = 2143;
+            // 
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -129,65 +161,27 @@
             this.button_draw_borehole.UseVisualStyleBackColor = false;
             this.button_draw_borehole.Click += new System.EventHandler(this.button_draw_borehole_Click);
             // 
-            // panel14
-            // 
-            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel14.Controls.Add(this.comboBox_scales_plan_view);
-            this.panel14.Controls.Add(this.comboBox_scales_profile);
-            this.panel14.Location = new System.Drawing.Point(106, 189);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(257, 37);
-            this.panel14.TabIndex = 2142;
-            // 
-            // comboBox_scales_profile
-            // 
-            this.comboBox_scales_profile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.comboBox_scales_profile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_scales_profile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_scales_profile.ForeColor = System.Drawing.Color.White;
-            this.comboBox_scales_profile.FormattingEnabled = true;
-            this.comboBox_scales_profile.Items.AddRange(new object[] {
-            "1:1",
-            "1:10",
-            "1:20",
-            "1:30",
-            "1:40",
-            "1:50",
-            "1:60",
-            "1:100",
-            "1:200",
-            "1:300",
-            "1:400",
-            "1:500",
-            "1:600"});
-            this.comboBox_scales_profile.Location = new System.Drawing.Point(6, 8);
-            this.comboBox_scales_profile.Name = "comboBox_scales_profile";
-            this.comboBox_scales_profile.Size = new System.Drawing.Size(115, 21);
-            this.comboBox_scales_profile.TabIndex = 2143;
-            // 
             // panel13
             // 
             this.panel13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel13.Controls.Add(this.label7);
             this.panel13.Controls.Add(this.label5);
-            this.panel13.Controls.Add(this.label6);
             this.panel13.Location = new System.Drawing.Point(106, 145);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(257, 68);
             this.panel13.TabIndex = 2139;
             // 
-            // label6
+            // label5
             // 
-            this.label6.AutoSize = true;
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Arial Black", 9.75F);
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.label6.Location = new System.Drawing.Point(2, 1);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(126, 18);
-            this.label6.TabIndex = 2054;
-            this.label6.Text = "Viewport Scales";
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.Transparent;
+            this.label5.Font = new System.Drawing.Font("Arial Black", 9.75F);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label5.Location = new System.Drawing.Point(3, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(118, 18);
+            this.label5.TabIndex = 2054;
+            this.label5.Text = "Viewport Scale";
             // 
             // panel9
             // 
@@ -449,7 +443,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Arial Black", 9.75F);
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.label1.Location = new System.Drawing.Point(5, 6);
+            this.label1.Location = new System.Drawing.Point(3, 12);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(67, 18);
             this.label1.TabIndex = 2054;
@@ -499,56 +493,6 @@
             this.label18.TabIndex = 2054;
             this.label18.Text = "Coordinate Systems";
             // 
-            // comboBox_scales_plan_view
-            // 
-            this.comboBox_scales_plan_view.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.comboBox_scales_plan_view.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_scales_plan_view.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_scales_plan_view.ForeColor = System.Drawing.Color.White;
-            this.comboBox_scales_plan_view.FormattingEnabled = true;
-            this.comboBox_scales_plan_view.Items.AddRange(new object[] {
-            "1:1",
-            "1:10",
-            "1:20",
-            "1:30",
-            "1:40",
-            "1:50",
-            "1:60",
-            "1:100",
-            "1:200",
-            "1:300",
-            "1:400",
-            "1:500",
-            "1:600"});
-            this.comboBox_scales_plan_view.Location = new System.Drawing.Point(137, 8);
-            this.comboBox_scales_plan_view.Name = "comboBox_scales_plan_view";
-            this.comboBox_scales_plan_view.Size = new System.Drawing.Size(115, 21);
-            this.comboBox_scales_plan_view.TabIndex = 2143;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Arial Black", 9.75F);
-            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.label5.Location = new System.Drawing.Point(25, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(54, 18);
-            this.label5.TabIndex = 2054;
-            this.label5.Text = "Profile";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Arial Black", 9.75F);
-            this.label7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
-            this.label7.Location = new System.Drawing.Point(153, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(78, 18);
-            this.label7.TabIndex = 2054;
-            this.label7.Text = "Plan View";
-            // 
             // HDD_Boreholes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -561,8 +505,8 @@
             this.Name = "HDD_Boreholes";
             this.Text = "`";
             this.panel3.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
             this.panel14.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel9.ResumeLayout(false);
@@ -617,10 +561,7 @@
         private System.Windows.Forms.TextBox textBox_th;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Panel panel13;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox comboBox_scales_profile;
-        private System.Windows.Forms.ComboBox comboBox_scales_plan_view;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox comboBox_scales;
         private System.Windows.Forms.Label label5;
     }
 }
