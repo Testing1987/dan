@@ -124,7 +124,7 @@ namespace Alignment_mdi
 
 
 
-                        if (W1 != null && W2 != null && W3 != null && W4 != null && W5 != null)
+                        if (W1 != null)
                         {
                             dt_point = null;
                             dt_rock = null;
@@ -134,6 +134,8 @@ namespace Alignment_mdi
                             build_data_tables(W1, W2, W3, W4, W5);
                             comboBox1.Items.Clear();
                             comboBox2.Items.Clear();
+
+                            //Functions.Transfer_datatable_to_new_excel_spreadsheet(dt_soil);
 
 
                             if (dt_point != null && dt_point.Rows.Count > 0 && ((dt_soil != null && dt_soil.Rows.Count > 0) || (dt_rock != null && dt_rock.Rows.Count > 0)))
@@ -403,323 +405,328 @@ namespace Alignment_mdi
                 }
             }
 
-
-            object[,] values2 = new object[300000, 53];
-            Microsoft.Office.Interop.Excel.Range range2 = W2.Range["A1:BA30000"];
-            values2 = range2.Value2;
-            System.Data.DataTable dt2 = dt1.Clone();
-            for (int i = 1; i <= 30000; ++i)
+            if (W2 != null)
             {
-                dt2.Rows.Add();
-                for (int j = 1; j <= 53; ++j)
+                object[,] values2 = new object[300000, 53];
+                Microsoft.Office.Interop.Excel.Range range2 = W2.Range["A1:BA30000"];
+                values2 = range2.Value2;
+                System.Data.DataTable dt2 = dt1.Clone();
+                for (int i = 1; i <= 30000; ++i)
                 {
-                    object Valoare2 = values2[i, j];
-                    if (Valoare2 != null)
+                    dt2.Rows.Add();
+                    for (int j = 1; j <= 53; ++j)
                     {
-                        dt2.Rows[i - 1][j - 1] = Valoare2;
-                    }
-                    else
-                    {
-                        if (j == 1)
+                        object Valoare2 = values2[i, j];
+                        if (Valoare2 != null)
                         {
-                            dt2.Rows[dt2.Rows.Count - 1].Delete();
-                            i = 30001;
-                            j = 54;
+                            dt2.Rows[i - 1][j - 1] = Valoare2;
+                        }
+                        else
+                        {
+                            if (j == 1)
+                            {
+                                dt2.Rows[dt2.Rows.Count - 1].Delete();
+                                i = 30001;
+                                j = 54;
+                            }
+                        }
+                    }
+                }
+
+                if (dt2.Rows.Count > 1)
+                {
+                    string col_pt = "PointID";
+                    string col_depth = "Depth";
+                    string col_len = "Length";
+                    string col_type = "Type";
+                    string col_number = "Number";
+                    string col_recovery = "Recovery";
+                    string col_rqd = "RQD";
+
+                    string A = "A";
+                    string B = "B";
+                    string C = "C";
+                    string D = "D";
+                    string E = "E";
+                    string G = "G";
+                    string H = "H";
+
+                    dt_core_r = new System.Data.DataTable();
+                    dt_core_r.Columns.Add(col_pt, typeof(string));
+                    dt_core_r.Columns.Add(col_depth, typeof(double));
+                    dt_core_r.Columns.Add(col_len, typeof(double));
+                    dt_core_r.Columns.Add(col_type, typeof(string));
+                    dt_core_r.Columns.Add(col_number, typeof(string));
+                    dt_core_r.Columns.Add(col_recovery, typeof(double));
+                    dt_core_r.Columns.Add(col_rqd, typeof(double));
+
+                    for (int i = 1; i < dt2.Rows.Count; i++)
+                    {
+                        if (dt2.Rows[i][A] != DBNull.Value &&
+                            dt2.Rows[i][B] != DBNull.Value &&
+                            dt2.Rows[i][C] != DBNull.Value &&
+                            dt2.Rows[i][D] != DBNull.Value &&
+                            dt2.Rows[i][E] != DBNull.Value &&
+                            dt2.Rows[i][G] != DBNull.Value &&
+                            dt2.Rows[i][H] != DBNull.Value &&
+                            Functions.IsNumeric(Convert.ToString(dt2.Rows[i][B]).Replace(" ", "")) == true &&
+                            Functions.IsNumeric(Convert.ToString(dt2.Rows[i][C]).Replace(" ", "")) == true &&
+                            Functions.IsNumeric(Convert.ToString(dt2.Rows[i][G]).Replace(" ", "")) == true &&
+                            Functions.IsNumeric(Convert.ToString(dt2.Rows[i][H]).Replace(" ", "")) == true)
+                        {
+                            dt_core_r.Rows.Add();
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_pt] = dt2.Rows[i][A];
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][B]).Replace(" ", ""));
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_len] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][C]).Replace(" ", ""));
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_type] = dt2.Rows[i][D];
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_number] = dt2.Rows[i][E];
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_recovery] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][G]).Replace(" ", ""));
+                            dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_rqd] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][H]).Replace(" ", ""));
                         }
                     }
                 }
             }
 
-            if (dt2.Rows.Count > 1)
+            if (W3 != null)
             {
-                string col_pt = "PointID";
-                string col_depth = "Depth";
-                string col_len = "Length";
-                string col_type = "Type";
-                string col_number = "Number";
-                string col_recovery = "Recovery";
-                string col_rqd = "RQD";
-
-                string A = "A";
-                string B = "B";
-                string C = "C";
-                string D = "D";
-                string E = "E";
-                string G = "G";
-                string H = "H";
-
-                dt_core_r = new System.Data.DataTable();
-                dt_core_r.Columns.Add(col_pt, typeof(string));
-                dt_core_r.Columns.Add(col_depth, typeof(double));
-                dt_core_r.Columns.Add(col_len, typeof(double));
-                dt_core_r.Columns.Add(col_type, typeof(string));
-                dt_core_r.Columns.Add(col_number, typeof(string));
-                dt_core_r.Columns.Add(col_recovery, typeof(double));
-                dt_core_r.Columns.Add(col_rqd, typeof(double));
-
-                for (int i = 1; i < dt2.Rows.Count; i++)
+                object[,] values3 = new object[300000, 53];
+                Microsoft.Office.Interop.Excel.Range range3 = W3.Range["A1:BA30000"];
+                values3 = range3.Value2;
+                System.Data.DataTable dt3 = dt1.Clone();
+                for (int i = 1; i <= 30000; ++i)
                 {
-                    if (dt2.Rows[i][A] != DBNull.Value &&
-                        dt2.Rows[i][B] != DBNull.Value &&
-                        dt2.Rows[i][C] != DBNull.Value &&
-                        dt2.Rows[i][D] != DBNull.Value &&
-                        dt2.Rows[i][E] != DBNull.Value &&
-                        dt2.Rows[i][G] != DBNull.Value &&
-                        dt2.Rows[i][H] != DBNull.Value &&
-                        Functions.IsNumeric(Convert.ToString(dt2.Rows[i][B]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt2.Rows[i][C]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt2.Rows[i][G]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt2.Rows[i][H]).Replace(" ", "")) == true)
+                    dt3.Rows.Add();
+                    for (int j = 1; j <= 53; ++j)
                     {
-                        dt_core_r.Rows.Add();
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_pt] = dt2.Rows[i][A];
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][B]).Replace(" ", ""));
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_len] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][C]).Replace(" ", ""));
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_type] = dt2.Rows[i][D];
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_number] = dt2.Rows[i][E];
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_recovery] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][G]).Replace(" ", ""));
-                        dt_core_r.Rows[dt_core_r.Rows.Count - 1][col_rqd] = Convert.ToDouble(Convert.ToString(dt2.Rows[i][H]).Replace(" ", ""));
+                        object Valoare3 = values3[i, j];
+                        if (Valoare3 != null)
+                        {
+                            dt3.Rows[i - 1][j - 1] = Valoare3;
+                        }
+                        else
+                        {
+                            if (j == 1)
+                            {
+                                dt3.Rows[dt3.Rows.Count - 1].Delete();
+                                i = 30001;
+                                j = 54;
+                            }
+                        }
                     }
                 }
-            }
-
-
-            object[,] values3 = new object[300000, 53];
-            Microsoft.Office.Interop.Excel.Range range3 = W3.Range["A1:BA30000"];
-            values3 = range3.Value2;
-            System.Data.DataTable dt3 = dt1.Clone();
-
-            for (int i = 1; i <= 30000; ++i)
-            {
-                dt3.Rows.Add();
-                for (int j = 1; j <= 53; ++j)
+                if (dt3.Rows.Count > 1)
                 {
-                    object Valoare3 = values3[i, j];
-                    if (Valoare3 != null)
+                    string col_pt = "PointID";
+                    string col_depth = "Depth";
+                    string col_bottom = "Bottom";
+                    string col_graphic = "Graphic";
+
+
+                    string A = "A";
+                    string B = "B";
+                    string C = "C";
+                    string D = "D";
+
+
+                    dt_rock = new System.Data.DataTable();
+                    dt_rock.Columns.Add(col_pt, typeof(string));
+                    dt_rock.Columns.Add(col_depth, typeof(double));
+                    dt_rock.Columns.Add(col_bottom, typeof(double));
+                    dt_rock.Columns.Add(col_graphic, typeof(string));
+
+
+                    for (int i = 1; i < dt3.Rows.Count; i++)
                     {
-                        dt3.Rows[i - 1][j - 1] = Valoare3;
-                    }
-                    else
-                    {
-                        if (j == 1)
+                        if (dt3.Rows[i][A] != DBNull.Value &&
+                            dt3.Rows[i][B] != DBNull.Value &&
+                            dt3.Rows[i][C] != DBNull.Value &&
+                            dt3.Rows[i][D] != DBNull.Value &&
+                            Functions.IsNumeric(Convert.ToString(dt3.Rows[i][B]).Replace(" ", "")) == true &&
+                            Functions.IsNumeric(Convert.ToString(dt3.Rows[i][C]).Replace(" ", "")) == true)
                         {
-                            dt3.Rows[dt3.Rows.Count - 1].Delete();
-                            i = 30001;
-                            j = 54;
+
+                            dt_rock.Rows.Add();
+                            dt_rock.Rows[dt_rock.Rows.Count - 1][col_pt] = dt3.Rows[i][A];
+                            dt_rock.Rows[dt_rock.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt3.Rows[i][B]).Replace(" ", ""));
+                            dt_rock.Rows[dt_rock.Rows.Count - 1][col_bottom] = Convert.ToDouble(Convert.ToString(dt3.Rows[i][C]).Replace(" ", ""));
+                            dt_rock.Rows[dt_rock.Rows.Count - 1][col_graphic] = dt3.Rows[i][D];
                         }
                     }
                 }
             }
 
-
-            if (dt3.Rows.Count > 1)
+            if (W4 != null)
             {
-                string col_pt = "PointID";
-                string col_depth = "Depth";
-                string col_bottom = "Bottom";
-                string col_graphic = "Graphic";
 
 
-                string A = "A";
-                string B = "B";
-                string C = "C";
-                string D = "D";
+                object[,] values4 = new object[300000, 53];
+                Microsoft.Office.Interop.Excel.Range range4 = W4.Range["A1:BA30000"];
+                values4 = range4.Value2;
+                System.Data.DataTable dt4 = dt1.Clone();
 
-
-                dt_rock = new System.Data.DataTable();
-                dt_rock.Columns.Add(col_pt, typeof(string));
-                dt_rock.Columns.Add(col_depth, typeof(double));
-                dt_rock.Columns.Add(col_bottom, typeof(double));
-                dt_rock.Columns.Add(col_graphic, typeof(string));
-
-
-                for (int i = 1; i < dt3.Rows.Count; i++)
+                for (int i = 1; i <= 30000; ++i)
                 {
-                    if (dt3.Rows[i][A] != DBNull.Value &&
-                        dt3.Rows[i][B] != DBNull.Value &&
-                        dt3.Rows[i][C] != DBNull.Value &&
-                        dt3.Rows[i][D] != DBNull.Value &&
-                        Functions.IsNumeric(Convert.ToString(dt3.Rows[i][B]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt3.Rows[i][C]).Replace(" ", "")) == true)
+                    dt4.Rows.Add();
+                    for (int j = 1; j <= 53; ++j)
                     {
-
-                        dt_rock.Rows.Add();
-                        dt_rock.Rows[dt_rock.Rows.Count - 1][col_pt] = dt3.Rows[i][A];
-                        dt_rock.Rows[dt_rock.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt3.Rows[i][B]).Replace(" ", ""));
-                        dt_rock.Rows[dt_rock.Rows.Count - 1][col_bottom] = Convert.ToDouble(Convert.ToString(dt3.Rows[i][C]).Replace(" ", ""));
-                        dt_rock.Rows[dt_rock.Rows.Count - 1][col_graphic] = dt3.Rows[i][D];
+                        object Valoare4 = values4[i, j];
+                        if (Valoare4 != null)
+                        {
+                            dt4.Rows[i - 1][j - 1] = Valoare4;
+                        }
+                        else
+                        {
+                            if (j == 1)
+                            {
+                                dt4.Rows[dt4.Rows.Count - 1].Delete();
+                                i = 30001;
+                                j = 54;
+                            }
+                        }
                     }
                 }
-            }
 
 
-            object[,] values4 = new object[300000, 53];
-            Microsoft.Office.Interop.Excel.Range range4 = W4.Range["A1:BA30000"];
-            values4 = range4.Value2;
-            System.Data.DataTable dt4 = dt1.Clone();
-
-            for (int i = 1; i <= 30000; ++i)
-            {
-                dt4.Rows.Add();
-                for (int j = 1; j <= 53; ++j)
+                if (dt4.Rows.Count > 1)
                 {
-                    object Valoare4 = values4[i, j];
-                    if (Valoare4 != null)
+                    string col_pt = "PointID";
+                    string col_depth = "Depth";
+                    string col_bottom = "Bottom";
+                    string col_graphic = "Graphic";
+
+
+                    string A = "A";
+                    string B = "B";
+                    string C = "C";
+                    string D = "D";
+
+
+                    dt_soil = new System.Data.DataTable();
+                    dt_soil.Columns.Add(col_pt, typeof(string));
+                    dt_soil.Columns.Add(col_depth, typeof(double));
+                    dt_soil.Columns.Add(col_bottom, typeof(double));
+                    dt_soil.Columns.Add(col_graphic, typeof(string));
+
+
+                    for (int i = 1; i < dt4.Rows.Count; i++)
                     {
-                        dt4.Rows[i - 1][j - 1] = Valoare4;
-                    }
-                    else
-                    {
-                        if (j == 1)
+                        if (dt4.Rows[i][A] != DBNull.Value &&
+                            dt4.Rows[i][B] != DBNull.Value &&
+                            dt4.Rows[i][C] != DBNull.Value &&
+                            dt4.Rows[i][D] != DBNull.Value &&
+                            Functions.IsNumeric(Convert.ToString(dt4.Rows[i][B]).Replace(" ", "")) == true &&
+                            Functions.IsNumeric(Convert.ToString(dt4.Rows[i][C]).Replace(" ", "")) == true)
                         {
-                            dt4.Rows[dt4.Rows.Count - 1].Delete();
-                            i = 30001;
-                            j = 54;
+
+                            dt_soil.Rows.Add();
+                            dt_soil.Rows[dt_soil.Rows.Count - 1][col_pt] = dt4.Rows[i][A];
+                            dt_soil.Rows[dt_soil.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt4.Rows[i][B]).Replace(" ", ""));
+                            dt_soil.Rows[dt_soil.Rows.Count - 1][col_bottom] = Convert.ToDouble(Convert.ToString(dt4.Rows[i][C]).Replace(" ", ""));
+                            dt_soil.Rows[dt_soil.Rows.Count - 1][col_graphic] = dt4.Rows[i][D];
                         }
                     }
                 }
             }
 
-
-            if (dt4.Rows.Count > 1)
+            if (W5 != null)
             {
-                string col_pt = "PointID";
-                string col_depth = "Depth";
-                string col_bottom = "Bottom";
-                string col_graphic = "Graphic";
+                object[,] values5 = new object[300000, 53];
+                Microsoft.Office.Interop.Excel.Range range5 = W5.Range["A1:BA30000"];
+                values5 = range5.Value2;
+                System.Data.DataTable dt5 = dt1.Clone();
 
-
-                string A = "A";
-                string B = "B";
-                string C = "C";
-                string D = "D";
-
-
-                dt_soil = new System.Data.DataTable();
-                dt_soil.Columns.Add(col_pt, typeof(string));
-                dt_soil.Columns.Add(col_depth, typeof(double));
-                dt_soil.Columns.Add(col_bottom, typeof(double));
-                dt_soil.Columns.Add(col_graphic, typeof(string));
-
-
-                for (int i = 1; i < dt4.Rows.Count; i++)
+                for (int i = 1; i <= 30000; ++i)
                 {
-                    if (dt4.Rows[i][A] != DBNull.Value &&
-                        dt4.Rows[i][B] != DBNull.Value &&
-                        dt4.Rows[i][C] != DBNull.Value &&
-                        dt4.Rows[i][D] != DBNull.Value &&
-                        Functions.IsNumeric(Convert.ToString(dt4.Rows[i][B]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt4.Rows[i][C]).Replace(" ", "")) == true)
+                    dt5.Rows.Add();
+                    for (int j = 1; j <= 53; ++j)
                     {
-
-                        dt_soil.Rows.Add();
-                        dt_soil.Rows[dt_soil.Rows.Count - 1][col_pt] = dt4.Rows[i][A];
-                        dt_soil.Rows[dt_soil.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt4.Rows[i][B]).Replace(" ", ""));
-                        dt_soil.Rows[dt_soil.Rows.Count - 1][col_bottom] = Convert.ToDouble(Convert.ToString(dt4.Rows[i][C]).Replace(" ", ""));
-                        dt_soil.Rows[dt_soil.Rows.Count - 1][col_graphic] = dt4.Rows[i][D];
+                        object Valoare5 = values5[i, j];
+                        if (Valoare5 != null)
+                        {
+                            dt5.Rows[i - 1][j - 1] = Valoare5;
+                        }
+                        else
+                        {
+                            if (j == 1)
+                            {
+                                dt5.Rows[dt5.Rows.Count - 1].Delete();
+                                i = 30001;
+                                j = 55;
+                            }
+                        }
                     }
                 }
-            }
 
-
-            object[,] values5 = new object[300000, 53];
-            Microsoft.Office.Interop.Excel.Range range5 = W5.Range["A1:BA30000"];
-            values5 = range5.Value2;
-            System.Data.DataTable dt5 = dt1.Clone();
-
-            for (int i = 1; i <= 30000; ++i)
-            {
-                dt5.Rows.Add();
-                for (int j = 1; j <= 53; ++j)
+                if (dt5.Rows.Count > 1)
                 {
-                    object Valoare5 = values5[i, j];
-                    if (Valoare5 != null)
+
+
+                    string col_pt = "PointID";
+                    string col_depth = "Depth";
+                    string col_len = "Length";
+                    string col_type = "Type";
+                    string col_number = "Number";
+
+                    string col_blow1 = "Blows 1st 6in";
+                    string col_blow2 = "Blows 2nd 6in";
+                    string col_blow3 = "Blows 3rd 6in";
+                    string col_blow4 = "Blows 4th 6in";
+
+
+                    string A = "A";
+                    string B = "B";
+                    string C = "C";
+
+                    string D = "D";
+                    string E = "E";
+                    string F = "F";
+                    string G = "G";
+                    string H = "H";
+                    string I = "I";
+
+
+                    dt_core_s = new System.Data.DataTable();
+                    dt_core_s.Columns.Add(col_pt, typeof(string));
+                    dt_core_s.Columns.Add(col_depth, typeof(double));
+                    dt_core_s.Columns.Add(col_len, typeof(double));
+                    dt_core_s.Columns.Add(col_type, typeof(string));
+                    dt_core_s.Columns.Add(col_number, typeof(string));
+                    dt_core_s.Columns.Add(col_blow1, typeof(string));
+                    dt_core_s.Columns.Add(col_blow2, typeof(string));
+                    dt_core_s.Columns.Add(col_blow3, typeof(string));
+                    dt_core_s.Columns.Add(col_blow4, typeof(string));
+
+
+                    for (int i = 1; i < dt5.Rows.Count; i++)
                     {
-                        dt5.Rows[i - 1][j - 1] = Valoare5;
-                    }
-                    else
-                    {
-                        if (j == 1)
+                        if (dt5.Rows[i][A] != DBNull.Value &&
+                            dt5.Rows[i][B] != DBNull.Value &&
+                            dt5.Rows[i][C] != DBNull.Value &&
+                            dt5.Rows[i][D] != DBNull.Value &&
+                            dt5.Rows[i][E] != DBNull.Value &&
+                            dt5.Rows[i][F] != DBNull.Value &&
+                            dt5.Rows[i][G] != DBNull.Value &&
+                            dt5.Rows[i][H] != DBNull.Value &&
+                            dt5.Rows[i][I] != DBNull.Value &&
+                            Functions.IsNumeric(Convert.ToString(dt5.Rows[i][B]).Replace(" ", "")) == true &&
+                            Functions.IsNumeric(Convert.ToString(dt5.Rows[i][C]).Replace(" ", "")) == true)
                         {
-                            dt5.Rows[dt5.Rows.Count - 1].Delete();
-                            i = 30001;
-                            j = 55;
+
+                            dt_core_s.Rows.Add();
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_pt] = dt5.Rows[i][A];
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt5.Rows[i][B]).Replace(" ", ""));
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_len] = Convert.ToDouble(Convert.ToString(dt5.Rows[i][C]).Replace(" ", ""));
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_type] = dt5.Rows[i][D];
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_number] = dt5.Rows[i][E];
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow1] = dt5.Rows[i][F];
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow2] = dt5.Rows[i][G];
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow3] = dt5.Rows[i][H];
+                            dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow4] = dt5.Rows[i][I];
+
                         }
                     }
                 }
             }
-
-
-            if (dt5.Rows.Count > 1)
-            {
-
-
-                string col_pt = "PointID";
-                string col_depth = "Depth";
-                string col_len = "Length";
-                string col_type = "Type";
-                string col_number = "Number";
-
-                string col_blow1 = "Blows 1st 6in";
-                string col_blow2 = "Blows 2nd 6in";
-                string col_blow3 = "Blows 3rd 6in";
-                string col_blow4 = "Blows 4th 6in";
-
-
-                string A = "A";
-                string B = "B";
-                string C = "C";
-
-                string D = "D";
-                string E = "E";
-                string F = "F";
-                string G = "G";
-                string H = "H";
-                string I = "I";
-
-
-                dt_core_s = new System.Data.DataTable();
-                dt_core_s.Columns.Add(col_pt, typeof(string));
-                dt_core_s.Columns.Add(col_depth, typeof(double));
-                dt_core_s.Columns.Add(col_len, typeof(double));
-                dt_core_s.Columns.Add(col_type, typeof(string));
-                dt_core_s.Columns.Add(col_number, typeof(string));
-                dt_core_s.Columns.Add(col_blow1, typeof(string));
-                dt_core_s.Columns.Add(col_blow2, typeof(string));
-                dt_core_s.Columns.Add(col_blow3, typeof(string));
-                dt_core_s.Columns.Add(col_blow4, typeof(string));
-
-
-                for (int i = 1; i < dt5.Rows.Count; i++)
-                {
-                    if (dt5.Rows[i][A] != DBNull.Value &&
-                        dt5.Rows[i][B] != DBNull.Value &&
-                        dt5.Rows[i][C] != DBNull.Value &&
-                        dt5.Rows[i][D] != DBNull.Value &&
-                        dt5.Rows[i][E] != DBNull.Value &&
-                        dt5.Rows[i][F] != DBNull.Value &&
-                        dt5.Rows[i][G] != DBNull.Value &&
-                        dt5.Rows[i][H] != DBNull.Value &&
-                        dt5.Rows[i][I] != DBNull.Value &&
-                        Functions.IsNumeric(Convert.ToString(dt5.Rows[i][B]).Replace(" ", "")) == true &&
-                        Functions.IsNumeric(Convert.ToString(dt5.Rows[i][C]).Replace(" ", "")) == true)
-                    {
-
-                        dt_core_s.Rows.Add();
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_pt] = dt5.Rows[i][A];
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_depth] = Convert.ToDouble(Convert.ToString(dt5.Rows[i][B]).Replace(" ", ""));
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_len] = Convert.ToDouble(Convert.ToString(dt5.Rows[i][C]).Replace(" ", ""));
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_type] = dt5.Rows[i][D];
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_number] = dt5.Rows[i][E];
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow1] = dt5.Rows[i][F];
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow2] = dt5.Rows[i][G];
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow3] = dt5.Rows[i][H];
-                        dt_core_s.Rows[dt_core_s.Rows.Count - 1][col_blow4] = dt5.Rows[i][I];
-
-                    }
-                }
-            }
-
             label_um.Visible = true;
             label_um.Text = units1;
 
@@ -1699,7 +1706,7 @@ namespace Alignment_mdi
                                     double lat1 = -1.234;
                                     double long1 = -1.234;
 
-                                    if(dt_point.Rows[i][col_long]!=DBNull.Value)
+                                    if (dt_point.Rows[i][col_long] != DBNull.Value)
                                     {
                                         long1 = Convert.ToDouble(dt_point.Rows[i][col_long]);
                                     }
@@ -1722,7 +1729,7 @@ namespace Alignment_mdi
                                     Point3d point_borhole_ll = new Point3d(long1, lat1, poly_cl.Elevation);
                                     Point3d point_borhole = new Point3d(east1, north1, poly_cl.Elevation);
 
-                                    if (cs1 != "" && cs2 != "" && cs1 != cs2 && north1 ==-1.234)
+                                    if (cs1 != "" && cs2 != "" && cs1 != cs2 && north1 == -1.234)
                                     {
                                         point_borhole = Functions.Convert_coordinate_from_CS_to_new_CS(point_borhole_ll, cs1, cs2);
                                     }
@@ -1922,6 +1929,7 @@ namespace Alignment_mdi
 
                                     if (dt_soil != null && dt_soil.Rows.Count > 0)
                                     {
+                                       
                                         for (int j = 0; j < dt_soil.Rows.Count; ++j)
                                         {
                                             string borehole2 = Convert.ToString(dt_soil.Rows[j][col_pt]).Replace(" ", "");

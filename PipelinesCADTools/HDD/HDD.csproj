@@ -112,11 +112,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="HDD_2_boreholes.cs">
+    <Compile Include="BH_1_boreholes.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HDD_2_boreholes.designer.cs">
-      <DependentUpon>HDD_2_boreholes.cs</DependentUpon>
+    <Compile Include="BH_1_boreholes.designer.cs">
+      <DependentUpon>BH_1_boreholes.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -133,8 +133,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="HDD_2_boreholes.resx">
-      <DependentUpon>HDD_2_boreholes.cs</DependentUpon>
+    <EmbeddedResource Include="BH_1_boreholes.resx">
+      <DependentUpon>BH_1_boreholes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
