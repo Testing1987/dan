@@ -4554,7 +4554,7 @@ namespace Alignment_mdi
         public void write_poly_to_excel4()
         {
 
-
+            char c = (char)34;
             ObjectId[] Empty_array = null;
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
@@ -4782,6 +4782,11 @@ namespace Alignment_mdi
                                     {
                                         Autodesk.AutoCAD.DatabaseServices.Polyline poly1 = ent1 as Autodesk.AutoCAD.DatabaseServices.Polyline;
 
+                                        Polyline polyextra62 = new Polyline();
+
+                                        dt1.Rows.Add();
+
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "Polyline poly" + Convert.ToString(index_polyline) + " = new Polyline();";
 
                                         for (int j = 0; j < poly1.NumberOfVertices; j++)
                                         {
@@ -4793,9 +4798,10 @@ namespace Alignment_mdi
 
 
                                             dt1.Rows.Add();
+
                                             dt1.Rows[dt1.Rows.Count - 1][col_type] = "Polyline#" + Convert.ToString(index_polyline);
 
-                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly1.AddVertexAt(" + Convert.ToString(j) + ", new Point2d(scale1 * " + Convert.ToString(x1) + ", scale1 *" + Convert.ToString(y1) + "), 0, 0, 0);";
+                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) +".AddVertexAt(" + Convert.ToString(j) + ", new Point2d(scale1 * " + Convert.ToString(x1) + ", scale1 *" + Convert.ToString(y1) + "), 0, 0, 0);";
 
                                             dt1.Rows[dt1.Rows.Count - 1][col_x] = x1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_y] = y1;
@@ -4847,8 +4853,23 @@ namespace Alignment_mdi
                                             }
 
                                         }
+                                        if(poly1.Closed==true)
+                                        {
+                                            dt1.Rows.Add();
 
+                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".Closed=true;";
+                                        }
 
+                                        dt1.Rows.Add();
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));";
+                                        dt1.Rows.Add();
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".Layer = " + c + "0" + c + ";";
+                                        dt1.Rows.Add();
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".Color = colorA;";
+                                        dt1.Rows.Add();
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".LineWeight = LineWeight.LineWeight000;";
+                                        dt1.Rows.Add();
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "bltrec1.AppendEntity(poly" + Convert.ToString(index_polyline) + ");";
 
                                         ++index_polyline;
                                     }
