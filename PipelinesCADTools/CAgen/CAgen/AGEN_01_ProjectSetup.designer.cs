@@ -114,6 +114,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.checkBox_draw_minor_lines = new System.Windows.Forms.CheckBox();
             this.textBox_tic_major = new System.Windows.Forms.TextBox();
+            this.checkBox_text_bottom = new System.Windows.Forms.CheckBox();
             this.checkBox_draw_major_lines = new System.Windows.Forms.CheckBox();
             this.comboBox_text_styles = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -131,7 +132,7 @@
             this.textBox_pi_min_angle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox_pi_block = new System.Windows.Forms.ComboBox();
-            this.checkBox_text_bottom = new System.Windows.Forms.CheckBox();
+            this.checkBox_blocks = new System.Windows.Forms.CheckBox();
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel17.SuspendLayout();
@@ -1129,6 +1130,7 @@
             this.panel4.Controls.Add(this.label19);
             this.panel4.Controls.Add(this.checkBox_draw_minor_lines);
             this.panel4.Controls.Add(this.textBox_tic_major);
+            this.panel4.Controls.Add(this.checkBox_blocks);
             this.panel4.Controls.Add(this.checkBox_text_bottom);
             this.panel4.Controls.Add(this.checkBox_draw_major_lines);
             this.panel4.Controls.Add(this.comboBox_text_styles);
@@ -1289,6 +1291,18 @@
             this.textBox_tic_major.TabIndex = 2123;
             this.textBox_tic_major.Text = "8";
             this.textBox_tic_major.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // checkBox_text_bottom
+            // 
+            this.checkBox_text_bottom.AutoSize = true;
+            this.checkBox_text_bottom.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_text_bottom.ForeColor = System.Drawing.Color.White;
+            this.checkBox_text_bottom.Location = new System.Drawing.Point(359, 8);
+            this.checkBox_text_bottom.Name = "checkBox_text_bottom";
+            this.checkBox_text_bottom.Size = new System.Drawing.Size(106, 18);
+            this.checkBox_text_bottom.TabIndex = 2088;
+            this.checkBox_text_bottom.Text = "Bottom Labels";
+            this.checkBox_text_bottom.UseVisualStyleBackColor = true;
             // 
             // checkBox_draw_major_lines
             // 
@@ -1520,17 +1534,17 @@
             this.comboBox_pi_block.DropDown += new System.EventHandler(this.button_refresh_pi_blocks_Click);
             this.comboBox_pi_block.SelectedIndexChanged += new System.EventHandler(this.comboBox_pi_block_SelectedIndexChanged);
             // 
-            // checkBox_text_bottom
+            // checkBox_blocks
             // 
-            this.checkBox_text_bottom.AutoSize = true;
-            this.checkBox_text_bottom.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_text_bottom.ForeColor = System.Drawing.Color.White;
-            this.checkBox_text_bottom.Location = new System.Drawing.Point(359, 8);
-            this.checkBox_text_bottom.Name = "checkBox_text_bottom";
-            this.checkBox_text_bottom.Size = new System.Drawing.Size(106, 18);
-            this.checkBox_text_bottom.TabIndex = 2088;
-            this.checkBox_text_bottom.Text = "Bottom Labels";
-            this.checkBox_text_bottom.UseVisualStyleBackColor = true;
+            this.checkBox_blocks.AutoSize = true;
+            this.checkBox_blocks.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_blocks.ForeColor = System.Drawing.Color.White;
+            this.checkBox_blocks.Location = new System.Drawing.Point(371, 58);
+            this.checkBox_blocks.Name = "checkBox_blocks";
+            this.checkBox_blocks.Size = new System.Drawing.Size(92, 32);
+            this.checkBox_blocks.TabIndex = 2088;
+            this.checkBox_blocks.Text = "Use Blocks\r\nSTA_MAJOR";
+            this.checkBox_blocks.UseVisualStyleBackColor = true;
             // 
             // AGEN_Project_Setup
             // 
@@ -1685,5 +1699,6 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBox_text_bottom;
+        private System.Windows.Forms.CheckBox checkBox_blocks;
     }
 }

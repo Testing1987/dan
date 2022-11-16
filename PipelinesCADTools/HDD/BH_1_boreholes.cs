@@ -1698,9 +1698,7 @@ namespace Alignment_mdi
 
                                 for (int i = 0; i < dt_point.Rows.Count; ++i)
                                 {
-
                                     string borehole1 = Convert.ToString(dt_point.Rows[i][col_pt]).Replace(" ", "");
-
                                     double north1 = -1.234;
                                     double east1 = -1.234;
                                     double lat1 = -1.234;
@@ -2141,7 +2139,7 @@ namespace Alignment_mdi
                                         boe.TextStyleId = HDD_textstyle.ObjectId;
                                         boe.Location = new Point3d(pt_ins.X, pt_ins.Y - depth1 * graph_vexag * stick_vexag - Texth / 2, 0);
                                         boe.Layer = hdd_boreholes;
-                                        boe.Color = color_labels;
+                                        boe.ColorIndex = 7;
                                         boe.BackgroundFill = true;
                                         boe.UseBackgroundColor = true;
                                         boe.BackgroundScaleFactor = 1.2;
@@ -2154,9 +2152,6 @@ namespace Alignment_mdi
                                     idx = 3;
                                     string suff = "A";
                                     exista = true;
-
-
-
                                     do
                                     {
                                         if (BlockTable1.Has(borehole1 + idx.ToString()) == false && BlockTable1.Has(borehole1 + idx.ToString() + suff) == false)
@@ -2389,13 +2384,8 @@ namespace Alignment_mdi
                                             ++idx;
                                         }
                                     } while (exista == true);
-
-
                                     #endregion
                                 }
-
-
-
 
                                 #region LEGEND
                                 int idx1 = 1;
