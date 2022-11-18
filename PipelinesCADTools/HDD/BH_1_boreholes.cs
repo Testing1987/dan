@@ -926,12 +926,6 @@ namespace Alignment_mdi
                                 double known_sta1 = -123.1234567;
                                 double known_el1 = -123.1234567;
 
-
-
-
-
-
-
                                 #region 2 STATION AND 2 ELEVATION SELECTION
 
                                 Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat_hor1;
@@ -2119,6 +2113,55 @@ namespace Alignment_mdi
                                                 ++idx;
                                             }
                                         } while (exista == true);
+
+                                        #region block hatches labels
+                                        idx = 3;
+                                        exista = true;
+                                        do
+                                        {
+                                            if (BlockTable1.Has(borehole1 + idx.ToString()) == false)
+                                            {
+                                                using (BlockTableRecord bltrec1 = new BlockTableRecord())
+                                                {
+                                                    bltrec1.Name = borehole1 + idx.ToString();
+
+
+                                                    for (int j = 0; j < dtc.Rows.Count; ++j)
+                                                    {
+                                                        double top1 = Convert.ToDouble(dtc.Rows[j]["top"]);
+                                                        double bottom1 = Convert.ToDouble(dtc.Rows[j]["bottom"]);
+                                                        string desc = Convert.ToString(dtc.Rows[j]["desc"]);
+
+
+
+                                                        MText mtxt_desc = new MText();
+                                                        mtxt_desc.Contents = desc;
+                                                        mtxt_desc.TextHeight = Texth;
+                                                        mtxt_desc.Attachment = AttachmentPoint.MiddleRight;
+                                                        mtxt_desc.Location = new Point3d(-wdth / 2 - wdth / 4, -top1 * graph_vexag * stick_vexag - 0.5 * graph_vexag * stick_vexag * Math.Abs(top1 - bottom1), 0);
+                                                        mtxt_desc.Layer = "0";
+                                                        mtxt_desc.ColorIndex = 7;
+                                                        mtxt_desc.UseBackgroundColor = true;
+                                                        mtxt_desc.BackgroundFill = true;
+                                                        mtxt_desc.BackgroundScaleFactor = 1.2;
+                                                        bltrec1.AppendEntity(mtxt_desc);
+                                                    }
+                                                    BlockTable1.Add(bltrec1);
+                                                    Trans1.AddNewlyCreatedDBObject(bltrec1, true);
+                                                    BlockReference b1 = Functions.InsertBlock_with_2scales(ThisDrawing.Database, BTrecord, borehole1 + idx.ToString(), pt_ins, 1, 1, 0, hdd_boreholes);
+                                                    b1.ColorIndex = 256;
+                                                }
+                                                exista = false;
+                                            }
+                                            else
+                                            {
+                                                ++idx;
+                                            }
+                                        } while (exista == true);
+                                        #endregion
+
+
+
                                         #endregion
 
                                         double depth1 = Convert.ToDouble(dtc.Rows[dtc.Rows.Count - 1]["bottom"]);
@@ -7815,7 +7858,7 @@ namespace Alignment_mdi
             polyextra5.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(polyextra5);
 
-          Polyline  polyextra6 = new Polyline();
+            Polyline polyextra6 = new Polyline();
             polyextra6.AddVertexAt(0, new Point2d(scale1 * 1.5, scale1 * 0.174114035195047), 0, 0, 0);
             polyextra6.AddVertexAt(1, new Point2d(scale1 * 1.49539016077217, scale1 * 0.173755215127021), 0, 0, 0);
             polyextra6.AddVertexAt(2, new Point2d(scale1 * 1.48720615671715, scale1 * 0.175817584991455), 0, 0, 0);
@@ -8947,123 +8990,117 @@ namespace Alignment_mdi
         private void add_pattern_topsoil(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
 
-            #region TOPSOIL
+            Autodesk.AutoCAD.Colors.Color color_ts = Autodesk.AutoCAD.Colors.Color.FromRgb(153, 95, 76);
 
-            Autodesk.AutoCAD.Colors.Color color_ts = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
-
-
-
-            double len_line1 = scale1 / 60;
-            double pattern_height = scale1 / 85.7;
-
-            double spc_h_edge = scale1 / 600;
-            double spc_v_edge = scale1 / 600;
-            double spc_hor = scale1 / 120;
-            double spc_ver = scale1 / 300;
+            double spc_hor = scale1 * 0.0975;
+            double spc_ver = scale1 * 0.0585;
 
             int nr_col = 0;
             int nr_rows = 0;
 
-            double x1 = poly1.GetPoint2dAt(3).X + spc_h_edge;
-            double y1 = poly1.GetPoint2dAt(3).Y + spc_v_edge;
+
 
 
             double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
-            double rectangle_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
 
-            if (rectangle_height >= pattern_height + 2 * spc_v_edge)
+            if (stick_height >= scale1 * 0.0585)
             {
-                double nr1 = Math.Floor((rectangle_height - 2 * spc_v_edge) / (pattern_height + spc_ver));
+                double nr1 = Math.Floor(stick_height / spc_ver);
                 nr_rows = Convert.ToInt32(nr1);
 
-                if (stick_width - 2 * spc_h_edge < len_line1 + 2 * spc_hor)
+                if (stick_width < scale1 * 0.0975)
                 {
                     nr_col = 1;
                 }
                 else
                 {
-                    double nr2 = Math.Floor((stick_width - 2 * spc_h_edge) / (len_line1 + spc_hor));
+                    double nr2 = Math.Floor(stick_width / spc_hor);
 
                     nr_col = Convert.ToInt32(nr2);
                 }
 
-                double dif_len = stick_width - (nr_col * (len_line1 + spc_hor) - spc_hor);
-                double dif_hght = rectangle_height - (nr_rows * (pattern_height + spc_ver) - spc_ver);
+
 
                 if (nr_rows > 0 && nr_col > 0)
                 {
+
+                    double spc_h_edge = (stick_width - ((nr_col - 1) * scale1 * spc_hor + scale1 * 0.065)) / 2;
+                    double spc_v_edge = (stick_height - ((nr_rows - 1) * scale1 * spc_ver + scale1 * 0.0455)) / 2;
+
                     for (int m = 0; m < nr_col; ++m)
                     {
                         for (int n = 0; n < nr_rows; ++n)
                         {
-                            double x2 = x1 + dif_len / 2 + m * (len_line1 + spc_hor);
-                            double y2 = y1 + dif_hght / 2 + n * (pattern_height + spc_ver);
 
-                            double x3 = x2 + len_line1;
-                            double y3 = y2;
+                            Polyline poly_hor = new Polyline();
+                            poly_hor.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0, spc_v_edge + n * scale1 * spc_ver + scale1 * 0), 0, 0, 0);
+                            poly_hor.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.065, spc_v_edge + n * scale1 * spc_ver + scale1 * 0), 0, 0, 0);
+                            poly_hor.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            poly_hor.Layer = "0";
+                            poly_hor.Color = color_ts;
+                            poly_hor.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(poly_hor);
 
-                            Polyline poly_down = new Polyline();
-                            poly_down.AddVertexAt(0, new Point2d(x2, y2), 0, 0, 0);
-                            poly_down.AddVertexAt(1, new Point2d(x3, y3), 0, 0, 0);
-                            poly_down.Layer = "0";
-                            poly_down.Color = color_ts;
-                            poly_down.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(poly_down);
 
-                            Polyline poly_left1 = new Polyline();
-                            poly_left1.AddVertexAt(0, new Point2d(x2 + scale1 / 300, y2 + scale1 / 300), 0, 0, 0);
-                            poly_left1.AddVertexAt(1, new Point2d(x2, y2 + scale1 / 120), 0, 0, 0);
-                            poly_left1.Layer = "0";
-                            poly_left1.Color = color_ts;
-                            poly_left1.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(poly_left1);
+                            Polyline polyts1 = new Polyline();
+                            polyts1.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0364009706925518, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0215254358900769), 0, 0, 0);
+                            polyts1.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0422535211267605, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0455075845974331), 0, 0, 0);
+                            polyts1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts1.Layer = "0";
+                            polyts1.Color = color_ts;
+                            polyts1.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts1);
+                            Polyline polyts2 = new Polyline();
+                            polyts2.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.052, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.013000000000001), 0, 0, 0);
+                            polyts2.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.065, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0325000000000004), 0, 0, 0);
+                            polyts2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts2.Layer = "0";
+                            polyts2.Color = color_ts;
+                            polyts2.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts2);
+                            Polyline polyts3 = new Polyline();
+                            polyts3.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.024050024050024, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0216450216450219), 0, 0, 0);
+                            polyts3.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0182004853462759, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0455022751137557), 0, 0, 0);
+                            polyts3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts3.Layer = "0";
+                            polyts3.Color = color_ts;
+                            polyts3.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts3);
+                            Polyline polyts4 = new Polyline();
+                            polyts4.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.013, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.013000000000001), 0, 0, 0);
+                            polyts4.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0325000000000004), 0, 0, 0);
+                            polyts4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts4.Layer = "0";
+                            polyts4.Color = color_ts;
+                            polyts4.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts4);
 
-                            Polyline poly_left2 = new Polyline();
-                            poly_left2.AddVertexAt(0, new Point2d(x2 + scale1 / 162.162, y2 + scale1 / 180.18), 0, 0, 0);
-                            poly_left2.AddVertexAt(1, new Point2d(x2 + scale1 / 214.28, y2 + scale1 / 85.71), 0, 0, 0);
-                            poly_left2.Layer = "0";
-                            poly_left2.Color = color_ts;
-                            poly_left2.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(poly_left2);
 
-                            Polyline poly_right1 = new Polyline();
-                            poly_right1.AddVertexAt(0, new Point2d(x2 + scale1 / 75, y2 + scale1 / 300), 0, 0, 0);
-                            poly_right1.AddVertexAt(1, new Point2d(x2 + scale1 / 60, y2 + scale1 / 120), 0, 0, 0);
-                            poly_right1.Layer = "0";
-                            poly_right1.Color = color_ts;
-                            poly_right1.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(poly_right1);
-
-                            Polyline poly_right2 = new Polyline();
-                            poly_right2.AddVertexAt(0, new Point2d(x2 + scale1 / 107.14, y2 + scale1 / 181.181), 0, 0, 0);
-                            poly_right2.AddVertexAt(1, new Point2d(x2 + scale1 / 92.3, y2 + scale1 / 85.7), 0, 0, 0);
-                            poly_right2.Layer = "0";
-                            poly_right2.Color = color_ts;
-                            poly_right2.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(poly_right2);
 
 
                         }
                     }
 
-                    Polyline poly2 = new Polyline();
-                    poly2 = poly1.Clone() as Polyline;
-                    BTrecord.AppendEntity(poly2);
-                    Trans1.AddNewlyCreatedDBObject(poly2, true);
 
-                    Hatch hatch1 = CreateHatch(poly2, "DOTS", scale1 / 5, 22);
-                    hatch1.Layer = "0";
-                    hatch1.Color = color_ts;
-                    hatch1.LineWeight = LineWeight.LineWeight000;
-                    bltrec1.AppendEntity(hatch1);
-                    poly2.Erase();
 
                 }
             }
             else
             {
+                Polyline poly2 = new Polyline();
+                poly2 = poly1.Clone() as Polyline;
+                BTrecord.AppendEntity(poly2);
+                Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+                Hatch hatch1 = CreateHatch(poly2, "SOLID", 1, 0);
+                hatch1.Layer = "0";
+                hatch1.Color = color_ts;
+                hatch1.LineWeight = LineWeight.LineWeight000;
+                bltrec1.AppendEntity(hatch1);
+                poly2.Erase();
             }
-            #endregion
+
 
         }
 
@@ -9073,7 +9110,7 @@ namespace Alignment_mdi
         {
             #region SANDSTONE
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(121, 178, 6);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
             double rec_hght = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
             double spc = scale1 / 12;
             int nr_col = 0;
@@ -9148,7 +9185,7 @@ namespace Alignment_mdi
         {
 
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(0, 255, 0);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
 
 
             double spc_linie = scale1 / 14.2;
@@ -9201,9 +9238,9 @@ namespace Alignment_mdi
                 }
             }
 
-            double spc_ver = scale1 * 0.01;
-            double spc_hor = scale1 * 0.01;
-            double r1 = 0.0015 * scale1;
+            double spc_ver = scale1 * 0.04;
+            double spc_hor = scale1 * 0.04;
+            double r1 = 0.002 * scale1;
 
             nr_col = 0;
             nr_rows = 0;

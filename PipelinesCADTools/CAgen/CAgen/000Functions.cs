@@ -3759,7 +3759,7 @@ namespace Alignment_mdi
 
         static public bool see_if_block_exists(string nume1)
         {
-            
+
             try
             {
                 Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -3767,12 +3767,12 @@ namespace Alignment_mdi
                 using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                 {
                     Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
-                     
+
 
                     foreach (ObjectId objid in BlockTable1)
                     {
                         BlockTableRecord Btr = Trans1.GetObject(objid, OpenMode.ForRead) as BlockTableRecord;
-                        if(Btr.Name.ToUpper()==nume1.ToUpper())
+                        if (Btr.Name.ToUpper() == nume1.ToUpper())
                         {
                             return true;
                         }
@@ -3971,8 +3971,8 @@ namespace Alignment_mdi
             Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecordPS = null;
             foreach (DBDictionaryEntry entry in Layoutdict)
             {
-                Layout Layout0 = (Layout)Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead);
-                if (Layout0.TabOrder == index1)
+                Layout Layout0 = Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead) as Layout;
+                if (Layout0 != null && Layout0.TabOrder == index1)
                 {
                     return (BlockTableRecord)Trans1.GetObject(Layout0.BlockTableRecordId, OpenMode.ForRead);
                 }
@@ -8058,10 +8058,11 @@ namespace Alignment_mdi
         }
 
 
-        public static MLeader creaza_mleader_with_color(Autodesk.AutoCAD.Colors.Color color1, Point3d pt_ins, string continut, ObjectId style1, double texth, double delta_x, double delta_y, double lgap, double dogl, double arrow, string layer1 = "0")
+        public static MLeader creaza_mleader_with_color(Autodesk.AutoCAD.Colors.Color color1, Point3d pt_ins, string continut, ObjectId style1, double texth, double delta_x, double delta_y, double lgap, double dogl, double arrow, bool arrow_towards_left = false, string layer1 = "0")
         {
 
-
+            int lr = 1;
+          
 
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
 
@@ -8082,13 +8083,22 @@ namespace Alignment_mdi
                 mtext1.BackgroundScaleFactor = 1.2;
                 mtext1.Color = color1;
                 mtext1.TextStyleId = style1;
+                if (arrow_towards_left == true)
+                {
+                    lr = -1;
+                    mtext1.Attachment = AttachmentPoint.MiddleRight;
+                }
+                else
+                {
+                    mtext1.Attachment = AttachmentPoint.MiddleLeft;
+                }
 
 
                 mleader1.SetDatabaseDefaults();
                 int index1 = mleader1.AddLeader();
                 int index2 = mleader1.AddLeaderLine(index1);
                 mleader1.AddFirstVertex(index2, pt_ins);
-                mleader1.AddLastVertex(index2, new Point3d(pt_ins.X + delta_x, pt_ins.Y + delta_y, pt_ins.Z));
+                mleader1.AddLastVertex(index2, new Point3d(pt_ins.X + lr*delta_x, pt_ins.Y + delta_y, pt_ins.Z));
                 mleader1.LeaderLineType = LeaderType.StraightLeader;
                 mleader1.ContentType = ContentType.MTextContent;
                 mleader1.MText = mtext1;
@@ -9029,7 +9039,7 @@ namespace Alignment_mdi
                             List1.Add("Note1");
                             List2.Add("Notes");
                             List3.Add(Autodesk.Gis.Map.Constants.DataType.Character);
-                            
+
                             List1.Add("Note2");
                             List2.Add("Notes");
                             List3.Add(Autodesk.Gis.Map.Constants.DataType.Character);
@@ -18833,7 +18843,7 @@ namespace Alignment_mdi
                                         Functions.Populate_object_data_table_from_objectid(Tables1, Poly_graph.ObjectId, "Agen_profile_band_V3", Lista_val, Lista_type);
                                     }
                                     #endregion
-                                    
+
                                     end_band_prof_sta_prev = Max_sta;
 
                                 }

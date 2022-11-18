@@ -1,0 +1,10 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\bin\Debug\Weld_Sheet_Generator.exe.config
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\bin\Debug\Weld_Sheet_Generator.exe
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\bin\Debug\Weld_Sheet_Generator.pdb
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\Weld_Sheet_Generator.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\weld_sheet.Form_main.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\weld_sheet.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\Weld_Sheet_Generator.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\Weld_Sheet_Generator.csproj.CoreCompileInputs.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\Weld_Sheet_Generator.exe
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Weld_Sheet_Generator\obj\Debug\Weld_Sheet_Generator.pdb

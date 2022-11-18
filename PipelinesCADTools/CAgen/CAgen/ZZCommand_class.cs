@@ -5695,22 +5695,22 @@ namespace Alignment_mdi
                             MText mt1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForWrite) as MText;
                             if (mt1 != null)
                             {
-
-
-
                                 Point3d pt1 = mt1.Location;
 
+                                bool towards_left = false;
 
+                                if (mt1.Attachment == AttachmentPoint.MiddleRight) towards_left = true;
 
                                 Autodesk.AutoCAD.Colors.Color color1 = mt1.Color;
 
-                                ml1 = Functions.creaza_mleader_with_color(color1, pt1, mt1.Contents, mt1.TextStyleId, mt1.TextHeight, 2 * mt1.TextHeight, 0, mt1.TextHeight, mt1.TextHeight, mt1.TextHeight, mt1.Layer);
+                                ml1 = Functions.creaza_mleader_with_color(color1, pt1, mt1.Contents, mt1.TextStyleId, mt1.TextHeight, 2 * mt1.TextHeight, 0, mt1.TextHeight, mt1.TextHeight, mt1.TextHeight,towards_left, mt1.Layer);
 
                                 using (MText mt2 = ml1.MText)
                                 {
                                     mt2.Rotation = 0;
                                     mt2.BackgroundFill = mt1.BackgroundFill;
                                     mt2.UseBackgroundColor = mt1.UseBackgroundColor;
+                                    mt2.BackgroundScaleFactor = mt1.BackgroundScaleFactor;
                                     ml1.MText = mt2;
                                 }
 

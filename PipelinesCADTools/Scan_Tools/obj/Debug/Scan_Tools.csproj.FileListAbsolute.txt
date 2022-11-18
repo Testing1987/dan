@@ -1,0 +1,7 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Scan_Tools.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Alignment_mdi.map_export.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Alignment_mdi.scan_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Alignment_mdi.scan_survey_permission.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Scan_Tools.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Scan_Tools\obj\Debug\Scan_Tools.csproj.CoreCompileInputs.cache

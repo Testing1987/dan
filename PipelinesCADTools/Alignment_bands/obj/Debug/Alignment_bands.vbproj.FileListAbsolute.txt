@@ -1,0 +1,8 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.vbproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.ALIGNMENT_MATERIAL_AND_COATING_FORM.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.Custom_User_band_Form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.Engineering_band_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.Graph_converter.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.vbproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Alignment_bands\obj\Debug\Alignment_bands.vbproj.CoreCompileInputs.cache

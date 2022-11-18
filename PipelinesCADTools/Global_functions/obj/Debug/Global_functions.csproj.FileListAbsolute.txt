@@ -1,0 +1,2 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Global_functions\obj\Debug\Global_functions.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Global_functions\obj\Debug\Global_functions.csproj.CoreCompileInputs.cache

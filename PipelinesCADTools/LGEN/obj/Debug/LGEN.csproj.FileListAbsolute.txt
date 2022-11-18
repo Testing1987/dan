@@ -1,0 +1,7 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\LGEN.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\Alignment_mdi.Lgen_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\Alignment_mdi.Lgen_label_page.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\Alignment_mdi.Lgen_alias_page.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\LGEN.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\LGEN\obj\Debug\LGEN.csproj.CoreCompileInputs.cache

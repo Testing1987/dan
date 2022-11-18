@@ -1,0 +1,12 @@
+C:\Users\POP70694\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\MMGeoTools.dll
+C:\Users\POP70694\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\MMGeoTools.pdb
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\Alignment_mdi.AttachOD_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.Form_processing.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\Alignment_mdi.Geo_tools_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.Text2_ODForm.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.csproj.CoreCompileInputs.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.dll
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\GeoManager\GeoManager\obj\Debug\MMGeoTools.pdb

@@ -1,0 +1,11 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\PGen.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.pgen_vp2ms.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.layer_sync1.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.Layer_sync_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.Pgen_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.Pgen_prof_gen.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.Pgen_prof_hyd.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.Pgen_prof_gen3.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.slicer_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\Alignment_mdi.Tcal.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Upstream_align\obj\Debug\PGen.csproj.GenerateResource.cache

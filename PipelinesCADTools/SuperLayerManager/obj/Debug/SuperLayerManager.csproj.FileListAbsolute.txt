@@ -1,0 +1,4 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\SuperLayerManager\obj\Debug\SuperLayerManager.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\SuperLayerManager\obj\Debug\SuperLayerManager.Layer_manager_Form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\SuperLayerManager\obj\Debug\SuperLayerManager.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\SuperLayerManager\obj\Debug\SuperLayerManager.csproj.CoreCompileInputs.cache
