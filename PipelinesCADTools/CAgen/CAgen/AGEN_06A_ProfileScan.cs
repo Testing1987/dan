@@ -180,7 +180,7 @@ namespace Alignment_mdi
 
                         _AGEN_mainform.Poly3D = Trans1.GetObject(_AGEN_mainform.Poly3D.ObjectId, OpenMode.ForWrite) as Polyline3d;
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.dt_station_equation.Rows.Count > 0)
                         {
@@ -1440,7 +1440,7 @@ namespace Alignment_mdi
                         dt1.Columns.Add("Z2", typeof(double));
                         dt1.Columns.Add("LAYER", typeof(string));
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                         _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
                         for (int i = 0; i < Rezultat_poly.Value.Count; ++i)

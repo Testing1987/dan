@@ -52,8 +52,6 @@
             this.textBox_project_name = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel_canada = new System.Windows.Forms.Panel();
-            this.button_display_tpage_load_cl_xl = new System.Windows.Forms.Button();
             this.panel_USA = new System.Windows.Forms.Panel();
             this.textBox_start_station_CL = new System.Windows.Forms.TextBox();
             this.button_load_new_CL_to_excel = new System.Windows.Forms.Button();
@@ -114,6 +112,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.checkBox_draw_minor_lines = new System.Windows.Forms.CheckBox();
             this.textBox_tic_major = new System.Windows.Forms.TextBox();
+            this.checkBox_blocks = new System.Windows.Forms.CheckBox();
             this.checkBox_text_bottom = new System.Windows.Forms.CheckBox();
             this.checkBox_draw_major_lines = new System.Windows.Forms.CheckBox();
             this.comboBox_text_styles = new System.Windows.Forms.ComboBox();
@@ -132,12 +131,10 @@
             this.textBox_pi_min_angle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox_pi_block = new System.Windows.Forms.ComboBox();
-            this.checkBox_blocks = new System.Windows.Forms.CheckBox();
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel_canada.SuspendLayout();
             this.panel_USA.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -470,7 +467,6 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.panel_canada);
             this.panel1.Controls.Add(this.panel_USA);
             this.panel1.Controls.Add(this.button_show_tools);
             this.panel1.ForeColor = System.Drawing.Color.White;
@@ -478,36 +474,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(366, 229);
             this.panel1.TabIndex = 2;
-            // 
-            // panel_canada
-            // 
-            this.panel_canada.Controls.Add(this.button_display_tpage_load_cl_xl);
-            this.panel_canada.Location = new System.Drawing.Point(-1, 64);
-            this.panel_canada.Name = "panel_canada";
-            this.panel_canada.Size = new System.Drawing.Size(310, 38);
-            this.panel_canada.TabIndex = 132;
-            this.panel_canada.Visible = false;
-            // 
-            // button_display_tpage_load_cl_xl
-            // 
-            this.button_display_tpage_load_cl_xl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_display_tpage_load_cl_xl.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button_display_tpage_load_cl_xl.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.button_display_tpage_load_cl_xl.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_display_tpage_load_cl_xl.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_display_tpage_load_cl_xl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_display_tpage_load_cl_xl.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_display_tpage_load_cl_xl.ForeColor = System.Drawing.Color.White;
-            this.button_display_tpage_load_cl_xl.Image = ((System.Drawing.Image)(resources.GetObject("button_display_tpage_load_cl_xl.Image")));
-            this.button_display_tpage_load_cl_xl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_display_tpage_load_cl_xl.Location = new System.Drawing.Point(3, 2);
-            this.button_display_tpage_load_cl_xl.Name = "button_display_tpage_load_cl_xl";
-            this.button_display_tpage_load_cl_xl.Size = new System.Drawing.Size(291, 31);
-            this.button_display_tpage_load_cl_xl.TabIndex = 5;
-            this.button_display_tpage_load_cl_xl.Text = "Create New Alignment from Survey file";
-            this.button_display_tpage_load_cl_xl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button_display_tpage_load_cl_xl.UseVisualStyleBackColor = false;
-            this.button_display_tpage_load_cl_xl.Click += new System.EventHandler(this.button_display_tpage_load_cl_xl_Click);
             // 
             // panel_USA
             // 
@@ -1292,6 +1258,18 @@
             this.textBox_tic_major.Text = "8";
             this.textBox_tic_major.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // checkBox_blocks
+            // 
+            this.checkBox_blocks.AutoSize = true;
+            this.checkBox_blocks.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_blocks.ForeColor = System.Drawing.Color.White;
+            this.checkBox_blocks.Location = new System.Drawing.Point(371, 58);
+            this.checkBox_blocks.Name = "checkBox_blocks";
+            this.checkBox_blocks.Size = new System.Drawing.Size(92, 32);
+            this.checkBox_blocks.TabIndex = 2088;
+            this.checkBox_blocks.Text = "Use Blocks\r\nSTA_MAJOR";
+            this.checkBox_blocks.UseVisualStyleBackColor = true;
+            // 
             // checkBox_text_bottom
             // 
             this.checkBox_text_bottom.AutoSize = true;
@@ -1534,18 +1512,6 @@
             this.comboBox_pi_block.DropDown += new System.EventHandler(this.button_refresh_pi_blocks_Click);
             this.comboBox_pi_block.SelectedIndexChanged += new System.EventHandler(this.comboBox_pi_block_SelectedIndexChanged);
             // 
-            // checkBox_blocks
-            // 
-            this.checkBox_blocks.AutoSize = true;
-            this.checkBox_blocks.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_blocks.ForeColor = System.Drawing.Color.White;
-            this.checkBox_blocks.Location = new System.Drawing.Point(371, 58);
-            this.checkBox_blocks.Name = "checkBox_blocks";
-            this.checkBox_blocks.Size = new System.Drawing.Size(92, 32);
-            this.checkBox_blocks.TabIndex = 2088;
-            this.checkBox_blocks.Text = "Use Blocks\r\nSTA_MAJOR";
-            this.checkBox_blocks.UseVisualStyleBackColor = true;
-            // 
             // AGEN_Project_Setup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1564,7 +1530,6 @@
             this.panel17.ResumeLayout(false);
             this.panel17.PerformLayout();
             this.panel1.ResumeLayout(false);
-            this.panel_canada.ResumeLayout(false);
             this.panel_USA.ResumeLayout(false);
             this.panel_USA.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -1687,8 +1652,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox_start_station_CL;
         private System.Windows.Forms.Panel panel_USA;
-        private System.Windows.Forms.Button button_display_tpage_load_cl_xl;
-        private System.Windows.Forms.Panel panel_canada;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button_show_tools;
         private System.Windows.Forms.TextBox textBox_scale_eq;

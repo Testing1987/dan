@@ -130,6 +130,8 @@ namespace Alignment_mdi
         public static string layer_ownership_band = "Agen_band_ownership";
         public static string layer_ownership_band_no_plot = "Agen_no_plot_prop";
         public static string layer_centerline = "P_PL_CL";
+        public static string layer_centerline_original = "P_PL_CL";
+      
         public static short color_index_cl = 1;
         public static LineWeight lw_cl = LineWeight.ByLineWeightDefault;
 

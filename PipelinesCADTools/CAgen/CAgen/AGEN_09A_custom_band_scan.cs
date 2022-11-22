@@ -320,7 +320,7 @@ namespace Alignment_mdi
                                 return;
                             }
 
-                            _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                            _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                             foreach (ObjectId ObjID in BTrecord)
                             {

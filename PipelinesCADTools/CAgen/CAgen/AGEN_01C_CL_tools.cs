@@ -510,7 +510,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -669,7 +669,7 @@ namespace Alignment_mdi
                     if (System.IO.File.Exists(fisier_cl) == true)
                     {
                         _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
-                        Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         string Col_x = "X";
                         string Col_y = "Y";
@@ -901,7 +901,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -1115,7 +1115,7 @@ namespace Alignment_mdi
                         dataGridView_errors.DefaultCellStyle.ForeColor = Color.White;
                         dataGridView_errors.EnableHeadersVisualStyles = false;
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                         _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
                         bool next1 = true;
@@ -1299,7 +1299,7 @@ namespace Alignment_mdi
                                     BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                                     BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
-                                    _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                     _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
                                     string Col_x = "X";
@@ -1464,7 +1464,7 @@ namespace Alignment_mdi
                     if (System.IO.File.Exists(fisier_cl) == true)
                     {
                         _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
-                        Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
                         Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -1479,7 +1479,7 @@ namespace Alignment_mdi
                                     BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                                     BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
-                                    _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                     _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
                                     string Col_x = "X";
@@ -1704,7 +1704,7 @@ namespace Alignment_mdi
                         short ci = 1;
 
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         if (comboBox_ws1.Text != "")
                         {
@@ -2203,7 +2203,7 @@ namespace Alignment_mdi
 
                                 System.Data.DataTable dt_cl = _AGEN_mainform.dt_centerline;
 
-                                Polyline poly1 = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly1 = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 this.MdiParent.WindowState = FormWindowState.Minimized;
                                 bool repeat = true;
@@ -3372,7 +3372,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -3551,7 +3551,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -3759,7 +3759,7 @@ namespace Alignment_mdi
 
                                 System.Data.DataTable dt_cl = _AGEN_mainform.dt_centerline;
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 this.MdiParent.WindowState = FormWindowState.Minimized;
                                 bool repeat = true;

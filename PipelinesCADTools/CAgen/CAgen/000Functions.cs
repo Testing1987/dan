@@ -1519,7 +1519,7 @@ namespace Alignment_mdi
         public static void Create_header_centerline_file(Worksheet W1, string Client, string Project, string Segment, bool CSF, string Version)
         {
             Microsoft.Office.Interop.Excel.Range range1 = W1.Range["A1:B8"];
-            Object[,] valuesH = new object[8, 2];
+            Object[,] valuesH = new object[9, 2];
             valuesH[0, 0] = "CLIENT";
             valuesH[0, 1] = Client;
             valuesH[1, 0] = "PROJECT";
@@ -1533,7 +1533,7 @@ namespace Alignment_mdi
             valuesH[5, 0] = "USER ID";
             valuesH[5, 1] = Environment.UserName;
             valuesH[6, 0] = "Do not manually edit any of the table information below.";
-            valuesH[7, 0] = "Do not add any columns to this table between coluns A And P, also do not add any rows above row 14";
+            valuesH[7, 0] = "Do not add any columns to this table between coluns A And S, also do not add any rows above row 14";
             range1.Value2 = valuesH;
             range1 = W1.Range["A1:B6"];
 
@@ -1541,7 +1541,7 @@ namespace Alignment_mdi
 
             if (CSF == false)
             {
-                range1 = W1.Range["A7:R7"];
+                range1 = W1.Range["A7:S7"];
                 range1.Merge();
                 range1.MergeCells = true;
             }
@@ -1556,7 +1556,7 @@ namespace Alignment_mdi
 
             if (CSF == false)
             {
-                range1 = W1.Range["A8:R8"];
+                range1 = W1.Range["A8:S8"];
                 range1.Merge();
                 range1.MergeCells = true;
             }
@@ -1571,7 +1571,7 @@ namespace Alignment_mdi
 
             if (CSF == false)
             {
-                range1 = W1.Range["A9:R9"];
+                range1 = W1.Range["A9:S9"];
             }
             else
             {
@@ -1583,7 +1583,7 @@ namespace Alignment_mdi
 
             if (CSF == false)
             {
-                range1 = W1.Range["C1:R6"];
+                range1 = W1.Range["C1:S6"];
             }
             else
             {
@@ -1600,7 +1600,7 @@ namespace Alignment_mdi
             Color_border_range_outside(range1, 0);
             if (CSF == false)
             {
-                range1 = W1.Range["A9:R9"];
+                range1 = W1.Range["A9:S9"];
             }
             else
             {
@@ -2429,6 +2429,8 @@ namespace Alignment_mdi
             {
                 Data_table_centerline.Columns.Add(Lista1[i], Lista2[i]);
             }
+            Data_table_centerline.Columns.Add("BULGE", typeof(double));
+
             return Data_table_centerline;
         }
 
@@ -7909,10 +7911,8 @@ namespace Alignment_mdi
         }
 
 
-        public static Polyline Build_2d_poly_for_scanning(System.Data.DataTable dt_cl)
+        public static Polyline Build_2D_CL_from_dt_cl(System.Data.DataTable dt_cl, bool add_to_btrecord = false)
         {
-
-
             Polyline Poly2D = new Polyline();
 
             int index1 = 0;
@@ -7930,9 +7930,9 @@ namespace Alignment_mdi
                         y = (double)dt_cl.Rows[i][Alignment_mdi._AGEN_mainform.Col_y];
 
                         double bulge1 = 0;
-                        if (dt_cl.Rows[i][Alignment_mdi._AGEN_mainform.Col_MMid] != DBNull.Value)
+                        if (dt_cl.Rows[i]["BULGE"] != DBNull.Value)
                         {
-                            string b1 = Convert.ToString(dt_cl.Rows[i][Alignment_mdi._AGEN_mainform.Col_MMid]);
+                            string b1 = Convert.ToString(dt_cl.Rows[i]["BULGE"]);
                             if (IsNumeric(b1) == true)
                             {
                                 bulge1 = Convert.ToDouble(b1);
@@ -7948,6 +7948,24 @@ namespace Alignment_mdi
                     }
                 }
             }
+
+            if (add_to_btrecord == true)
+            {
+                Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+                        BTrecord.AppendEntity(Poly2D);
+                        Trans1.AddNewlyCreatedDBObject(Poly2D, true);
+                        Trans1.Commit();
+
+                    }
+
+                }
+            }
+
 
             return Poly2D;
 
@@ -8062,7 +8080,7 @@ namespace Alignment_mdi
         {
 
             int lr = 1;
-          
+
 
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
 
@@ -8098,7 +8116,7 @@ namespace Alignment_mdi
                 int index1 = mleader1.AddLeader();
                 int index2 = mleader1.AddLeaderLine(index1);
                 mleader1.AddFirstVertex(index2, pt_ins);
-                mleader1.AddLastVertex(index2, new Point3d(pt_ins.X + lr*delta_x, pt_ins.Y + delta_y, pt_ins.Z));
+                mleader1.AddLastVertex(index2, new Point3d(pt_ins.X + lr * delta_x, pt_ins.Y + delta_y, pt_ins.Z));
                 mleader1.LeaderLineType = LeaderType.StraightLeader;
                 mleader1.ContentType = ContentType.MTextContent;
                 mleader1.MText = mtext1;
@@ -19713,7 +19731,73 @@ namespace Alignment_mdi
 
             return Block1;
         }
+        public static void delete_entities_with_OD(string layer_name, string od_table_name)
+        {
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            using (DocumentLock lock1 = ThisDrawing.LockDocument())
+            {
+                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.Database.TransactionManager.StartTransaction())
+                {
+                    BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                    Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+                    foreach (ObjectId id1 in BTrecord)
+                    {
+                        Entity ent1 = Trans1.GetObject(id1, OpenMode.ForRead) as Entity;
+                        if (ent1 != null)
+                        {
+                            if (ent1.Layer == layer_name)
+                            {
+                                Autodesk.Gis.Map.ObjectData.Records Records1;
+                                bool delete1 = false;
+                                if (Tables1.IsTableDefined(od_table_name) == true)
+                                {
+                                    Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[od_table_name];
+                                    using (Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), ent1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                    {
+                                        if (Records1.Count > 0)
+                                        {
+                                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                            foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                            {
+                                                if (delete1 == false)
+                                                {
+                                                    for (int i = 0; i < Record1.Count; ++i)
+                                                    {
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                                        string Nume_field = Field_def1.Name;
+                                                        string Valoare1 = Record1[i].StrValue;
+                                                        if (Nume_field == "SegmentName")
+                                                        {
+                                                            string segment1 = _AGEN_mainform.tpage_setup.Get_segment_name1();
+                                                            if (segment1 == "not defined") segment1 = "";
+                                                            if (Valoare1 == segment1)
+                                                            {
+                                                                delete1 = true;
+                                                                i = Record1.Count;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (delete1 == true)
+                                    {
+                                        if (ent1.IsErased == false)
+                                        {
+                                            ent1.UpgradeOpen();
+                                            ent1.Erase();
+                                        }
 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Trans1.Commit();
+                }
+            }
+        }
 
     }
 

@@ -169,7 +169,7 @@ namespace Alignment_mdi
                         }
 
 
-                        Polyline old_poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline old_poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
 
 
@@ -969,9 +969,9 @@ namespace Alignment_mdi
 
                     System.Data.DataTable Data_table_station_equation = Functions.Creaza_station_equation_datatable_structure();
 
-                    bool delete_3d = false;
+                   
                     Polyline Poly2D = null;
-                    Polyline3d Poly3D = null;
+                  
 
                     string layer_rstart = "Agen Reroute Start";
                     string layer_bsta = "Agen Back Station";
@@ -980,12 +980,7 @@ namespace Alignment_mdi
                     using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                     {
                         Poly2D = Trans1.GetObject(Rezultat1.Value[0].ObjectId, OpenMode.ForRead) as Polyline;
-                        Poly3D = Trans1.GetObject(Rezultat1.Value[0].ObjectId, OpenMode.ForRead) as Polyline3d;
 
-                        if (Poly3D != null)
-                        {
-                            Poly2D = Functions.Build_2dpoly_from_3d(Poly3D);
-                        }
 
                         if (Poly2D == null)
                         {
@@ -997,11 +992,7 @@ namespace Alignment_mdi
                             return;
                         }
 
-                        if (Poly3D == null)
-                        {
-                            Poly3D = Functions.Build_3d_poly_from2D_poly(Poly2D);
-                            delete_3d = true;
-                        }
+
 
                         Functions.Creaza_layer(layer_rstart, 2, false);
                         Functions.Creaza_layer(layer_bsta, 5, false);
@@ -1096,26 +1087,21 @@ namespace Alignment_mdi
                         Point3d ptnew3 = Poly2D.GetClosestPointTo(Point_res3.Value, Vector3d.ZAxis, false);
                         Point3d ptnew4 = Poly2D.GetClosestPointTo(Point_res4.Value, Vector3d.ZAxis, false);
 
-                        double paramnew1 = Poly2D.GetParameterAtPoint(ptnew1);
-                        double paramnew2 = Poly2D.GetParameterAtPoint(ptnew2);
-                        double paramnew3 = Poly2D.GetParameterAtPoint(ptnew3);
-                        double paramnew4 = Poly2D.GetParameterAtPoint(ptnew4);
 
-                        if (paramnew1 > paramnew2)
+
+
+                        double d1 = Poly2D.GetDistAtPoint(ptnew1);
+                        double d2 = Poly2D.GetDistAtPoint(ptnew2);
+                        double d3 = Poly2D.GetDistAtPoint(ptnew3);
+                        double d4 = Poly2D.GetDistAtPoint(ptnew4);
+
+                        if (d1 > d2)
                         {
-                            double t = paramnew1;
-                            paramnew1 = paramnew2;
-                            paramnew2 = t;
+                            double t = d1;
+                            d1 = d2;
+                            d2 = t;
                         }
 
-
-                        Point3d point_on_polynew1 = Poly3D.GetPointAtParameter(paramnew1);
-                        Point3d point_on_polynew2 = Poly3D.GetPointAtParameter(paramnew2);
-
-                        double d1 = Poly3D.GetDistanceAtParameter(paramnew1);
-                        double d2 = Poly3D.GetDistanceAtParameter(paramnew2);
-                        double d3 = Poly3D.GetDistanceAtParameter(paramnew3);
-                        double d4 = Poly3D.GetDistanceAtParameter(paramnew4);
 
                         double r1 = Math.Round(sta3 + (d1 - d3), 3);
 
@@ -1126,25 +1112,25 @@ namespace Alignment_mdi
                         double Ahead11 = Math.Round(sta4 + (d2 - d4), 3);
 
                         Data_table_station_equation.Rows.Add();
-                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute Start X"] = point_on_polynew1.X;
-                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute Start Y"] = point_on_polynew1.Y;
-                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute Start Z"] = point_on_polynew1.Z;
-                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute End X"] = point_on_polynew2.X;
-                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute End Y"] = point_on_polynew2.Y;
-                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute End Z"] = point_on_polynew2.Z;
+                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute Start X"] = ptnew1.X;
+                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute Start Y"] = ptnew1.Y;
+                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute Start Z"] = 0;
+                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute End X"] = ptnew2.X;
+                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute End Y"] = ptnew2.Y;
+                        Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Reroute End Z"] = 0;
                         Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Station Back"] = Back11;
                         Data_table_station_equation.Rows[Data_table_station_equation.Rows.Count - 1]["Station Ahead"] = Ahead11;
 
 
-                        MLeader Ml1 = Functions.creaza_mleader(point_on_polynew1, Functions.Get_chainage_from_double(r1, _AGEN_mainform.units_of_measurement, 0), 50, 50, 50, 20, 20, 2.5);
+                        MLeader Ml1 = Functions.creaza_mleader(ptnew1, Functions.Get_chainage_from_double(r1, _AGEN_mainform.units_of_measurement, 0), 50, 50, 50, 20, 20, 2.5);
                         Ml1.Layer = layer_rstart;
                         Ml1.ColorIndex = 256;
 
-                        MLeader Ml2 = Functions.creaza_mleader(point_on_polynew2, Functions.Get_chainage_from_double(Back11, _AGEN_mainform.units_of_measurement, 0), 50, 50, 50, 20, 20, 2.5);
+                        MLeader Ml2 = Functions.creaza_mleader(ptnew2, Functions.Get_chainage_from_double(Back11, _AGEN_mainform.units_of_measurement, 0), 50, 50, 50, 20, 20, 2.5);
                         Ml2.Layer = layer_bsta;
                         Ml2.ColorIndex = 256;
 
-                        MLeader Ml3 = Functions.creaza_mleader(point_on_polynew2, Functions.Get_chainage_from_double(Ahead11, _AGEN_mainform.units_of_measurement, 0), 50, 50, -50, 20, 20, 2.5);
+                        MLeader Ml3 = Functions.creaza_mleader(ptnew2, Functions.Get_chainage_from_double(Ahead11, _AGEN_mainform.units_of_measurement, 0), 50, 50, -50, 20, 20, 2.5);
                         Ml3.Layer = layer_asta;
                         Ml3.ColorIndex = 256;
 
@@ -1153,22 +1139,6 @@ namespace Alignment_mdi
                     }
 
                 label_delete:
-                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
-                    {
-                        set_enable_true();
-                        Ag.WindowState = FormWindowState.Normal;
-                        _AGEN_mainform.tpage_processing.Hide();
-                        ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                        Editor1.SetImpliedSelection(Empty_array);
-                        BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
-                        if (delete_3d == true)
-                        {
-                            Polyline3d Poly3D_del = Trans1.GetObject(Poly3D.ObjectId, OpenMode.ForWrite) as Polyline3d;
-                            Poly3D_del.Erase();
-                        }
-                        Trans1.Commit();
-                    }
-
                     Functions.Transfer_datatable_to_new_excel_spreadsheet_formated_general(Data_table_station_equation);
                 }
             }

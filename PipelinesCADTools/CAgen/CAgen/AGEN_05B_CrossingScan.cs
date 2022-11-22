@@ -2164,7 +2164,7 @@ namespace Alignment_mdi
                                     BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                                     BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
-                                    _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                     _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
                                     set_enable_false();

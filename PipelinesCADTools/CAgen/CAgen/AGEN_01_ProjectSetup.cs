@@ -90,7 +90,7 @@ namespace Alignment_mdi
             lista_butoane.Add(textBox_tic_major);
 
             lista_butoane.Add(textBox_tic_minor);
-            lista_butoane.Add(button_display_tpage_load_cl_xl);
+      
 
 
 
@@ -154,7 +154,7 @@ namespace Alignment_mdi
             lista_butoane.Add(textBox_start_station_CL);
             lista_butoane.Add(textBox_tic_major);
 
-            lista_butoane.Add(button_display_tpage_load_cl_xl);
+         
             lista_butoane.Add(textBox_tic_minor);
             foreach (System.Windows.Forms.Control bt1 in lista_butoane)
             {
@@ -4251,7 +4251,7 @@ namespace Alignment_mdi
                             _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
                             _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = _AGEN_mainform.Poly2D.GetDistanceAtParameter(i);
 
-                            if (bulge != 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_MMid] = bulge;
+                           _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1]["BULGE"] = bulge;
 
 
                             if (_AGEN_mainform.Poly3D != null)
@@ -4633,7 +4633,7 @@ namespace Alignment_mdi
             using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
             {
                 Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                Polyline Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                 BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
 
@@ -5085,14 +5085,14 @@ namespace Alignment_mdi
         {
             Ag = this.MdiParent as _AGEN_mainform;
 
-            string fisier_cl = "";
+            
             string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
 
             if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
             {
                 ProjFolder = ProjFolder + "\\";
             }
-            fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+         string   fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
 
             if (System.IO.Directory.Exists(ProjFolder) == false)
             {
@@ -5105,17 +5105,18 @@ namespace Alignment_mdi
                 return;
             }
 
-
+#region object data stationing
             string od_name = "STA_V1";
             Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-            #region object data stationing
+            
             List<object> Lista_val_CL = new List<object>();
             List<Autodesk.Gis.Map.Constants.DataType> Lista_type_CL = new List<Autodesk.Gis.Map.Constants.DataType>();
 
             Lista_val_CL.Add(comboBox_segment_name.Text);
             Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
-            Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToUpper());
+            Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + 
+                                System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToUpper());
             Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
 
@@ -5233,14 +5234,15 @@ namespace Alignment_mdi
                 {
 
                     _AGEN_mainform.layer_stationing = _AGEN_mainform.layer_stationing_original + "_" + _AGEN_mainform.current_segment;
+                    _AGEN_mainform.layer_centerline = _AGEN_mainform.layer_centerline_original + "_" + _AGEN_mainform.current_segment;
 
                     try
                     {
 
                         Functions.Create_stationing_od_table();
 
-                        delete_entities_with_OD(_AGEN_mainform.layer_stationing, od_name);
-                        delete_entities_with_OD(_AGEN_mainform.layer_centerline, od_name);
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_stationing, od_name);
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_centerline, od_name);
 
                         Functions.Creaza_layer(_AGEN_mainform.layer_stationing, 2, true);
                         Functions.Creaza_layer(_AGEN_mainform.layer_centerline, _AGEN_mainform.color_index_cl, true);
@@ -5270,7 +5272,7 @@ namespace Alignment_mdi
                                 }
 
 
-                                Polyline Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Poly2D.Layer = _AGEN_mainform.layer_centerline;
                                 Poly2D.ColorIndex = 256;
 
@@ -6855,69 +6857,7 @@ namespace Alignment_mdi
 
         }
 
-        public void delete_entities_with_OD(string layer_name, string od_table_name)
-        {
-            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            using (DocumentLock lock1 = ThisDrawing.LockDocument())
-            {
-                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.Database.TransactionManager.StartTransaction())
-                {
-                    BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
-                    Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-                    foreach (ObjectId id1 in BTrecord)
-                    {
-                        Entity ent1 = Trans1.GetObject(id1, OpenMode.ForRead) as Entity;
-                        if (ent1 != null)
-                        {
-                            if (ent1.Layer == layer_name)
-                            {
-                                Autodesk.Gis.Map.ObjectData.Records Records1;
-                                bool delete1 = false;
-                                if (Tables1.IsTableDefined(od_table_name) == true)
-                                {
-                                    Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[od_table_name];
-                                    using (Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), ent1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
-                                    {
-                                        if (Records1.Count > 0)
-                                        {
-                                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                            foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
-                                            {
-                                                if (delete1 == false)
-                                                {
-                                                    for (int i = 0; i < Record1.Count; ++i)
-                                                    {
-                                                        Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
-                                                        string Nume_field = Field_def1.Name;
-                                                        string Valoare1 = Record1[i].StrValue;
-                                                        if (Nume_field == "SegmentName")
-                                                        {
-                                                            string segment1 = _AGEN_mainform.tpage_setup.Get_segment_name1();
-                                                            if (segment1 == "not defined") segment1 = "";
-                                                            if (Valoare1 == segment1)
-                                                            {
-                                                                delete1 = true;
-                                                                i = Record1.Count;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (delete1 == true)
-                                    {
-                                        ent1.UpgradeOpen();
-                                        ent1.Erase();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Trans1.Commit();
-                }
-            }
-        }
+
 
         public static MText creaza_mtext_sta_bottom_center(Point3d pt_ins, string continut, double texth, double rot1)
         {
@@ -7046,7 +6986,7 @@ namespace Alignment_mdi
                 {
                     try
                     {
-                        delete_entities_with_OD(_AGEN_mainform.layer_eq_blocks, "Agen_eq");
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_eq_blocks, "Agen_eq");
                         Functions.Creaza_layer(_AGEN_mainform.layer_eq_blocks, 2, true);
 
                         Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -7079,7 +7019,7 @@ namespace Alignment_mdi
                                     if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                     {
                                         Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                        Polyline Poly2d = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                        Polyline Poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                         for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
                                         {
                                             if (_AGEN_mainform.dt_station_equation.Rows[i]["Station Back"] != DBNull.Value &&
@@ -7289,7 +7229,7 @@ namespace Alignment_mdi
                 {
                     try
                     {
-                        delete_entities_with_OD(_AGEN_mainform.layer_pi_blocks, "Agen_pi");
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_pi_blocks, "Agen_pi");
                         Functions.Creaza_layer(_AGEN_mainform.layer_pi_blocks, 2, true);
 
                         Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -7548,7 +7488,7 @@ namespace Alignment_mdi
                     {
 
 
-                        delete_entities_with_OD(_AGEN_mainform.layer_mp_blocks, "Agen_mp_block");
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_mp_blocks, "Agen_mp_block");
 
                         Functions.Creaza_layer(_AGEN_mainform.layer_mp_blocks, 2, true);
 
@@ -7583,7 +7523,7 @@ namespace Alignment_mdi
                                 string suf_at_end = "";
 
                                 Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                Polyline Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 #region USA     
                                 if (_AGEN_mainform.COUNTRY == "USA")
@@ -8802,17 +8742,15 @@ namespace Alignment_mdi
 
             if (radioButton_usa.Checked == true)
             {
-                panel_canada.Visible = false;
+              
                 _AGEN_mainform.COUNTRY = "USA";
                 panel_USA.Visible = true;
-                panel_canada.Location = new Point(-1, 64);
+             
 
             }
             else
             {
                 _AGEN_mainform.COUNTRY = "CANADA";
-                panel_canada.Visible = true;
-                panel_canada.Location = new Point(-1, 3);
                 panel_USA.Visible = false;
 
             }

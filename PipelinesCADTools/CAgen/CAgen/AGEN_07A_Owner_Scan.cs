@@ -188,7 +188,7 @@ namespace Alignment_mdi
 
                 _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
-                _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
 
 
@@ -398,7 +398,7 @@ namespace Alignment_mdi
 
                             // AGEN_mainform.tpage_crossing_scan_and_draw.Build_3d_2d_poly(Trans1, BTrecord, AGEN_mainform.Data_table_centerline, "0");
 
-                            _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                            _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
 
 

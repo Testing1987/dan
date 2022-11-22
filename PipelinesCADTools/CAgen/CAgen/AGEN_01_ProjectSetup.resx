@@ -3055,34 +3055,6 @@
   <metadata name="panel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="panel_canada.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="button_display_tpage_load_cl_xl.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="button_display_tpage_load_cl_xl.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAA99JREFUOE+V
-        lFtsk2UYx79EuBAv8MKYEWUFxtrBysZOUHagHRNhwMq6Q3dCZIcyDsrUGN3WdoeubOvmDsBYQBxLdNxI
-        YkhgmKB4MU6CiUpEBTdWcROZhnXnc/L3eZ+v34ZGM32Tf7r14pfn/3uft9J8JzLH2LwyNaZVX2u5qTHr
-        W71f/7djrnvr9Ganxa2zZ7lj6/chqjYXG1zZWFf1KsIO74KvSTc/cHvzm9jaVICXj72Ol44cxKbG/TDU
-        5yO6Ng+RNbnQVe9BROVuhDp3YZk5+uzCZ59RzWURZ4GSxYtU0rbjb8jAo68hrvEAYhv2Q1+XL09Xk4P1
-        XmCIMwvZLWW4dPsart6/TfkWV7qUfIOOzq+xosQEBm5pOoTNXqChYR821u39S93wylewtiITQaVp0FpT
-        sbokBeIEOMxQl6dAXZbM/zMw/ngBtvytrgBy3Vl/c8BAWwpWWZMwODgIjSOVgf5e4PKSREiKv7gj3rrC
-        33t5s3XDhT+6kGBHBg5+VIXvuu/iTvc99Pf3o/PXn9Hj6eOIs8y+E5JSdxPVnZmZwcmOTxj4+8Bj3H/U
-        w0DhL8iRDm1pKk2XDA1N6PF44F+ciJXWRPiVmhioshsh8e0eletWftrK0PhjBZicnERmixVhwp+T6hIw
-        /UQR2jrOo+3KBQwMDKDt6gU5N9oZ6GtTgOQvloCibldfD6anp/Hgj4eIqJLrCn9rytMQVpEFQ40FBlce
-        O4xx5SK6OgeR1dkYHx/HUlsCJK5L/pTbTXn/XQYq/kIOZyG4IgNaAoY6MhHrskBPGRoaYmAUA3MwNjaG
-        Fwq3QeK6BNQ35COmzoLR8TEG9j7u89aV/QWWmZF2ohBnrrVzhoeHceY6/X39ItroU0zIwLgn6jovtrBD
-        MalwaD/XLK8LAVfThWjsyVBbTfCnixgZGcHyYiNURTvgS5mYmJgDGhrluh+SXEf7Kax37cHHty7BMzzo
-        9ZeOVQQ8QGtzr7cbP/W6MTo6is6HD9D1G+XRLzwAA8V0wp+oG0XroqP9W1dNyzxbV/YXQK9DbUui6Uzw
-        s+5kZ6qiBCyl6V4s2o6pqSksKdwqA3mZCRhJz01XQ6+DgHy7vC4Z7E9TQnVtJt67FVYjO/MtngMK7ww0
-        EHBj/V5aZgs21NLroLoRBBS3K4BrhL8y8kfA3R/Y8dmdLzmff38Tl3+g/ChyC1/c/Qo+AqgX60JApa4A
-        htP+ibrKugh/ansSfJIizoqfqAWLn1Y99S+RnjzaQwmngt42ubXvmNzi7QYRMLDcjIBS8kfA53eE/r9f
-        7H86S+JDmnyMYa1+hcYbz8UHzwOUpD8BNG8mHf5/xr8AAAAASUVORK5CYII=
-</value>
-  </data>
   <metadata name="panel_USA.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

@@ -855,7 +855,7 @@ namespace Alignment_mdi
                 {
                     using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                     {
-                        Polyline poly2d = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                         Polyline3d poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
 

@@ -756,7 +756,7 @@ namespace Alignment_mdi
 
 
                         _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                         _AGEN_mainform.dt_sheet_index = Functions.Redefine_stations_for_sheet_index(_AGEN_mainform.dt_sheet_index);
 
 
@@ -3486,7 +3486,7 @@ namespace Alignment_mdi
 
 
 
-                        Polyline poly2d = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         #region USA
                         if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.COUNTRY == "USA")
@@ -5551,7 +5551,7 @@ namespace Alignment_mdi
 
 
 
-                        Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                         Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                         Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
