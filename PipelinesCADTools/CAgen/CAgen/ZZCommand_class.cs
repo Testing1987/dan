@@ -4588,7 +4588,7 @@ namespace Alignment_mdi
                 string col_Blockname = "Block Name";
                 string col_rotationblock = "Block Rotation";
                 string col_blockscale = "Block Scale";
-
+                string col_radius1 = "Circle Radius";
 
 
                 dt1.Columns.Add(col_CODE, typeof(string));
@@ -4614,6 +4614,7 @@ namespace Alignment_mdi
                 dt1.Columns.Add(col_Blockname, typeof(string));
                 dt1.Columns.Add(col_rotationblock, typeof(double));
                 dt1.Columns.Add(col_blockscale, typeof(double));
+                dt1.Columns.Add(col_radius1, typeof(double));
 
 
                 using (DocumentLock lock1 = ThisDrawing.LockDocument())
@@ -4744,6 +4745,7 @@ namespace Alignment_mdi
                                         dt1.Rows[dt1.Rows.Count - 1][col_y] = circ1.Center.Y;
                                         dt1.Rows[dt1.Rows.Count - 1][col_z] = circ1.Center.Z;
                                         dt1.Rows[dt1.Rows.Count - 1][col_layer] = circ1.Layer;
+                                        dt1.Rows[dt1.Rows.Count - 1][col_radius1] = circ1.Radius;
                                         ++index_circle;
                                     }
                                     else if (ent1 is Autodesk.AutoCAD.DatabaseServices.Line)
@@ -4786,13 +4788,14 @@ namespace Alignment_mdi
 
                                         dt1.Rows.Add();
 
-                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "Polyline poly" + Convert.ToString(index_polyline) + " = new Polyline();";
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "Polyline polys" + Convert.ToString(index_polyline) + " = new Polyline();";
 
                                         for (int j = 0; j < poly1.NumberOfVertices; j++)
                                         {
 
                                             double x1 = poly1.GetPoint2dAt(j).X;
                                             double y1 = poly1.GetPoint2dAt(j).Y;
+                                            
                                             double bulge1 = poly1.GetBulgeAt(j);
 
 
@@ -4801,7 +4804,10 @@ namespace Alignment_mdi
 
                                             dt1.Rows[dt1.Rows.Count - 1][col_type] = "Polyline#" + Convert.ToString(index_polyline);
 
-                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) +".AddVertexAt(" + Convert.ToString(j) + ", new Point2d(scale1 * " + Convert.ToString(x1) + ", scale1 *" + Convert.ToString(y1) + "), 0, 0, 0);";
+                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "polys" + Convert.ToString(index_polyline) +
+                                                ".AddVertexAt(" + Convert.ToString(j) + 
+                                                ", new Point2d(scale1 * " + Convert.ToString(x1) + ", scale1 *" + Convert.ToString(y1) + "), " +
+                                                Convert.ToString(bulge1)+ ", 0, 0);";
 
                                             dt1.Rows[dt1.Rows.Count - 1][col_x] = x1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_y] = y1;
@@ -4857,19 +4863,19 @@ namespace Alignment_mdi
                                         {
                                             dt1.Rows.Add();
 
-                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".Closed=true;";
+                                            dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "polys" + Convert.ToString(index_polyline) + ".Closed=true;";
                                         }
 
                                         dt1.Rows.Add();
-                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));";
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "polys" + Convert.ToString(index_polyline) + ".TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));";
                                         dt1.Rows.Add();
-                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".Layer = " + c + "0" + c + ";";
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "polys" + Convert.ToString(index_polyline) + ".Layer = " + c + "0" + c + ";";
                                         dt1.Rows.Add();
-                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".Color = colorA;";
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "polys" + Convert.ToString(index_polyline) + ".Color = colorA;";
                                         dt1.Rows.Add();
-                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "poly" + Convert.ToString(index_polyline) + ".LineWeight = LineWeight.LineWeight000;";
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "polys" + Convert.ToString(index_polyline) + ".LineWeight = LineWeight.LineWeight000;";
                                         dt1.Rows.Add();
-                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "bltrec1.AppendEntity(poly" + Convert.ToString(index_polyline) + ");";
+                                        dt1.Rows[dt1.Rows.Count - 1][col_CODE] = "bltrec1.AppendEntity(polys" + Convert.ToString(index_polyline) + ");";
 
                                         ++index_polyline;
                                     }

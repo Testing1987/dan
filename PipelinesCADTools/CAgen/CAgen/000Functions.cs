@@ -5956,9 +5956,18 @@ namespace Alignment_mdi
                         double x0 = Convert.ToDouble(Data_table_station_equation.Rows[i]["Reroute End X"]);
                         double y0 = Convert.ToDouble(Data_table_station_equation.Rows[i]["Reroute End Y"]);
                         Point3d pt_on_2d0 = Poly2d.GetClosestPointTo(new Point3d(x0, y0, Poly2d.Elevation), Vector3d.ZAxis, false);
-                        double param0 = Poly2d.GetParameterAtPoint(pt_on_2d0);
-                        if (param0 > Poly3d.EndParam) param0 = Poly3d.EndParam;
-                        double dist0 = Poly3d.GetDistanceAtParameter(param0);
+                        double dist0 = -1;
+
+                        if (Poly3d != null)
+                        {
+                            double param0 = Poly2d.GetParameterAtPoint(pt_on_2d0);
+                            if (param0 > Poly3d.EndParam) param0 = Poly3d.EndParam;
+                            dist0 = Poly3d.GetDistanceAtParameter(param0);
+                        }
+                        else
+                        {
+                            dist0 = Poly2d.GetDistAtPoint(pt_on_2d0);
+                        }
                         Data_table_station_equation.Rows[i]["measured value from start"] = dist0;
 
 
@@ -5968,7 +5977,16 @@ namespace Alignment_mdi
                 }
 
 
-                double last_sta = Station_equation_ofV2(Poly3d.Length - 0.001, Data_table_station_equation);
+                double last_sta = -1;
+                if (Poly3d != null)
+                {
+                    last_sta = Station_equation_ofV2(Poly3d.Length - 0.001, Data_table_station_equation);
+                }
+                else
+                {
+                    last_sta = Station_equation_ofV2(Poly2d.Length - 0.001, Data_table_station_equation);
+
+                }
                 double last_back = last_sta;
 
                 //double first_sta = Station_equation_ofV2(0, Data_table_station_equation);
