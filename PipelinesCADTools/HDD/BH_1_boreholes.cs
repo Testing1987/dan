@@ -1848,7 +1848,7 @@ namespace Alignment_mdi
                                                 Hatch hatch1 = CreateHatch(polyh1, "SOLID", 1, 0);
                                                 hatch1.Layer = "0";
                                                 hatch1.LineWeight = LineWeight.LineWeight000;
-                                                hatch1.Color = color_white;
+                                                hatch1.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch1);
                                                 polyh1.Erase();
 
@@ -1858,7 +1858,7 @@ namespace Alignment_mdi
                                                 Hatch hatch2 = CreateHatch(polyh2, "SOLID", 1, 0);
                                                 hatch2.Layer = "0";
                                                 hatch2.LineWeight = LineWeight.LineWeight000;
-                                                hatch2.Color = color_white;
+                                                hatch2.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch2);
                                                 polyh2.Erase();
 
@@ -1867,7 +1867,7 @@ namespace Alignment_mdi
                                                 Hatch hatch3 = CreateHatch(polyh3, "SOLID", 1, 0);
                                                 hatch3.Layer = "0";
                                                 hatch3.LineWeight = LineWeight.LineWeight000;
-                                                hatch3.Color = color_white;
+                                                hatch3.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch3);
                                                 polyh3.Erase();
 
@@ -1877,7 +1877,7 @@ namespace Alignment_mdi
                                                 Hatch hatch4 = CreateHatch(polyh4, "SOLID", 1, 0);
                                                 hatch4.Layer = "0";
                                                 hatch4.LineWeight = LineWeight.LineWeight000;
-                                                hatch4.Color = color_white;
+                                                hatch4.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch4);
                                                 polyh4.Erase();
 
@@ -2002,7 +2002,7 @@ namespace Alignment_mdi
                                                                 Functions.Get_String_Rounded(offset1, 0) + f + " " + left_right;
 
                                     MLeader mleader_top = Functions.creaza_mleader_with_style(new Point3d(x_ins, y_ins, 0), content1,
-                                                                                                2*Texth, mleaderstyle_name, textstyle_name,
+                                                                                                2 * Texth, mleaderstyle_name, textstyle_name,
                                                                                                         0.67 * scale1, 0.35 * scale1, hdd_boreholes);
 
                                     mleader_top.SetTextAttachmentType(TextAttachmentType.AttachmentBottomOfTopLine, LeaderDirectionType.RightLeader);
@@ -2357,7 +2357,7 @@ namespace Alignment_mdi
 
                                         MText boe = new MText();
                                         boe.Contents = "B.O.E. " + Functions.Get_String_Rounded(depth1, 0) + " " + f1 + "\r\n(EL. " + Functions.Get_String_Rounded(el_bottom, 0) + f + ")";
-                                        boe.TextHeight = 2* Texth;
+                                        boe.TextHeight = 2 * Texth;
                                         boe.Attachment = AttachmentPoint.TopCenter;
                                         boe.TextStyleId = HDD_textstyle.ObjectId;
                                         boe.Location = new Point3d(pt_ins.X, pt_ins.Y - depth1 * graph_vexag * stick_vexag - Texth / 2, 0);
@@ -2815,7 +2815,7 @@ namespace Alignment_mdi
                                                 Hatch hatch1 = CreateHatch(polyh1, "SOLID", 1, 0);
                                                 hatch1.Layer = "0";
                                                 hatch1.LineWeight = LineWeight.LineWeight000;
-                                                hatch1.Color = color_white;
+                                                hatch1.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch1);
                                                 polyh1.Erase();
 
@@ -2825,7 +2825,7 @@ namespace Alignment_mdi
                                                 Hatch hatch2 = CreateHatch(polyh2, "SOLID", 1, 0);
                                                 hatch2.Layer = "0";
                                                 hatch2.LineWeight = LineWeight.LineWeight000;
-                                                hatch2.Color = color_white;
+                                                hatch2.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch2);
                                                 polyh2.Erase();
 
@@ -2834,7 +2834,7 @@ namespace Alignment_mdi
                                                 Hatch hatch3 = CreateHatch(polyh3, "SOLID", 1, 0);
                                                 hatch3.Layer = "0";
                                                 hatch3.LineWeight = LineWeight.LineWeight000;
-                                                hatch3.Color = color_white;
+                                                hatch3.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch3);
                                                 polyh3.Erase();
 
@@ -2844,7 +2844,7 @@ namespace Alignment_mdi
                                                 Hatch hatch4 = CreateHatch(polyh4, "SOLID", 1, 0);
                                                 hatch4.Layer = "0";
                                                 hatch4.LineWeight = LineWeight.LineWeight000;
-                                                hatch4.Color = color_white;
+                                                hatch4.Color = color_sym;
                                                 bltrec1.AppendEntity(hatch4);
                                                 polyh4.Erase();
 
@@ -2982,7 +2982,7 @@ namespace Alignment_mdi
 
                                                 MLeader mleader2 = Functions.creaza_mleader_with_style_IN_BTR(new Point3d(11.50338, -0.43627, 0), content2,
                                                                                                             0.06, mleaderstyle_name, textstyle_name,
-                                                                                                                    0.0644, 0.3939, hdd_boreholes, bltrec1, Trans1, BTrecord);
+                                                                                                                    0.4539, 0.1265, hdd_boreholes, bltrec1, Trans1, BTrecord);
 
                                                 mleader2.SetTextAttachmentType(TextAttachmentType.AttachmentMiddle, LeaderDirectionType.RightLeader);
                                                 mleader2.SetTextAttachmentType(TextAttachmentType.AttachmentMiddle, LeaderDirectionType.LeftLeader);
@@ -3211,7 +3211,7 @@ namespace Alignment_mdi
                                                     }
                                                     if (lista_legend[i] == "SC")
                                                     {
-                                                        add_pattern_SC(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                        add_pattern_SC_legend(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
                                                     }
                                                 }
 
@@ -3253,7 +3253,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GC = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GC = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -3430,7 +3430,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GC = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GC = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -4111,7 +4111,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GC = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GC = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -4281,8 +4281,8 @@ namespace Alignment_mdi
         {
 
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 255, 255);
-            Autodesk.AutoCAD.Colors.Color color_MDST = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_white = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 255, 255);
+            Autodesk.AutoCAD.Colors.Color color_MDST = Autodesk.AutoCAD.Colors.Color.FromRgb(63, 127, 63);
 
 
             double ins_x = poly1.GetPoint2dAt(3).X;
@@ -4324,7 +4324,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4339,7 +4339,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4353,7 +4353,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4368,7 +4368,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4382,7 +4382,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4396,7 +4396,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4410,7 +4410,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4424,7 +4424,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4445,7 +4445,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4461,7 +4461,7 @@ namespace Alignment_mdi
             poly2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(ins_x, ins_y, 0))));
 
             poly2.Layer = "0";
-            poly2.Color = color1;
+            poly2.Color = color_white;
 
             poly2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly2);
@@ -4477,8 +4477,8 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_mdst = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 255, 255);
+            Autodesk.AutoCAD.Colors.Color color_mdst = Autodesk.AutoCAD.Colors.Color.FromRgb(63, 127, 63);
+            Autodesk.AutoCAD.Colors.Color color_white = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 255, 255);
 
 
 
@@ -4565,7 +4565,7 @@ namespace Alignment_mdi
                         Polyline polymdst1 = get_poly_mdst1(scale1);
                         polymdst1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
                         polymdst1.Layer = "0";
-                        polymdst1.Color = color1;
+                        polymdst1.Color = color_white;
                         polymdst1.LineWeight = LineWeight.LineWeight000;
                         bltrec1.AppendEntity(polymdst1);
 
@@ -4573,7 +4573,7 @@ namespace Alignment_mdi
                         polymdst2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                         polymdst2.Layer = "0";
-                        polymdst2.Color = color1;
+                        polymdst2.Color = color_white;
                         polymdst2.LineWeight = LineWeight.LineWeight000;
                         bltrec1.AppendEntity(polymdst2);
 
@@ -4581,7 +4581,7 @@ namespace Alignment_mdi
                         polymdst3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                         polymdst3.Layer = "0";
-                        polymdst3.Color = color1;
+                        polymdst3.Color = color_white;
                         polymdst3.LineWeight = LineWeight.LineWeight000;
                         bltrec1.AppendEntity(polymdst3);
 
@@ -4607,7 +4607,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -4763,7 +4763,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -7947,7 +7947,7 @@ namespace Alignment_mdi
         {
 
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(0, 255, 0);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
 
 
 
@@ -8164,7 +8164,7 @@ namespace Alignment_mdi
         {
 
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(0, 255, 0);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 63, 63);
 
 
 
@@ -8277,7 +8277,7 @@ namespace Alignment_mdi
         {
 
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(0, 255, 0);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 63, 63);
 
 
 
@@ -8445,7 +8445,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_gm = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_gm = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -8601,7 +8601,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_gm = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_gm = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -10098,8 +10098,6 @@ namespace Alignment_mdi
         private void add_pattern_sandstone(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
 
         {
-            #region SANDSTONE
-
             Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
             double rec_hght = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
             double spc = scale1 / 12;
@@ -10168,7 +10166,7 @@ namespace Alignment_mdi
             else
             {
             }
-            #endregion
+
         }
 
         private void add_pattern_SM(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
@@ -10295,7 +10293,7 @@ namespace Alignment_mdi
             string nume_hatch = "ANSI31";
             double hatch_scale = scale1 / 3;
             double hatch_angle = 45;
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(176, 71, 159);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(63, 127, 63);
 
             Polyline poly2 = new Polyline();
             poly2 = poly1.Clone() as Polyline;
@@ -10319,7 +10317,8 @@ namespace Alignment_mdi
             double hatch_scale2 = 0.6 * scale1;
             double hatch_angle2 = 45;
 
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(204, 0, 204);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(63, 127, 63);
+            Autodesk.AutoCAD.Colors.Color color2 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 127,159);
 
             Polyline poly2 = new Polyline();
             poly2 = poly1.Clone() as Polyline;
@@ -10335,7 +10334,7 @@ namespace Alignment_mdi
             Hatch hatch2 = CreateHatch(poly2, nume_hatch, hatch_scale2, hatch_angle2 * Math.PI / 180);
             hatch2.Layer = "0";
             hatch2.LineWeight = LineWeight.LineWeight000;
-            hatch2.Color = color1;
+            hatch2.Color = color2;
             bltrec1.AppendEntity(hatch2);
 
             poly2.Erase();
@@ -10349,7 +10348,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -10528,7 +10527,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -13738,7 +13737,7 @@ namespace Alignment_mdi
             string nume_hatch = "ANSI31";
             double hatch_scale = scale1 / 3;
             double hatch_angle = 0;
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(176, 71, 159);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 127, 159);
 
             Polyline poly2 = new Polyline();
             poly2 = poly1.Clone() as Polyline;
@@ -13758,7 +13757,7 @@ namespace Alignment_mdi
 
         private void add_pattern_SC(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
-            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 95, 93);
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
 
             int nr_rows = 0;
             int nr_col = 0;
@@ -13982,6 +13981,1006 @@ namespace Alignment_mdi
 
         }
 
+
+        private void add_pattern_SC_legend(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color colorSC = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
+
+            int nr_rows = 0;
+            int nr_col = 0;
+
+            double Xmax = 0.177187500001552 * scale1;
+            double Ymax = 0.0645833333333333 * scale1;
+            double r1 = 0.0015 * scale1;
+
+
+
+            double x1 = poly1.GetPoint2dAt(3).X;
+            double y1 = poly1.GetPoint2dAt(3).Y;
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (stick_height < Ymax)
+            {
+                nr_rows = 1;
+            }
+            else
+            {
+                double nr2 = Math.Floor(stick_height / Ymax);
+                nr_rows = Convert.ToInt32(nr2);
+            }
+
+
+            if (stick_width < Xmax)
+            {
+                nr_col = 1;
+            }
+            else
+            {
+                double nr2 = Math.Floor(stick_width / Xmax);
+                nr_col = Convert.ToInt32(nr2);
+            }
+
+
+
+
+
+
+
+
+            for (int m = 0; m < nr_col; ++m)
+            {
+                for (int n = 0; n < nr_rows; ++n)
+                {
+
+                    double x2 = x1;
+                    double y2 = y1;
+
+
+
+                    Circle cerc1 = new Circle(new Point3d(0.0771875000015522 * scale1 + m * Xmax, 0.00208333333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    Hatch hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.108497459879921 * scale1 + m * Xmax, 0.0111742424157759 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.139687500001552 * scale1 + m * Xmax, 0.0395833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.177187500001552 * scale1 + m * Xmax, 0.0520833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.164687500001552 * scale1 + m * Xmax, 0.0145833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.102187500001552 * scale1 + m * Xmax, 0.0395833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.114687500001552 * scale1 + m * Xmax, 0.0645833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0857900086014221 * scale1 + m * Xmax, 0.0532196969725192 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0521875000015522 * scale1 + m * Xmax, 0.0270833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0146875000015522 * scale1 + m * Xmax, 0.0145833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0271875000015522 * scale1 + m * Xmax, 0.0395833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0396875000015522 * scale1 + m * Xmax, 0.0645833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0021875000015522 * scale1 + m * Xmax, 0.0520833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = colorSC;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+
+
+
+
+                }
+            }
+            #region extra legend circles
+            Circle cercSC1 = new Circle(new Point3d(1.48393899574876, 0.196425437927246, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC1);
+            Trans1.AddNewlyCreatedDBObject(cercSC1, true);
+            Hatch hatch1a = CreateHatch(cercSC1, "SOLID", 1, 0);
+            hatch1a.Layer = "0";
+            hatch1a.LineWeight = LineWeight.LineWeight000;
+            hatch1a.Color = colorSC;
+            bltrec1.AppendEntity(hatch1a);
+            cercSC1.Erase();
+            Circle cercSC2 = new Circle(new Point3d(1.49541072013229, 0.171472426503897, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC2);
+            Trans1.AddNewlyCreatedDBObject(cercSC2, true);
+            Hatch hatch2 = CreateHatch(cercSC2, "SOLID", 1, 0);
+            hatch2.Layer = "0";
+            hatch2.LineWeight = LineWeight.LineWeight000;
+            hatch2.Color = colorSC;
+            bltrec1.AppendEntity(hatch2);
+            cercSC2.Erase();
+            Circle cercSC3 = new Circle(new Point3d(1.47246751724742, 0.171472426503897, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC3);
+            Trans1.AddNewlyCreatedDBObject(cercSC3, true);
+            Hatch hatch3 = CreateHatch(cercSC3, "SOLID", 1, 0);
+            hatch3.Layer = "0";
+            hatch3.LineWeight = LineWeight.LineWeight000;
+            hatch3.Color = colorSC;
+            bltrec1.AppendEntity(hatch3);
+            cercSC3.Erase();
+            Circle cercSC4 = new Circle(new Point3d(1.45964635186829, 0.145844835788012, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC4);
+            Trans1.AddNewlyCreatedDBObject(cercSC4, true);
+            Hatch hatch4 = CreateHatch(cercSC4, "SOLID", 1, 0);
+            hatch4.Layer = "0";
+            hatch4.LineWeight = LineWeight.LineWeight000;
+            hatch4.Color = colorSC;
+            bltrec1.AppendEntity(hatch4);
+            cercSC4.Erase();
+            Circle cercSC5 = new Circle(new Point3d(1.44613177841529, 0.119762554764748, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC5);
+            Trans1.AddNewlyCreatedDBObject(cercSC5, true);
+            Hatch hatch5 = CreateHatch(cercSC5, "SOLID", 1, 0);
+            hatch5.Layer = "0";
+            hatch5.LineWeight = LineWeight.LineWeight000;
+            hatch5.Color = colorSC;
+            bltrec1.AppendEntity(hatch5);
+            cercSC5.Erase();
+            Circle cercSC6 = new Circle(new Point3d(1.48461396223865, 0.132356656715274, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC6);
+            Trans1.AddNewlyCreatedDBObject(cercSC6, true);
+            Hatch hatch6 = CreateHatch(cercSC6, "SOLID", 1, 0);
+            hatch6.Layer = "0";
+            hatch6.LineWeight = LineWeight.LineWeight000;
+            hatch6.Color = colorSC;
+            bltrec1.AppendEntity(hatch6);
+            cercSC6.Erase();
+            Circle cercSC7 = new Circle(new Point3d(1.47211146936752, 0.106611534953117, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC7);
+            Trans1.AddNewlyCreatedDBObject(cercSC7, true);
+            Hatch hatch7 = CreateHatch(cercSC7, "SOLID", 1, 0);
+            hatch7.Layer = "0";
+            hatch7.LineWeight = LineWeight.LineWeight000;
+            hatch7.Color = colorSC;
+            bltrec1.AppendEntity(hatch7);
+            cercSC7.Erase();
+            Circle cercSC8 = new Circle(new Point3d(1.45962766418234, 0.0796351786702871, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC8);
+            Trans1.AddNewlyCreatedDBObject(cercSC8, true);
+            Hatch hatch8 = CreateHatch(cercSC8, "SOLID", 1, 0);
+            hatch8.Layer = "0";
+            hatch8.LineWeight = LineWeight.LineWeight000;
+            hatch8.Color = colorSC;
+            bltrec1.AppendEntity(hatch8);
+            cercSC8.Erase();
+            Circle cercSC9 = new Circle(new Point3d(1.49235529825091, 0.0796351786702871, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC9);
+            Trans1.AddNewlyCreatedDBObject(cercSC9, true);
+            Hatch hatch9 = CreateHatch(cercSC9, "SOLID", 1, 0);
+            hatch9.Layer = "0";
+            hatch9.LineWeight = LineWeight.LineWeight000;
+            hatch9.Color = colorSC;
+            bltrec1.AppendEntity(hatch9);
+            cercSC9.Erase();
+            Circle cercSC10 = new Circle(new Point3d(1.49235529825091, 0.0202872734516859, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC10);
+            Trans1.AddNewlyCreatedDBObject(cercSC10, true);
+            Hatch hatch10 = CreateHatch(cercSC10, "SOLID", 1, 0);
+            hatch10.Layer = "0";
+            hatch10.LineWeight = LineWeight.LineWeight000;
+            hatch10.Color = colorSC;
+            bltrec1.AppendEntity(hatch10);
+            cercSC10.Erase();
+            Circle cercSC11 = new Circle(new Point3d(1.47042442229576, 0.0378218777477741, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC11.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC11);
+            Trans1.AddNewlyCreatedDBObject(cercSC11, true);
+            Hatch hatch11 = CreateHatch(cercSC11, "SOLID", 1, 0);
+            hatch11.Layer = "0";
+            hatch11.LineWeight = LineWeight.LineWeight000;
+            hatch11.Color = colorSC;
+            bltrec1.AppendEntity(hatch11);
+            cercSC11.Erase();
+            Circle cercSC12 = new Circle(new Point3d(1.46232679230161, 0.00814799219369888, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC12.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC12);
+            Trans1.AddNewlyCreatedDBObject(cercSC12, true);
+            Hatch hatch12 = CreateHatch(cercSC12, "SOLID", 1, 0);
+            hatch12.Layer = "0";
+            hatch12.LineWeight = LineWeight.LineWeight000;
+            hatch12.Color = colorSC;
+            bltrec1.AppendEntity(hatch12);
+            cercSC12.Erase();
+            Circle cercSC13 = new Circle(new Point3d(1.43938383529894, 0.0283802580088377, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC13.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC13);
+            Trans1.AddNewlyCreatedDBObject(cercSC13, true);
+            Hatch hatch13 = CreateHatch(cercSC13, "SOLID", 1, 0);
+            hatch13.Layer = "0";
+            hatch13.LineWeight = LineWeight.LineWeight000;
+            hatch13.Color = colorSC;
+            bltrec1.AppendEntity(hatch13);
+            cercSC13.Erase();
+            Circle cercSC14 = new Circle(new Point3d(1.44511945173144, 0.0556937735527754, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC14.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC14);
+            Trans1.AddNewlyCreatedDBObject(cercSC14, true);
+            Hatch hatch14 = CreateHatch(cercSC14, "SOLID", 1, 0);
+            hatch14.Layer = "0";
+            hatch14.LineWeight = LineWeight.LineWeight000;
+            hatch14.Color = colorSC;
+            bltrec1.AppendEntity(hatch14);
+            cercSC14.Erase();
+            Circle cercSC15 = new Circle(new Point3d(1.43263589241542, 0.0941349640488625, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC15.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC15);
+            Trans1.AddNewlyCreatedDBObject(cercSC15, true);
+            Hatch hatch15 = CreateHatch(cercSC15, "SOLID", 1, 0);
+            hatch15.Layer = "0";
+            hatch15.LineWeight = LineWeight.LineWeight000;
+            hatch15.Color = colorSC;
+            bltrec1.AppendEntity(hatch15);
+            cercSC15.Erase();
+            Circle cercSC16 = new Circle(new Point3d(1.43299194029532, 0.157309800386429, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC16.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC16);
+            Trans1.AddNewlyCreatedDBObject(cercSC16, true);
+            Hatch hatch16 = CreateHatch(cercSC16, "SOLID", 1, 0);
+            hatch16.Layer = "0";
+            hatch16.LineWeight = LineWeight.LineWeight000;
+            hatch16.Color = colorSC;
+            bltrec1.AppendEntity(hatch16);
+            cercSC16.Erase();
+            Circle cercSC17 = new Circle(new Point3d(1.4464878262952, 0.184960605576634, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC17.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC17);
+            Trans1.AddNewlyCreatedDBObject(cercSC17, true);
+            Hatch hatch17 = CreateHatch(cercSC17, "SOLID", 1, 0);
+            hatch17.Layer = "0";
+            hatch17.LineWeight = LineWeight.LineWeight000;
+            hatch17.Color = colorSC;
+            bltrec1.AppendEntity(hatch17);
+            cercSC17.Erase();
+            Circle cercSC18 = new Circle(new Point3d(1.4579593045637, 0.212274121120572, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC18.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC18);
+            Trans1.AddNewlyCreatedDBObject(cercSC18, true);
+            Hatch hatch18 = CreateHatch(cercSC18, "SOLID", 1, 0);
+            hatch18.Layer = "0";
+            hatch18.LineWeight = LineWeight.LineWeight000;
+            hatch18.Color = colorSC;
+            bltrec1.AppendEntity(hatch18);
+            cercSC18.Erase();
+            Circle cercSC19 = new Circle(new Point3d(1.49102700385265, 0.241556897759438, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC19.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC19);
+            Trans1.AddNewlyCreatedDBObject(cercSC19, true);
+            Hatch hatch19 = CreateHatch(cercSC19, "SOLID", 1, 0);
+            hatch19.Layer = "0";
+            hatch19.LineWeight = LineWeight.LineWeight000;
+            hatch19.Color = colorSC;
+            bltrec1.AppendEntity(hatch19);
+            cercSC19.Erase();
+            Circle cercSC20 = new Circle(new Point3d(1.47190049639903, 0.236019903793931, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC20.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC20);
+            Trans1.AddNewlyCreatedDBObject(cercSC20, true);
+            Hatch hatch20 = CreateHatch(cercSC20, "SOLID", 1, 0);
+            hatch20.Layer = "0";
+            hatch20.LineWeight = LineWeight.LineWeight000;
+            hatch20.Color = colorSC;
+            bltrec1.AppendEntity(hatch20);
+            cercSC20.Erase();
+            Circle cercSC21 = new Circle(new Point3d(1.4356261533685, 0.223232291638851, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC21.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC21);
+            Trans1.AddNewlyCreatedDBObject(cercSC21, true);
+            Hatch hatch21 = CreateHatch(cercSC21, "SOLID", 1, 0);
+            hatch21.Layer = "0";
+            hatch21.LineWeight = LineWeight.LineWeight000;
+            hatch21.Color = colorSC;
+            bltrec1.AppendEntity(hatch21);
+            cercSC21.Erase();
+            Circle cercSC22 = new Circle(new Point3d(1.44947243179195, 0.264681128785014, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC22.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC22);
+            Trans1.AddNewlyCreatedDBObject(cercSC22, true);
+            Hatch hatch22 = CreateHatch(cercSC22, "SOLID", 1, 0);
+            hatch22.Layer = "0";
+            hatch22.LineWeight = LineWeight.LineWeight000;
+            hatch22.Color = colorSC;
+            bltrec1.AppendEntity(hatch22);
+            cercSC22.Erase();
+            Circle cercSC23 = new Circle(new Point3d(1.4758539062459, 0.264681128785014, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC23.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC23);
+            Trans1.AddNewlyCreatedDBObject(cercSC23, true);
+            Hatch hatch23 = CreateHatch(cercSC23, "SOLID", 1, 0);
+            hatch23.Layer = "0";
+            hatch23.LineWeight = LineWeight.LineWeight000;
+            hatch23.Color = colorSC;
+            bltrec1.AppendEntity(hatch23);
+            cercSC23.Erase();
+            Circle cercSC24 = new Circle(new Point3d(1.48706597136334, 0.288147002458572, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC24.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC24);
+            Trans1.AddNewlyCreatedDBObject(cercSC24, true);
+            Hatch hatch24 = CreateHatch(cercSC24, "SOLID", 1, 0);
+            hatch24.Layer = "0";
+            hatch24.LineWeight = LineWeight.LineWeight000;
+            hatch24.Color = colorSC;
+            bltrec1.AppendEntity(hatch24);
+            cercSC24.Erase();
+            Circle cercSC25 = new Circle(new Point3d(1.46118881623261, 0.297776328399777, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC25.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC25);
+            Trans1.AddNewlyCreatedDBObject(cercSC25, true);
+            Hatch hatch25 = CreateHatch(cercSC25, "SOLID", 1, 0);
+            hatch25.Layer = "0";
+            hatch25.LineWeight = LineWeight.LineWeight000;
+            hatch25.Color = colorSC;
+            bltrec1.AppendEntity(hatch25);
+            cercSC25.Erase();
+            Circle cercSC26 = new Circle(new Point3d(1.18110234080814, 0.293746653944254, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC26.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC26);
+            Trans1.AddNewlyCreatedDBObject(cercSC26, true);
+            Hatch hatch26 = CreateHatch(cercSC26, "SOLID", 1, 0);
+            hatch26.Layer = "0";
+            hatch26.LineWeight = LineWeight.LineWeight000;
+            hatch26.Color = colorSC;
+            bltrec1.AppendEntity(hatch26);
+            cercSC26.Erase();
+            Circle cercSC27 = new Circle(new Point3d(1.1283585713245, 0.269236590713263, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC27.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC27);
+            Trans1.AddNewlyCreatedDBObject(cercSC27, true);
+            Hatch hatch27 = CreateHatch(cercSC27, "SOLID", 1, 0);
+            hatch27.Layer = "0";
+            hatch27.LineWeight = LineWeight.LineWeight000;
+            hatch27.Color = colorSC;
+            bltrec1.AppendEntity(hatch27);
+            cercSC27.Erase();
+            Circle cercSC28 = new Circle(new Point3d(1.16027354099788, 0.282666729763149, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC28.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC28);
+            Trans1.AddNewlyCreatedDBObject(cercSC28, true);
+            Hatch hatch28 = CreateHatch(cercSC28, "SOLID", 1, 0);
+            hatch28.Layer = "0";
+            hatch28.LineWeight = LineWeight.LineWeight000;
+            hatch28.Color = colorSC;
+            bltrec1.AppendEntity(hatch28);
+            cercSC28.Erase();
+            Circle cercSC29 = new Circle(new Point3d(1.2173847979866, 0.28266672976315, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC29.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC29);
+            Trans1.AddNewlyCreatedDBObject(cercSC29, true);
+            Hatch hatch29 = CreateHatch(cercSC29, "SOLID", 1, 0);
+            hatch29.Layer = "0";
+            hatch29.LineWeight = LineWeight.LineWeight000;
+            hatch29.Color = colorSC;
+            bltrec1.AppendEntity(hatch29);
+            cercSC29.Erase();
+            Circle cercSC30 = new Circle(new Point3d(1.24426050997712, 0.28266672976315, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC30.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC30);
+            Trans1.AddNewlyCreatedDBObject(cercSC30, true);
+            Hatch hatch30 = CreateHatch(cercSC30, "SOLID", 1, 0);
+            hatch30.Layer = "0";
+            hatch30.LineWeight = LineWeight.LineWeight000;
+            hatch30.Color = colorSC;
+            bltrec1.AppendEntity(hatch30);
+            cercSC30.Erase();
+            Circle cercSC31 = new Circle(new Point3d(1.28121498296969, 0.295089615508914, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC31.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC31);
+            Trans1.AddNewlyCreatedDBObject(cercSC31, true);
+            Hatch hatch31 = CreateHatch(cercSC31, "SOLID", 1, 0);
+            hatch31.Layer = "0";
+            hatch31.LineWeight = LineWeight.LineWeight000;
+            hatch31.Color = colorSC;
+            bltrec1.AppendEntity(hatch31);
+            cercSC31.Erase();
+            Circle cercSC32 = new Circle(new Point3d(1.30620644451119, 0.269942302256823, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC32.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC32);
+            Trans1.AddNewlyCreatedDBObject(cercSC32, true);
+            Hatch hatch32 = CreateHatch(cercSC32, "SOLID", 1, 0);
+            hatch32.Layer = "0";
+            hatch32.LineWeight = LineWeight.LineWeight000;
+            hatch32.Color = colorSC;
+            bltrec1.AppendEntity(hatch32);
+            cercSC32.Erase();
+            Circle cercSC33 = new Circle(new Point3d(1.33711375948042, 0.280014973133802, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC33.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC33);
+            Trans1.AddNewlyCreatedDBObject(cercSC33, true);
+            Hatch hatch33 = CreateHatch(cercSC33, "SOLID", 1, 0);
+            hatch33.Layer = "0";
+            hatch33.LineWeight = LineWeight.LineWeight000;
+            hatch33.Color = colorSC;
+            bltrec1.AppendEntity(hatch33);
+            cercSC33.Erase();
+            Circle cercSC34 = new Circle(new Point3d(1.35693465848453, 0.291766310110688, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC34.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC34);
+            Trans1.AddNewlyCreatedDBObject(cercSC34, true);
+            Hatch hatch34 = CreateHatch(cercSC34, "SOLID", 1, 0);
+            hatch34.Layer = "0";
+            hatch34.LineWeight = LineWeight.LineWeight000;
+            hatch34.Color = colorSC;
+            bltrec1.AppendEntity(hatch34);
+            cercSC34.Erase();
+            Circle cercSC35 = new Circle(new Point3d(1.39446721761487, 0.280500791966915, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC35.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC35);
+            Trans1.AddNewlyCreatedDBObject(cercSC35, true);
+            Hatch hatch35 = CreateHatch(cercSC35, "SOLID", 1, 0);
+            hatch35.Layer = "0";
+            hatch35.LineWeight = LineWeight.LineWeight000;
+            hatch35.Color = colorSC;
+            bltrec1.AppendEntity(hatch35);
+            cercSC35.Erase();
+            Circle cercSC36 = new Circle(new Point3d(1.42345241480507, 0.287737295031548, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC36.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC36);
+            Trans1.AddNewlyCreatedDBObject(cercSC36, true);
+            Hatch hatch36 = CreateHatch(cercSC36, "SOLID", 1, 0);
+            hatch36.Layer = "0";
+            hatch36.LineWeight = LineWeight.LineWeight000;
+            hatch36.Color = colorSC;
+            bltrec1.AppendEntity(hatch36);
+            cercSC36.Erase();
+            Circle cercSC37 = new Circle(new Point3d(1.10475023766048, 0.294761426746845, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC37.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC37);
+            Trans1.AddNewlyCreatedDBObject(cercSC37, true);
+            Hatch hatch37 = CreateHatch(cercSC37, "SOLID", 1, 0);
+            hatch37.Layer = "0";
+            hatch37.LineWeight = LineWeight.LineWeight000;
+            hatch37.Color = colorSC;
+            bltrec1.AppendEntity(hatch37);
+            cercSC37.Erase();
+            Circle cercSC38 = new Circle(new Point3d(1.06611609413661, 0.282338541001081, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC38.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC38);
+            Trans1.AddNewlyCreatedDBObject(cercSC38, true);
+            Hatch hatch38 = CreateHatch(cercSC38, "SOLID", 1, 0);
+            hatch38.Layer = "0";
+            hatch38.LineWeight = LineWeight.LineWeight000;
+            hatch38.Color = colorSC;
+            bltrec1.AppendEntity(hatch38);
+            cercSC38.Erase();
+            Circle cercSC39 = new Circle(new Point3d(1.03789659636095, 0.282338541001081, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC39.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC39);
+            Trans1.AddNewlyCreatedDBObject(cercSC39, true);
+            Hatch hatch39 = CreateHatch(cercSC39, "SOLID", 1, 0);
+            hatch39.Layer = "0";
+            hatch39.LineWeight = LineWeight.LineWeight000;
+            hatch39.Color = colorSC;
+            bltrec1.AppendEntity(hatch39);
+            cercSC39.Erase();
+            Circle cercSC40 = new Circle(new Point3d(1.0098942189943, 0.29479493200779, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC40.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC40);
+            Trans1.AddNewlyCreatedDBObject(cercSC40, true);
+            Hatch hatch40 = CreateHatch(cercSC40, "SOLID", 1, 0);
+            hatch40.Layer = "0";
+            hatch40.LineWeight = LineWeight.LineWeight000;
+            hatch40.Color = colorSC;
+            bltrec1.AppendEntity(hatch40);
+            cercSC40.Erase();
+            Circle cercSC41 = new Circle(new Point3d(0.982010606210679, 0.278678737580776, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC41.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC41);
+            Trans1.AddNewlyCreatedDBObject(cercSC41, true);
+            Hatch hatch41 = CreateHatch(cercSC41, "SOLID", 1, 0);
+            hatch41.Layer = "0";
+            hatch41.LineWeight = LineWeight.LineWeight000;
+            hatch41.Color = colorSC;
+            bltrec1.AppendEntity(hatch41);
+            cercSC41.Erase();
+            Circle cercSC42 = new Circle(new Point3d(0.951775307301432, 0.270620577037334, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC42.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC42);
+            Trans1.AddNewlyCreatedDBObject(cercSC42, true);
+            Hatch hatch42 = CreateHatch(cercSC42, "SOLID", 1, 0);
+            hatch42.Layer = "0";
+            hatch42.LineWeight = LineWeight.LineWeight000;
+            hatch42.Color = colorSC;
+            bltrec1.AppendEntity(hatch42);
+            cercSC42.Erase();
+            Circle cercSC43 = new Circle(new Point3d(0.925235480070114, 0.292780423536897, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC43.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC43);
+            Trans1.AddNewlyCreatedDBObject(cercSC43, true);
+            Hatch hatch43 = CreateHatch(cercSC43, "SOLID", 1, 0);
+            hatch43.Layer = "0";
+            hatch43.LineWeight = LineWeight.LineWeight000;
+            hatch43.Color = colorSC;
+            bltrec1.AppendEntity(hatch43);
+            cercSC43.Erase();
+            Circle cercSC44 = new Circle(new Point3d(0.889624792862683, 0.283715007826686, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC44.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC44);
+            Trans1.AddNewlyCreatedDBObject(cercSC44, true);
+            Hatch hatch44 = CreateHatch(cercSC44, "SOLID", 1, 0);
+            hatch44.Layer = "0";
+            hatch44.LineWeight = LineWeight.LineWeight000;
+            hatch44.Color = colorSC;
+            bltrec1.AppendEntity(hatch44);
+            cercSC44.Erase();
+            Circle cercSC45 = new Circle(new Point3d(0.861741180066019, 0.283715007826686, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC45.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC45);
+            Trans1.AddNewlyCreatedDBObject(cercSC45, true);
+            Hatch hatch45 = CreateHatch(cercSC45, "SOLID", 1, 0);
+            hatch45.Layer = "0";
+            hatch45.LineWeight = LineWeight.LineWeight000;
+            hatch45.Color = colorSC;
+            bltrec1.AppendEntity(hatch45);
+            cercSC45.Erase();
+            Circle cercSC46 = new Circle(new Point3d(0.83173800050281, 0.29479493200779, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC46.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC46);
+            Trans1.AddNewlyCreatedDBObject(cercSC46, true);
+            Hatch hatch46 = CreateHatch(cercSC46, "SOLID", 1, 0);
+            hatch46.Layer = "0";
+            hatch46.LineWeight = LineWeight.LineWeight000;
+            hatch46.Color = colorSC;
+            bltrec1.AppendEntity(hatch46);
+            cercSC46.Erase();
+            Circle cercSC47 = new Circle(new Point3d(0.805198173271492, 0.277671484276652, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC47.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC47);
+            Trans1.AddNewlyCreatedDBObject(cercSC47, true);
+            Hatch hatch47 = CreateHatch(cercSC47, "SOLID", 1, 0);
+            hatch47.Layer = "0";
+            hatch47.LineWeight = LineWeight.LineWeight000;
+            hatch47.Color = colorSC;
+            bltrec1.AppendEntity(hatch47);
+            cercSC47.Erase();
+            Circle cercSC48 = new Circle(new Point3d(0.774290858535096, 0.270284868776798, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC48.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC48);
+            Trans1.AddNewlyCreatedDBObject(cercSC48, true);
+            Hatch hatch48 = CreateHatch(cercSC48, "SOLID", 1, 0);
+            hatch48.Layer = "0";
+            hatch48.LineWeight = LineWeight.LineWeight000;
+            hatch48.Color = colorSC;
+            bltrec1.AppendEntity(hatch48);
+            cercSC48.Erase();
+            Circle cercSC49 = new Circle(new Point3d(0.748422801261768, 0.293787676841021, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC49.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC49);
+            Trans1.AddNewlyCreatedDBObject(cercSC49, true);
+            Hatch hatch49 = CreateHatch(cercSC49, "SOLID", 1, 0);
+            hatch49.Layer = "0";
+            hatch49.LineWeight = LineWeight.LineWeight000;
+            hatch49.Color = colorSC;
+            bltrec1.AppendEntity(hatch49);
+            cercSC49.Erase();
+            Circle cercSC50 = new Circle(new Point3d(0.71012478858605, 0.28102895244956, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC50.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC50);
+            Trans1.AddNewlyCreatedDBObject(cercSC50, true);
+            Hatch hatch50 = CreateHatch(cercSC50, "SOLID", 1, 0);
+            hatch50.Layer = "0";
+            hatch50.LineWeight = LineWeight.LineWeight000;
+            hatch50.Color = colorSC;
+            bltrec1.AppendEntity(hatch50);
+            cercSC50.Erase();
+            Circle cercSC51 = new Circle(new Point3d(0.684592616045848, 0.28102895244956, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC51.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC51);
+            Trans1.AddNewlyCreatedDBObject(cercSC51, true);
+            Hatch hatch51 = CreateHatch(cercSC51, "SOLID", 1, 0);
+            hatch51.Layer = "0";
+            hatch51.LineWeight = LineWeight.LineWeight000;
+            hatch51.Color = colorSC;
+            bltrec1.AppendEntity(hatch51);
+            cercSC51.Erase();
+            Circle cercSC52 = new Circle(new Point3d(0.650568407261744, 0.294471755623817, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC52.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC52);
+            Trans1.AddNewlyCreatedDBObject(cercSC52, true);
+            Hatch hatch52 = CreateHatch(cercSC52, "SOLID", 1, 0);
+            hatch52.Layer = "0";
+            hatch52.LineWeight = LineWeight.LineWeight000;
+            hatch52.Color = colorSC;
+            bltrec1.AppendEntity(hatch52);
+            cercSC52.Erase();
+            Circle cercSC53 = new Circle(new Point3d(0.628059691051021, 0.278355563059449, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC53.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC53);
+            Trans1.AddNewlyCreatedDBObject(cercSC53, true);
+            Hatch hatch53 = CreateHatch(cercSC53, "SOLID", 1, 0);
+            hatch53.Layer = "0";
+            hatch53.LineWeight = LineWeight.LineWeight000;
+            hatch53.Color = colorSC;
+            bltrec1.AppendEntity(hatch53);
+            cercSC53.Erase();
+            Circle cercSC54 = new Circle(new Point3d(0.596480606356636, 0.269961692392826, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC54.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC54);
+            Trans1.AddNewlyCreatedDBObject(cercSC54, true);
+            Hatch hatch54 = CreateHatch(cercSC54, "SOLID", 1, 0);
+            hatch54.Layer = "0";
+            hatch54.LineWeight = LineWeight.LineWeight000;
+            hatch54.Color = colorSC;
+            bltrec1.AppendEntity(hatch54);
+            cercSC54.Erase();
+            Circle cercSC55 = new Circle(new Point3d(0.57229246548377, 0.293464500457048, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC55.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC55);
+            Trans1.AddNewlyCreatedDBObject(cercSC55, true);
+            Hatch hatch55 = CreateHatch(cercSC55, "SOLID", 1, 0);
+            hatch55.Layer = "0";
+            hatch55.LineWeight = LineWeight.LineWeight000;
+            hatch55.Color = colorSC;
+            bltrec1.AppendEntity(hatch55);
+            cercSC55.Erase();
+            Circle cercSC56 = new Circle(new Point3d(0.535337992491201, 0.282048869878054, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC56.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC56);
+            Trans1.AddNewlyCreatedDBObject(cercSC56, true);
+            Hatch hatch56 = CreateHatch(cercSC56, "SOLID", 1, 0);
+            hatch56.Layer = "0";
+            hatch56.LineWeight = LineWeight.LineWeight000;
+            hatch56.Color = colorSC;
+            bltrec1.AppendEntity(hatch56);
+            cercSC56.Erase();
+            Circle cercSC57 = new Circle(new Point3d(0.507790264673531, 0.282048869878054, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC57.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC57);
+            Trans1.AddNewlyCreatedDBObject(cercSC57, true);
+            Hatch hatch57 = CreateHatch(cercSC57, "SOLID", 1, 0);
+            hatch57.Layer = "0";
+            hatch57.LineWeight = LineWeight.LineWeight000;
+            hatch57.Color = colorSC;
+            bltrec1.AppendEntity(hatch57);
+            cercSC57.Erase();
+            Circle cercSC58 = new Circle(new Point3d(0.480105330469087, 0.292116923257709, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC58.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC58);
+            Trans1.AddNewlyCreatedDBObject(cercSC58, true);
+            Hatch hatch58 = CreateHatch(cercSC58, "SOLID", 1, 0);
+            hatch58.Layer = "0";
+            hatch58.LineWeight = LineWeight.LineWeight000;
+            hatch58.Color = colorSC;
+            bltrec1.AppendEntity(hatch58);
+            cercSC58.Erase();
+            Circle cercSC59 = new Circle(new Point3d(0.450541801284999, 0.27835107780993, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC59.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC59);
+            Trans1.AddNewlyCreatedDBObject(cercSC59, true);
+            Hatch hatch59 = CreateHatch(cercSC59, "SOLID", 1, 0);
+            hatch59.Layer = "0";
+            hatch59.LineWeight = LineWeight.LineWeight000;
+            hatch59.Color = colorSC;
+            bltrec1.AppendEntity(hatch59);
+            cercSC59.Erase();
+            Circle cercSC60 = new Circle(new Point3d(0.419970617396757, 0.270292915403843, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC60.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC60);
+            Trans1.AddNewlyCreatedDBObject(cercSC60, true);
+            Hatch hatch60 = CreateHatch(cercSC60, "SOLID", 1, 0);
+            hatch60.Layer = "0";
+            hatch60.LineWeight = LineWeight.LineWeight000;
+            hatch60.Color = colorSC;
+            bltrec1.AppendEntity(hatch60);
+            cercSC60.Erase();
+            Circle cercSC61 = new Circle(new Point3d(0.39645424624905, 0.292788470163941, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC61.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC61);
+            Trans1.AddNewlyCreatedDBObject(cercSC61, true);
+            Hatch hatch61 = CreateHatch(cercSC61, "SOLID", 1, 0);
+            hatch61.Layer = "0";
+            hatch61.LineWeight = LineWeight.LineWeight000;
+            hatch61.Color = colorSC;
+            bltrec1.AppendEntity(hatch61);
+            cercSC61.Erase();
+            Circle cercSC62 = new Circle(new Point3d(0.356140432193875, 0.281372839584947, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC62.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC62);
+            Trans1.AddNewlyCreatedDBObject(cercSC62, true);
+            Hatch hatch62 = CreateHatch(cercSC62, "SOLID", 1, 0);
+            hatch62.Layer = "0";
+            hatch62.LineWeight = LineWeight.LineWeight000;
+            hatch62.Color = colorSC;
+            bltrec1.AppendEntity(hatch62);
+            cercSC62.Erase();
+            Circle cercSC63 = new Circle(new Point3d(0.329600359080359, 0.281372839584947, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC63.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC63);
+            Trans1.AddNewlyCreatedDBObject(cercSC63, true);
+            Hatch hatch63 = CreateHatch(cercSC63, "SOLID", 1, 0);
+            hatch63.Layer = "0";
+            hatch63.LineWeight = LineWeight.LineWeight000;
+            hatch63.Color = colorSC;
+            bltrec1.AppendEntity(hatch63);
+            cercSC63.Erase();
+            Circle cercSC64 = new Circle(new Point3d(0.343374346163124, 0.293795723468065, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC64.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC64);
+            Trans1.AddNewlyCreatedDBObject(cercSC64, true);
+            Hatch hatch64 = CreateHatch(cercSC64, "SOLID", 1, 0);
+            hatch64.Layer = "0";
+            hatch64.LineWeight = LineWeight.LineWeight000;
+            hatch64.Color = colorSC;
+            bltrec1.AppendEntity(hatch64);
+            cercSC64.Erase();
+            Circle cercSC65 = new Circle(new Point3d(0.287606874713674, 0.293795723468065, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC65.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC65);
+            Trans1.AddNewlyCreatedDBObject(cercSC65, true);
+            Hatch hatch65 = CreateHatch(cercSC65, "SOLID", 1, 0);
+            hatch65.Layer = "0";
+            hatch65.LineWeight = LineWeight.LineWeight000;
+            hatch65.Color = colorSC;
+            bltrec1.AppendEntity(hatch65);
+            cercSC65.Erase();
+            Circle cercSC66 = new Circle(new Point3d(0.273369386326522, 0.277330895885825, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC66.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC66);
+            Trans1.AddNewlyCreatedDBObject(cercSC66, true);
+            Hatch hatch66 = CreateHatch(cercSC66, "SOLID", 1, 0);
+            hatch66.Layer = "0";
+            hatch66.LineWeight = LineWeight.LineWeight000;
+            hatch66.Color = colorSC;
+            bltrec1.AppendEntity(hatch66);
+            cercSC66.Erase();
+            Circle cercSC67 = new Circle(new Point3d(0.25623605819419, 0.292775543406606, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC67.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC67);
+            Trans1.AddNewlyCreatedDBObject(cercSC67, true);
+            Hatch hatch67 = CreateHatch(cercSC67, "SOLID", 1, 0);
+            hatch67.Layer = "0";
+            hatch67.LineWeight = LineWeight.LineWeight000;
+            hatch67.Color = colorSC;
+            bltrec1.AppendEntity(hatch67);
+            cercSC67.Erase();
+            Circle cercSC68 = new Circle(new Point3d(0.21760191489011, 0.294118635356426, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC68.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC68);
+            Trans1.AddNewlyCreatedDBObject(cercSC68, true);
+            Hatch hatch68 = CreateHatch(cercSC68, "SOLID", 1, 0);
+            hatch68.Layer = "0";
+            hatch68.LineWeight = LineWeight.LineWeight000;
+            hatch68.Color = colorSC;
+            bltrec1.AppendEntity(hatch68);
+            cercSC68.Erase();
+            Circle cercSC69 = new Circle(new Point3d(0.241790301632136, 0.268265480175614, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC69.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC69);
+            Trans1.AddNewlyCreatedDBObject(cercSC69, true);
+            Hatch hatch69 = CreateHatch(cercSC69, "SOLID", 1, 0);
+            hatch69.Layer = "0";
+            hatch69.LineWeight = LineWeight.LineWeight000;
+            hatch69.Color = colorSC;
+            bltrec1.AppendEntity(hatch69);
+            cercSC69.Erase();
+            Circle cercSC70 = new Circle(new Point3d(0.180647687766701, 0.281024204567075, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC70.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC70);
+            Trans1.AddNewlyCreatedDBObject(cercSC70, true);
+            Hatch hatch70 = CreateHatch(cercSC70, "SOLID", 1, 0);
+            hatch70.Layer = "0";
+            hatch70.LineWeight = LineWeight.LineWeight000;
+            hatch70.Color = colorSC;
+            bltrec1.AppendEntity(hatch70);
+            cercSC70.Erase();
+            Circle cercSC71 = new Circle(new Point3d(0.153099959949031, 0.281024204567075, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC71.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC71);
+            Trans1.AddNewlyCreatedDBObject(cercSC71, true);
+            Hatch hatch71 = CreateHatch(cercSC71, "SOLID", 1, 0);
+            hatch71.Layer = "0";
+            hatch71.LineWeight = LineWeight.LineWeight000;
+            hatch71.Color = colorSC;
+            bltrec1.AppendEntity(hatch71);
+            cercSC71.Erase();
+            Circle cercSC72 = new Circle(new Point3d(0.123200545798987, 0.294118635356426, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC72.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC72);
+            Trans1.AddNewlyCreatedDBObject(cercSC72, true);
+            Hatch hatch72 = CreateHatch(cercSC72, "SOLID", 1, 0);
+            hatch72.Layer = "0";
+            hatch72.LineWeight = LineWeight.LineWeight000;
+            hatch72.Color = colorSC;
+            bltrec1.AppendEntity(hatch72);
+            cercSC72.Erase();
+            Circle cercSC73 = new Circle(new Point3d(0.0811212458647788, 0.294962719082832, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC73.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC73);
+            Trans1.AddNewlyCreatedDBObject(cercSC73, true);
+            Hatch hatch73 = CreateHatch(cercSC73, "SOLID", 1, 0);
+            hatch73.Layer = "0";
+            hatch73.LineWeight = LineWeight.LineWeight000;
+            hatch73.Color = colorSC;
+            bltrec1.AppendEntity(hatch73);
+            cercSC73.Erase();
+            Circle cercSC74 = new Circle(new Point3d(0.0968820189591497, 0.278160866349936, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC74.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC74);
+            Trans1.AddNewlyCreatedDBObject(cercSC74, true);
+            Hatch hatch74 = CreateHatch(cercSC74, "SOLID", 1, 0);
+            hatch74.Layer = "0";
+            hatch74.LineWeight = LineWeight.LineWeight000;
+            hatch74.Color = colorSC;
+            bltrec1.AppendEntity(hatch74);
+            cercSC74.Erase();
+            Circle cercSC75 = new Circle(new Point3d(0.0647037017624825, 0.268578631803393, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC75.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC75);
+            Trans1.AddNewlyCreatedDBObject(cercSC75, true);
+            Hatch hatch75 = CreateHatch(cercSC75, "SOLID", 1, 0);
+            hatch75.Layer = "0";
+            hatch75.LineWeight = LineWeight.LineWeight000;
+            hatch75.Color = colorSC;
+            bltrec1.AppendEntity(hatch75);
+            cercSC75.Erase();
+            Circle cercSC76 = new Circle(new Point3d(0.0401432844810188, 0.293912595137954, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC76.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC76);
+            Trans1.AddNewlyCreatedDBObject(cercSC76, true);
+            Hatch hatch76 = CreateHatch(cercSC76, "SOLID", 1, 0);
+            hatch76.Layer = "0";
+            hatch76.LineWeight = LineWeight.LineWeight000;
+            hatch76.Color = colorSC;
+            bltrec1.AppendEntity(hatch76);
+            cercSC76.Erase();
+            Circle cercSC77 = new Circle(new Point3d(0.00304439085690911, 0.281485936542353, 0), Vector3d.ZAxis, scale1 * 0.00150000000000021);
+            cercSC77.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercSC77);
+            Trans1.AddNewlyCreatedDBObject(cercSC77, true);
+            Hatch hatch77 = CreateHatch(cercSC77, "SOLID", 1, 0);
+            hatch77.Layer = "0";
+            hatch77.LineWeight = LineWeight.LineWeight000;
+            hatch77.Color = colorSC;
+            bltrec1.AppendEntity(hatch77);
+            cercSC77.Erase();
+
+
+            #endregion
+
+            string nume_hatch = "ANSI31";
+            double hatch_scale = scale1 / 2;
+            double hatch_angle = 0;
+
+
+            Polyline poly2 = new Polyline();
+            poly2 = poly1.Clone() as Polyline;
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch99 = CreateHatch(poly2, nume_hatch, hatch_scale, hatch_angle * Math.PI / 180);
+            hatch99.Layer = "0";
+            hatch99.LineWeight = LineWeight.LineWeight000;
+            hatch99.Color = colorSC;
+            bltrec1.AppendEntity(hatch99);
+            poly2.Erase();
+
+
+        }
 
 
         private Polyline get_poly_gm1(double scale1)
