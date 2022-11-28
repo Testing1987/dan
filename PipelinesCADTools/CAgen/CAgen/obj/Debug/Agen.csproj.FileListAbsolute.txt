@@ -46,3 +46,4 @@ C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.csproj.CoreCompileInputs.cache
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.dll
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.pdb
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.csproj.AssemblyReference.cache

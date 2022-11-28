@@ -4106,6 +4106,91 @@ namespace Alignment_mdi
         }
 
 
+        static public BlockReference InsertBlock_with_multiple_atributes_with_database_2_SCALES(Database Database1, Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord,
+            string Nume_fisier, string NumeBlock, Point3d Insertion_point, double Scale_x, double Scale_y, double Rotation1, string Layer1,
+             System.Collections.Specialized.StringCollection Colectie_nume_atribute, System.Collections.Specialized.StringCollection Colectie_valori_atribute)
+        {
+
+            BlockReference Block1 = null;
+
+
+            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = Database1.TransactionManager.StartTransaction())
+            {
+
+                BlockTable BlockTable1 = (BlockTable)Trans1.GetObject(Database1.BlockTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+
+                if (BlockTable1.Has(NumeBlock) == false)
+                {
+                    if (System.IO.File.Exists(Nume_fisier) == true)
+                    {
+                        using (Database Database2 = new Database(false, false))
+                        {
+                            Database2.ReadDwgFile(Nume_fisier, System.IO.FileShare.Read, true, null);
+                            Database1.Insert(NumeBlock, Database2, false);
+                        }
+                    }
+
+
+                }
+
+                Trans1.Commit();
+            }
+
+            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = Database1.TransactionManager.StartTransaction())
+            {
+
+                BlockTable BlockTable1 = (BlockTable)Trans1.GetObject(Database1.BlockTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+                if (BlockTable1.Has(NumeBlock) == true)
+                {
+
+
+                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTR = (BlockTableRecord)Trans1.GetObject(BlockTable1[NumeBlock], OpenMode.ForRead);
+
+                    Block1 = new BlockReference(Insertion_point, BTR.ObjectId);
+                    Block1.Layer = Layer1;
+                    Block1.ScaleFactors = new Autodesk.AutoCAD.Geometry.Scale3d(Scale_x, Scale_y, Scale_x);
+                    Block1.Rotation = Rotation1;
+                    BTrecord.AppendEntity(Block1);
+                    Trans1.AddNewlyCreatedDBObject(Block1, true);
+                    Autodesk.AutoCAD.DatabaseServices.AttributeCollection attColl = Block1.AttributeCollection;
+                    BlockTableRecordEnumerator BTR_enum = BTR.GetEnumerator();
+                    while (BTR_enum.MoveNext())
+                    {
+                        Entity Ent1 = (Entity)Trans1.GetObject(BTR_enum.Current, OpenMode.ForWrite);
+                        if (Ent1 is AttributeDefinition)
+                        {
+                            AttributeDefinition Attdef = (AttributeDefinition)Ent1;
+                            AttributeReference Attref = new AttributeReference();
+                            Attref.SetAttributeFromBlock(Attdef, Block1.BlockTransform);
+
+                            for (int i = 0; i < Colectie_nume_atribute.Count; ++i)
+                            {
+                                string Tag1 = Colectie_nume_atribute[i];
+                                string Valoare = Colectie_valori_atribute[i];
+                                if (Attref.Tag.ToLower() == Tag1.ToLower())
+                                {
+                                    Attref.TextString = Valoare;
+                                    i = Colectie_nume_atribute.Count;
+                                }
+                            }
+                            if (Attref != null)
+                            {
+                                attColl.AppendAttribute(Attref);
+                                Trans1.AddNewlyCreatedDBObject(Attref, true);
+                            }
+                        }
+
+                    }
+
+                }
+
+                Trans1.Commit();
+            }
+
+            return Block1;
+        }
+
 
         static public MLeader Create_mleader_on_profile_with_database(Database Database1, Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord, Point3d Insertion_point, string Layer1, string descriptie, double Text_height, ObjectId textid)
         {

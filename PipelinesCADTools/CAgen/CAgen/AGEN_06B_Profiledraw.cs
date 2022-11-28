@@ -1437,50 +1437,67 @@ namespace Alignment_mdi
                                                                     if (_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"] != DBNull.Value)
                                                                     {
                                                                         #region block creation
-                                                                        int idx1 = 1;
-                                                                        string name_of_block = "_" + display_sta_string;
-                                                                        bool exista2 = true;
 
-                                                                        do
+                                                                        double diam1 = Math.Abs(Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"]));
+                                                                        string name_of_block = "_" + diam1;
+
+                                                                        string content1 = display_sta_string;
+                                                                        if (_AGEN_mainform.Data_Table_crossings.Rows[i][6] != DBNull.Value)
                                                                         {
-                                                                            if (BlockTable1.Has(name_of_block + "_" + idx1.ToString()) == false)
+                                                                            content1 = display_sta_string + "\r\n" + Convert.ToString(_AGEN_mainform.Data_Table_crossings.Rows[i][6]);
+                                                                        }
+
+
+                                                                        if (BlockTable1.Has(name_of_block) == false)
+                                                                        {
+                                                                            BlockTable1.UpgradeOpen();
+                                                                            using (BlockTableRecord bltrec1 = new BlockTableRecord())
                                                                             {
-                                                                                BlockTable1.UpgradeOpen();
-                                                                                using (BlockTableRecord bltrec1 = new BlockTableRecord())
-                                                                                {
-                                                                                    bltrec1.Name = name_of_block + "_" + idx1.ToString();
+                                                                                bltrec1.Name = name_of_block;
 
-                                                                                    double diam1 = Math.Abs(Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"]));
-                                                                                    Circle cerc1 = new Circle(new Point3d(0, -diam1 / 2, 0), Vector3d.ZAxis, diam1 / 2);
-                                                                                    cerc1.Layer = "0";
-                                                                                    bltrec1.AppendEntity(cerc1);
 
-                                                                                    MText mtext1 = new MText();
-                                                                                    mtext1.Location = new Point3d(0, -diam1, 0);
-                                                                                    mtext1.TextHeight = diam1 / 4;
-                                                                                    mtext1.Layer = "NO PLOT";
+                                                                                Circle cerc1 = new Circle(new Point3d(0, -diam1 / 2, 0), Vector3d.ZAxis, diam1 / 2);
+                                                                                cerc1.Layer = "0";
+                                                                                bltrec1.AppendEntity(cerc1);
 
-                                                                                    string content1 = "xxx";
-                                                                                    if (_AGEN_mainform.Data_Table_crossings.Rows[i][6] != DBNull.Value)
-                                                                                    {
-                                                                                        content1 = display_sta_string + "\r\n" + Convert.ToString(_AGEN_mainform.Data_Table_crossings.Rows[i][6]);
-                                                                                    }
-                                                                                    mtext1.Contents = content1;
-                                                                                    mtext1.Attachment = AttachmentPoint.TopCenter;
-                                                                                    bltrec1.AppendEntity(mtext1);
 
-                                                                                    BlockTable1.Add(bltrec1);
-                                                                                    Trans1.AddNewlyCreatedDBObject(bltrec1, true);
-                                                                                    BlockReference b1 = Functions.InsertBlock_with_2scales(ThisDrawing.Database, BTrecord, name_of_block + "_" + idx1.ToString(), inspt, Hexag, vexag, 0, "Agen_symbols");
-                                                                                    b1.ColorIndex = 256;
-                                                                                }
-                                                                                exista2 = false;
+
+                                                                                AttributeDefinition att1 = new AttributeDefinition();
+                                                                                att1.Tag = "DESCRIPTION";
+                                                                                att1.Layer = "NO PLOT";
+                                                                                att1.Height = diam1 / 4;
+                                                                                att1.Position = new Point3d(0, -diam1 - diam1 / 4, 0);
+                                                                                att1.IsMTextAttributeDefinition = true;
+                                                                                att1.Justify = AttachmentPoint.TopCenter;
+
+                                                                                att1.TextString = content1;
+                                                                                bltrec1.AppendEntity(att1);
+
+
+
+                                                                                BlockTable1.Add(bltrec1);
+                                                                                Trans1.AddNewlyCreatedDBObject(bltrec1, true);
+
+                                                                                col_atr = new System.Collections.Specialized.StringCollection();
+                                                                                col_val = new System.Collections.Specialized.StringCollection();
+                                                                                col_atr.Add("DESCRIPTION");
+                                                                                col_val.Add(content1);
+
+                                                                                BlockReference b1 = Functions.InsertBlock_with_multiple_atributes_with_database_2_SCALES(ThisDrawing.Database, BTrecord, "", name_of_block, inspt, Hexag, vexag, 0, "Agen_symbols", col_atr, col_val);
+                                                                                b1.ColorIndex = 256;
                                                                             }
-                                                                            else
-                                                                            {
-                                                                                ++idx1;
-                                                                            }
-                                                                        } while (exista2 == true);
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            col_atr = new System.Collections.Specialized.StringCollection();
+                                                                            col_val = new System.Collections.Specialized.StringCollection();
+                                                                            col_atr.Add("DESCRIPTION");
+                                                                            col_val.Add(content1);
+
+                                                                            BlockReference b1 = Functions.InsertBlock_with_multiple_atributes_with_database_2_SCALES(ThisDrawing.Database, BTrecord, "", name_of_block, inspt, Hexag, vexag, 0, "Agen_symbols", col_atr, col_val);
+                                                                            b1.ColorIndex = 256;
+                                                                        }
+
                                                                         #endregion
                                                                     }
                                                                 }
