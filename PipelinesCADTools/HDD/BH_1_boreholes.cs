@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using Autodesk.AutoCAD.Runtime;
-using Autodesk.AutoCAD.Geometry;
-using Autodesk.AutoCAD.ApplicationServices;
+﻿using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.Geometry;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Alignment_mdi
 {
@@ -1686,7 +1678,7 @@ namespace Alignment_mdi
                                 Autodesk.AutoCAD.Colors.Color color_sym = Autodesk.AutoCAD.Colors.Color.FromRgb(0, 0, 255);
                                 Autodesk.AutoCAD.Colors.Color color_labels = Autodesk.AutoCAD.Colors.Color.FromRgb(51, 51, 51);
                                 Autodesk.AutoCAD.Colors.Color color_white = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 255, 255);
-                                Autodesk.AutoCAD.Colors.Color color_explanations = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 0, 255);
+
                                 Point3d pt_legend = new Point3d();
 
 
@@ -2267,6 +2259,17 @@ namespace Alignment_mdi
                                                         if (desc.ToUpper() == "SC")
                                                         {
                                                             add_pattern_SC(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
+
+                                                        }
+
+                                                        if (desc.ToUpper() == "GP-GM")
+                                                        {
+                                                            add_pattern_GPGM(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
+
+                                                        }
+                                                        if (desc.ToUpper() == "DECOMPOSED ROCK")
+                                                        {
+                                                            add_pattern_DECOMPOSED_ROCK(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
 
                                                         }
                                                         #endregion
@@ -2935,7 +2938,7 @@ namespace Alignment_mdi
                                                 polyL1.LineWeight = LineWeight.LineWeight000;
                                                 polyL1.Color = color_rect;
                                                 bltrec1.AppendEntity(polyL1);
-                                                add_pattern_SP(bltrec1, 1, 1, 1, polyL1, BTrecord, Trans1);
+                                                add_pattern_SP_legend2(bltrec1, 1, 1, 1, polyL1, BTrecord, Trans1);
 
 
                                                 polyL1 = new Polyline();
@@ -2978,7 +2981,7 @@ namespace Alignment_mdi
 
 
                                                 #region mleader explanation2
-                                                string content2 = "TEST BORING LABEL";
+                                                string content2 = "TEST BORING ID";
 
                                                 MLeader mleader2 = Functions.creaza_mleader_with_style_IN_BTR(new Point3d(11.50338, -0.43627, 0), content2,
                                                                                                             0.06, mleaderstyle_name, textstyle_name,
@@ -2997,7 +3000,8 @@ namespace Alignment_mdi
 
                                                 mleader2.LineWeight = LineWeight.LineWeight000;
                                                 mleader2.LeaderLineWeight = LineWeight.LineWeight000;
-                                                mleader2.Color = color_explanations;
+                                                mleader2.Color = color_labels;
+
 
 
                                                 #endregion
@@ -3022,7 +3026,7 @@ namespace Alignment_mdi
 
                                                 mleader3.LineWeight = LineWeight.LineWeight000;
                                                 mleader3.LeaderLineWeight = LineWeight.LineWeight000;
-                                                mleader3.Color = color_explanations;
+                                                mleader3.Color = color_labels;
 
 
                                                 #endregion
@@ -3047,7 +3051,7 @@ namespace Alignment_mdi
 
                                                 mleader4.LineWeight = LineWeight.LineWeight000;
                                                 mleader4.LeaderLineWeight = LineWeight.LineWeight000;
-                                                mleader4.Color = color_explanations;
+                                                mleader4.Color = color_labels;
 
 
                                                 #endregion
@@ -3072,7 +3076,7 @@ namespace Alignment_mdi
 
                                                 mleader5.LineWeight = LineWeight.LineWeight000;
                                                 mleader5.LeaderLineWeight = LineWeight.LineWeight000;
-                                                mleader5.Color = color_explanations;
+                                                mleader5.Color = color_labels;
 
 
                                                 #endregion
@@ -3097,7 +3101,7 @@ namespace Alignment_mdi
 
                                                 mleader6.LineWeight = LineWeight.LineWeight000;
                                                 mleader6.LeaderLineWeight = LineWeight.LineWeight000;
-                                                mleader6.Color = color_explanations;
+                                                mleader6.Color = color_labels;
 
 
                                                 #endregion
@@ -3122,7 +3126,7 @@ namespace Alignment_mdi
 
                                                 mleader7.LineWeight = LineWeight.LineWeight000;
                                                 mleader7.LeaderLineWeight = LineWeight.LineWeight000;
-                                                mleader7.Color = color_explanations;
+                                                mleader7.Color = color_labels;
 
 
                                                 #endregion
@@ -3213,6 +3217,14 @@ namespace Alignment_mdi
                                                     {
                                                         add_pattern_SC_legend(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
                                                     }
+                                                    if (lista_legend[i] == "GP-GM")
+                                                    {
+                                                        add_pattern_GPGM_legend(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+                                                    if (lista_legend[i] == "DECOMPOSED ROCK")
+                                                    {
+                                                        add_pattern_DECOMPOSED_ROCK(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
                                                 }
 
                                                 BlockTable1.Add(bltrec1);
@@ -3247,6 +3259,123 @@ namespace Alignment_mdi
             this.MdiParent.WindowState = FormWindowState.Normal;
         }
 
+
+        private void add_pattern_topsoil(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+
+            Autodesk.AutoCAD.Colors.Color color_ts = Autodesk.AutoCAD.Colors.Color.FromRgb(153, 95, 76);
+
+            double spc_hor = scale1 * 0.0975;
+            double spc_ver = scale1 * 0.0585;
+
+            int nr_col = 0;
+            int nr_rows = 0;
+
+
+
+
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (stick_height >= scale1 * 0.0585)
+            {
+                double nr1 = Math.Floor(stick_height / spc_ver);
+                nr_rows = Convert.ToInt32(nr1);
+
+                if (stick_width < scale1 * 0.0975)
+                {
+                    nr_col = 1;
+                }
+                else
+                {
+                    double nr2 = Math.Floor(stick_width / spc_hor);
+
+                    nr_col = Convert.ToInt32(nr2);
+                }
+
+
+
+                if (nr_rows > 0 && nr_col > 0)
+                {
+
+                    double spc_h_edge = (stick_width - ((nr_col - 1) * scale1 * spc_hor + scale1 * 0.065)) / 2;
+                    double spc_v_edge = (stick_height - ((nr_rows - 1) * scale1 * spc_ver + scale1 * 0.0455)) / 2;
+
+                    for (int m = 0; m < nr_col; ++m)
+                    {
+                        for (int n = 0; n < nr_rows; ++n)
+                        {
+
+                            Polyline poly_hor = new Polyline();
+                            poly_hor.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0, spc_v_edge + n * scale1 * spc_ver + scale1 * 0), 0, 0, 0);
+                            poly_hor.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.065, spc_v_edge + n * scale1 * spc_ver + scale1 * 0), 0, 0, 0);
+                            poly_hor.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            poly_hor.Layer = "0";
+                            poly_hor.Color = color_ts;
+                            poly_hor.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(poly_hor);
+
+
+                            Polyline polyts1 = new Polyline();
+                            polyts1.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0364009706925518, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0215254358900769), 0, 0, 0);
+                            polyts1.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0422535211267605, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0455075845974331), 0, 0, 0);
+                            polyts1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts1.Layer = "0";
+                            polyts1.Color = color_ts;
+                            polyts1.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts1);
+                            Polyline polyts2 = new Polyline();
+                            polyts2.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.052, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.013000000000001), 0, 0, 0);
+                            polyts2.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.065, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0325000000000004), 0, 0, 0);
+                            polyts2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts2.Layer = "0";
+                            polyts2.Color = color_ts;
+                            polyts2.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts2);
+                            Polyline polyts3 = new Polyline();
+                            polyts3.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.024050024050024, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0216450216450219), 0, 0, 0);
+                            polyts3.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0182004853462759, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0455022751137557), 0, 0, 0);
+                            polyts3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts3.Layer = "0";
+                            polyts3.Color = color_ts;
+                            polyts3.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts3);
+                            Polyline polyts4 = new Polyline();
+                            polyts4.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.013, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.013000000000001), 0, 0, 0);
+                            polyts4.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0325000000000004), 0, 0, 0);
+                            polyts4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+                            polyts4.Layer = "0";
+                            polyts4.Color = color_ts;
+                            polyts4.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polyts4);
+
+
+
+
+                        }
+                    }
+
+
+
+                }
+            }
+            else
+            {
+                Polyline poly2 = new Polyline();
+                poly2 = poly1.Clone() as Polyline;
+                BTrecord.AppendEntity(poly2);
+                Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+                Hatch hatch1 = CreateHatch(poly2, "SOLID", 1, 0);
+                hatch1.Layer = "0";
+                hatch1.Color = color_ts;
+                hatch1.LineWeight = LineWeight.LineWeight000;
+                bltrec1.AppendEntity(hatch1);
+                poly2.Erase();
+            }
+
+
+        }
 
         private void add_pattern_GC(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -8157,8 +8286,334 @@ namespace Alignment_mdi
         }
 
 
+        private void add_pattern_SP_legend2(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
 
 
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
+
+
+
+
+            int nr_rows = 0;
+            int nr_col = 0;
+
+            double Xmax = 0.177187500001552 * scale1;
+            double Ymax = 0.0645833333333333 * scale1;
+            double r1 = 0.0015 * scale1;
+
+
+
+            double x1 = poly1.GetPoint2dAt(3).X;
+            double y1 = poly1.GetPoint2dAt(3).Y;
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (stick_height < Ymax)
+            {
+                nr_rows = 1;
+            }
+            else
+            {
+                double nr2 = Math.Floor(stick_height / Ymax);
+                nr_rows = Convert.ToInt32(nr2);
+            }
+
+
+            if (stick_width < Xmax)
+            {
+                nr_col = 1;
+            }
+            else
+            {
+                double nr2 = Math.Floor(stick_width / Xmax);
+                nr_col = Convert.ToInt32(nr2);
+            }
+
+
+
+
+
+
+
+
+            for (int m = 0; m < nr_col; ++m)
+            {
+                for (int n = 0; n < nr_rows; ++n)
+                {
+
+                    double x2 = x1;
+                    double y2 = y1;
+
+
+
+                    Circle cerc1 = new Circle(new Point3d(0.0771875000015522 * scale1 + m * Xmax, 0.00208333333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    Hatch hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.108497459879921 * scale1 + m * Xmax, 0.0111742424157759 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.139687500001552 * scale1 + m * Xmax, 0.0395833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.177187500001552 * scale1 + m * Xmax, 0.0520833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.164687500001552 * scale1 + m * Xmax, 0.0145833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.102187500001552 * scale1 + m * Xmax, 0.0395833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.114687500001552 * scale1 + m * Xmax, 0.0645833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0857900086014221 * scale1 + m * Xmax, 0.0532196969725192 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0521875000015522 * scale1 + m * Xmax, 0.0270833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0146875000015522 * scale1 + m * Xmax, 0.0145833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0271875000015522 * scale1 + m * Xmax, 0.0395833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0396875000015522 * scale1 + m * Xmax, 0.0645833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+                    cerc1 = new Circle(new Point3d(0.0021875000015522 * scale1 + m * Xmax, 0.0520833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
+                    cerc1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
+                    BTrecord.AppendEntity(cerc1);
+                    Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                    hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                    hatch1.Layer = "0";
+                    hatch1.LineWeight = LineWeight.LineWeight000;
+                    hatch1.Color = color1;
+                    bltrec1.AppendEntity(hatch1);
+                    cerc1.Erase();
+
+
+
+
+
+                }
+            }
+
+            #region extra region for legend stick
+            Circle cercsp1 = new Circle(new Point3d(0.134004906900227, 0.436697329804301, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp1);
+            Trans1.AddNewlyCreatedDBObject(cercsp1, true);
+            Hatch hatch1sp = CreateHatch(cercsp1, "SOLID", 1, 0);
+            hatch1sp.Layer = "0";
+            hatch1sp.LineWeight = LineWeight.LineWeight000;
+            hatch1sp.Color = color1;
+            bltrec1.AppendEntity(hatch1sp);
+            cercsp1.Erase();
+            Circle cercsp2 = new Circle(new Point3d(0.175592796327546, 0.411691028103232, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp2);
+            Trans1.AddNewlyCreatedDBObject(cercsp2, true);
+            Hatch hatch2 = CreateHatch(cercsp2, "SOLID", 1, 0);
+            hatch2.Layer = "0";
+            hatch2.LineWeight = LineWeight.LineWeight000;
+            hatch2.Color = color1;
+            bltrec1.AppendEntity(hatch2);
+            cercsp2.Erase();
+            Circle cercsp3 = new Circle(new Point3d(0.160306634763256, 0.429395529851317, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp3);
+            Trans1.AddNewlyCreatedDBObject(cercsp3, true);
+            Hatch hatch3 = CreateHatch(cercsp3, "SOLID", 1, 0);
+            hatch3.Layer = "0";
+            hatch3.LineWeight = LineWeight.LineWeight000;
+            hatch3.Color = color1;
+            bltrec1.AppendEntity(hatch3);
+            cercsp3.Erase();
+            Circle cercsp4 = new Circle(new Point3d(0.149630562318489, 0.39641192689538, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp4);
+            Trans1.AddNewlyCreatedDBObject(cercsp4, true);
+            Hatch hatch4 = CreateHatch(cercsp4, "SOLID", 1, 0);
+            hatch4.Layer = "0";
+            hatch4.LineWeight = LineWeight.LineWeight000;
+            hatch4.Color = color1;
+            bltrec1.AppendEntity(hatch4);
+            cercsp4.Erase();
+            Circle cercsp5 = new Circle(new Point3d(0.131322427568957, 0.414305455461145, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp5);
+            Trans1.AddNewlyCreatedDBObject(cercsp5, true);
+            Hatch hatch5 = CreateHatch(cercsp5, "SOLID", 1, 0);
+            hatch5.Layer = "0";
+            hatch5.LineWeight = LineWeight.LineWeight000;
+            hatch5.Color = color1;
+            bltrec1.AppendEntity(hatch5);
+            cercsp5.Erase();
+            Circle cercsp6 = new Circle(new Point3d(0.100992718627676, 0.432494986280799, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp6);
+            Trans1.AddNewlyCreatedDBObject(cercsp6, true);
+            Hatch hatch6 = CreateHatch(cercsp6, "SOLID", 1, 0);
+            hatch6.Layer = "0";
+            hatch6.LineWeight = LineWeight.LineWeight000;
+            hatch6.Color = color1;
+            bltrec1.AppendEntity(hatch6);
+            cercsp6.Erase();
+            Circle cercsp7 = new Circle(new Point3d(0.0898314173426478, 0.410909996777773, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp7);
+            Trans1.AddNewlyCreatedDBObject(cercsp7, true);
+            Hatch hatch7 = CreateHatch(cercsp7, "SOLID", 1, 0);
+            hatch7.Layer = "0";
+            hatch7.LineWeight = LineWeight.LineWeight000;
+            hatch7.Color = color1;
+            bltrec1.AppendEntity(hatch7);
+            cercsp7.Erase();
+            Circle cercsp8 = new Circle(new Point3d(0.0519800390210001, 0.403634184449911, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp8);
+            Trans1.AddNewlyCreatedDBObject(cercsp8, true);
+            Hatch hatch8 = CreateHatch(cercsp8, "SOLID", 1, 0);
+            hatch8.Layer = "0";
+            hatch8.LineWeight = LineWeight.LineWeight000;
+            hatch8.Color = color1;
+            bltrec1.AppendEntity(hatch8);
+            cercsp8.Erase();
+            Circle cercsp9 = new Circle(new Point3d(0.0631413403060286, 0.429099527597427, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp9);
+            Trans1.AddNewlyCreatedDBObject(cercsp9, true);
+            Hatch hatch9 = CreateHatch(cercsp9, "SOLID", 1, 0);
+            hatch9.Layer = "0";
+            hatch9.LineWeight = LineWeight.LineWeight000;
+            hatch9.Color = color1;
+            bltrec1.AppendEntity(hatch9);
+            cercsp9.Erase();
+            Circle cercsp10 = new Circle(new Point3d(0.0235914531257002, 0.416245698407292, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp10);
+            Trans1.AddNewlyCreatedDBObject(cercsp10, true);
+            Hatch hatch10 = CreateHatch(cercsp10, "SOLID", 1, 0);
+            hatch10.Layer = "0";
+            hatch10.LineWeight = LineWeight.LineWeight000;
+            hatch10.Color = color1;
+            bltrec1.AppendEntity(hatch10);
+            cercsp10.Erase();
+            Circle cercsp11 = new Circle(new Point3d(0.00515109664760516, 0.434920256435871, 0), Vector3d.ZAxis, scale1 * 0.0015);
+            cercsp11.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            BTrecord.AppendEntity(cercsp11);
+            Trans1.AddNewlyCreatedDBObject(cercsp11, true);
+            Hatch hatch11 = CreateHatch(cercsp11, "SOLID", 1, 0);
+            hatch11.Layer = "0";
+            hatch11.LineWeight = LineWeight.LineWeight000;
+            hatch11.Color = color1;
+            bltrec1.AppendEntity(hatch11);
+            cercsp11.Erase();
+
+            #endregion
+
+
+
+        }
 
         private void add_pattern_Shale(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -9977,123 +10432,6 @@ namespace Alignment_mdi
         }
 
 
-        private void add_pattern_topsoil(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
-        {
-
-            Autodesk.AutoCAD.Colors.Color color_ts = Autodesk.AutoCAD.Colors.Color.FromRgb(153, 95, 76);
-
-            double spc_hor = scale1 * 0.0975;
-            double spc_ver = scale1 * 0.0585;
-
-            int nr_col = 0;
-            int nr_rows = 0;
-
-
-
-
-            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
-            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
-
-            if (stick_height >= scale1 * 0.0585)
-            {
-                double nr1 = Math.Floor(stick_height / spc_ver);
-                nr_rows = Convert.ToInt32(nr1);
-
-                if (stick_width < scale1 * 0.0975)
-                {
-                    nr_col = 1;
-                }
-                else
-                {
-                    double nr2 = Math.Floor(stick_width / spc_hor);
-
-                    nr_col = Convert.ToInt32(nr2);
-                }
-
-
-
-                if (nr_rows > 0 && nr_col > 0)
-                {
-
-                    double spc_h_edge = (stick_width - ((nr_col - 1) * scale1 * spc_hor + scale1 * 0.065)) / 2;
-                    double spc_v_edge = (stick_height - ((nr_rows - 1) * scale1 * spc_ver + scale1 * 0.0455)) / 2;
-
-                    for (int m = 0; m < nr_col; ++m)
-                    {
-                        for (int n = 0; n < nr_rows; ++n)
-                        {
-
-                            Polyline poly_hor = new Polyline();
-                            poly_hor.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0, spc_v_edge + n * scale1 * spc_ver + scale1 * 0), 0, 0, 0);
-                            poly_hor.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.065, spc_v_edge + n * scale1 * spc_ver + scale1 * 0), 0, 0, 0);
-                            poly_hor.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
-                            poly_hor.Layer = "0";
-                            poly_hor.Color = color_ts;
-                            poly_hor.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(poly_hor);
-
-
-                            Polyline polyts1 = new Polyline();
-                            polyts1.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0364009706925518, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0215254358900769), 0, 0, 0);
-                            polyts1.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0422535211267605, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0455075845974331), 0, 0, 0);
-                            polyts1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
-                            polyts1.Layer = "0";
-                            polyts1.Color = color_ts;
-                            polyts1.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(polyts1);
-                            Polyline polyts2 = new Polyline();
-                            polyts2.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.052, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.013000000000001), 0, 0, 0);
-                            polyts2.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.065, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0325000000000004), 0, 0, 0);
-                            polyts2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
-                            polyts2.Layer = "0";
-                            polyts2.Color = color_ts;
-                            polyts2.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(polyts2);
-                            Polyline polyts3 = new Polyline();
-                            polyts3.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.024050024050024, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0216450216450219), 0, 0, 0);
-                            polyts3.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.0182004853462759, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0455022751137557), 0, 0, 0);
-                            polyts3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
-                            polyts3.Layer = "0";
-                            polyts3.Color = color_ts;
-                            polyts3.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(polyts3);
-                            Polyline polyts4 = new Polyline();
-                            polyts4.AddVertexAt(0, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0.013, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.013000000000001), 0, 0, 0);
-                            polyts4.AddVertexAt(1, new Point2d(spc_h_edge + m * scale1 * spc_hor + scale1 * 0, spc_v_edge + n * scale1 * spc_ver + scale1 * 0.0325000000000004), 0, 0, 0);
-                            polyts4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
-                            polyts4.Layer = "0";
-                            polyts4.Color = color_ts;
-                            polyts4.LineWeight = LineWeight.LineWeight000;
-                            bltrec1.AppendEntity(polyts4);
-
-
-
-
-                        }
-                    }
-
-
-
-                }
-            }
-            else
-            {
-                Polyline poly2 = new Polyline();
-                poly2 = poly1.Clone() as Polyline;
-                BTrecord.AppendEntity(poly2);
-                Trans1.AddNewlyCreatedDBObject(poly2, true);
-
-                Hatch hatch1 = CreateHatch(poly2, "SOLID", 1, 0);
-                hatch1.Layer = "0";
-                hatch1.Color = color_ts;
-                hatch1.LineWeight = LineWeight.LineWeight000;
-                bltrec1.AppendEntity(hatch1);
-                poly2.Erase();
-            }
-
-
-        }
-
 
         private void add_pattern_sandstone(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
 
@@ -10318,7 +10656,7 @@ namespace Alignment_mdi
             double hatch_angle2 = 45;
 
             Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(63, 127, 63);
-            Autodesk.AutoCAD.Colors.Color color2 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 127,159);
+            Autodesk.AutoCAD.Colors.Color color2 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 127, 159);
 
             Polyline poly2 = new Polyline();
             poly2 = poly1.Clone() as Polyline;
@@ -10527,7 +10865,7 @@ namespace Alignment_mdi
 
 
 
-            Autodesk.AutoCAD.Colors.Color color_GP = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
+            Autodesk.AutoCAD.Colors.Color color_GPGC = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
 
 
 
@@ -10586,7 +10924,7 @@ namespace Alignment_mdi
                             Polyline polygp1 = get_poly_gp1(scale1);
                             polygp1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
                             polygp1.Layer = "0";
-                            polygp1.Color = color_GP;
+                            polygp1.Color = color_GPGC;
                             polygp1.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp1);
 
@@ -10594,7 +10932,7 @@ namespace Alignment_mdi
                             polygp2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp2.Layer = "0";
-                            polygp2.Color = color_GP;
+                            polygp2.Color = color_GPGC;
                             polygp2.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp2);
 
@@ -10602,7 +10940,7 @@ namespace Alignment_mdi
                             polygp3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp3.Layer = "0";
-                            polygp3.Color = color_GP;
+                            polygp3.Color = color_GPGC;
                             polygp3.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp3);
 
@@ -10610,7 +10948,7 @@ namespace Alignment_mdi
                             polygp4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp4.Layer = "0";
-                            polygp4.Color = color_GP;
+                            polygp4.Color = color_GPGC;
                             polygp4.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp4);
 
@@ -10618,7 +10956,7 @@ namespace Alignment_mdi
                             polygp5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp5.Layer = "0";
-                            polygp5.Color = color_GP;
+                            polygp5.Color = color_GPGC;
                             polygp5.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp5);
 
@@ -10626,7 +10964,7 @@ namespace Alignment_mdi
                             polygp6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp6.Layer = "0";
-                            polygp6.Color = color_GP;
+                            polygp6.Color = color_GPGC;
                             polygp6.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp6);
 
@@ -10634,7 +10972,7 @@ namespace Alignment_mdi
                             polygp7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp7.Layer = "0";
-                            polygp7.Color = color_GP;
+                            polygp7.Color = color_GPGC;
                             polygp7.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp7);
 
@@ -10642,7 +10980,7 @@ namespace Alignment_mdi
                             polygp8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp8.Layer = "0";
-                            polygp8.Color = color_GP;
+                            polygp8.Color = color_GPGC;
                             polygp8.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp8);
 
@@ -10650,7 +10988,7 @@ namespace Alignment_mdi
                             polygp9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp9.Layer = "0";
-                            polygp9.Color = color_GP;
+                            polygp9.Color = color_GPGC;
                             polygp9.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp9);
 
@@ -10658,7 +10996,7 @@ namespace Alignment_mdi
                             polygp10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
 
                             polygp10.Layer = "0";
-                            polygp10.Color = color_GP;
+                            polygp10.Color = color_GPGC;
                             polygp10.LineWeight = LineWeight.LineWeight000;
                             bltrec1.AppendEntity(polygp10);
 
@@ -10682,7 +11020,7 @@ namespace Alignment_mdi
             polye1.AddVertexAt(4, new Point2d(scale1 * 1.46818596195379, scale1 * 0.3), 0, 0, 0);
             polye1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             polye1.Layer = "0";
-            polye1.Color = color_GP;
+            polye1.Color = color_GPGC;
             polye1.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(polye1);
             Polyline polye2 = new Polyline();
@@ -10695,7 +11033,7 @@ namespace Alignment_mdi
             polye2.AddVertexAt(6, new Point2d(scale1 * 1.41875935585757, scale1 * 0.3), 0, 0, 0);
             polye2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             polye2.Layer = "0";
-            polye2.Color = color_GP;
+            polye2.Color = color_GPGC;
             polye2.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(polye2);
             Polyline poly3 = new Polyline();
@@ -10709,7 +11047,7 @@ namespace Alignment_mdi
             poly3.Closed = true;
             poly3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly3.Layer = "0";
-            poly3.Color = color_GP;
+            poly3.Color = color_GPGC;
             poly3.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly3);
             Polyline poly4 = new Polyline();
@@ -10724,7 +11062,7 @@ namespace Alignment_mdi
             poly4.Closed = true;
             poly4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly4.Layer = "0";
-            poly4.Color = color_GP;
+            poly4.Color = color_GPGC;
             poly4.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly4);
             Polyline poly5 = new Polyline();
@@ -10738,7 +11076,7 @@ namespace Alignment_mdi
             poly5.Closed = true;
             poly5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly5.Layer = "0";
-            poly5.Color = color_GP;
+            poly5.Color = color_GPGC;
             poly5.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly5);
             Polyline poly6 = new Polyline();
@@ -10754,7 +11092,7 @@ namespace Alignment_mdi
             poly6.Closed = true;
             poly6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly6.Layer = "0";
-            poly6.Color = color_GP;
+            poly6.Color = color_GPGC;
             poly6.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly6);
             Polyline poly7 = new Polyline();
@@ -10773,7 +11111,7 @@ namespace Alignment_mdi
             poly7.AddVertexAt(12, new Point2d(scale1 * 1.5, scale1 * 0.272880884269521), 0, 0, 0);
             poly7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly7.Layer = "0";
-            poly7.Color = color_GP;
+            poly7.Color = color_GPGC;
             poly7.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly7);
             Polyline poly8 = new Polyline();
@@ -10796,7 +11134,7 @@ namespace Alignment_mdi
             poly8.Closed = true;
             poly8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly8.Layer = "0";
-            poly8.Color = color_GP;
+            poly8.Color = color_GPGC;
             poly8.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly8);
             Polyline poly9 = new Polyline();
@@ -10811,7 +11149,7 @@ namespace Alignment_mdi
             poly9.Closed = true;
             poly9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly9.Layer = "0";
-            poly9.Color = color_GP;
+            poly9.Color = color_GPGC;
             poly9.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly9);
             Polyline poly10 = new Polyline();
@@ -10831,7 +11169,7 @@ namespace Alignment_mdi
             poly10.Closed = true;
             poly10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly10.Layer = "0";
-            poly10.Color = color_GP;
+            poly10.Color = color_GPGC;
             poly10.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly10);
             Polyline poly11 = new Polyline();
@@ -10847,7 +11185,7 @@ namespace Alignment_mdi
             poly11.Closed = true;
             poly11.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly11.Layer = "0";
-            poly11.Color = color_GP;
+            poly11.Color = color_GPGC;
             poly11.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly11);
             Polyline poly12 = new Polyline();
@@ -10869,7 +11207,7 @@ namespace Alignment_mdi
             poly12.Closed = true;
             poly12.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly12.Layer = "0";
-            poly12.Color = color_GP;
+            poly12.Color = color_GPGC;
             poly12.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly12);
             Polyline poly13 = new Polyline();
@@ -10880,7 +11218,7 @@ namespace Alignment_mdi
             poly13.AddVertexAt(4, new Point2d(scale1 * 1.36818596195379, scale1 * 0.3), 0, 0, 0);
             poly13.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly13.Layer = "0";
-            poly13.Color = color_GP;
+            poly13.Color = color_GPGC;
             poly13.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly13);
             Polyline poly14 = new Polyline();
@@ -10893,7 +11231,7 @@ namespace Alignment_mdi
             poly14.AddVertexAt(6, new Point2d(scale1 * 1.31875935585757, scale1 * 0.3), 0, 0, 0);
             poly14.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly14.Layer = "0";
-            poly14.Color = color_GP;
+            poly14.Color = color_GPGC;
             poly14.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly14);
             Polyline poly15 = new Polyline();
@@ -10907,7 +11245,7 @@ namespace Alignment_mdi
             poly15.Closed = true;
             poly15.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly15.Layer = "0";
-            poly15.Color = color_GP;
+            poly15.Color = color_GPGC;
             poly15.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly15);
             Polyline poly16 = new Polyline();
@@ -10922,7 +11260,7 @@ namespace Alignment_mdi
             poly16.Closed = true;
             poly16.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly16.Layer = "0";
-            poly16.Color = color_GP;
+            poly16.Color = color_GPGC;
             poly16.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly16);
             Polyline poly17 = new Polyline();
@@ -10936,7 +11274,7 @@ namespace Alignment_mdi
             poly17.Closed = true;
             poly17.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly17.Layer = "0";
-            poly17.Color = color_GP;
+            poly17.Color = color_GPGC;
             poly17.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly17);
             Polyline poly18 = new Polyline();
@@ -10952,7 +11290,7 @@ namespace Alignment_mdi
             poly18.Closed = true;
             poly18.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly18.Layer = "0";
-            poly18.Color = color_GP;
+            poly18.Color = color_GPGC;
             poly18.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly18);
             Polyline poly19 = new Polyline();
@@ -10975,7 +11313,7 @@ namespace Alignment_mdi
             poly19.Closed = true;
             poly19.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly19.Layer = "0";
-            poly19.Color = color_GP;
+            poly19.Color = color_GPGC;
             poly19.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly19);
             Polyline poly20 = new Polyline();
@@ -10998,7 +11336,7 @@ namespace Alignment_mdi
             poly20.Closed = true;
             poly20.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly20.Layer = "0";
-            poly20.Color = color_GP;
+            poly20.Color = color_GPGC;
             poly20.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly20);
             Polyline poly21 = new Polyline();
@@ -11013,7 +11351,7 @@ namespace Alignment_mdi
             poly21.Closed = true;
             poly21.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly21.Layer = "0";
-            poly21.Color = color_GP;
+            poly21.Color = color_GPGC;
             poly21.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly21);
             Polyline poly22 = new Polyline();
@@ -11033,7 +11371,7 @@ namespace Alignment_mdi
             poly22.Closed = true;
             poly22.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly22.Layer = "0";
-            poly22.Color = color_GP;
+            poly22.Color = color_GPGC;
             poly22.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly22);
             Polyline poly23 = new Polyline();
@@ -11049,7 +11387,7 @@ namespace Alignment_mdi
             poly23.Closed = true;
             poly23.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly23.Layer = "0";
-            poly23.Color = color_GP;
+            poly23.Color = color_GPGC;
             poly23.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly23);
             Polyline poly24 = new Polyline();
@@ -11071,7 +11409,7 @@ namespace Alignment_mdi
             poly24.Closed = true;
             poly24.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly24.Layer = "0";
-            poly24.Color = color_GP;
+            poly24.Color = color_GPGC;
             poly24.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly24);
             Polyline poly25 = new Polyline();
@@ -11082,7 +11420,7 @@ namespace Alignment_mdi
             poly25.AddVertexAt(4, new Point2d(scale1 * 1.26818596195379, scale1 * 0.3), 0, 0, 0);
             poly25.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly25.Layer = "0";
-            poly25.Color = color_GP;
+            poly25.Color = color_GPGC;
             poly25.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly25);
             Polyline poly26 = new Polyline();
@@ -11095,7 +11433,7 @@ namespace Alignment_mdi
             poly26.AddVertexAt(6, new Point2d(scale1 * 1.21875935585757, scale1 * 0.3), 0, 0, 0);
             poly26.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly26.Layer = "0";
-            poly26.Color = color_GP;
+            poly26.Color = color_GPGC;
             poly26.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly26);
             Polyline poly27 = new Polyline();
@@ -11109,7 +11447,7 @@ namespace Alignment_mdi
             poly27.Closed = true;
             poly27.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly27.Layer = "0";
-            poly27.Color = color_GP;
+            poly27.Color = color_GPGC;
             poly27.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly27);
             Polyline poly28 = new Polyline();
@@ -11124,7 +11462,7 @@ namespace Alignment_mdi
             poly28.Closed = true;
             poly28.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly28.Layer = "0";
-            poly28.Color = color_GP;
+            poly28.Color = color_GPGC;
             poly28.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly28);
             Polyline poly29 = new Polyline();
@@ -11138,7 +11476,7 @@ namespace Alignment_mdi
             poly29.Closed = true;
             poly29.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly29.Layer = "0";
-            poly29.Color = color_GP;
+            poly29.Color = color_GPGC;
             poly29.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly29);
             Polyline poly30 = new Polyline();
@@ -11154,7 +11492,7 @@ namespace Alignment_mdi
             poly30.Closed = true;
             poly30.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly30.Layer = "0";
-            poly30.Color = color_GP;
+            poly30.Color = color_GPGC;
             poly30.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly30);
             Polyline poly31 = new Polyline();
@@ -11177,7 +11515,7 @@ namespace Alignment_mdi
             poly31.Closed = true;
             poly31.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly31.Layer = "0";
-            poly31.Color = color_GP;
+            poly31.Color = color_GPGC;
             poly31.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly31);
             Polyline poly32 = new Polyline();
@@ -11200,7 +11538,7 @@ namespace Alignment_mdi
             poly32.Closed = true;
             poly32.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly32.Layer = "0";
-            poly32.Color = color_GP;
+            poly32.Color = color_GPGC;
             poly32.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly32);
             Polyline poly33 = new Polyline();
@@ -11215,7 +11553,7 @@ namespace Alignment_mdi
             poly33.Closed = true;
             poly33.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly33.Layer = "0";
-            poly33.Color = color_GP;
+            poly33.Color = color_GPGC;
             poly33.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly33);
             Polyline poly34 = new Polyline();
@@ -11235,7 +11573,7 @@ namespace Alignment_mdi
             poly34.Closed = true;
             poly34.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly34.Layer = "0";
-            poly34.Color = color_GP;
+            poly34.Color = color_GPGC;
             poly34.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly34);
             Polyline poly35 = new Polyline();
@@ -11251,7 +11589,7 @@ namespace Alignment_mdi
             poly35.Closed = true;
             poly35.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly35.Layer = "0";
-            poly35.Color = color_GP;
+            poly35.Color = color_GPGC;
             poly35.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly35);
             Polyline poly36 = new Polyline();
@@ -11273,7 +11611,7 @@ namespace Alignment_mdi
             poly36.Closed = true;
             poly36.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly36.Layer = "0";
-            poly36.Color = color_GP;
+            poly36.Color = color_GPGC;
             poly36.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly36);
             Polyline poly37 = new Polyline();
@@ -11284,7 +11622,7 @@ namespace Alignment_mdi
             poly37.AddVertexAt(4, new Point2d(scale1 * 1.16818596195379, scale1 * 0.3), 0, 0, 0);
             poly37.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly37.Layer = "0";
-            poly37.Color = color_GP;
+            poly37.Color = color_GPGC;
             poly37.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly37);
             Polyline poly38 = new Polyline();
@@ -11297,7 +11635,7 @@ namespace Alignment_mdi
             poly38.AddVertexAt(6, new Point2d(scale1 * 1.11875935585757, scale1 * 0.3), 0, 0, 0);
             poly38.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly38.Layer = "0";
-            poly38.Color = color_GP;
+            poly38.Color = color_GPGC;
             poly38.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly38);
             Polyline poly39 = new Polyline();
@@ -11311,7 +11649,7 @@ namespace Alignment_mdi
             poly39.Closed = true;
             poly39.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly39.Layer = "0";
-            poly39.Color = color_GP;
+            poly39.Color = color_GPGC;
             poly39.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly39);
             Polyline poly40 = new Polyline();
@@ -11326,7 +11664,7 @@ namespace Alignment_mdi
             poly40.Closed = true;
             poly40.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly40.Layer = "0";
-            poly40.Color = color_GP;
+            poly40.Color = color_GPGC;
             poly40.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly40);
             Polyline poly41 = new Polyline();
@@ -11340,7 +11678,7 @@ namespace Alignment_mdi
             poly41.Closed = true;
             poly41.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly41.Layer = "0";
-            poly41.Color = color_GP;
+            poly41.Color = color_GPGC;
             poly41.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly41);
             Polyline poly42 = new Polyline();
@@ -11356,7 +11694,7 @@ namespace Alignment_mdi
             poly42.Closed = true;
             poly42.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly42.Layer = "0";
-            poly42.Color = color_GP;
+            poly42.Color = color_GPGC;
             poly42.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly42);
             Polyline poly43 = new Polyline();
@@ -11379,7 +11717,7 @@ namespace Alignment_mdi
             poly43.Closed = true;
             poly43.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly43.Layer = "0";
-            poly43.Color = color_GP;
+            poly43.Color = color_GPGC;
             poly43.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly43);
             Polyline poly44 = new Polyline();
@@ -11402,7 +11740,7 @@ namespace Alignment_mdi
             poly44.Closed = true;
             poly44.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly44.Layer = "0";
-            poly44.Color = color_GP;
+            poly44.Color = color_GPGC;
             poly44.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly44);
             Polyline poly45 = new Polyline();
@@ -11417,7 +11755,7 @@ namespace Alignment_mdi
             poly45.Closed = true;
             poly45.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly45.Layer = "0";
-            poly45.Color = color_GP;
+            poly45.Color = color_GPGC;
             poly45.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly45);
             Polyline poly46 = new Polyline();
@@ -11437,7 +11775,7 @@ namespace Alignment_mdi
             poly46.Closed = true;
             poly46.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly46.Layer = "0";
-            poly46.Color = color_GP;
+            poly46.Color = color_GPGC;
             poly46.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly46);
             Polyline poly47 = new Polyline();
@@ -11453,7 +11791,7 @@ namespace Alignment_mdi
             poly47.Closed = true;
             poly47.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly47.Layer = "0";
-            poly47.Color = color_GP;
+            poly47.Color = color_GPGC;
             poly47.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly47);
             Polyline poly48 = new Polyline();
@@ -11475,7 +11813,7 @@ namespace Alignment_mdi
             poly48.Closed = true;
             poly48.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly48.Layer = "0";
-            poly48.Color = color_GP;
+            poly48.Color = color_GPGC;
             poly48.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly48);
             Polyline poly49 = new Polyline();
@@ -11486,7 +11824,7 @@ namespace Alignment_mdi
             poly49.AddVertexAt(4, new Point2d(scale1 * 1.06818596195379, scale1 * 0.3), 0, 0, 0);
             poly49.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly49.Layer = "0";
-            poly49.Color = color_GP;
+            poly49.Color = color_GPGC;
             poly49.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly49);
             Polyline poly50 = new Polyline();
@@ -11499,7 +11837,7 @@ namespace Alignment_mdi
             poly50.AddVertexAt(6, new Point2d(scale1 * 1.01875935585757, scale1 * 0.3), 0, 0, 0);
             poly50.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly50.Layer = "0";
-            poly50.Color = color_GP;
+            poly50.Color = color_GPGC;
             poly50.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly50);
             Polyline poly51 = new Polyline();
@@ -11513,7 +11851,7 @@ namespace Alignment_mdi
             poly51.Closed = true;
             poly51.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly51.Layer = "0";
-            poly51.Color = color_GP;
+            poly51.Color = color_GPGC;
             poly51.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly51);
             Polyline poly52 = new Polyline();
@@ -11528,7 +11866,7 @@ namespace Alignment_mdi
             poly52.Closed = true;
             poly52.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly52.Layer = "0";
-            poly52.Color = color_GP;
+            poly52.Color = color_GPGC;
             poly52.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly52);
             Polyline poly53 = new Polyline();
@@ -11542,7 +11880,7 @@ namespace Alignment_mdi
             poly53.Closed = true;
             poly53.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly53.Layer = "0";
-            poly53.Color = color_GP;
+            poly53.Color = color_GPGC;
             poly53.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly53);
             Polyline poly54 = new Polyline();
@@ -11558,7 +11896,7 @@ namespace Alignment_mdi
             poly54.Closed = true;
             poly54.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly54.Layer = "0";
-            poly54.Color = color_GP;
+            poly54.Color = color_GPGC;
             poly54.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly54);
             Polyline poly55 = new Polyline();
@@ -11581,7 +11919,7 @@ namespace Alignment_mdi
             poly55.Closed = true;
             poly55.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly55.Layer = "0";
-            poly55.Color = color_GP;
+            poly55.Color = color_GPGC;
             poly55.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly55);
             Polyline poly56 = new Polyline();
@@ -11604,7 +11942,7 @@ namespace Alignment_mdi
             poly56.Closed = true;
             poly56.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly56.Layer = "0";
-            poly56.Color = color_GP;
+            poly56.Color = color_GPGC;
             poly56.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly56);
             Polyline poly57 = new Polyline();
@@ -11619,7 +11957,7 @@ namespace Alignment_mdi
             poly57.Closed = true;
             poly57.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly57.Layer = "0";
-            poly57.Color = color_GP;
+            poly57.Color = color_GPGC;
             poly57.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly57);
             Polyline poly58 = new Polyline();
@@ -11639,7 +11977,7 @@ namespace Alignment_mdi
             poly58.Closed = true;
             poly58.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly58.Layer = "0";
-            poly58.Color = color_GP;
+            poly58.Color = color_GPGC;
             poly58.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly58);
             Polyline poly59 = new Polyline();
@@ -11655,7 +11993,7 @@ namespace Alignment_mdi
             poly59.Closed = true;
             poly59.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly59.Layer = "0";
-            poly59.Color = color_GP;
+            poly59.Color = color_GPGC;
             poly59.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly59);
             Polyline poly60 = new Polyline();
@@ -11677,7 +12015,7 @@ namespace Alignment_mdi
             poly60.Closed = true;
             poly60.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly60.Layer = "0";
-            poly60.Color = color_GP;
+            poly60.Color = color_GPGC;
             poly60.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly60);
             Polyline poly61 = new Polyline();
@@ -11688,7 +12026,7 @@ namespace Alignment_mdi
             poly61.AddVertexAt(4, new Point2d(scale1 * 0.968185961953785, scale1 * 0.3), 0, 0, 0);
             poly61.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly61.Layer = "0";
-            poly61.Color = color_GP;
+            poly61.Color = color_GPGC;
             poly61.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly61);
             Polyline poly62 = new Polyline();
@@ -11701,7 +12039,7 @@ namespace Alignment_mdi
             poly62.AddVertexAt(6, new Point2d(scale1 * 0.918759355857569, scale1 * 0.3), 0, 0, 0);
             poly62.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly62.Layer = "0";
-            poly62.Color = color_GP;
+            poly62.Color = color_GPGC;
             poly62.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly62);
             Polyline poly63 = new Polyline();
@@ -11715,7 +12053,7 @@ namespace Alignment_mdi
             poly63.Closed = true;
             poly63.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly63.Layer = "0";
-            poly63.Color = color_GP;
+            poly63.Color = color_GPGC;
             poly63.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly63);
             Polyline poly64 = new Polyline();
@@ -11730,7 +12068,7 @@ namespace Alignment_mdi
             poly64.Closed = true;
             poly64.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly64.Layer = "0";
-            poly64.Color = color_GP;
+            poly64.Color = color_GPGC;
             poly64.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly64);
             Polyline poly65 = new Polyline();
@@ -11744,7 +12082,7 @@ namespace Alignment_mdi
             poly65.Closed = true;
             poly65.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly65.Layer = "0";
-            poly65.Color = color_GP;
+            poly65.Color = color_GPGC;
             poly65.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly65);
             Polyline poly66 = new Polyline();
@@ -11760,7 +12098,7 @@ namespace Alignment_mdi
             poly66.Closed = true;
             poly66.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly66.Layer = "0";
-            poly66.Color = color_GP;
+            poly66.Color = color_GPGC;
             poly66.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly66);
             Polyline poly67 = new Polyline();
@@ -11783,7 +12121,7 @@ namespace Alignment_mdi
             poly67.Closed = true;
             poly67.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly67.Layer = "0";
-            poly67.Color = color_GP;
+            poly67.Color = color_GPGC;
             poly67.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly67);
             Polyline poly68 = new Polyline();
@@ -11806,7 +12144,7 @@ namespace Alignment_mdi
             poly68.Closed = true;
             poly68.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly68.Layer = "0";
-            poly68.Color = color_GP;
+            poly68.Color = color_GPGC;
             poly68.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly68);
             Polyline poly69 = new Polyline();
@@ -11821,7 +12159,7 @@ namespace Alignment_mdi
             poly69.Closed = true;
             poly69.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly69.Layer = "0";
-            poly69.Color = color_GP;
+            poly69.Color = color_GPGC;
             poly69.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly69);
             Polyline poly70 = new Polyline();
@@ -11841,7 +12179,7 @@ namespace Alignment_mdi
             poly70.Closed = true;
             poly70.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly70.Layer = "0";
-            poly70.Color = color_GP;
+            poly70.Color = color_GPGC;
             poly70.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly70);
             Polyline poly71 = new Polyline();
@@ -11857,7 +12195,7 @@ namespace Alignment_mdi
             poly71.Closed = true;
             poly71.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly71.Layer = "0";
-            poly71.Color = color_GP;
+            poly71.Color = color_GPGC;
             poly71.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly71);
             Polyline poly72 = new Polyline();
@@ -11879,7 +12217,7 @@ namespace Alignment_mdi
             poly72.Closed = true;
             poly72.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly72.Layer = "0";
-            poly72.Color = color_GP;
+            poly72.Color = color_GPGC;
             poly72.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly72);
             Polyline poly73 = new Polyline();
@@ -11890,7 +12228,7 @@ namespace Alignment_mdi
             poly73.AddVertexAt(4, new Point2d(scale1 * 0.868185961953785, scale1 * 0.3), 0, 0, 0);
             poly73.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly73.Layer = "0";
-            poly73.Color = color_GP;
+            poly73.Color = color_GPGC;
             poly73.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly73);
             Polyline poly74 = new Polyline();
@@ -11903,7 +12241,7 @@ namespace Alignment_mdi
             poly74.AddVertexAt(6, new Point2d(scale1 * 0.818759355857569, scale1 * 0.3), 0, 0, 0);
             poly74.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly74.Layer = "0";
-            poly74.Color = color_GP;
+            poly74.Color = color_GPGC;
             poly74.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly74);
             Polyline poly75 = new Polyline();
@@ -11917,7 +12255,7 @@ namespace Alignment_mdi
             poly75.Closed = true;
             poly75.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly75.Layer = "0";
-            poly75.Color = color_GP;
+            poly75.Color = color_GPGC;
             poly75.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly75);
             Polyline poly76 = new Polyline();
@@ -11932,7 +12270,7 @@ namespace Alignment_mdi
             poly76.Closed = true;
             poly76.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly76.Layer = "0";
-            poly76.Color = color_GP;
+            poly76.Color = color_GPGC;
             poly76.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly76);
             Polyline poly77 = new Polyline();
@@ -11946,7 +12284,7 @@ namespace Alignment_mdi
             poly77.Closed = true;
             poly77.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly77.Layer = "0";
-            poly77.Color = color_GP;
+            poly77.Color = color_GPGC;
             poly77.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly77);
             Polyline poly78 = new Polyline();
@@ -11962,7 +12300,7 @@ namespace Alignment_mdi
             poly78.Closed = true;
             poly78.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly78.Layer = "0";
-            poly78.Color = color_GP;
+            poly78.Color = color_GPGC;
             poly78.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly78);
             Polyline poly79 = new Polyline();
@@ -11985,7 +12323,7 @@ namespace Alignment_mdi
             poly79.Closed = true;
             poly79.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly79.Layer = "0";
-            poly79.Color = color_GP;
+            poly79.Color = color_GPGC;
             poly79.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly79);
             Polyline poly80 = new Polyline();
@@ -12008,7 +12346,7 @@ namespace Alignment_mdi
             poly80.Closed = true;
             poly80.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly80.Layer = "0";
-            poly80.Color = color_GP;
+            poly80.Color = color_GPGC;
             poly80.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly80);
             Polyline poly81 = new Polyline();
@@ -12023,7 +12361,7 @@ namespace Alignment_mdi
             poly81.Closed = true;
             poly81.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly81.Layer = "0";
-            poly81.Color = color_GP;
+            poly81.Color = color_GPGC;
             poly81.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly81);
             Polyline poly82 = new Polyline();
@@ -12043,7 +12381,7 @@ namespace Alignment_mdi
             poly82.Closed = true;
             poly82.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly82.Layer = "0";
-            poly82.Color = color_GP;
+            poly82.Color = color_GPGC;
             poly82.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly82);
             Polyline poly83 = new Polyline();
@@ -12059,7 +12397,7 @@ namespace Alignment_mdi
             poly83.Closed = true;
             poly83.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly83.Layer = "0";
-            poly83.Color = color_GP;
+            poly83.Color = color_GPGC;
             poly83.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly83);
             Polyline poly84 = new Polyline();
@@ -12081,7 +12419,7 @@ namespace Alignment_mdi
             poly84.Closed = true;
             poly84.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly84.Layer = "0";
-            poly84.Color = color_GP;
+            poly84.Color = color_GPGC;
             poly84.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly84);
             Polyline poly85 = new Polyline();
@@ -12092,7 +12430,7 @@ namespace Alignment_mdi
             poly85.AddVertexAt(4, new Point2d(scale1 * 0.768185961953785, scale1 * 0.3), 0, 0, 0);
             poly85.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly85.Layer = "0";
-            poly85.Color = color_GP;
+            poly85.Color = color_GPGC;
             poly85.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly85);
             Polyline poly86 = new Polyline();
@@ -12105,7 +12443,7 @@ namespace Alignment_mdi
             poly86.AddVertexAt(6, new Point2d(scale1 * 0.718759355857569, scale1 * 0.3), 0, 0, 0);
             poly86.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly86.Layer = "0";
-            poly86.Color = color_GP;
+            poly86.Color = color_GPGC;
             poly86.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly86);
             Polyline poly87 = new Polyline();
@@ -12119,7 +12457,7 @@ namespace Alignment_mdi
             poly87.Closed = true;
             poly87.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly87.Layer = "0";
-            poly87.Color = color_GP;
+            poly87.Color = color_GPGC;
             poly87.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly87);
             Polyline poly88 = new Polyline();
@@ -12134,7 +12472,7 @@ namespace Alignment_mdi
             poly88.Closed = true;
             poly88.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly88.Layer = "0";
-            poly88.Color = color_GP;
+            poly88.Color = color_GPGC;
             poly88.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly88);
             Polyline poly89 = new Polyline();
@@ -12148,7 +12486,7 @@ namespace Alignment_mdi
             poly89.Closed = true;
             poly89.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly89.Layer = "0";
-            poly89.Color = color_GP;
+            poly89.Color = color_GPGC;
             poly89.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly89);
             Polyline poly90 = new Polyline();
@@ -12164,7 +12502,7 @@ namespace Alignment_mdi
             poly90.Closed = true;
             poly90.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly90.Layer = "0";
-            poly90.Color = color_GP;
+            poly90.Color = color_GPGC;
             poly90.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly90);
             Polyline poly91 = new Polyline();
@@ -12187,7 +12525,7 @@ namespace Alignment_mdi
             poly91.Closed = true;
             poly91.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly91.Layer = "0";
-            poly91.Color = color_GP;
+            poly91.Color = color_GPGC;
             poly91.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly91);
             Polyline poly92 = new Polyline();
@@ -12210,7 +12548,7 @@ namespace Alignment_mdi
             poly92.Closed = true;
             poly92.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly92.Layer = "0";
-            poly92.Color = color_GP;
+            poly92.Color = color_GPGC;
             poly92.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly92);
             Polyline poly93 = new Polyline();
@@ -12225,7 +12563,7 @@ namespace Alignment_mdi
             poly93.Closed = true;
             poly93.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly93.Layer = "0";
-            poly93.Color = color_GP;
+            poly93.Color = color_GPGC;
             poly93.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly93);
             Polyline poly94 = new Polyline();
@@ -12245,7 +12583,7 @@ namespace Alignment_mdi
             poly94.Closed = true;
             poly94.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly94.Layer = "0";
-            poly94.Color = color_GP;
+            poly94.Color = color_GPGC;
             poly94.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly94);
             Polyline poly95 = new Polyline();
@@ -12261,7 +12599,7 @@ namespace Alignment_mdi
             poly95.Closed = true;
             poly95.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly95.Layer = "0";
-            poly95.Color = color_GP;
+            poly95.Color = color_GPGC;
             poly95.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly95);
             Polyline poly96 = new Polyline();
@@ -12283,7 +12621,7 @@ namespace Alignment_mdi
             poly96.Closed = true;
             poly96.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly96.Layer = "0";
-            poly96.Color = color_GP;
+            poly96.Color = color_GPGC;
             poly96.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly96);
             Polyline poly97 = new Polyline();
@@ -12294,7 +12632,7 @@ namespace Alignment_mdi
             poly97.AddVertexAt(4, new Point2d(scale1 * 0.668185961953786, scale1 * 0.3), 0, 0, 0);
             poly97.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly97.Layer = "0";
-            poly97.Color = color_GP;
+            poly97.Color = color_GPGC;
             poly97.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly97);
             Polyline poly98 = new Polyline();
@@ -12307,7 +12645,7 @@ namespace Alignment_mdi
             poly98.AddVertexAt(6, new Point2d(scale1 * 0.618759355857569, scale1 * 0.3), 0, 0, 0);
             poly98.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly98.Layer = "0";
-            poly98.Color = color_GP;
+            poly98.Color = color_GPGC;
             poly98.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly98);
             Polyline poly99 = new Polyline();
@@ -12321,7 +12659,7 @@ namespace Alignment_mdi
             poly99.Closed = true;
             poly99.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly99.Layer = "0";
-            poly99.Color = color_GP;
+            poly99.Color = color_GPGC;
             poly99.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly99);
             Polyline poly100 = new Polyline();
@@ -12336,7 +12674,7 @@ namespace Alignment_mdi
             poly100.Closed = true;
             poly100.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly100.Layer = "0";
-            poly100.Color = color_GP;
+            poly100.Color = color_GPGC;
             poly100.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly100);
             Polyline poly101 = new Polyline();
@@ -12350,7 +12688,7 @@ namespace Alignment_mdi
             poly101.Closed = true;
             poly101.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly101.Layer = "0";
-            poly101.Color = color_GP;
+            poly101.Color = color_GPGC;
             poly101.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly101);
             Polyline poly102 = new Polyline();
@@ -12366,7 +12704,7 @@ namespace Alignment_mdi
             poly102.Closed = true;
             poly102.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly102.Layer = "0";
-            poly102.Color = color_GP;
+            poly102.Color = color_GPGC;
             poly102.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly102);
             Polyline poly103 = new Polyline();
@@ -12389,7 +12727,7 @@ namespace Alignment_mdi
             poly103.Closed = true;
             poly103.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly103.Layer = "0";
-            poly103.Color = color_GP;
+            poly103.Color = color_GPGC;
             poly103.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly103);
             Polyline poly104 = new Polyline();
@@ -12412,7 +12750,7 @@ namespace Alignment_mdi
             poly104.Closed = true;
             poly104.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly104.Layer = "0";
-            poly104.Color = color_GP;
+            poly104.Color = color_GPGC;
             poly104.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly104);
             Polyline poly105 = new Polyline();
@@ -12427,7 +12765,7 @@ namespace Alignment_mdi
             poly105.Closed = true;
             poly105.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly105.Layer = "0";
-            poly105.Color = color_GP;
+            poly105.Color = color_GPGC;
             poly105.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly105);
             Polyline poly106 = new Polyline();
@@ -12447,7 +12785,7 @@ namespace Alignment_mdi
             poly106.Closed = true;
             poly106.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly106.Layer = "0";
-            poly106.Color = color_GP;
+            poly106.Color = color_GPGC;
             poly106.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly106);
             Polyline poly107 = new Polyline();
@@ -12463,7 +12801,7 @@ namespace Alignment_mdi
             poly107.Closed = true;
             poly107.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly107.Layer = "0";
-            poly107.Color = color_GP;
+            poly107.Color = color_GPGC;
             poly107.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly107);
             Polyline poly108 = new Polyline();
@@ -12485,7 +12823,7 @@ namespace Alignment_mdi
             poly108.Closed = true;
             poly108.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly108.Layer = "0";
-            poly108.Color = color_GP;
+            poly108.Color = color_GPGC;
             poly108.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly108);
             Polyline poly109 = new Polyline();
@@ -12496,7 +12834,7 @@ namespace Alignment_mdi
             poly109.AddVertexAt(4, new Point2d(scale1 * 0.568185961953785, scale1 * 0.3), 0, 0, 0);
             poly109.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly109.Layer = "0";
-            poly109.Color = color_GP;
+            poly109.Color = color_GPGC;
             poly109.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly109);
             Polyline poly110 = new Polyline();
@@ -12509,7 +12847,7 @@ namespace Alignment_mdi
             poly110.AddVertexAt(6, new Point2d(scale1 * 0.518759355857569, scale1 * 0.3), 0, 0, 0);
             poly110.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly110.Layer = "0";
-            poly110.Color = color_GP;
+            poly110.Color = color_GPGC;
             poly110.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly110);
             Polyline poly111 = new Polyline();
@@ -12523,7 +12861,7 @@ namespace Alignment_mdi
             poly111.Closed = true;
             poly111.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly111.Layer = "0";
-            poly111.Color = color_GP;
+            poly111.Color = color_GPGC;
             poly111.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly111);
             Polyline poly112 = new Polyline();
@@ -12538,7 +12876,7 @@ namespace Alignment_mdi
             poly112.Closed = true;
             poly112.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly112.Layer = "0";
-            poly112.Color = color_GP;
+            poly112.Color = color_GPGC;
             poly112.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly112);
             Polyline poly113 = new Polyline();
@@ -12552,7 +12890,7 @@ namespace Alignment_mdi
             poly113.Closed = true;
             poly113.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly113.Layer = "0";
-            poly113.Color = color_GP;
+            poly113.Color = color_GPGC;
             poly113.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly113);
             Polyline poly114 = new Polyline();
@@ -12568,7 +12906,7 @@ namespace Alignment_mdi
             poly114.Closed = true;
             poly114.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly114.Layer = "0";
-            poly114.Color = color_GP;
+            poly114.Color = color_GPGC;
             poly114.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly114);
             Polyline poly115 = new Polyline();
@@ -12591,7 +12929,7 @@ namespace Alignment_mdi
             poly115.Closed = true;
             poly115.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly115.Layer = "0";
-            poly115.Color = color_GP;
+            poly115.Color = color_GPGC;
             poly115.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly115);
             Polyline poly116 = new Polyline();
@@ -12614,7 +12952,7 @@ namespace Alignment_mdi
             poly116.Closed = true;
             poly116.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly116.Layer = "0";
-            poly116.Color = color_GP;
+            poly116.Color = color_GPGC;
             poly116.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly116);
             Polyline poly117 = new Polyline();
@@ -12629,7 +12967,7 @@ namespace Alignment_mdi
             poly117.Closed = true;
             poly117.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly117.Layer = "0";
-            poly117.Color = color_GP;
+            poly117.Color = color_GPGC;
             poly117.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly117);
             Polyline poly118 = new Polyline();
@@ -12649,7 +12987,7 @@ namespace Alignment_mdi
             poly118.Closed = true;
             poly118.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly118.Layer = "0";
-            poly118.Color = color_GP;
+            poly118.Color = color_GPGC;
             poly118.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly118);
             Polyline poly119 = new Polyline();
@@ -12665,7 +13003,7 @@ namespace Alignment_mdi
             poly119.Closed = true;
             poly119.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly119.Layer = "0";
-            poly119.Color = color_GP;
+            poly119.Color = color_GPGC;
             poly119.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly119);
             Polyline poly120 = new Polyline();
@@ -12687,7 +13025,7 @@ namespace Alignment_mdi
             poly120.Closed = true;
             poly120.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly120.Layer = "0";
-            poly120.Color = color_GP;
+            poly120.Color = color_GPGC;
             poly120.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly120);
             Polyline poly121 = new Polyline();
@@ -12698,7 +13036,7 @@ namespace Alignment_mdi
             poly121.AddVertexAt(4, new Point2d(scale1 * 0.468185961953785, scale1 * 0.3), 0, 0, 0);
             poly121.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly121.Layer = "0";
-            poly121.Color = color_GP;
+            poly121.Color = color_GPGC;
             poly121.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly121);
             Polyline poly122 = new Polyline();
@@ -12711,7 +13049,7 @@ namespace Alignment_mdi
             poly122.AddVertexAt(6, new Point2d(scale1 * 0.418759355857569, scale1 * 0.3), 0, 0, 0);
             poly122.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly122.Layer = "0";
-            poly122.Color = color_GP;
+            poly122.Color = color_GPGC;
             poly122.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly122);
             Polyline poly123 = new Polyline();
@@ -12725,7 +13063,7 @@ namespace Alignment_mdi
             poly123.Closed = true;
             poly123.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly123.Layer = "0";
-            poly123.Color = color_GP;
+            poly123.Color = color_GPGC;
             poly123.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly123);
             Polyline poly124 = new Polyline();
@@ -12740,7 +13078,7 @@ namespace Alignment_mdi
             poly124.Closed = true;
             poly124.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly124.Layer = "0";
-            poly124.Color = color_GP;
+            poly124.Color = color_GPGC;
             poly124.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly124);
             Polyline poly125 = new Polyline();
@@ -12754,7 +13092,7 @@ namespace Alignment_mdi
             poly125.Closed = true;
             poly125.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly125.Layer = "0";
-            poly125.Color = color_GP;
+            poly125.Color = color_GPGC;
             poly125.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly125);
             Polyline poly126 = new Polyline();
@@ -12770,7 +13108,7 @@ namespace Alignment_mdi
             poly126.Closed = true;
             poly126.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly126.Layer = "0";
-            poly126.Color = color_GP;
+            poly126.Color = color_GPGC;
             poly126.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly126);
             Polyline poly127 = new Polyline();
@@ -12793,7 +13131,7 @@ namespace Alignment_mdi
             poly127.Closed = true;
             poly127.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly127.Layer = "0";
-            poly127.Color = color_GP;
+            poly127.Color = color_GPGC;
             poly127.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly127);
             Polyline poly128 = new Polyline();
@@ -12816,7 +13154,7 @@ namespace Alignment_mdi
             poly128.Closed = true;
             poly128.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly128.Layer = "0";
-            poly128.Color = color_GP;
+            poly128.Color = color_GPGC;
             poly128.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly128);
             Polyline poly129 = new Polyline();
@@ -12831,7 +13169,7 @@ namespace Alignment_mdi
             poly129.Closed = true;
             poly129.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly129.Layer = "0";
-            poly129.Color = color_GP;
+            poly129.Color = color_GPGC;
             poly129.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly129);
             Polyline poly130 = new Polyline();
@@ -12851,7 +13189,7 @@ namespace Alignment_mdi
             poly130.Closed = true;
             poly130.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly130.Layer = "0";
-            poly130.Color = color_GP;
+            poly130.Color = color_GPGC;
             poly130.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly130);
             Polyline poly131 = new Polyline();
@@ -12867,7 +13205,7 @@ namespace Alignment_mdi
             poly131.Closed = true;
             poly131.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly131.Layer = "0";
-            poly131.Color = color_GP;
+            poly131.Color = color_GPGC;
             poly131.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly131);
             Polyline poly132 = new Polyline();
@@ -12889,7 +13227,7 @@ namespace Alignment_mdi
             poly132.Closed = true;
             poly132.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly132.Layer = "0";
-            poly132.Color = color_GP;
+            poly132.Color = color_GPGC;
             poly132.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly132);
             Polyline poly133 = new Polyline();
@@ -12900,7 +13238,7 @@ namespace Alignment_mdi
             poly133.AddVertexAt(4, new Point2d(scale1 * 0.368185961953785, scale1 * 0.3), 0, 0, 0);
             poly133.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly133.Layer = "0";
-            poly133.Color = color_GP;
+            poly133.Color = color_GPGC;
             poly133.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly133);
             Polyline poly134 = new Polyline();
@@ -12913,7 +13251,7 @@ namespace Alignment_mdi
             poly134.AddVertexAt(6, new Point2d(scale1 * 0.318759355857569, scale1 * 0.3), 0, 0, 0);
             poly134.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly134.Layer = "0";
-            poly134.Color = color_GP;
+            poly134.Color = color_GPGC;
             poly134.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly134);
             Polyline poly135 = new Polyline();
@@ -12927,7 +13265,7 @@ namespace Alignment_mdi
             poly135.Closed = true;
             poly135.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly135.Layer = "0";
-            poly135.Color = color_GP;
+            poly135.Color = color_GPGC;
             poly135.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly135);
             Polyline poly136 = new Polyline();
@@ -12942,7 +13280,7 @@ namespace Alignment_mdi
             poly136.Closed = true;
             poly136.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly136.Layer = "0";
-            poly136.Color = color_GP;
+            poly136.Color = color_GPGC;
             poly136.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly136);
             Polyline poly137 = new Polyline();
@@ -12956,7 +13294,7 @@ namespace Alignment_mdi
             poly137.Closed = true;
             poly137.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly137.Layer = "0";
-            poly137.Color = color_GP;
+            poly137.Color = color_GPGC;
             poly137.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly137);
             Polyline poly138 = new Polyline();
@@ -12972,7 +13310,7 @@ namespace Alignment_mdi
             poly138.Closed = true;
             poly138.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly138.Layer = "0";
-            poly138.Color = color_GP;
+            poly138.Color = color_GPGC;
             poly138.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly138);
             Polyline poly139 = new Polyline();
@@ -12995,7 +13333,7 @@ namespace Alignment_mdi
             poly139.Closed = true;
             poly139.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly139.Layer = "0";
-            poly139.Color = color_GP;
+            poly139.Color = color_GPGC;
             poly139.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly139);
             Polyline poly140 = new Polyline();
@@ -13018,7 +13356,7 @@ namespace Alignment_mdi
             poly140.Closed = true;
             poly140.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly140.Layer = "0";
-            poly140.Color = color_GP;
+            poly140.Color = color_GPGC;
             poly140.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly140);
             Polyline poly141 = new Polyline();
@@ -13033,7 +13371,7 @@ namespace Alignment_mdi
             poly141.Closed = true;
             poly141.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly141.Layer = "0";
-            poly141.Color = color_GP;
+            poly141.Color = color_GPGC;
             poly141.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly141);
             Polyline poly142 = new Polyline();
@@ -13053,7 +13391,7 @@ namespace Alignment_mdi
             poly142.Closed = true;
             poly142.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly142.Layer = "0";
-            poly142.Color = color_GP;
+            poly142.Color = color_GPGC;
             poly142.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly142);
             Polyline poly143 = new Polyline();
@@ -13069,7 +13407,7 @@ namespace Alignment_mdi
             poly143.Closed = true;
             poly143.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly143.Layer = "0";
-            poly143.Color = color_GP;
+            poly143.Color = color_GPGC;
             poly143.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly143);
             Polyline poly144 = new Polyline();
@@ -13091,7 +13429,7 @@ namespace Alignment_mdi
             poly144.Closed = true;
             poly144.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly144.Layer = "0";
-            poly144.Color = color_GP;
+            poly144.Color = color_GPGC;
             poly144.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly144);
             Polyline poly145 = new Polyline();
@@ -13102,7 +13440,7 @@ namespace Alignment_mdi
             poly145.AddVertexAt(4, new Point2d(scale1 * 0.268185961953785, scale1 * 0.3), 0, 0, 0);
             poly145.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly145.Layer = "0";
-            poly145.Color = color_GP;
+            poly145.Color = color_GPGC;
             poly145.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly145);
             Polyline poly146 = new Polyline();
@@ -13115,7 +13453,7 @@ namespace Alignment_mdi
             poly146.AddVertexAt(6, new Point2d(scale1 * 0.218759355857569, scale1 * 0.3), 0, 0, 0);
             poly146.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly146.Layer = "0";
-            poly146.Color = color_GP;
+            poly146.Color = color_GPGC;
             poly146.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly146);
             Polyline poly147 = new Polyline();
@@ -13129,7 +13467,7 @@ namespace Alignment_mdi
             poly147.Closed = true;
             poly147.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly147.Layer = "0";
-            poly147.Color = color_GP;
+            poly147.Color = color_GPGC;
             poly147.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly147);
             Polyline poly148 = new Polyline();
@@ -13144,7 +13482,7 @@ namespace Alignment_mdi
             poly148.Closed = true;
             poly148.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly148.Layer = "0";
-            poly148.Color = color_GP;
+            poly148.Color = color_GPGC;
             poly148.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly148);
             Polyline poly149 = new Polyline();
@@ -13158,7 +13496,7 @@ namespace Alignment_mdi
             poly149.Closed = true;
             poly149.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly149.Layer = "0";
-            poly149.Color = color_GP;
+            poly149.Color = color_GPGC;
             poly149.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly149);
             Polyline poly150 = new Polyline();
@@ -13174,7 +13512,7 @@ namespace Alignment_mdi
             poly150.Closed = true;
             poly150.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly150.Layer = "0";
-            poly150.Color = color_GP;
+            poly150.Color = color_GPGC;
             poly150.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly150);
             Polyline poly151 = new Polyline();
@@ -13197,7 +13535,7 @@ namespace Alignment_mdi
             poly151.Closed = true;
             poly151.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly151.Layer = "0";
-            poly151.Color = color_GP;
+            poly151.Color = color_GPGC;
             poly151.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly151);
             Polyline poly152 = new Polyline();
@@ -13220,7 +13558,7 @@ namespace Alignment_mdi
             poly152.Closed = true;
             poly152.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly152.Layer = "0";
-            poly152.Color = color_GP;
+            poly152.Color = color_GPGC;
             poly152.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly152);
             Polyline poly153 = new Polyline();
@@ -13235,7 +13573,7 @@ namespace Alignment_mdi
             poly153.Closed = true;
             poly153.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly153.Layer = "0";
-            poly153.Color = color_GP;
+            poly153.Color = color_GPGC;
             poly153.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly153);
             Polyline poly154 = new Polyline();
@@ -13255,7 +13593,7 @@ namespace Alignment_mdi
             poly154.Closed = true;
             poly154.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly154.Layer = "0";
-            poly154.Color = color_GP;
+            poly154.Color = color_GPGC;
             poly154.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly154);
             Polyline poly155 = new Polyline();
@@ -13271,7 +13609,7 @@ namespace Alignment_mdi
             poly155.Closed = true;
             poly155.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly155.Layer = "0";
-            poly155.Color = color_GP;
+            poly155.Color = color_GPGC;
             poly155.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly155);
             Polyline poly156 = new Polyline();
@@ -13293,7 +13631,7 @@ namespace Alignment_mdi
             poly156.Closed = true;
             poly156.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly156.Layer = "0";
-            poly156.Color = color_GP;
+            poly156.Color = color_GPGC;
             poly156.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly156);
             Polyline poly157 = new Polyline();
@@ -13304,7 +13642,7 @@ namespace Alignment_mdi
             poly157.AddVertexAt(4, new Point2d(scale1 * 0.168185961953785, scale1 * 0.3), 0, 0, 0);
             poly157.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly157.Layer = "0";
-            poly157.Color = color_GP;
+            poly157.Color = color_GPGC;
             poly157.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly157);
             Polyline poly158 = new Polyline();
@@ -13317,7 +13655,7 @@ namespace Alignment_mdi
             poly158.AddVertexAt(6, new Point2d(scale1 * 0.118759355857569, scale1 * 0.3), 0, 0, 0);
             poly158.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly158.Layer = "0";
-            poly158.Color = color_GP;
+            poly158.Color = color_GPGC;
             poly158.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly158);
             Polyline poly159 = new Polyline();
@@ -13331,7 +13669,7 @@ namespace Alignment_mdi
             poly159.Closed = true;
             poly159.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly159.Layer = "0";
-            poly159.Color = color_GP;
+            poly159.Color = color_GPGC;
             poly159.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly159);
             Polyline poly160 = new Polyline();
@@ -13346,7 +13684,7 @@ namespace Alignment_mdi
             poly160.Closed = true;
             poly160.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly160.Layer = "0";
-            poly160.Color = color_GP;
+            poly160.Color = color_GPGC;
             poly160.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly160);
             Polyline poly161 = new Polyline();
@@ -13360,7 +13698,7 @@ namespace Alignment_mdi
             poly161.Closed = true;
             poly161.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly161.Layer = "0";
-            poly161.Color = color_GP;
+            poly161.Color = color_GPGC;
             poly161.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly161);
             Polyline poly162 = new Polyline();
@@ -13376,7 +13714,7 @@ namespace Alignment_mdi
             poly162.Closed = true;
             poly162.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly162.Layer = "0";
-            poly162.Color = color_GP;
+            poly162.Color = color_GPGC;
             poly162.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly162);
             Polyline poly163 = new Polyline();
@@ -13399,7 +13737,7 @@ namespace Alignment_mdi
             poly163.Closed = true;
             poly163.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly163.Layer = "0";
-            poly163.Color = color_GP;
+            poly163.Color = color_GPGC;
             poly163.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly163);
             Polyline poly164 = new Polyline();
@@ -13422,7 +13760,7 @@ namespace Alignment_mdi
             poly164.Closed = true;
             poly164.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly164.Layer = "0";
-            poly164.Color = color_GP;
+            poly164.Color = color_GPGC;
             poly164.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly164);
             Polyline poly165 = new Polyline();
@@ -13437,7 +13775,7 @@ namespace Alignment_mdi
             poly165.Closed = true;
             poly165.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly165.Layer = "0";
-            poly165.Color = color_GP;
+            poly165.Color = color_GPGC;
             poly165.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly165);
             Polyline poly166 = new Polyline();
@@ -13457,7 +13795,7 @@ namespace Alignment_mdi
             poly166.Closed = true;
             poly166.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly166.Layer = "0";
-            poly166.Color = color_GP;
+            poly166.Color = color_GPGC;
             poly166.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly166);
             Polyline poly167 = new Polyline();
@@ -13473,7 +13811,7 @@ namespace Alignment_mdi
             poly167.Closed = true;
             poly167.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly167.Layer = "0";
-            poly167.Color = color_GP;
+            poly167.Color = color_GPGC;
             poly167.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly167);
             Polyline poly168 = new Polyline();
@@ -13495,7 +13833,7 @@ namespace Alignment_mdi
             poly168.Closed = true;
             poly168.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly168.Layer = "0";
-            poly168.Color = color_GP;
+            poly168.Color = color_GPGC;
             poly168.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly168);
             Polyline poly169 = new Polyline();
@@ -13506,7 +13844,7 @@ namespace Alignment_mdi
             poly169.AddVertexAt(4, new Point2d(scale1 * 0.0681859619537855, scale1 * 0.3), 0, 0, 0);
             poly169.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly169.Layer = "0";
-            poly169.Color = color_GP;
+            poly169.Color = color_GPGC;
             poly169.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly169);
             Polyline poly170 = new Polyline();
@@ -13519,7 +13857,7 @@ namespace Alignment_mdi
             poly170.AddVertexAt(6, new Point2d(scale1 * 0.0187593558575691, scale1 * 0.3), 0, 0, 0);
             poly170.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly170.Layer = "0";
-            poly170.Color = color_GP;
+            poly170.Color = color_GPGC;
             poly170.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly170);
             Polyline poly171 = new Polyline();
@@ -13533,7 +13871,7 @@ namespace Alignment_mdi
             poly171.Closed = true;
             poly171.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly171.Layer = "0";
-            poly171.Color = color_GP;
+            poly171.Color = color_GPGC;
             poly171.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly171);
             Polyline poly172 = new Polyline();
@@ -13548,7 +13886,7 @@ namespace Alignment_mdi
             poly172.Closed = true;
             poly172.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly172.Layer = "0";
-            poly172.Color = color_GP;
+            poly172.Color = color_GPGC;
             poly172.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly172);
             Polyline poly173 = new Polyline();
@@ -13562,7 +13900,7 @@ namespace Alignment_mdi
             poly173.Closed = true;
             poly173.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly173.Layer = "0";
-            poly173.Color = color_GP;
+            poly173.Color = color_GPGC;
             poly173.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly173);
             Polyline poly174 = new Polyline();
@@ -13578,7 +13916,7 @@ namespace Alignment_mdi
             poly174.Closed = true;
             poly174.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly174.Layer = "0";
-            poly174.Color = color_GP;
+            poly174.Color = color_GPGC;
             poly174.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly174);
             Polyline poly175 = new Polyline();
@@ -13601,7 +13939,7 @@ namespace Alignment_mdi
             poly175.Closed = true;
             poly175.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly175.Layer = "0";
-            poly175.Color = color_GP;
+            poly175.Color = color_GPGC;
             poly175.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly175);
             Polyline poly176 = new Polyline();
@@ -13624,7 +13962,7 @@ namespace Alignment_mdi
             poly176.Closed = true;
             poly176.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly176.Layer = "0";
-            poly176.Color = color_GP;
+            poly176.Color = color_GPGC;
             poly176.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly176);
             Polyline poly177 = new Polyline();
@@ -13639,7 +13977,7 @@ namespace Alignment_mdi
             poly177.Closed = true;
             poly177.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly177.Layer = "0";
-            poly177.Color = color_GP;
+            poly177.Color = color_GPGC;
             poly177.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly177);
             Polyline poly178 = new Polyline();
@@ -13659,7 +13997,7 @@ namespace Alignment_mdi
             poly178.Closed = true;
             poly178.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly178.Layer = "0";
-            poly178.Color = color_GP;
+            poly178.Color = color_GPGC;
             poly178.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly178);
             Polyline poly179 = new Polyline();
@@ -13675,7 +14013,7 @@ namespace Alignment_mdi
             poly179.Closed = true;
             poly179.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly179.Layer = "0";
-            poly179.Color = color_GP;
+            poly179.Color = color_GPGC;
             poly179.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly179);
             Polyline poly180 = new Polyline();
@@ -13697,7 +14035,7 @@ namespace Alignment_mdi
             poly180.Closed = true;
             poly180.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
             poly180.Layer = "0";
-            poly180.Color = color_GP;
+            poly180.Color = color_GPGC;
             poly180.LineWeight = LineWeight.LineWeight000;
             bltrec1.AppendEntity(poly180);
 
@@ -13722,7 +14060,7 @@ namespace Alignment_mdi
             Hatch hatch1 = CreateHatch(poly2, nume_hatch, hatch_scale1, hatch_angle1 * Math.PI / 180);
             hatch1.Layer = "0";
             hatch1.LineWeight = LineWeight.LineWeight000;
-            hatch1.Color = color_GP;
+            hatch1.Color = color_GPGC;
             bltrec1.AppendEntity(hatch1);
 
 
@@ -13752,8 +14090,6 @@ namespace Alignment_mdi
             poly2.Erase();
 
         }
-
-
 
         private void add_pattern_SC(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -13980,7 +14316,6 @@ namespace Alignment_mdi
 
 
         }
-
 
         private void add_pattern_SC_legend(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -14983,6 +15318,3511 @@ namespace Alignment_mdi
         }
 
 
+
+        private void add_pattern_GPGM(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+
+
+
+            Autodesk.AutoCAD.Colors.Color color_GPGM = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
+
+
+
+            double pattern_width = 0.1 * scale1;
+            double pattern_height = 0.06 * scale1;
+
+            double spc_h_edge = 0;
+            double spc_v_edge = 0;
+            double spc_hor = 0;
+            double spc_ver = 0;
+
+            int nr_col = 0;
+            int nr_rows = 1;
+
+            double x1 = poly1.GetPoint2dAt(3).X + spc_h_edge;
+            double y1 = poly1.GetPoint2dAt(3).Y + spc_v_edge;
+
+
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double rectangle_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (rectangle_height >= pattern_height + 2 * spc_v_edge)
+            {
+                double nr1 = Math.Floor((rectangle_height - 2 * spc_v_edge) / (pattern_height + spc_ver));
+                nr_rows = Convert.ToInt32(nr1);
+
+                if (stick_width - 2 * spc_h_edge < pattern_width + 2 * spc_hor)
+                {
+                    nr_col = 1;
+                }
+                else
+                {
+                    double nr2 = Math.Floor((stick_width - 2 * spc_h_edge) / (pattern_width + spc_hor));
+
+                    nr_col = Convert.ToInt32(nr2);
+                }
+
+                double dif_len = stick_width - (nr_col * (pattern_width + spc_hor) - spc_hor);
+                double dif_hght = rectangle_height - (nr_rows * (pattern_height + spc_ver) - spc_ver);
+
+                Point3d pt_ins = poly1.GetPoint3dAt(3);
+
+                if (nr_rows > 0 && nr_col > 0)
+                {
+                    for (int m = 0; m < nr_col; ++m)
+                    {
+                        for (int n = 0; n < nr_rows; ++n)
+                        {
+                            double x2 = x1 + dif_len / 2 + m * (pattern_width + spc_hor);
+                            double y2 = y1 + dif_hght / 2 + n * (pattern_height + spc_ver);
+
+                            double x3 = x2 + pattern_width;
+                            double y3 = y2;
+
+
+                            Polyline polygp1 = get_poly_gp1(scale1);
+                            polygp1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+                            polygp1.Layer = "0";
+                            polygp1.Color = color_GPGM;
+                            polygp1.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp1);
+
+                            Polyline polygp2 = get_poly_gp2(scale1);
+                            polygp2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp2.Layer = "0";
+                            polygp2.Color = color_GPGM;
+                            polygp2.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp2);
+
+                            Polyline polygp3 = get_poly_gp3(scale1);
+                            polygp3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp3.Layer = "0";
+                            polygp3.Color = color_GPGM;
+                            polygp3.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp3);
+
+                            Polyline polygp4 = get_poly_gp4(scale1);
+                            polygp4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp4.Layer = "0";
+                            polygp4.Color = color_GPGM;
+                            polygp4.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp4);
+
+                            Polyline polygp5 = get_poly_gp5(scale1);
+                            polygp5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp5.Layer = "0";
+                            polygp5.Color = color_GPGM;
+                            polygp5.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp5);
+
+                            Polyline polygp6 = get_poly_gp6(scale1);
+                            polygp6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp6.Layer = "0";
+                            polygp6.Color = color_GPGM;
+                            polygp6.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp6);
+
+                            Polyline polygp7 = get_poly_gp7(scale1);
+                            polygp7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp7.Layer = "0";
+                            polygp7.Color = color_GPGM;
+                            polygp7.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp7);
+
+                            Polyline polygp8 = get_poly_gp8(scale1);
+                            polygp8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp8.Layer = "0";
+                            polygp8.Color = color_GPGM;
+                            polygp8.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp8);
+
+                            Polyline polygp9 = get_poly_gp9(scale1);
+                            polygp9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp9.Layer = "0";
+                            polygp9.Color = color_GPGM;
+                            polygp9.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp9);
+
+                            Polyline polygp10 = get_poly_gp10(scale1);
+                            polygp10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp10.Layer = "0";
+                            polygp10.Color = color_GPGM;
+                            polygp10.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp10);
+
+                        }
+                    }
+
+
+
+                }
+            }
+            else
+            {
+            }
+            string nume_hatch = "ANSI31";
+            double hatch_scale1 = 0.6 * scale1;
+            double hatch_angle1 = 45;
+
+
+            Polyline poly2 = new Polyline();
+            poly2.AddVertexAt(0, new Point2d((poly1.GetPoint2dAt(0).X + poly1.GetPoint2dAt(1).X) / 2, (poly1.GetPoint2dAt(0).Y + poly1.GetPoint2dAt(1).Y) / 2), 0, 0, 0);
+            poly2.AddVertexAt(1, poly1.GetPoint2dAt(1), 0, 0, 0);
+            poly2.AddVertexAt(2, poly1.GetPoint2dAt(2), 0, 0, 0);
+            poly2.AddVertexAt(3, new Point2d((poly1.GetPoint2dAt(2).X + poly1.GetPoint2dAt(3).X) / 2, (poly1.GetPoint2dAt(2).Y + poly1.GetPoint2dAt(3).Y) / 2), 0, 0, 0);
+            poly2.Closed = true;
+
+
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch1 = CreateHatch(poly2, nume_hatch, hatch_scale1, hatch_angle1 * Math.PI / 180);
+            hatch1.Layer = "0";
+            hatch1.LineWeight = LineWeight.LineWeight000;
+            hatch1.Color = color_GPGM;
+            bltrec1.AppendEntity(hatch1);
+
+
+
+            poly2.Erase();
+
+        }
+
+
+
+        private void add_pattern_GPGM_legend(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+
+
+
+            Autodesk.AutoCAD.Colors.Color color_GPGM = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 191, 0);
+
+
+
+            double pattern_width = 0.1 * scale1;
+            double pattern_height = 0.06 * scale1;
+
+            double spc_h_edge = 0;
+            double spc_v_edge = 0;
+            double spc_hor = 0;
+            double spc_ver = 0;
+
+            int nr_col = 0;
+            int nr_rows = 1;
+
+            double x1 = poly1.GetPoint2dAt(3).X + spc_h_edge;
+            double y1 = poly1.GetPoint2dAt(3).Y + spc_v_edge;
+
+
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double rectangle_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (rectangle_height >= pattern_height + 2 * spc_v_edge)
+            {
+                double nr1 = Math.Floor((rectangle_height - 2 * spc_v_edge) / (pattern_height + spc_ver));
+                nr_rows = Convert.ToInt32(nr1);
+
+                if (stick_width - 2 * spc_h_edge < pattern_width + 2 * spc_hor)
+                {
+                    nr_col = 1;
+                }
+                else
+                {
+                    double nr2 = Math.Floor((stick_width - 2 * spc_h_edge) / (pattern_width + spc_hor));
+
+                    nr_col = Convert.ToInt32(nr2);
+                }
+
+                double dif_len = stick_width - (nr_col * (pattern_width + spc_hor) - spc_hor);
+                double dif_hght = rectangle_height - (nr_rows * (pattern_height + spc_ver) - spc_ver);
+
+                Point3d pt_ins = poly1.GetPoint3dAt(3);
+
+                if (nr_rows > 0 && nr_col > 0)
+                {
+                    for (int m = 0; m < nr_col; ++m)
+                    {
+                        for (int n = 0; n < nr_rows; ++n)
+                        {
+                            double x2 = x1 + dif_len / 2 + m * (pattern_width + spc_hor);
+                            double y2 = y1 + dif_hght / 2 + n * (pattern_height + spc_ver);
+
+                            double x3 = x2 + pattern_width;
+                            double y3 = y2;
+
+
+                            Polyline polygp1 = get_poly_gp1(scale1);
+                            polygp1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+                            polygp1.Layer = "0";
+                            polygp1.Color = color_GPGM;
+                            polygp1.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp1);
+
+                            Polyline polygp2 = get_poly_gp2(scale1);
+                            polygp2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp2.Layer = "0";
+                            polygp2.Color = color_GPGM;
+                            polygp2.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp2);
+
+                            Polyline polygp3 = get_poly_gp3(scale1);
+                            polygp3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp3.Layer = "0";
+                            polygp3.Color = color_GPGM;
+                            polygp3.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp3);
+
+                            Polyline polygp4 = get_poly_gp4(scale1);
+                            polygp4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp4.Layer = "0";
+                            polygp4.Color = color_GPGM;
+                            polygp4.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp4);
+
+                            Polyline polygp5 = get_poly_gp5(scale1);
+                            polygp5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp5.Layer = "0";
+                            polygp5.Color = color_GPGM;
+                            polygp5.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp5);
+
+                            Polyline polygp6 = get_poly_gp6(scale1);
+                            polygp6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp6.Layer = "0";
+                            polygp6.Color = color_GPGM;
+                            polygp6.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp6);
+
+                            Polyline polygp7 = get_poly_gp7(scale1);
+                            polygp7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp7.Layer = "0";
+                            polygp7.Color = color_GPGM;
+                            polygp7.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp7);
+
+                            Polyline polygp8 = get_poly_gp8(scale1);
+                            polygp8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp8.Layer = "0";
+                            polygp8.Color = color_GPGM;
+                            polygp8.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp8);
+
+                            Polyline polygp9 = get_poly_gp9(scale1);
+                            polygp9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp9.Layer = "0";
+                            polygp9.Color = color_GPGM;
+                            polygp9.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp9);
+
+                            Polyline polygp10 = get_poly_gp10(scale1);
+                            polygp10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(pt_ins.X + m * pattern_width, pt_ins.Y + n * pattern_height, 0))));
+
+                            polygp10.Layer = "0";
+                            polygp10.Color = color_GPGM;
+                            polygp10.LineWeight = LineWeight.LineWeight000;
+                            bltrec1.AppendEntity(polygp10);
+
+                        }
+                    }
+
+
+
+                }
+            }
+            else
+            {
+            }
+
+            #region poly extra for filling the gap
+            Polyline polye1 = new Polyline();
+            polye1.AddVertexAt(0, new Point2d(scale1 * 1.46028574100171, scale1 * 0.3), 0, 0, 0);
+            polye1.AddVertexAt(1, new Point2d(scale1 * 1.46164016907527, scale1 * 0.297968357889651), 0, 0, 0);
+            polye1.AddVertexAt(2, new Point2d(scale1 * 1.46467928719744, scale1 * 0.297687823909144), 0, 0, 0);
+            polye1.AddVertexAt(3, new Point2d(scale1 * 1.46818596195379, scale1 * 0.29937102779219), 0, 0, 0);
+            polye1.AddVertexAt(4, new Point2d(scale1 * 1.46818596195379, scale1 * 0.3), 0, 0, 0);
+            polye1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            polye1.Layer = "0";
+            polye1.Color = color_GPGM;
+            polye1.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(polye1);
+            Polyline polye2 = new Polyline();
+            polye2.AddVertexAt(0, new Point2d(scale1 * 1.44565464779079, scale1 * 0.3), 0, 0, 0);
+            polye2.AddVertexAt(1, new Point2d(scale1 * 1.44457435192772, scale1 * 0.297407289928637), 0, 0, 0);
+            polye2.AddVertexAt(2, new Point2d(scale1 * 1.43943122895175, scale1 * 0.295583819055336), 0, 0, 0);
+            polye2.AddVertexAt(3, new Point2d(scale1 * 1.42937876131689, scale1 * 0.295303285074829), 0, 0, 0);
+            polye2.AddVertexAt(4, new Point2d(scale1 * 1.424469416658, scale1 * 0.296144887016352), 0, 0, 0);
+            polye2.AddVertexAt(5, new Point2d(scale1 * 1.42096274190166, scale1 * 0.297828090899398), 0, 0, 0);
+            polye2.AddVertexAt(6, new Point2d(scale1 * 1.41875935585757, scale1 * 0.3), 0, 0, 0);
+            polye2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            polye2.Layer = "0";
+            polye2.Color = color_GPGM;
+            polye2.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(polye2);
+            Polyline poly3 = new Polyline();
+            poly3.AddVertexAt(0, new Point2d(scale1 * 1.45836727263602, scale1 * 0.282994061761134), 0, 0, 0);
+            poly3.AddVertexAt(1, new Point2d(scale1 * 1.4564970460993, scale1 * 0.282853794770882), 0, 0, 0);
+            poly3.AddVertexAt(2, new Point2d(scale1 * 1.4541592629284, scale1 * 0.28355512972215), 0, 0, 0);
+            poly3.AddVertexAt(3, new Point2d(scale1 * 1.45228903639168, scale1 * 0.285518867585705), 0, 0, 0);
+            poly3.AddVertexAt(4, new Point2d(scale1 * 1.45392548461131, scale1 * 0.287061804478495), 0, 0, 0);
+            poly3.AddVertexAt(5, new Point2d(scale1 * 1.45836727263602, scale1 * 0.286220202536974), 0, 0, 0);
+            poly3.AddVertexAt(6, new Point2d(scale1 * 1.45953616422147, scale1 * 0.284817532634435), 0, 0, 0);
+            poly3.Closed = true;
+            poly3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly3.Layer = "0";
+            poly3.Color = color_GPGM;
+            poly3.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly3);
+            Polyline poly4 = new Polyline();
+            poly4.AddVertexAt(0, new Point2d(scale1 * 1.4679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly4.AddVertexAt(1, new Point2d(scale1 * 1.46608195709998, scale1 * 0.282012192829359), 0, 0, 0);
+            poly4.AddVertexAt(2, new Point2d(scale1 * 1.46584817878289, scale1 * 0.280048454965803), 0, 0, 0);
+            poly4.AddVertexAt(3, new Point2d(scale1 * 1.46841974027088, scale1 * 0.278505518073012), 0, 0, 0);
+            poly4.AddVertexAt(4, new Point2d(scale1 * 1.47169263671013, scale1 * 0.278926319043773), 0, 0, 0);
+            poly4.AddVertexAt(5, new Point2d(scale1 * 1.4723939716614, scale1 * 0.281030323897581), 0, 0, 0);
+            poly4.AddVertexAt(6, new Point2d(scale1 * 1.47192641502722, scale1 * 0.282713527780627), 0, 0, 0);
+            poly4.AddVertexAt(7, new Point2d(scale1 * 1.4679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly4.Closed = true;
+            poly4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly4.Layer = "0";
+            poly4.Color = color_GPGM;
+            poly4.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly4);
+            Polyline poly5 = new Polyline();
+            poly5.AddVertexAt(0, new Point2d(scale1 * 1.41657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly5.AddVertexAt(1, new Point2d(scale1 * 1.41423932895615, scale1 * 0.285251085149766), 0, 0, 0);
+            poly5.AddVertexAt(2, new Point2d(scale1 * 1.41564199885869, scale1 * 0.283427614276465), 0, 0, 0);
+            poly5.AddVertexAt(3, new Point2d(scale1 * 1.41961623024921, scale1 * 0.282726279325197), 0, 0, 0);
+            poly5.AddVertexAt(4, new Point2d(scale1 * 1.42265534837138, scale1 * 0.283988682237481), 0, 0, 0);
+            poly5.AddVertexAt(5, new Point2d(scale1 * 1.42265534837138, scale1 * 0.286653755052303), 0, 0, 0);
+            poly5.AddVertexAt(6, new Point2d(scale1 * 1.41657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly5.Closed = true;
+            poly5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly5.Layer = "0";
+            poly5.Color = color_GPGM;
+            poly5.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly5);
+            Polyline poly6 = new Polyline();
+            poly6.AddVertexAt(0, new Point2d(scale1 * 1.41108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly6.AddVertexAt(1, new Point2d(scale1 * 1.40947696180731, scale1 * 0.263254670769046), 0, 0, 0);
+            poly6.AddVertexAt(2, new Point2d(scale1 * 1.4097107401244, scale1 * 0.259607729022446), 0, 0, 0);
+            poly6.AddVertexAt(3, new Point2d(scale1 * 1.41064585339276, scale1 * 0.256802389217368), 0, 0, 0);
+            poly6.AddVertexAt(4, new Point2d(scale1 * 1.41485386310037, scale1 * 0.255960787275844), 0, 0, 0);
+            poly6.AddVertexAt(5, new Point2d(scale1 * 1.41906187280799, scale1 * 0.256521855236861), 0, 0, 0);
+            poly6.AddVertexAt(6, new Point2d(scale1 * 1.42256854756433, scale1 * 0.258625860090668), 0, 0, 0);
+            poly6.AddVertexAt(7, new Point2d(scale1 * 1.41906187280799, scale1 * 0.263535204749552), 0, 0, 0);
+            poly6.AddVertexAt(8, new Point2d(scale1 * 1.41108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly6.Closed = true;
+            poly6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly6.Layer = "0";
+            poly6.Color = color_GPGM;
+            poly6.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly6);
+            Polyline poly7 = new Polyline();
+            poly7.AddVertexAt(0, new Point2d(scale1 * 1.5, scale1 * 0.282677952223438), 0, 0, 0);
+            poly7.AddVertexAt(1, new Point2d(scale1 * 1.49989813913476, scale1 * 0.282764533958894), 0, 0, 0);
+            poly7.AddVertexAt(2, new Point2d(scale1 * 1.49756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly7.AddVertexAt(3, new Point2d(scale1 * 1.49569012942714, scale1 * 0.288796014539811), 0, 0, 0);
+            poly7.AddVertexAt(4, new Point2d(scale1 * 1.49148211971953, scale1 * 0.289777883471588), 0, 0, 0);
+            poly7.AddVertexAt(5, new Point2d(scale1 * 1.48797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly7.AddVertexAt(6, new Point2d(scale1 * 1.48470254852392, scale1 * 0.288936281530065), 0, 0, 0);
+            poly7.AddVertexAt(7, new Point2d(scale1 * 1.48259854367012, scale1 * 0.283746402890672), 0, 0, 0);
+            poly7.AddVertexAt(8, new Point2d(scale1 * 1.48259854367012, scale1 * 0.281221597066103), 0, 0, 0);
+            poly7.AddVertexAt(9, new Point2d(scale1 * 1.48189720871885, scale1 * 0.275751184446203), 0, 0, 0);
+            poly7.AddVertexAt(10, new Point2d(scale1 * 1.48540388347519, scale1 * 0.273366645611888), 0, 0, 0);
+            poly7.AddVertexAt(11, new Point2d(scale1 * 1.49031322813408, scale1 * 0.272525043670365), 0, 0, 0);
+            poly7.AddVertexAt(12, new Point2d(scale1 * 1.5, scale1 * 0.272880884269521), 0, 0, 0);
+            poly7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly7.Layer = "0";
+            poly7.Color = color_GPGM;
+            poly7.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly7);
+            Polyline poly8 = new Polyline();
+            poly8.AddVertexAt(0, new Point2d(scale1 * 1.45836727263602, scale1 * 0.274437775355651), 0, 0, 0);
+            poly8.AddVertexAt(1, new Point2d(scale1 * 1.46608195709998, scale1 * 0.272754571472604), 0, 0, 0);
+            poly8.AddVertexAt(2, new Point2d(scale1 * 1.46935485353923, scale1 * 0.268125760794228), 0, 0, 0);
+            poly8.AddVertexAt(3, new Point2d(scale1 * 1.46608195709998, scale1 * 0.263637217106105), 0, 0, 0);
+            poly8.AddVertexAt(4, new Point2d(scale1 * 1.45836727263602, scale1 * 0.261954013223059), 0, 0, 0);
+            poly8.AddVertexAt(5, new Point2d(scale1 * 1.4497174749037, scale1 * 0.261392945262043), 0, 0, 0);
+            poly8.AddVertexAt(6, new Point2d(scale1 * 1.4450419085619, scale1 * 0.26237481419382), 0, 0, 0);
+            poly8.AddVertexAt(7, new Point2d(scale1 * 1.44130145548847, scale1 * 0.26489962001839), 0, 0, 0);
+            poly8.AddVertexAt(8, new Point2d(scale1 * 1.43078143121943, scale1 * 0.268967362735751), 0, 0, 0);
+            poly8.AddVertexAt(9, new Point2d(scale1 * 1.42517075160927, scale1 * 0.272894838462859), 0, 0, 0);
+            poly8.AddVertexAt(10, new Point2d(scale1 * 1.42657342151181, scale1 * 0.27471830933616), 0, 0, 0);
+            poly8.AddVertexAt(11, new Point2d(scale1 * 1.43498944092704, scale1 * 0.278365251082757), 0, 0, 0);
+            poly8.AddVertexAt(12, new Point2d(scale1 * 1.44153523380556, scale1 * 0.279066586034028), 0, 0, 0);
+            poly8.AddVertexAt(13, new Point2d(scale1 * 1.44574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly8.AddVertexAt(14, new Point2d(scale1 * 1.45135392312332, scale1 * 0.276541780209458), 0, 0, 0);
+            poly8.AddVertexAt(15, new Point2d(scale1 * 1.45579571114803, scale1 * 0.275840445258188), 0, 0, 0);
+            poly8.Closed = true;
+            poly8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly8.Layer = "0";
+            poly8.Color = color_GPGM;
+            poly8.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly8);
+            Polyline poly9 = new Polyline();
+            poly9.AddVertexAt(0, new Point2d(scale1 * 1.47889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly9.AddVertexAt(1, new Point2d(scale1 * 1.47274102660718, scale1 * 0.262017770945895), 0, 0, 0);
+            poly9.AddVertexAt(2, new Point2d(scale1 * 1.46743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly9.AddVertexAt(3, new Point2d(scale1 * 1.46637081491274, scale1 * 0.256662122227115), 0, 0, 0);
+            poly9.AddVertexAt(4, new Point2d(scale1 * 1.47167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly9.AddVertexAt(5, new Point2d(scale1 * 1.47826187674237, scale1 * 0.2567896376728), 0, 0, 0);
+            poly9.AddVertexAt(6, new Point2d(scale1 * 1.48208400375904, scale1 * 0.259467462032192), 0, 0, 0);
+            poly9.AddVertexAt(7, new Point2d(scale1 * 1.47889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly9.Closed = true;
+            poly9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly9.Layer = "0";
+            poly9.Color = color_GPGM;
+            poly9.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly9);
+            Polyline poly10 = new Polyline();
+            poly10.AddVertexAt(0, new Point2d(scale1 * 1.49647313832164, scale1 * 0.248628649148944), 0, 0, 0);
+            poly10.AddVertexAt(1, new Point2d(scale1 * 1.49670691663873, scale1 * 0.243298503519296), 0, 0, 0);
+            poly10.AddVertexAt(2, new Point2d(scale1 * 1.49507046841911, scale1 * 0.242036100607014), 0, 0, 0);
+            poly10.AddVertexAt(3, new Point2d(scale1 * 1.49086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly10.AddVertexAt(4, new Point2d(scale1 * 1.48688822732096, scale1 * 0.240773697694727), 0, 0, 0);
+            poly10.AddVertexAt(5, new Point2d(scale1 * 1.4838491091988, scale1 * 0.242036100607014), 0, 0, 0);
+            poly10.AddVertexAt(6, new Point2d(scale1 * 1.48057621275954, scale1 * 0.243298503519296), 0, 0, 0);
+            poly10.AddVertexAt(7, new Point2d(scale1 * 1.47753709463737, scale1 * 0.244560906431583), 0, 0, 0);
+            poly10.AddVertexAt(8, new Point2d(scale1 * 1.47566686810066, scale1 * 0.246945445265898), 0, 0, 0);
+            poly10.AddVertexAt(9, new Point2d(scale1 * 1.47566686810066, scale1 * 0.248628649148944), 0, 0, 0);
+            poly10.AddVertexAt(10, new Point2d(scale1 * 1.479173542857, scale1 * 0.252275590895543), 0, 0, 0);
+            poly10.AddVertexAt(11, new Point2d(scale1 * 1.48595311405261, scale1 * 0.253818527788335), 0, 0, 0);
+            poly10.AddVertexAt(12, new Point2d(scale1 * 1.49273268524821, scale1 * 0.252275590895543), 0, 0, 0);
+            poly10.Closed = true;
+            poly10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly10.Layer = "0";
+            poly10.Color = color_GPGM;
+            poly10.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly10);
+            Polyline poly11 = new Polyline();
+            poly11.AddVertexAt(0, new Point2d(scale1 * 1.46210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly11.AddVertexAt(1, new Point2d(scale1 * 1.45930238590438, scale1 * 0.241895833616759), 0, 0, 0);
+            poly11.AddVertexAt(2, new Point2d(scale1 * 1.46023749917273, scale1 * 0.240072362743458), 0, 0, 0);
+            poly11.AddVertexAt(3, new Point2d(scale1 * 1.46164016907527, scale1 * 0.237968357889651), 0, 0, 0);
+            poly11.AddVertexAt(4, new Point2d(scale1 * 1.46467928719744, scale1 * 0.237687823909144), 0, 0, 0);
+            poly11.AddVertexAt(5, new Point2d(scale1 * 1.46818596195379, scale1 * 0.23937102779219), 0, 0, 0);
+            poly11.AddVertexAt(6, new Point2d(scale1 * 1.46818596195379, scale1 * 0.241615299636252), 0, 0, 0);
+            poly11.AddVertexAt(7, new Point2d(scale1 * 1.46584817878289, scale1 * 0.244140105460821), 0, 0, 0);
+            poly11.AddVertexAt(8, new Point2d(scale1 * 1.46210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly11.Closed = true;
+            poly11.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly11.Layer = "0";
+            poly11.Color = color_GPGM;
+            poly11.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly11);
+            Polyline poly12 = new Polyline();
+            poly12.AddVertexAt(0, new Point2d(scale1 * 1.41652095387695, scale1 * 0.248628649148944), 0, 0, 0);
+            poly12.AddVertexAt(1, new Point2d(scale1 * 1.42306674675547, scale1 * 0.250452120022245), 0, 0, 0);
+            poly12.AddVertexAt(2, new Point2d(scale1 * 1.4359245541954, scale1 * 0.249750785070974), 0, 0, 0);
+            poly12.AddVertexAt(3, new Point2d(scale1 * 1.44247034707391, scale1 * 0.248628649148944), 0, 0, 0);
+            poly12.AddVertexAt(4, new Point2d(scale1 * 1.44363923865936, scale1 * 0.246805178275643), 0, 0, 0);
+            poly12.AddVertexAt(5, new Point2d(scale1 * 1.44387301697645, scale1 * 0.244981707402343), 0, 0, 0);
+            poly12.AddVertexAt(6, new Point2d(scale1 * 1.44410679529354, scale1 * 0.242737435558282), 0, 0, 0);
+            poly12.AddVertexAt(7, new Point2d(scale1 * 1.44597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly12.AddVertexAt(8, new Point2d(scale1 * 1.44457435192772, scale1 * 0.237407289928637), 0, 0, 0);
+            poly12.AddVertexAt(9, new Point2d(scale1 * 1.43943122895175, scale1 * 0.235583819055336), 0, 0, 0);
+            poly12.AddVertexAt(10, new Point2d(scale1 * 1.42937876131689, scale1 * 0.235303285074829), 0, 0, 0);
+            poly12.AddVertexAt(11, new Point2d(scale1 * 1.424469416658, scale1 * 0.236144887016352), 0, 0, 0);
+            poly12.AddVertexAt(12, new Point2d(scale1 * 1.42096274190166, scale1 * 0.237828090899398), 0, 0, 0);
+            poly12.AddVertexAt(13, new Point2d(scale1 * 1.4176898454624, scale1 * 0.241054231675236), 0, 0, 0);
+            poly12.AddVertexAt(14, new Point2d(scale1 * 1.41581961892568, scale1 * 0.244420639441328), 0, 0, 0);
+            poly12.Closed = true;
+            poly12.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly12.Layer = "0";
+            poly12.Color = color_GPGM;
+            poly12.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly12);
+            Polyline poly13 = new Polyline();
+            poly13.AddVertexAt(0, new Point2d(scale1 * 1.36028574100171, scale1 * 0.3), 0, 0, 0);
+            poly13.AddVertexAt(1, new Point2d(scale1 * 1.36164016907527, scale1 * 0.297968357889651), 0, 0, 0);
+            poly13.AddVertexAt(2, new Point2d(scale1 * 1.36467928719744, scale1 * 0.297687823909144), 0, 0, 0);
+            poly13.AddVertexAt(3, new Point2d(scale1 * 1.36818596195379, scale1 * 0.29937102779219), 0, 0, 0);
+            poly13.AddVertexAt(4, new Point2d(scale1 * 1.36818596195379, scale1 * 0.3), 0, 0, 0);
+            poly13.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly13.Layer = "0";
+            poly13.Color = color_GPGM;
+            poly13.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly13);
+            Polyline poly14 = new Polyline();
+            poly14.AddVertexAt(0, new Point2d(scale1 * 1.34565464779079, scale1 * 0.3), 0, 0, 0);
+            poly14.AddVertexAt(1, new Point2d(scale1 * 1.34457435192772, scale1 * 0.297407289928637), 0, 0, 0);
+            poly14.AddVertexAt(2, new Point2d(scale1 * 1.33943122895175, scale1 * 0.295583819055336), 0, 0, 0);
+            poly14.AddVertexAt(3, new Point2d(scale1 * 1.32937876131689, scale1 * 0.295303285074829), 0, 0, 0);
+            poly14.AddVertexAt(4, new Point2d(scale1 * 1.324469416658, scale1 * 0.296144887016352), 0, 0, 0);
+            poly14.AddVertexAt(5, new Point2d(scale1 * 1.32096274190166, scale1 * 0.297828090899398), 0, 0, 0);
+            poly14.AddVertexAt(6, new Point2d(scale1 * 1.31875935585757, scale1 * 0.3), 0, 0, 0);
+            poly14.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly14.Layer = "0";
+            poly14.Color = color_GPGM;
+            poly14.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly14);
+            Polyline poly15 = new Polyline();
+            poly15.AddVertexAt(0, new Point2d(scale1 * 1.35836727263602, scale1 * 0.282994061761134), 0, 0, 0);
+            poly15.AddVertexAt(1, new Point2d(scale1 * 1.3564970460993, scale1 * 0.282853794770882), 0, 0, 0);
+            poly15.AddVertexAt(2, new Point2d(scale1 * 1.3541592629284, scale1 * 0.28355512972215), 0, 0, 0);
+            poly15.AddVertexAt(3, new Point2d(scale1 * 1.35228903639168, scale1 * 0.285518867585705), 0, 0, 0);
+            poly15.AddVertexAt(4, new Point2d(scale1 * 1.35392548461131, scale1 * 0.287061804478495), 0, 0, 0);
+            poly15.AddVertexAt(5, new Point2d(scale1 * 1.35836727263602, scale1 * 0.286220202536974), 0, 0, 0);
+            poly15.AddVertexAt(6, new Point2d(scale1 * 1.35953616422147, scale1 * 0.284817532634435), 0, 0, 0);
+            poly15.Closed = true;
+            poly15.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly15.Layer = "0";
+            poly15.Color = color_GPGM;
+            poly15.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly15);
+            Polyline poly16 = new Polyline();
+            poly16.AddVertexAt(0, new Point2d(scale1 * 1.3679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly16.AddVertexAt(1, new Point2d(scale1 * 1.36608195709998, scale1 * 0.282012192829359), 0, 0, 0);
+            poly16.AddVertexAt(2, new Point2d(scale1 * 1.36584817878289, scale1 * 0.280048454965803), 0, 0, 0);
+            poly16.AddVertexAt(3, new Point2d(scale1 * 1.36841974027088, scale1 * 0.278505518073012), 0, 0, 0);
+            poly16.AddVertexAt(4, new Point2d(scale1 * 1.37169263671013, scale1 * 0.278926319043773), 0, 0, 0);
+            poly16.AddVertexAt(5, new Point2d(scale1 * 1.3723939716614, scale1 * 0.281030323897581), 0, 0, 0);
+            poly16.AddVertexAt(6, new Point2d(scale1 * 1.37192641502722, scale1 * 0.282713527780627), 0, 0, 0);
+            poly16.AddVertexAt(7, new Point2d(scale1 * 1.3679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly16.Closed = true;
+            poly16.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly16.Layer = "0";
+            poly16.Color = color_GPGM;
+            poly16.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly16);
+            Polyline poly17 = new Polyline();
+            poly17.AddVertexAt(0, new Point2d(scale1 * 1.31657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly17.AddVertexAt(1, new Point2d(scale1 * 1.31423932895615, scale1 * 0.285251085149766), 0, 0, 0);
+            poly17.AddVertexAt(2, new Point2d(scale1 * 1.31564199885869, scale1 * 0.283427614276465), 0, 0, 0);
+            poly17.AddVertexAt(3, new Point2d(scale1 * 1.31961623024921, scale1 * 0.282726279325197), 0, 0, 0);
+            poly17.AddVertexAt(4, new Point2d(scale1 * 1.32265534837138, scale1 * 0.283988682237481), 0, 0, 0);
+            poly17.AddVertexAt(5, new Point2d(scale1 * 1.32265534837138, scale1 * 0.286653755052303), 0, 0, 0);
+            poly17.AddVertexAt(6, new Point2d(scale1 * 1.31657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly17.Closed = true;
+            poly17.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly17.Layer = "0";
+            poly17.Color = color_GPGM;
+            poly17.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly17);
+            Polyline poly18 = new Polyline();
+            poly18.AddVertexAt(0, new Point2d(scale1 * 1.31108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly18.AddVertexAt(1, new Point2d(scale1 * 1.30947696180731, scale1 * 0.263254670769046), 0, 0, 0);
+            poly18.AddVertexAt(2, new Point2d(scale1 * 1.3097107401244, scale1 * 0.259607729022446), 0, 0, 0);
+            poly18.AddVertexAt(3, new Point2d(scale1 * 1.31064585339276, scale1 * 0.256802389217368), 0, 0, 0);
+            poly18.AddVertexAt(4, new Point2d(scale1 * 1.31485386310037, scale1 * 0.255960787275844), 0, 0, 0);
+            poly18.AddVertexAt(5, new Point2d(scale1 * 1.31906187280799, scale1 * 0.256521855236861), 0, 0, 0);
+            poly18.AddVertexAt(6, new Point2d(scale1 * 1.32256854756433, scale1 * 0.258625860090668), 0, 0, 0);
+            poly18.AddVertexAt(7, new Point2d(scale1 * 1.31906187280799, scale1 * 0.263535204749552), 0, 0, 0);
+            poly18.AddVertexAt(8, new Point2d(scale1 * 1.31108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly18.Closed = true;
+            poly18.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly18.Layer = "0";
+            poly18.Color = color_GPGM;
+            poly18.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly18);
+            Polyline poly19 = new Polyline();
+            poly19.AddVertexAt(0, new Point2d(scale1 * 1.38797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly19.AddVertexAt(1, new Point2d(scale1 * 1.38470254852392, scale1 * 0.288936281530065), 0, 0, 0);
+            poly19.AddVertexAt(2, new Point2d(scale1 * 1.38259854367012, scale1 * 0.283746402890672), 0, 0, 0);
+            poly19.AddVertexAt(3, new Point2d(scale1 * 1.38259854367012, scale1 * 0.281221597066103), 0, 0, 0);
+            poly19.AddVertexAt(4, new Point2d(scale1 * 1.38189720871885, scale1 * 0.275751184446203), 0, 0, 0);
+            poly19.AddVertexAt(5, new Point2d(scale1 * 1.38540388347519, scale1 * 0.273366645611888), 0, 0, 0);
+            poly19.AddVertexAt(6, new Point2d(scale1 * 1.39031322813408, scale1 * 0.272525043670365), 0, 0, 0);
+            poly19.AddVertexAt(7, new Point2d(scale1 * 1.40176836567148, scale1 * 0.272945844641126), 0, 0, 0);
+            poly19.AddVertexAt(8, new Point2d(scale1 * 1.40480748379364, scale1 * 0.274488781533918), 0, 0, 0);
+            poly19.AddVertexAt(9, new Point2d(scale1 * 1.405742597062, scale1 * 0.278275990270772), 0, 0, 0);
+            poly19.AddVertexAt(10, new Point2d(scale1 * 1.40270347893983, scale1 * 0.28037999512458), 0, 0, 0);
+            poly19.AddVertexAt(11, new Point2d(scale1 * 1.39989813913476, scale1 * 0.282764533958894), 0, 0, 0);
+            poly19.AddVertexAt(12, new Point2d(scale1 * 1.39756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly19.AddVertexAt(13, new Point2d(scale1 * 1.39569012942714, scale1 * 0.288796014539811), 0, 0, 0);
+            poly19.AddVertexAt(14, new Point2d(scale1 * 1.39148211971953, scale1 * 0.289777883471588), 0, 0, 0);
+            poly19.AddVertexAt(15, new Point2d(scale1 * 1.38797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly19.Closed = true;
+            poly19.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly19.Layer = "0";
+            poly19.Color = color_GPGM;
+            poly19.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly19);
+            Polyline poly20 = new Polyline();
+            poly20.AddVertexAt(0, new Point2d(scale1 * 1.35836727263602, scale1 * 0.274437775355651), 0, 0, 0);
+            poly20.AddVertexAt(1, new Point2d(scale1 * 1.36608195709998, scale1 * 0.272754571472604), 0, 0, 0);
+            poly20.AddVertexAt(2, new Point2d(scale1 * 1.36935485353923, scale1 * 0.268125760794228), 0, 0, 0);
+            poly20.AddVertexAt(3, new Point2d(scale1 * 1.36608195709998, scale1 * 0.263637217106105), 0, 0, 0);
+            poly20.AddVertexAt(4, new Point2d(scale1 * 1.35836727263602, scale1 * 0.261954013223059), 0, 0, 0);
+            poly20.AddVertexAt(5, new Point2d(scale1 * 1.3497174749037, scale1 * 0.261392945262043), 0, 0, 0);
+            poly20.AddVertexAt(6, new Point2d(scale1 * 1.3450419085619, scale1 * 0.26237481419382), 0, 0, 0);
+            poly20.AddVertexAt(7, new Point2d(scale1 * 1.34130145548847, scale1 * 0.26489962001839), 0, 0, 0);
+            poly20.AddVertexAt(8, new Point2d(scale1 * 1.33078143121943, scale1 * 0.268967362735751), 0, 0, 0);
+            poly20.AddVertexAt(9, new Point2d(scale1 * 1.32517075160927, scale1 * 0.272894838462859), 0, 0, 0);
+            poly20.AddVertexAt(10, new Point2d(scale1 * 1.32657342151181, scale1 * 0.27471830933616), 0, 0, 0);
+            poly20.AddVertexAt(11, new Point2d(scale1 * 1.33498944092704, scale1 * 0.278365251082757), 0, 0, 0);
+            poly20.AddVertexAt(12, new Point2d(scale1 * 1.34153523380556, scale1 * 0.279066586034028), 0, 0, 0);
+            poly20.AddVertexAt(13, new Point2d(scale1 * 1.34574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly20.AddVertexAt(14, new Point2d(scale1 * 1.35135392312332, scale1 * 0.276541780209458), 0, 0, 0);
+            poly20.AddVertexAt(15, new Point2d(scale1 * 1.35579571114803, scale1 * 0.275840445258188), 0, 0, 0);
+            poly20.Closed = true;
+            poly20.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly20.Layer = "0";
+            poly20.Color = color_GPGM;
+            poly20.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly20);
+            Polyline poly21 = new Polyline();
+            poly21.AddVertexAt(0, new Point2d(scale1 * 1.37889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly21.AddVertexAt(1, new Point2d(scale1 * 1.37274102660718, scale1 * 0.262017770945895), 0, 0, 0);
+            poly21.AddVertexAt(2, new Point2d(scale1 * 1.36743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly21.AddVertexAt(3, new Point2d(scale1 * 1.36637081491274, scale1 * 0.256662122227115), 0, 0, 0);
+            poly21.AddVertexAt(4, new Point2d(scale1 * 1.37167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly21.AddVertexAt(5, new Point2d(scale1 * 1.37826187674237, scale1 * 0.2567896376728), 0, 0, 0);
+            poly21.AddVertexAt(6, new Point2d(scale1 * 1.38208400375904, scale1 * 0.259467462032192), 0, 0, 0);
+            poly21.AddVertexAt(7, new Point2d(scale1 * 1.37889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly21.Closed = true;
+            poly21.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly21.Layer = "0";
+            poly21.Color = color_GPGM;
+            poly21.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly21);
+            Polyline poly22 = new Polyline();
+            poly22.AddVertexAt(0, new Point2d(scale1 * 1.39647313832164, scale1 * 0.248628649148944), 0, 0, 0);
+            poly22.AddVertexAt(1, new Point2d(scale1 * 1.39670691663873, scale1 * 0.243298503519296), 0, 0, 0);
+            poly22.AddVertexAt(2, new Point2d(scale1 * 1.39507046841911, scale1 * 0.242036100607014), 0, 0, 0);
+            poly22.AddVertexAt(3, new Point2d(scale1 * 1.39086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly22.AddVertexAt(4, new Point2d(scale1 * 1.38688822732096, scale1 * 0.240773697694727), 0, 0, 0);
+            poly22.AddVertexAt(5, new Point2d(scale1 * 1.3838491091988, scale1 * 0.242036100607014), 0, 0, 0);
+            poly22.AddVertexAt(6, new Point2d(scale1 * 1.38057621275954, scale1 * 0.243298503519296), 0, 0, 0);
+            poly22.AddVertexAt(7, new Point2d(scale1 * 1.37753709463737, scale1 * 0.244560906431583), 0, 0, 0);
+            poly22.AddVertexAt(8, new Point2d(scale1 * 1.37566686810066, scale1 * 0.246945445265898), 0, 0, 0);
+            poly22.AddVertexAt(9, new Point2d(scale1 * 1.37566686810066, scale1 * 0.248628649148944), 0, 0, 0);
+            poly22.AddVertexAt(10, new Point2d(scale1 * 1.379173542857, scale1 * 0.252275590895543), 0, 0, 0);
+            poly22.AddVertexAt(11, new Point2d(scale1 * 1.38595311405261, scale1 * 0.253818527788335), 0, 0, 0);
+            poly22.AddVertexAt(12, new Point2d(scale1 * 1.39273268524821, scale1 * 0.252275590895543), 0, 0, 0);
+            poly22.Closed = true;
+            poly22.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly22.Layer = "0";
+            poly22.Color = color_GPGM;
+            poly22.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly22);
+            Polyline poly23 = new Polyline();
+            poly23.AddVertexAt(0, new Point2d(scale1 * 1.36210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly23.AddVertexAt(1, new Point2d(scale1 * 1.35930238590438, scale1 * 0.241895833616759), 0, 0, 0);
+            poly23.AddVertexAt(2, new Point2d(scale1 * 1.36023749917273, scale1 * 0.240072362743458), 0, 0, 0);
+            poly23.AddVertexAt(3, new Point2d(scale1 * 1.36164016907527, scale1 * 0.237968357889651), 0, 0, 0);
+            poly23.AddVertexAt(4, new Point2d(scale1 * 1.36467928719744, scale1 * 0.237687823909144), 0, 0, 0);
+            poly23.AddVertexAt(5, new Point2d(scale1 * 1.36818596195379, scale1 * 0.23937102779219), 0, 0, 0);
+            poly23.AddVertexAt(6, new Point2d(scale1 * 1.36818596195379, scale1 * 0.241615299636252), 0, 0, 0);
+            poly23.AddVertexAt(7, new Point2d(scale1 * 1.36584817878289, scale1 * 0.244140105460821), 0, 0, 0);
+            poly23.AddVertexAt(8, new Point2d(scale1 * 1.36210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly23.Closed = true;
+            poly23.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly23.Layer = "0";
+            poly23.Color = color_GPGM;
+            poly23.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly23);
+            Polyline poly24 = new Polyline();
+            poly24.AddVertexAt(0, new Point2d(scale1 * 1.31652095387695, scale1 * 0.248628649148944), 0, 0, 0);
+            poly24.AddVertexAt(1, new Point2d(scale1 * 1.32306674675547, scale1 * 0.250452120022245), 0, 0, 0);
+            poly24.AddVertexAt(2, new Point2d(scale1 * 1.3359245541954, scale1 * 0.249750785070974), 0, 0, 0);
+            poly24.AddVertexAt(3, new Point2d(scale1 * 1.34247034707391, scale1 * 0.248628649148944), 0, 0, 0);
+            poly24.AddVertexAt(4, new Point2d(scale1 * 1.34363923865936, scale1 * 0.246805178275643), 0, 0, 0);
+            poly24.AddVertexAt(5, new Point2d(scale1 * 1.34387301697645, scale1 * 0.244981707402343), 0, 0, 0);
+            poly24.AddVertexAt(6, new Point2d(scale1 * 1.34410679529354, scale1 * 0.242737435558282), 0, 0, 0);
+            poly24.AddVertexAt(7, new Point2d(scale1 * 1.34597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly24.AddVertexAt(8, new Point2d(scale1 * 1.34457435192772, scale1 * 0.237407289928637), 0, 0, 0);
+            poly24.AddVertexAt(9, new Point2d(scale1 * 1.33943122895175, scale1 * 0.235583819055336), 0, 0, 0);
+            poly24.AddVertexAt(10, new Point2d(scale1 * 1.32937876131689, scale1 * 0.235303285074829), 0, 0, 0);
+            poly24.AddVertexAt(11, new Point2d(scale1 * 1.324469416658, scale1 * 0.236144887016352), 0, 0, 0);
+            poly24.AddVertexAt(12, new Point2d(scale1 * 1.32096274190166, scale1 * 0.237828090899398), 0, 0, 0);
+            poly24.AddVertexAt(13, new Point2d(scale1 * 1.3176898454624, scale1 * 0.241054231675236), 0, 0, 0);
+            poly24.AddVertexAt(14, new Point2d(scale1 * 1.31581961892568, scale1 * 0.244420639441328), 0, 0, 0);
+            poly24.Closed = true;
+            poly24.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly24.Layer = "0";
+            poly24.Color = color_GPGM;
+            poly24.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly24);
+            Polyline poly25 = new Polyline();
+            poly25.AddVertexAt(0, new Point2d(scale1 * 1.26028574100171, scale1 * 0.3), 0, 0, 0);
+            poly25.AddVertexAt(1, new Point2d(scale1 * 1.26164016907527, scale1 * 0.297968357889651), 0, 0, 0);
+            poly25.AddVertexAt(2, new Point2d(scale1 * 1.26467928719744, scale1 * 0.297687823909144), 0, 0, 0);
+            poly25.AddVertexAt(3, new Point2d(scale1 * 1.26818596195379, scale1 * 0.29937102779219), 0, 0, 0);
+            poly25.AddVertexAt(4, new Point2d(scale1 * 1.26818596195379, scale1 * 0.3), 0, 0, 0);
+            poly25.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly25.Layer = "0";
+            poly25.Color = color_GPGM;
+            poly25.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly25);
+            Polyline poly26 = new Polyline();
+            poly26.AddVertexAt(0, new Point2d(scale1 * 1.24565464779079, scale1 * 0.3), 0, 0, 0);
+            poly26.AddVertexAt(1, new Point2d(scale1 * 1.24457435192772, scale1 * 0.297407289928637), 0, 0, 0);
+            poly26.AddVertexAt(2, new Point2d(scale1 * 1.23943122895175, scale1 * 0.295583819055336), 0, 0, 0);
+            poly26.AddVertexAt(3, new Point2d(scale1 * 1.22937876131689, scale1 * 0.295303285074829), 0, 0, 0);
+            poly26.AddVertexAt(4, new Point2d(scale1 * 1.224469416658, scale1 * 0.296144887016352), 0, 0, 0);
+            poly26.AddVertexAt(5, new Point2d(scale1 * 1.22096274190166, scale1 * 0.297828090899398), 0, 0, 0);
+            poly26.AddVertexAt(6, new Point2d(scale1 * 1.21875935585757, scale1 * 0.3), 0, 0, 0);
+            poly26.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly26.Layer = "0";
+            poly26.Color = color_GPGM;
+            poly26.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly26);
+            Polyline poly27 = new Polyline();
+            poly27.AddVertexAt(0, new Point2d(scale1 * 1.25836727263602, scale1 * 0.282994061761134), 0, 0, 0);
+            poly27.AddVertexAt(1, new Point2d(scale1 * 1.2564970460993, scale1 * 0.282853794770882), 0, 0, 0);
+            poly27.AddVertexAt(2, new Point2d(scale1 * 1.2541592629284, scale1 * 0.28355512972215), 0, 0, 0);
+            poly27.AddVertexAt(3, new Point2d(scale1 * 1.25228903639168, scale1 * 0.285518867585705), 0, 0, 0);
+            poly27.AddVertexAt(4, new Point2d(scale1 * 1.25392548461131, scale1 * 0.287061804478495), 0, 0, 0);
+            poly27.AddVertexAt(5, new Point2d(scale1 * 1.25836727263602, scale1 * 0.286220202536974), 0, 0, 0);
+            poly27.AddVertexAt(6, new Point2d(scale1 * 1.25953616422147, scale1 * 0.284817532634435), 0, 0, 0);
+            poly27.Closed = true;
+            poly27.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly27.Layer = "0";
+            poly27.Color = color_GPGM;
+            poly27.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly27);
+            Polyline poly28 = new Polyline();
+            poly28.AddVertexAt(0, new Point2d(scale1 * 1.2679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly28.AddVertexAt(1, new Point2d(scale1 * 1.26608195709998, scale1 * 0.282012192829359), 0, 0, 0);
+            poly28.AddVertexAt(2, new Point2d(scale1 * 1.26584817878289, scale1 * 0.280048454965803), 0, 0, 0);
+            poly28.AddVertexAt(3, new Point2d(scale1 * 1.26841974027088, scale1 * 0.278505518073012), 0, 0, 0);
+            poly28.AddVertexAt(4, new Point2d(scale1 * 1.27169263671013, scale1 * 0.278926319043773), 0, 0, 0);
+            poly28.AddVertexAt(5, new Point2d(scale1 * 1.2723939716614, scale1 * 0.281030323897581), 0, 0, 0);
+            poly28.AddVertexAt(6, new Point2d(scale1 * 1.27192641502722, scale1 * 0.282713527780627), 0, 0, 0);
+            poly28.AddVertexAt(7, new Point2d(scale1 * 1.2679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly28.Closed = true;
+            poly28.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly28.Layer = "0";
+            poly28.Color = color_GPGM;
+            poly28.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly28);
+            Polyline poly29 = new Polyline();
+            poly29.AddVertexAt(0, new Point2d(scale1 * 1.21657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly29.AddVertexAt(1, new Point2d(scale1 * 1.21423932895615, scale1 * 0.285251085149766), 0, 0, 0);
+            poly29.AddVertexAt(2, new Point2d(scale1 * 1.21564199885869, scale1 * 0.283427614276465), 0, 0, 0);
+            poly29.AddVertexAt(3, new Point2d(scale1 * 1.21961623024921, scale1 * 0.282726279325197), 0, 0, 0);
+            poly29.AddVertexAt(4, new Point2d(scale1 * 1.22265534837138, scale1 * 0.283988682237481), 0, 0, 0);
+            poly29.AddVertexAt(5, new Point2d(scale1 * 1.22265534837138, scale1 * 0.286653755052303), 0, 0, 0);
+            poly29.AddVertexAt(6, new Point2d(scale1 * 1.21657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly29.Closed = true;
+            poly29.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly29.Layer = "0";
+            poly29.Color = color_GPGM;
+            poly29.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly29);
+            Polyline poly30 = new Polyline();
+            poly30.AddVertexAt(0, new Point2d(scale1 * 1.21108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly30.AddVertexAt(1, new Point2d(scale1 * 1.20947696180731, scale1 * 0.263254670769046), 0, 0, 0);
+            poly30.AddVertexAt(2, new Point2d(scale1 * 1.2097107401244, scale1 * 0.259607729022446), 0, 0, 0);
+            poly30.AddVertexAt(3, new Point2d(scale1 * 1.21064585339276, scale1 * 0.256802389217368), 0, 0, 0);
+            poly30.AddVertexAt(4, new Point2d(scale1 * 1.21485386310037, scale1 * 0.255960787275844), 0, 0, 0);
+            poly30.AddVertexAt(5, new Point2d(scale1 * 1.21906187280799, scale1 * 0.256521855236861), 0, 0, 0);
+            poly30.AddVertexAt(6, new Point2d(scale1 * 1.22256854756433, scale1 * 0.258625860090668), 0, 0, 0);
+            poly30.AddVertexAt(7, new Point2d(scale1 * 1.21906187280799, scale1 * 0.263535204749552), 0, 0, 0);
+            poly30.AddVertexAt(8, new Point2d(scale1 * 1.21108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly30.Closed = true;
+            poly30.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly30.Layer = "0";
+            poly30.Color = color_GPGM;
+            poly30.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly30);
+            Polyline poly31 = new Polyline();
+            poly31.AddVertexAt(0, new Point2d(scale1 * 1.28797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly31.AddVertexAt(1, new Point2d(scale1 * 1.28470254852392, scale1 * 0.288936281530065), 0, 0, 0);
+            poly31.AddVertexAt(2, new Point2d(scale1 * 1.28259854367012, scale1 * 0.283746402890672), 0, 0, 0);
+            poly31.AddVertexAt(3, new Point2d(scale1 * 1.28259854367012, scale1 * 0.281221597066103), 0, 0, 0);
+            poly31.AddVertexAt(4, new Point2d(scale1 * 1.28189720871885, scale1 * 0.275751184446203), 0, 0, 0);
+            poly31.AddVertexAt(5, new Point2d(scale1 * 1.28540388347519, scale1 * 0.273366645611888), 0, 0, 0);
+            poly31.AddVertexAt(6, new Point2d(scale1 * 1.29031322813408, scale1 * 0.272525043670365), 0, 0, 0);
+            poly31.AddVertexAt(7, new Point2d(scale1 * 1.30176836567148, scale1 * 0.272945844641126), 0, 0, 0);
+            poly31.AddVertexAt(8, new Point2d(scale1 * 1.30480748379364, scale1 * 0.274488781533918), 0, 0, 0);
+            poly31.AddVertexAt(9, new Point2d(scale1 * 1.305742597062, scale1 * 0.278275990270772), 0, 0, 0);
+            poly31.AddVertexAt(10, new Point2d(scale1 * 1.30270347893983, scale1 * 0.28037999512458), 0, 0, 0);
+            poly31.AddVertexAt(11, new Point2d(scale1 * 1.29989813913476, scale1 * 0.282764533958894), 0, 0, 0);
+            poly31.AddVertexAt(12, new Point2d(scale1 * 1.29756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly31.AddVertexAt(13, new Point2d(scale1 * 1.29569012942714, scale1 * 0.288796014539811), 0, 0, 0);
+            poly31.AddVertexAt(14, new Point2d(scale1 * 1.29148211971953, scale1 * 0.289777883471588), 0, 0, 0);
+            poly31.AddVertexAt(15, new Point2d(scale1 * 1.28797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly31.Closed = true;
+            poly31.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly31.Layer = "0";
+            poly31.Color = color_GPGM;
+            poly31.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly31);
+            Polyline poly32 = new Polyline();
+            poly32.AddVertexAt(0, new Point2d(scale1 * 1.25836727263602, scale1 * 0.274437775355651), 0, 0, 0);
+            poly32.AddVertexAt(1, new Point2d(scale1 * 1.26608195709998, scale1 * 0.272754571472604), 0, 0, 0);
+            poly32.AddVertexAt(2, new Point2d(scale1 * 1.26935485353923, scale1 * 0.268125760794228), 0, 0, 0);
+            poly32.AddVertexAt(3, new Point2d(scale1 * 1.26608195709998, scale1 * 0.263637217106105), 0, 0, 0);
+            poly32.AddVertexAt(4, new Point2d(scale1 * 1.25836727263602, scale1 * 0.261954013223059), 0, 0, 0);
+            poly32.AddVertexAt(5, new Point2d(scale1 * 1.2497174749037, scale1 * 0.261392945262043), 0, 0, 0);
+            poly32.AddVertexAt(6, new Point2d(scale1 * 1.2450419085619, scale1 * 0.26237481419382), 0, 0, 0);
+            poly32.AddVertexAt(7, new Point2d(scale1 * 1.24130145548847, scale1 * 0.26489962001839), 0, 0, 0);
+            poly32.AddVertexAt(8, new Point2d(scale1 * 1.23078143121943, scale1 * 0.268967362735751), 0, 0, 0);
+            poly32.AddVertexAt(9, new Point2d(scale1 * 1.22517075160927, scale1 * 0.272894838462859), 0, 0, 0);
+            poly32.AddVertexAt(10, new Point2d(scale1 * 1.22657342151181, scale1 * 0.27471830933616), 0, 0, 0);
+            poly32.AddVertexAt(11, new Point2d(scale1 * 1.23498944092704, scale1 * 0.278365251082757), 0, 0, 0);
+            poly32.AddVertexAt(12, new Point2d(scale1 * 1.24153523380556, scale1 * 0.279066586034028), 0, 0, 0);
+            poly32.AddVertexAt(13, new Point2d(scale1 * 1.24574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly32.AddVertexAt(14, new Point2d(scale1 * 1.25135392312332, scale1 * 0.276541780209458), 0, 0, 0);
+            poly32.AddVertexAt(15, new Point2d(scale1 * 1.25579571114803, scale1 * 0.275840445258188), 0, 0, 0);
+            poly32.Closed = true;
+            poly32.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly32.Layer = "0";
+            poly32.Color = color_GPGM;
+            poly32.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly32);
+            Polyline poly33 = new Polyline();
+            poly33.AddVertexAt(0, new Point2d(scale1 * 1.27889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly33.AddVertexAt(1, new Point2d(scale1 * 1.27274102660718, scale1 * 0.262017770945895), 0, 0, 0);
+            poly33.AddVertexAt(2, new Point2d(scale1 * 1.26743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly33.AddVertexAt(3, new Point2d(scale1 * 1.26637081491274, scale1 * 0.256662122227115), 0, 0, 0);
+            poly33.AddVertexAt(4, new Point2d(scale1 * 1.27167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly33.AddVertexAt(5, new Point2d(scale1 * 1.27826187674237, scale1 * 0.2567896376728), 0, 0, 0);
+            poly33.AddVertexAt(6, new Point2d(scale1 * 1.28208400375904, scale1 * 0.259467462032192), 0, 0, 0);
+            poly33.AddVertexAt(7, new Point2d(scale1 * 1.27889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly33.Closed = true;
+            poly33.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly33.Layer = "0";
+            poly33.Color = color_GPGM;
+            poly33.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly33);
+            Polyline poly34 = new Polyline();
+            poly34.AddVertexAt(0, new Point2d(scale1 * 1.29647313832164, scale1 * 0.248628649148944), 0, 0, 0);
+            poly34.AddVertexAt(1, new Point2d(scale1 * 1.29670691663873, scale1 * 0.243298503519296), 0, 0, 0);
+            poly34.AddVertexAt(2, new Point2d(scale1 * 1.29507046841911, scale1 * 0.242036100607014), 0, 0, 0);
+            poly34.AddVertexAt(3, new Point2d(scale1 * 1.29086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly34.AddVertexAt(4, new Point2d(scale1 * 1.28688822732096, scale1 * 0.240773697694727), 0, 0, 0);
+            poly34.AddVertexAt(5, new Point2d(scale1 * 1.2838491091988, scale1 * 0.242036100607014), 0, 0, 0);
+            poly34.AddVertexAt(6, new Point2d(scale1 * 1.28057621275954, scale1 * 0.243298503519296), 0, 0, 0);
+            poly34.AddVertexAt(7, new Point2d(scale1 * 1.27753709463737, scale1 * 0.244560906431583), 0, 0, 0);
+            poly34.AddVertexAt(8, new Point2d(scale1 * 1.27566686810066, scale1 * 0.246945445265898), 0, 0, 0);
+            poly34.AddVertexAt(9, new Point2d(scale1 * 1.27566686810066, scale1 * 0.248628649148944), 0, 0, 0);
+            poly34.AddVertexAt(10, new Point2d(scale1 * 1.279173542857, scale1 * 0.252275590895543), 0, 0, 0);
+            poly34.AddVertexAt(11, new Point2d(scale1 * 1.28595311405261, scale1 * 0.253818527788335), 0, 0, 0);
+            poly34.AddVertexAt(12, new Point2d(scale1 * 1.29273268524821, scale1 * 0.252275590895543), 0, 0, 0);
+            poly34.Closed = true;
+            poly34.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly34.Layer = "0";
+            poly34.Color = color_GPGM;
+            poly34.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly34);
+            Polyline poly35 = new Polyline();
+            poly35.AddVertexAt(0, new Point2d(scale1 * 1.26210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly35.AddVertexAt(1, new Point2d(scale1 * 1.25930238590438, scale1 * 0.241895833616759), 0, 0, 0);
+            poly35.AddVertexAt(2, new Point2d(scale1 * 1.26023749917273, scale1 * 0.240072362743458), 0, 0, 0);
+            poly35.AddVertexAt(3, new Point2d(scale1 * 1.26164016907527, scale1 * 0.237968357889651), 0, 0, 0);
+            poly35.AddVertexAt(4, new Point2d(scale1 * 1.26467928719744, scale1 * 0.237687823909144), 0, 0, 0);
+            poly35.AddVertexAt(5, new Point2d(scale1 * 1.26818596195379, scale1 * 0.23937102779219), 0, 0, 0);
+            poly35.AddVertexAt(6, new Point2d(scale1 * 1.26818596195379, scale1 * 0.241615299636252), 0, 0, 0);
+            poly35.AddVertexAt(7, new Point2d(scale1 * 1.26584817878289, scale1 * 0.244140105460821), 0, 0, 0);
+            poly35.AddVertexAt(8, new Point2d(scale1 * 1.26210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly35.Closed = true;
+            poly35.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly35.Layer = "0";
+            poly35.Color = color_GPGM;
+            poly35.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly35);
+            Polyline poly36 = new Polyline();
+            poly36.AddVertexAt(0, new Point2d(scale1 * 1.21652095387695, scale1 * 0.248628649148944), 0, 0, 0);
+            poly36.AddVertexAt(1, new Point2d(scale1 * 1.22306674675547, scale1 * 0.250452120022245), 0, 0, 0);
+            poly36.AddVertexAt(2, new Point2d(scale1 * 1.2359245541954, scale1 * 0.249750785070974), 0, 0, 0);
+            poly36.AddVertexAt(3, new Point2d(scale1 * 1.24247034707391, scale1 * 0.248628649148944), 0, 0, 0);
+            poly36.AddVertexAt(4, new Point2d(scale1 * 1.24363923865936, scale1 * 0.246805178275643), 0, 0, 0);
+            poly36.AddVertexAt(5, new Point2d(scale1 * 1.24387301697645, scale1 * 0.244981707402343), 0, 0, 0);
+            poly36.AddVertexAt(6, new Point2d(scale1 * 1.24410679529354, scale1 * 0.242737435558282), 0, 0, 0);
+            poly36.AddVertexAt(7, new Point2d(scale1 * 1.24597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly36.AddVertexAt(8, new Point2d(scale1 * 1.24457435192772, scale1 * 0.237407289928637), 0, 0, 0);
+            poly36.AddVertexAt(9, new Point2d(scale1 * 1.23943122895175, scale1 * 0.235583819055336), 0, 0, 0);
+            poly36.AddVertexAt(10, new Point2d(scale1 * 1.22937876131689, scale1 * 0.235303285074829), 0, 0, 0);
+            poly36.AddVertexAt(11, new Point2d(scale1 * 1.224469416658, scale1 * 0.236144887016352), 0, 0, 0);
+            poly36.AddVertexAt(12, new Point2d(scale1 * 1.22096274190166, scale1 * 0.237828090899398), 0, 0, 0);
+            poly36.AddVertexAt(13, new Point2d(scale1 * 1.2176898454624, scale1 * 0.241054231675236), 0, 0, 0);
+            poly36.AddVertexAt(14, new Point2d(scale1 * 1.21581961892568, scale1 * 0.244420639441328), 0, 0, 0);
+            poly36.Closed = true;
+            poly36.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly36.Layer = "0";
+            poly36.Color = color_GPGM;
+            poly36.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly36);
+            Polyline poly37 = new Polyline();
+            poly37.AddVertexAt(0, new Point2d(scale1 * 1.16028574100171, scale1 * 0.3), 0, 0, 0);
+            poly37.AddVertexAt(1, new Point2d(scale1 * 1.16164016907527, scale1 * 0.297968357889651), 0, 0, 0);
+            poly37.AddVertexAt(2, new Point2d(scale1 * 1.16467928719744, scale1 * 0.297687823909144), 0, 0, 0);
+            poly37.AddVertexAt(3, new Point2d(scale1 * 1.16818596195379, scale1 * 0.29937102779219), 0, 0, 0);
+            poly37.AddVertexAt(4, new Point2d(scale1 * 1.16818596195379, scale1 * 0.3), 0, 0, 0);
+            poly37.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly37.Layer = "0";
+            poly37.Color = color_GPGM;
+            poly37.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly37);
+            Polyline poly38 = new Polyline();
+            poly38.AddVertexAt(0, new Point2d(scale1 * 1.14565464779079, scale1 * 0.3), 0, 0, 0);
+            poly38.AddVertexAt(1, new Point2d(scale1 * 1.14457435192772, scale1 * 0.297407289928637), 0, 0, 0);
+            poly38.AddVertexAt(2, new Point2d(scale1 * 1.13943122895175, scale1 * 0.295583819055336), 0, 0, 0);
+            poly38.AddVertexAt(3, new Point2d(scale1 * 1.12937876131689, scale1 * 0.295303285074829), 0, 0, 0);
+            poly38.AddVertexAt(4, new Point2d(scale1 * 1.124469416658, scale1 * 0.296144887016352), 0, 0, 0);
+            poly38.AddVertexAt(5, new Point2d(scale1 * 1.12096274190166, scale1 * 0.297828090899398), 0, 0, 0);
+            poly38.AddVertexAt(6, new Point2d(scale1 * 1.11875935585757, scale1 * 0.3), 0, 0, 0);
+            poly38.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly38.Layer = "0";
+            poly38.Color = color_GPGM;
+            poly38.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly38);
+            Polyline poly39 = new Polyline();
+            poly39.AddVertexAt(0, new Point2d(scale1 * 1.15836727263602, scale1 * 0.282994061761134), 0, 0, 0);
+            poly39.AddVertexAt(1, new Point2d(scale1 * 1.1564970460993, scale1 * 0.282853794770882), 0, 0, 0);
+            poly39.AddVertexAt(2, new Point2d(scale1 * 1.1541592629284, scale1 * 0.28355512972215), 0, 0, 0);
+            poly39.AddVertexAt(3, new Point2d(scale1 * 1.15228903639168, scale1 * 0.285518867585705), 0, 0, 0);
+            poly39.AddVertexAt(4, new Point2d(scale1 * 1.15392548461131, scale1 * 0.287061804478495), 0, 0, 0);
+            poly39.AddVertexAt(5, new Point2d(scale1 * 1.15836727263602, scale1 * 0.286220202536974), 0, 0, 0);
+            poly39.AddVertexAt(6, new Point2d(scale1 * 1.15953616422147, scale1 * 0.284817532634435), 0, 0, 0);
+            poly39.Closed = true;
+            poly39.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly39.Layer = "0";
+            poly39.Color = color_GPGM;
+            poly39.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly39);
+            Polyline poly40 = new Polyline();
+            poly40.AddVertexAt(0, new Point2d(scale1 * 1.1679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly40.AddVertexAt(1, new Point2d(scale1 * 1.16608195709998, scale1 * 0.282012192829359), 0, 0, 0);
+            poly40.AddVertexAt(2, new Point2d(scale1 * 1.16584817878289, scale1 * 0.280048454965803), 0, 0, 0);
+            poly40.AddVertexAt(3, new Point2d(scale1 * 1.16841974027088, scale1 * 0.278505518073012), 0, 0, 0);
+            poly40.AddVertexAt(4, new Point2d(scale1 * 1.17169263671013, scale1 * 0.278926319043773), 0, 0, 0);
+            poly40.AddVertexAt(5, new Point2d(scale1 * 1.1723939716614, scale1 * 0.281030323897581), 0, 0, 0);
+            poly40.AddVertexAt(6, new Point2d(scale1 * 1.17192641502722, scale1 * 0.282713527780627), 0, 0, 0);
+            poly40.AddVertexAt(7, new Point2d(scale1 * 1.1679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly40.Closed = true;
+            poly40.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly40.Layer = "0";
+            poly40.Color = color_GPGM;
+            poly40.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly40);
+            Polyline poly41 = new Polyline();
+            poly41.AddVertexAt(0, new Point2d(scale1 * 1.11657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly41.AddVertexAt(1, new Point2d(scale1 * 1.11423932895615, scale1 * 0.285251085149766), 0, 0, 0);
+            poly41.AddVertexAt(2, new Point2d(scale1 * 1.11564199885869, scale1 * 0.283427614276465), 0, 0, 0);
+            poly41.AddVertexAt(3, new Point2d(scale1 * 1.11961623024921, scale1 * 0.282726279325197), 0, 0, 0);
+            poly41.AddVertexAt(4, new Point2d(scale1 * 1.12265534837138, scale1 * 0.283988682237481), 0, 0, 0);
+            poly41.AddVertexAt(5, new Point2d(scale1 * 1.12265534837138, scale1 * 0.286653755052303), 0, 0, 0);
+            poly41.AddVertexAt(6, new Point2d(scale1 * 1.11657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly41.Closed = true;
+            poly41.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly41.Layer = "0";
+            poly41.Color = color_GPGM;
+            poly41.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly41);
+            Polyline poly42 = new Polyline();
+            poly42.AddVertexAt(0, new Point2d(scale1 * 1.11108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly42.AddVertexAt(1, new Point2d(scale1 * 1.10947696180731, scale1 * 0.263254670769046), 0, 0, 0);
+            poly42.AddVertexAt(2, new Point2d(scale1 * 1.1097107401244, scale1 * 0.259607729022446), 0, 0, 0);
+            poly42.AddVertexAt(3, new Point2d(scale1 * 1.11064585339276, scale1 * 0.256802389217368), 0, 0, 0);
+            poly42.AddVertexAt(4, new Point2d(scale1 * 1.11485386310037, scale1 * 0.255960787275844), 0, 0, 0);
+            poly42.AddVertexAt(5, new Point2d(scale1 * 1.11906187280799, scale1 * 0.256521855236861), 0, 0, 0);
+            poly42.AddVertexAt(6, new Point2d(scale1 * 1.12256854756433, scale1 * 0.258625860090668), 0, 0, 0);
+            poly42.AddVertexAt(7, new Point2d(scale1 * 1.11906187280799, scale1 * 0.263535204749552), 0, 0, 0);
+            poly42.AddVertexAt(8, new Point2d(scale1 * 1.11108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly42.Closed = true;
+            poly42.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly42.Layer = "0";
+            poly42.Color = color_GPGM;
+            poly42.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly42);
+            Polyline poly43 = new Polyline();
+            poly43.AddVertexAt(0, new Point2d(scale1 * 1.18797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly43.AddVertexAt(1, new Point2d(scale1 * 1.18470254852392, scale1 * 0.288936281530065), 0, 0, 0);
+            poly43.AddVertexAt(2, new Point2d(scale1 * 1.18259854367012, scale1 * 0.283746402890672), 0, 0, 0);
+            poly43.AddVertexAt(3, new Point2d(scale1 * 1.18259854367012, scale1 * 0.281221597066103), 0, 0, 0);
+            poly43.AddVertexAt(4, new Point2d(scale1 * 1.18189720871885, scale1 * 0.275751184446203), 0, 0, 0);
+            poly43.AddVertexAt(5, new Point2d(scale1 * 1.18540388347519, scale1 * 0.273366645611888), 0, 0, 0);
+            poly43.AddVertexAt(6, new Point2d(scale1 * 1.19031322813408, scale1 * 0.272525043670365), 0, 0, 0);
+            poly43.AddVertexAt(7, new Point2d(scale1 * 1.20176836567148, scale1 * 0.272945844641126), 0, 0, 0);
+            poly43.AddVertexAt(8, new Point2d(scale1 * 1.20480748379364, scale1 * 0.274488781533918), 0, 0, 0);
+            poly43.AddVertexAt(9, new Point2d(scale1 * 1.205742597062, scale1 * 0.278275990270772), 0, 0, 0);
+            poly43.AddVertexAt(10, new Point2d(scale1 * 1.20270347893983, scale1 * 0.28037999512458), 0, 0, 0);
+            poly43.AddVertexAt(11, new Point2d(scale1 * 1.19989813913476, scale1 * 0.282764533958894), 0, 0, 0);
+            poly43.AddVertexAt(12, new Point2d(scale1 * 1.19756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly43.AddVertexAt(13, new Point2d(scale1 * 1.19569012942714, scale1 * 0.288796014539811), 0, 0, 0);
+            poly43.AddVertexAt(14, new Point2d(scale1 * 1.19148211971953, scale1 * 0.289777883471588), 0, 0, 0);
+            poly43.AddVertexAt(15, new Point2d(scale1 * 1.18797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly43.Closed = true;
+            poly43.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly43.Layer = "0";
+            poly43.Color = color_GPGM;
+            poly43.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly43);
+            Polyline poly44 = new Polyline();
+            poly44.AddVertexAt(0, new Point2d(scale1 * 1.15836727263602, scale1 * 0.274437775355651), 0, 0, 0);
+            poly44.AddVertexAt(1, new Point2d(scale1 * 1.16608195709998, scale1 * 0.272754571472604), 0, 0, 0);
+            poly44.AddVertexAt(2, new Point2d(scale1 * 1.16935485353923, scale1 * 0.268125760794228), 0, 0, 0);
+            poly44.AddVertexAt(3, new Point2d(scale1 * 1.16608195709998, scale1 * 0.263637217106105), 0, 0, 0);
+            poly44.AddVertexAt(4, new Point2d(scale1 * 1.15836727263602, scale1 * 0.261954013223059), 0, 0, 0);
+            poly44.AddVertexAt(5, new Point2d(scale1 * 1.1497174749037, scale1 * 0.261392945262043), 0, 0, 0);
+            poly44.AddVertexAt(6, new Point2d(scale1 * 1.1450419085619, scale1 * 0.26237481419382), 0, 0, 0);
+            poly44.AddVertexAt(7, new Point2d(scale1 * 1.14130145548847, scale1 * 0.26489962001839), 0, 0, 0);
+            poly44.AddVertexAt(8, new Point2d(scale1 * 1.13078143121943, scale1 * 0.268967362735751), 0, 0, 0);
+            poly44.AddVertexAt(9, new Point2d(scale1 * 1.12517075160927, scale1 * 0.272894838462859), 0, 0, 0);
+            poly44.AddVertexAt(10, new Point2d(scale1 * 1.12657342151181, scale1 * 0.27471830933616), 0, 0, 0);
+            poly44.AddVertexAt(11, new Point2d(scale1 * 1.13498944092704, scale1 * 0.278365251082757), 0, 0, 0);
+            poly44.AddVertexAt(12, new Point2d(scale1 * 1.14153523380556, scale1 * 0.279066586034028), 0, 0, 0);
+            poly44.AddVertexAt(13, new Point2d(scale1 * 1.14574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly44.AddVertexAt(14, new Point2d(scale1 * 1.15135392312332, scale1 * 0.276541780209458), 0, 0, 0);
+            poly44.AddVertexAt(15, new Point2d(scale1 * 1.15579571114803, scale1 * 0.275840445258188), 0, 0, 0);
+            poly44.Closed = true;
+            poly44.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly44.Layer = "0";
+            poly44.Color = color_GPGM;
+            poly44.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly44);
+            Polyline poly45 = new Polyline();
+            poly45.AddVertexAt(0, new Point2d(scale1 * 1.17889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly45.AddVertexAt(1, new Point2d(scale1 * 1.17274102660718, scale1 * 0.262017770945895), 0, 0, 0);
+            poly45.AddVertexAt(2, new Point2d(scale1 * 1.16743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly45.AddVertexAt(3, new Point2d(scale1 * 1.16637081491274, scale1 * 0.256662122227115), 0, 0, 0);
+            poly45.AddVertexAt(4, new Point2d(scale1 * 1.17167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly45.AddVertexAt(5, new Point2d(scale1 * 1.17826187674237, scale1 * 0.2567896376728), 0, 0, 0);
+            poly45.AddVertexAt(6, new Point2d(scale1 * 1.18208400375904, scale1 * 0.259467462032192), 0, 0, 0);
+            poly45.AddVertexAt(7, new Point2d(scale1 * 1.17889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly45.Closed = true;
+            poly45.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly45.Layer = "0";
+            poly45.Color = color_GPGM;
+            poly45.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly45);
+            Polyline poly46 = new Polyline();
+            poly46.AddVertexAt(0, new Point2d(scale1 * 1.19647313832164, scale1 * 0.248628649148944), 0, 0, 0);
+            poly46.AddVertexAt(1, new Point2d(scale1 * 1.19670691663873, scale1 * 0.243298503519296), 0, 0, 0);
+            poly46.AddVertexAt(2, new Point2d(scale1 * 1.19507046841911, scale1 * 0.242036100607014), 0, 0, 0);
+            poly46.AddVertexAt(3, new Point2d(scale1 * 1.19086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly46.AddVertexAt(4, new Point2d(scale1 * 1.18688822732096, scale1 * 0.240773697694727), 0, 0, 0);
+            poly46.AddVertexAt(5, new Point2d(scale1 * 1.1838491091988, scale1 * 0.242036100607014), 0, 0, 0);
+            poly46.AddVertexAt(6, new Point2d(scale1 * 1.18057621275954, scale1 * 0.243298503519296), 0, 0, 0);
+            poly46.AddVertexAt(7, new Point2d(scale1 * 1.17753709463737, scale1 * 0.244560906431583), 0, 0, 0);
+            poly46.AddVertexAt(8, new Point2d(scale1 * 1.17566686810066, scale1 * 0.246945445265898), 0, 0, 0);
+            poly46.AddVertexAt(9, new Point2d(scale1 * 1.17566686810066, scale1 * 0.248628649148944), 0, 0, 0);
+            poly46.AddVertexAt(10, new Point2d(scale1 * 1.179173542857, scale1 * 0.252275590895543), 0, 0, 0);
+            poly46.AddVertexAt(11, new Point2d(scale1 * 1.18595311405261, scale1 * 0.253818527788335), 0, 0, 0);
+            poly46.AddVertexAt(12, new Point2d(scale1 * 1.19273268524821, scale1 * 0.252275590895543), 0, 0, 0);
+            poly46.Closed = true;
+            poly46.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly46.Layer = "0";
+            poly46.Color = color_GPGM;
+            poly46.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly46);
+            Polyline poly47 = new Polyline();
+            poly47.AddVertexAt(0, new Point2d(scale1 * 1.16210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly47.AddVertexAt(1, new Point2d(scale1 * 1.15930238590438, scale1 * 0.241895833616759), 0, 0, 0);
+            poly47.AddVertexAt(2, new Point2d(scale1 * 1.16023749917273, scale1 * 0.240072362743458), 0, 0, 0);
+            poly47.AddVertexAt(3, new Point2d(scale1 * 1.16164016907527, scale1 * 0.237968357889651), 0, 0, 0);
+            poly47.AddVertexAt(4, new Point2d(scale1 * 1.16467928719744, scale1 * 0.237687823909144), 0, 0, 0);
+            poly47.AddVertexAt(5, new Point2d(scale1 * 1.16818596195379, scale1 * 0.23937102779219), 0, 0, 0);
+            poly47.AddVertexAt(6, new Point2d(scale1 * 1.16818596195379, scale1 * 0.241615299636252), 0, 0, 0);
+            poly47.AddVertexAt(7, new Point2d(scale1 * 1.16584817878289, scale1 * 0.244140105460821), 0, 0, 0);
+            poly47.AddVertexAt(8, new Point2d(scale1 * 1.16210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly47.Closed = true;
+            poly47.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly47.Layer = "0";
+            poly47.Color = color_GPGM;
+            poly47.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly47);
+            Polyline poly48 = new Polyline();
+            poly48.AddVertexAt(0, new Point2d(scale1 * 1.11652095387695, scale1 * 0.248628649148944), 0, 0, 0);
+            poly48.AddVertexAt(1, new Point2d(scale1 * 1.12306674675547, scale1 * 0.250452120022245), 0, 0, 0);
+            poly48.AddVertexAt(2, new Point2d(scale1 * 1.1359245541954, scale1 * 0.249750785070974), 0, 0, 0);
+            poly48.AddVertexAt(3, new Point2d(scale1 * 1.14247034707391, scale1 * 0.248628649148944), 0, 0, 0);
+            poly48.AddVertexAt(4, new Point2d(scale1 * 1.14363923865936, scale1 * 0.246805178275643), 0, 0, 0);
+            poly48.AddVertexAt(5, new Point2d(scale1 * 1.14387301697645, scale1 * 0.244981707402343), 0, 0, 0);
+            poly48.AddVertexAt(6, new Point2d(scale1 * 1.14410679529354, scale1 * 0.242737435558282), 0, 0, 0);
+            poly48.AddVertexAt(7, new Point2d(scale1 * 1.14597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly48.AddVertexAt(8, new Point2d(scale1 * 1.14457435192772, scale1 * 0.237407289928637), 0, 0, 0);
+            poly48.AddVertexAt(9, new Point2d(scale1 * 1.13943122895175, scale1 * 0.235583819055336), 0, 0, 0);
+            poly48.AddVertexAt(10, new Point2d(scale1 * 1.12937876131689, scale1 * 0.235303285074829), 0, 0, 0);
+            poly48.AddVertexAt(11, new Point2d(scale1 * 1.124469416658, scale1 * 0.236144887016352), 0, 0, 0);
+            poly48.AddVertexAt(12, new Point2d(scale1 * 1.12096274190166, scale1 * 0.237828090899398), 0, 0, 0);
+            poly48.AddVertexAt(13, new Point2d(scale1 * 1.1176898454624, scale1 * 0.241054231675236), 0, 0, 0);
+            poly48.AddVertexAt(14, new Point2d(scale1 * 1.11581961892568, scale1 * 0.244420639441328), 0, 0, 0);
+            poly48.Closed = true;
+            poly48.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly48.Layer = "0";
+            poly48.Color = color_GPGM;
+            poly48.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly48);
+            Polyline poly49 = new Polyline();
+            poly49.AddVertexAt(0, new Point2d(scale1 * 1.06028574100171, scale1 * 0.3), 0, 0, 0);
+            poly49.AddVertexAt(1, new Point2d(scale1 * 1.06164016907527, scale1 * 0.297968357889651), 0, 0, 0);
+            poly49.AddVertexAt(2, new Point2d(scale1 * 1.06467928719744, scale1 * 0.297687823909144), 0, 0, 0);
+            poly49.AddVertexAt(3, new Point2d(scale1 * 1.06818596195379, scale1 * 0.29937102779219), 0, 0, 0);
+            poly49.AddVertexAt(4, new Point2d(scale1 * 1.06818596195379, scale1 * 0.3), 0, 0, 0);
+            poly49.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly49.Layer = "0";
+            poly49.Color = color_GPGM;
+            poly49.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly49);
+            Polyline poly50 = new Polyline();
+            poly50.AddVertexAt(0, new Point2d(scale1 * 1.04565464779079, scale1 * 0.3), 0, 0, 0);
+            poly50.AddVertexAt(1, new Point2d(scale1 * 1.04457435192772, scale1 * 0.297407289928637), 0, 0, 0);
+            poly50.AddVertexAt(2, new Point2d(scale1 * 1.03943122895175, scale1 * 0.295583819055336), 0, 0, 0);
+            poly50.AddVertexAt(3, new Point2d(scale1 * 1.02937876131689, scale1 * 0.295303285074829), 0, 0, 0);
+            poly50.AddVertexAt(4, new Point2d(scale1 * 1.024469416658, scale1 * 0.296144887016352), 0, 0, 0);
+            poly50.AddVertexAt(5, new Point2d(scale1 * 1.02096274190166, scale1 * 0.297828090899398), 0, 0, 0);
+            poly50.AddVertexAt(6, new Point2d(scale1 * 1.01875935585757, scale1 * 0.3), 0, 0, 0);
+            poly50.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly50.Layer = "0";
+            poly50.Color = color_GPGM;
+            poly50.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly50);
+            Polyline poly51 = new Polyline();
+            poly51.AddVertexAt(0, new Point2d(scale1 * 1.05836727263602, scale1 * 0.282994061761134), 0, 0, 0);
+            poly51.AddVertexAt(1, new Point2d(scale1 * 1.0564970460993, scale1 * 0.282853794770882), 0, 0, 0);
+            poly51.AddVertexAt(2, new Point2d(scale1 * 1.0541592629284, scale1 * 0.28355512972215), 0, 0, 0);
+            poly51.AddVertexAt(3, new Point2d(scale1 * 1.05228903639168, scale1 * 0.285518867585705), 0, 0, 0);
+            poly51.AddVertexAt(4, new Point2d(scale1 * 1.05392548461131, scale1 * 0.287061804478495), 0, 0, 0);
+            poly51.AddVertexAt(5, new Point2d(scale1 * 1.05836727263602, scale1 * 0.286220202536974), 0, 0, 0);
+            poly51.AddVertexAt(6, new Point2d(scale1 * 1.05953616422147, scale1 * 0.284817532634435), 0, 0, 0);
+            poly51.Closed = true;
+            poly51.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly51.Layer = "0";
+            poly51.Color = color_GPGM;
+            poly51.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly51);
+            Polyline poly52 = new Polyline();
+            poly52.AddVertexAt(0, new Point2d(scale1 * 1.0679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly52.AddVertexAt(1, new Point2d(scale1 * 1.06608195709998, scale1 * 0.282012192829359), 0, 0, 0);
+            poly52.AddVertexAt(2, new Point2d(scale1 * 1.06584817878289, scale1 * 0.280048454965803), 0, 0, 0);
+            poly52.AddVertexAt(3, new Point2d(scale1 * 1.06841974027088, scale1 * 0.278505518073012), 0, 0, 0);
+            poly52.AddVertexAt(4, new Point2d(scale1 * 1.07169263671013, scale1 * 0.278926319043773), 0, 0, 0);
+            poly52.AddVertexAt(5, new Point2d(scale1 * 1.0723939716614, scale1 * 0.281030323897581), 0, 0, 0);
+            poly52.AddVertexAt(6, new Point2d(scale1 * 1.07192641502722, scale1 * 0.282713527780627), 0, 0, 0);
+            poly52.AddVertexAt(7, new Point2d(scale1 * 1.0679521836367, scale1 * 0.28355512972215), 0, 0, 0);
+            poly52.Closed = true;
+            poly52.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly52.Layer = "0";
+            poly52.Color = color_GPGM;
+            poly52.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly52);
+            Polyline poly53 = new Polyline();
+            poly53.AddVertexAt(0, new Point2d(scale1 * 1.01657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly53.AddVertexAt(1, new Point2d(scale1 * 1.01423932895615, scale1 * 0.285251085149766), 0, 0, 0);
+            poly53.AddVertexAt(2, new Point2d(scale1 * 1.01564199885869, scale1 * 0.283427614276465), 0, 0, 0);
+            poly53.AddVertexAt(3, new Point2d(scale1 * 1.01961623024921, scale1 * 0.282726279325197), 0, 0, 0);
+            poly53.AddVertexAt(4, new Point2d(scale1 * 1.02265534837138, scale1 * 0.283988682237481), 0, 0, 0);
+            poly53.AddVertexAt(5, new Point2d(scale1 * 1.02265534837138, scale1 * 0.286653755052303), 0, 0, 0);
+            poly53.AddVertexAt(6, new Point2d(scale1 * 1.01657711212705, scale1 * 0.287355090003573), 0, 0, 0);
+            poly53.Closed = true;
+            poly53.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly53.Layer = "0";
+            poly53.Color = color_GPGM;
+            poly53.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly53);
+            Polyline poly54 = new Polyline();
+            poly54.AddVertexAt(0, new Point2d(scale1 * 1.01108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly54.AddVertexAt(1, new Point2d(scale1 * 1.00947696180731, scale1 * 0.263254670769046), 0, 0, 0);
+            poly54.AddVertexAt(2, new Point2d(scale1 * 1.0097107401244, scale1 * 0.259607729022446), 0, 0, 0);
+            poly54.AddVertexAt(3, new Point2d(scale1 * 1.01064585339276, scale1 * 0.256802389217368), 0, 0, 0);
+            poly54.AddVertexAt(4, new Point2d(scale1 * 1.01485386310037, scale1 * 0.255960787275844), 0, 0, 0);
+            poly54.AddVertexAt(5, new Point2d(scale1 * 1.01906187280799, scale1 * 0.256521855236861), 0, 0, 0);
+            poly54.AddVertexAt(6, new Point2d(scale1 * 1.02256854756433, scale1 * 0.258625860090668), 0, 0, 0);
+            poly54.AddVertexAt(7, new Point2d(scale1 * 1.01906187280799, scale1 * 0.263535204749552), 0, 0, 0);
+            poly54.AddVertexAt(8, new Point2d(scale1 * 1.01108075824353, scale1 * 0.266735842436258), 0, 0, 0);
+            poly54.Closed = true;
+            poly54.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly54.Layer = "0";
+            poly54.Color = color_GPGM;
+            poly54.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly54);
+            Polyline poly55 = new Polyline();
+            poly55.AddVertexAt(0, new Point2d(scale1 * 1.08797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly55.AddVertexAt(1, new Point2d(scale1 * 1.08470254852392, scale1 * 0.288936281530065), 0, 0, 0);
+            poly55.AddVertexAt(2, new Point2d(scale1 * 1.08259854367012, scale1 * 0.283746402890672), 0, 0, 0);
+            poly55.AddVertexAt(3, new Point2d(scale1 * 1.08259854367012, scale1 * 0.281221597066103), 0, 0, 0);
+            poly55.AddVertexAt(4, new Point2d(scale1 * 1.08189720871885, scale1 * 0.275751184446203), 0, 0, 0);
+            poly55.AddVertexAt(5, new Point2d(scale1 * 1.08540388347519, scale1 * 0.273366645611888), 0, 0, 0);
+            poly55.AddVertexAt(6, new Point2d(scale1 * 1.09031322813408, scale1 * 0.272525043670365), 0, 0, 0);
+            poly55.AddVertexAt(7, new Point2d(scale1 * 1.10176836567147, scale1 * 0.272945844641126), 0, 0, 0);
+            poly55.AddVertexAt(8, new Point2d(scale1 * 1.10480748379364, scale1 * 0.274488781533918), 0, 0, 0);
+            poly55.AddVertexAt(9, new Point2d(scale1 * 1.105742597062, scale1 * 0.278275990270772), 0, 0, 0);
+            poly55.AddVertexAt(10, new Point2d(scale1 * 1.10270347893983, scale1 * 0.28037999512458), 0, 0, 0);
+            poly55.AddVertexAt(11, new Point2d(scale1 * 1.09989813913476, scale1 * 0.282764533958894), 0, 0, 0);
+            poly55.AddVertexAt(12, new Point2d(scale1 * 1.09756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly55.AddVertexAt(13, new Point2d(scale1 * 1.09569012942714, scale1 * 0.288796014539811), 0, 0, 0);
+            poly55.AddVertexAt(14, new Point2d(scale1 * 1.09148211971953, scale1 * 0.289777883471588), 0, 0, 0);
+            poly55.AddVertexAt(15, new Point2d(scale1 * 1.08797544496318, scale1 * 0.290759752403364), 0, 0, 0);
+            poly55.Closed = true;
+            poly55.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly55.Layer = "0";
+            poly55.Color = color_GPGM;
+            poly55.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly55);
+            Polyline poly56 = new Polyline();
+            poly56.AddVertexAt(0, new Point2d(scale1 * 1.05836727263602, scale1 * 0.274437775355651), 0, 0, 0);
+            poly56.AddVertexAt(1, new Point2d(scale1 * 1.06608195709998, scale1 * 0.272754571472604), 0, 0, 0);
+            poly56.AddVertexAt(2, new Point2d(scale1 * 1.06935485353923, scale1 * 0.268125760794228), 0, 0, 0);
+            poly56.AddVertexAt(3, new Point2d(scale1 * 1.06608195709998, scale1 * 0.263637217106105), 0, 0, 0);
+            poly56.AddVertexAt(4, new Point2d(scale1 * 1.05836727263602, scale1 * 0.261954013223059), 0, 0, 0);
+            poly56.AddVertexAt(5, new Point2d(scale1 * 1.0497174749037, scale1 * 0.261392945262043), 0, 0, 0);
+            poly56.AddVertexAt(6, new Point2d(scale1 * 1.0450419085619, scale1 * 0.26237481419382), 0, 0, 0);
+            poly56.AddVertexAt(7, new Point2d(scale1 * 1.04130145548847, scale1 * 0.26489962001839), 0, 0, 0);
+            poly56.AddVertexAt(8, new Point2d(scale1 * 1.03078143121943, scale1 * 0.268967362735751), 0, 0, 0);
+            poly56.AddVertexAt(9, new Point2d(scale1 * 1.02517075160927, scale1 * 0.272894838462859), 0, 0, 0);
+            poly56.AddVertexAt(10, new Point2d(scale1 * 1.02657342151181, scale1 * 0.27471830933616), 0, 0, 0);
+            poly56.AddVertexAt(11, new Point2d(scale1 * 1.03498944092704, scale1 * 0.278365251082757), 0, 0, 0);
+            poly56.AddVertexAt(12, new Point2d(scale1 * 1.04153523380556, scale1 * 0.279066586034028), 0, 0, 0);
+            poly56.AddVertexAt(13, new Point2d(scale1 * 1.04574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly56.AddVertexAt(14, new Point2d(scale1 * 1.05135392312332, scale1 * 0.276541780209458), 0, 0, 0);
+            poly56.AddVertexAt(15, new Point2d(scale1 * 1.05579571114803, scale1 * 0.275840445258188), 0, 0, 0);
+            poly56.Closed = true;
+            poly56.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly56.Layer = "0";
+            poly56.Color = color_GPGM;
+            poly56.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly56);
+            Polyline poly57 = new Polyline();
+            poly57.AddVertexAt(0, new Point2d(scale1 * 1.07889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly57.AddVertexAt(1, new Point2d(scale1 * 1.07274102660718, scale1 * 0.262017770945895), 0, 0, 0);
+            poly57.AddVertexAt(2, new Point2d(scale1 * 1.06743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly57.AddVertexAt(3, new Point2d(scale1 * 1.06637081491274, scale1 * 0.256662122227115), 0, 0, 0);
+            poly57.AddVertexAt(4, new Point2d(scale1 * 1.07167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly57.AddVertexAt(5, new Point2d(scale1 * 1.07826187674237, scale1 * 0.2567896376728), 0, 0, 0);
+            poly57.AddVertexAt(6, new Point2d(scale1 * 1.08208400375904, scale1 * 0.259467462032192), 0, 0, 0);
+            poly57.AddVertexAt(7, new Point2d(scale1 * 1.07889889791182, scale1 * 0.261890255500208), 0, 0, 0);
+            poly57.Closed = true;
+            poly57.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly57.Layer = "0";
+            poly57.Color = color_GPGM;
+            poly57.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly57);
+            Polyline poly58 = new Polyline();
+            poly58.AddVertexAt(0, new Point2d(scale1 * 1.09647313832164, scale1 * 0.248628649148944), 0, 0, 0);
+            poly58.AddVertexAt(1, new Point2d(scale1 * 1.09670691663873, scale1 * 0.243298503519296), 0, 0, 0);
+            poly58.AddVertexAt(2, new Point2d(scale1 * 1.09507046841911, scale1 * 0.242036100607014), 0, 0, 0);
+            poly58.AddVertexAt(3, new Point2d(scale1 * 1.09086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly58.AddVertexAt(4, new Point2d(scale1 * 1.08688822732096, scale1 * 0.240773697694727), 0, 0, 0);
+            poly58.AddVertexAt(5, new Point2d(scale1 * 1.0838491091988, scale1 * 0.242036100607014), 0, 0, 0);
+            poly58.AddVertexAt(6, new Point2d(scale1 * 1.08057621275954, scale1 * 0.243298503519296), 0, 0, 0);
+            poly58.AddVertexAt(7, new Point2d(scale1 * 1.07753709463737, scale1 * 0.244560906431583), 0, 0, 0);
+            poly58.AddVertexAt(8, new Point2d(scale1 * 1.07566686810066, scale1 * 0.246945445265898), 0, 0, 0);
+            poly58.AddVertexAt(9, new Point2d(scale1 * 1.07566686810066, scale1 * 0.248628649148944), 0, 0, 0);
+            poly58.AddVertexAt(10, new Point2d(scale1 * 1.079173542857, scale1 * 0.252275590895543), 0, 0, 0);
+            poly58.AddVertexAt(11, new Point2d(scale1 * 1.08595311405261, scale1 * 0.253818527788335), 0, 0, 0);
+            poly58.AddVertexAt(12, new Point2d(scale1 * 1.09273268524821, scale1 * 0.252275590895543), 0, 0, 0);
+            poly58.Closed = true;
+            poly58.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly58.Layer = "0";
+            poly58.Color = color_GPGM;
+            poly58.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly58);
+            Polyline poly59 = new Polyline();
+            poly59.AddVertexAt(0, new Point2d(scale1 * 1.06210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly59.AddVertexAt(1, new Point2d(scale1 * 1.05930238590438, scale1 * 0.241895833616759), 0, 0, 0);
+            poly59.AddVertexAt(2, new Point2d(scale1 * 1.06023749917273, scale1 * 0.240072362743458), 0, 0, 0);
+            poly59.AddVertexAt(3, new Point2d(scale1 * 1.06164016907527, scale1 * 0.237968357889651), 0, 0, 0);
+            poly59.AddVertexAt(4, new Point2d(scale1 * 1.06467928719744, scale1 * 0.237687823909144), 0, 0, 0);
+            poly59.AddVertexAt(5, new Point2d(scale1 * 1.06818596195379, scale1 * 0.23937102779219), 0, 0, 0);
+            poly59.AddVertexAt(6, new Point2d(scale1 * 1.06818596195379, scale1 * 0.241615299636252), 0, 0, 0);
+            poly59.AddVertexAt(7, new Point2d(scale1 * 1.06584817878289, scale1 * 0.244140105460821), 0, 0, 0);
+            poly59.AddVertexAt(8, new Point2d(scale1 * 1.06210772570945, scale1 * 0.243438770509551), 0, 0, 0);
+            poly59.Closed = true;
+            poly59.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly59.Layer = "0";
+            poly59.Color = color_GPGM;
+            poly59.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly59);
+            Polyline poly60 = new Polyline();
+            poly60.AddVertexAt(0, new Point2d(scale1 * 1.01652095387695, scale1 * 0.248628649148944), 0, 0, 0);
+            poly60.AddVertexAt(1, new Point2d(scale1 * 1.02306674675547, scale1 * 0.250452120022245), 0, 0, 0);
+            poly60.AddVertexAt(2, new Point2d(scale1 * 1.0359245541954, scale1 * 0.249750785070974), 0, 0, 0);
+            poly60.AddVertexAt(3, new Point2d(scale1 * 1.04247034707391, scale1 * 0.248628649148944), 0, 0, 0);
+            poly60.AddVertexAt(4, new Point2d(scale1 * 1.04363923865936, scale1 * 0.246805178275643), 0, 0, 0);
+            poly60.AddVertexAt(5, new Point2d(scale1 * 1.04387301697645, scale1 * 0.244981707402343), 0, 0, 0);
+            poly60.AddVertexAt(6, new Point2d(scale1 * 1.04410679529354, scale1 * 0.242737435558282), 0, 0, 0);
+            poly60.AddVertexAt(7, new Point2d(scale1 * 1.04597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly60.AddVertexAt(8, new Point2d(scale1 * 1.04457435192772, scale1 * 0.237407289928637), 0, 0, 0);
+            poly60.AddVertexAt(9, new Point2d(scale1 * 1.03943122895175, scale1 * 0.235583819055336), 0, 0, 0);
+            poly60.AddVertexAt(10, new Point2d(scale1 * 1.02937876131689, scale1 * 0.235303285074829), 0, 0, 0);
+            poly60.AddVertexAt(11, new Point2d(scale1 * 1.024469416658, scale1 * 0.236144887016352), 0, 0, 0);
+            poly60.AddVertexAt(12, new Point2d(scale1 * 1.02096274190166, scale1 * 0.237828090899398), 0, 0, 0);
+            poly60.AddVertexAt(13, new Point2d(scale1 * 1.0176898454624, scale1 * 0.241054231675236), 0, 0, 0);
+            poly60.AddVertexAt(14, new Point2d(scale1 * 1.01581961892568, scale1 * 0.244420639441328), 0, 0, 0);
+            poly60.Closed = true;
+            poly60.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly60.Layer = "0";
+            poly60.Color = color_GPGM;
+            poly60.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly60);
+            Polyline poly61 = new Polyline();
+            poly61.AddVertexAt(0, new Point2d(scale1 * 0.960285741001707, scale1 * 0.3), 0, 0, 0);
+            poly61.AddVertexAt(1, new Point2d(scale1 * 0.961640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly61.AddVertexAt(2, new Point2d(scale1 * 0.964679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly61.AddVertexAt(3, new Point2d(scale1 * 0.968185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly61.AddVertexAt(4, new Point2d(scale1 * 0.968185961953785, scale1 * 0.3), 0, 0, 0);
+            poly61.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly61.Layer = "0";
+            poly61.Color = color_GPGM;
+            poly61.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly61);
+            Polyline poly62 = new Polyline();
+            poly62.AddVertexAt(0, new Point2d(scale1 * 0.94565464779079, scale1 * 0.3), 0, 0, 0);
+            poly62.AddVertexAt(1, new Point2d(scale1 * 0.944574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly62.AddVertexAt(2, new Point2d(scale1 * 0.939431228951747, scale1 * 0.295583819055336), 0, 0, 0);
+            poly62.AddVertexAt(3, new Point2d(scale1 * 0.929378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly62.AddVertexAt(4, new Point2d(scale1 * 0.924469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly62.AddVertexAt(5, new Point2d(scale1 * 0.920962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly62.AddVertexAt(6, new Point2d(scale1 * 0.918759355857569, scale1 * 0.3), 0, 0, 0);
+            poly62.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly62.Layer = "0";
+            poly62.Color = color_GPGM;
+            poly62.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly62);
+            Polyline poly63 = new Polyline();
+            poly63.AddVertexAt(0, new Point2d(scale1 * 0.958367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly63.AddVertexAt(1, new Point2d(scale1 * 0.956497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly63.AddVertexAt(2, new Point2d(scale1 * 0.954159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly63.AddVertexAt(3, new Point2d(scale1 * 0.952289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly63.AddVertexAt(4, new Point2d(scale1 * 0.953925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly63.AddVertexAt(5, new Point2d(scale1 * 0.958367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly63.AddVertexAt(6, new Point2d(scale1 * 0.959536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly63.Closed = true;
+            poly63.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly63.Layer = "0";
+            poly63.Color = color_GPGM;
+            poly63.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly63);
+            Polyline poly64 = new Polyline();
+            poly64.AddVertexAt(0, new Point2d(scale1 * 0.967952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly64.AddVertexAt(1, new Point2d(scale1 * 0.966081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly64.AddVertexAt(2, new Point2d(scale1 * 0.965848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly64.AddVertexAt(3, new Point2d(scale1 * 0.968419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly64.AddVertexAt(4, new Point2d(scale1 * 0.971692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly64.AddVertexAt(5, new Point2d(scale1 * 0.972393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly64.AddVertexAt(6, new Point2d(scale1 * 0.971926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly64.AddVertexAt(7, new Point2d(scale1 * 0.967952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly64.Closed = true;
+            poly64.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly64.Layer = "0";
+            poly64.Color = color_GPGM;
+            poly64.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly64);
+            Polyline poly65 = new Polyline();
+            poly65.AddVertexAt(0, new Point2d(scale1 * 0.916577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly65.AddVertexAt(1, new Point2d(scale1 * 0.914239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly65.AddVertexAt(2, new Point2d(scale1 * 0.915641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly65.AddVertexAt(3, new Point2d(scale1 * 0.919616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly65.AddVertexAt(4, new Point2d(scale1 * 0.922655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly65.AddVertexAt(5, new Point2d(scale1 * 0.922655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly65.AddVertexAt(6, new Point2d(scale1 * 0.916577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly65.Closed = true;
+            poly65.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly65.Layer = "0";
+            poly65.Color = color_GPGM;
+            poly65.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly65);
+            Polyline poly66 = new Polyline();
+            poly66.AddVertexAt(0, new Point2d(scale1 * 0.911080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly66.AddVertexAt(1, new Point2d(scale1 * 0.909476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly66.AddVertexAt(2, new Point2d(scale1 * 0.909710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly66.AddVertexAt(3, new Point2d(scale1 * 0.910645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly66.AddVertexAt(4, new Point2d(scale1 * 0.914853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly66.AddVertexAt(5, new Point2d(scale1 * 0.919061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly66.AddVertexAt(6, new Point2d(scale1 * 0.922568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly66.AddVertexAt(7, new Point2d(scale1 * 0.919061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly66.AddVertexAt(8, new Point2d(scale1 * 0.911080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly66.Closed = true;
+            poly66.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly66.Layer = "0";
+            poly66.Color = color_GPGM;
+            poly66.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly66);
+            Polyline poly67 = new Polyline();
+            poly67.AddVertexAt(0, new Point2d(scale1 * 0.987975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly67.AddVertexAt(1, new Point2d(scale1 * 0.984702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly67.AddVertexAt(2, new Point2d(scale1 * 0.982598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly67.AddVertexAt(3, new Point2d(scale1 * 0.982598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly67.AddVertexAt(4, new Point2d(scale1 * 0.981897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly67.AddVertexAt(5, new Point2d(scale1 * 0.985403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly67.AddVertexAt(6, new Point2d(scale1 * 0.990313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly67.AddVertexAt(7, new Point2d(scale1 * 1.00176836567148, scale1 * 0.272945844641126), 0, 0, 0);
+            poly67.AddVertexAt(8, new Point2d(scale1 * 1.00480748379364, scale1 * 0.274488781533918), 0, 0, 0);
+            poly67.AddVertexAt(9, new Point2d(scale1 * 1.005742597062, scale1 * 0.278275990270772), 0, 0, 0);
+            poly67.AddVertexAt(10, new Point2d(scale1 * 1.00270347893983, scale1 * 0.28037999512458), 0, 0, 0);
+            poly67.AddVertexAt(11, new Point2d(scale1 * 0.999898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly67.AddVertexAt(12, new Point2d(scale1 * 0.99756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly67.AddVertexAt(13, new Point2d(scale1 * 0.995690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly67.AddVertexAt(14, new Point2d(scale1 * 0.991482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly67.AddVertexAt(15, new Point2d(scale1 * 0.987975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly67.Closed = true;
+            poly67.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly67.Layer = "0";
+            poly67.Color = color_GPGM;
+            poly67.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly67);
+            Polyline poly68 = new Polyline();
+            poly68.AddVertexAt(0, new Point2d(scale1 * 0.958367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly68.AddVertexAt(1, new Point2d(scale1 * 0.966081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly68.AddVertexAt(2, new Point2d(scale1 * 0.969354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly68.AddVertexAt(3, new Point2d(scale1 * 0.966081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly68.AddVertexAt(4, new Point2d(scale1 * 0.958367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly68.AddVertexAt(5, new Point2d(scale1 * 0.949717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly68.AddVertexAt(6, new Point2d(scale1 * 0.945041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly68.AddVertexAt(7, new Point2d(scale1 * 0.941301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly68.AddVertexAt(8, new Point2d(scale1 * 0.930781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly68.AddVertexAt(9, new Point2d(scale1 * 0.925170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly68.AddVertexAt(10, new Point2d(scale1 * 0.926573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly68.AddVertexAt(11, new Point2d(scale1 * 0.934989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly68.AddVertexAt(12, new Point2d(scale1 * 0.941535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly68.AddVertexAt(13, new Point2d(scale1 * 0.94574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly68.AddVertexAt(14, new Point2d(scale1 * 0.951353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly68.AddVertexAt(15, new Point2d(scale1 * 0.955795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly68.Closed = true;
+            poly68.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly68.Layer = "0";
+            poly68.Color = color_GPGM;
+            poly68.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly68);
+            Polyline poly69 = new Polyline();
+            poly69.AddVertexAt(0, new Point2d(scale1 * 0.978898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly69.AddVertexAt(1, new Point2d(scale1 * 0.972741026607183, scale1 * 0.262017770945895), 0, 0, 0);
+            poly69.AddVertexAt(2, new Point2d(scale1 * 0.96743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly69.AddVertexAt(3, new Point2d(scale1 * 0.966370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly69.AddVertexAt(4, new Point2d(scale1 * 0.97167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly69.AddVertexAt(5, new Point2d(scale1 * 0.978261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly69.AddVertexAt(6, new Point2d(scale1 * 0.982084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly69.AddVertexAt(7, new Point2d(scale1 * 0.978898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly69.Closed = true;
+            poly69.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly69.Layer = "0";
+            poly69.Color = color_GPGM;
+            poly69.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly69);
+            Polyline poly70 = new Polyline();
+            poly70.AddVertexAt(0, new Point2d(scale1 * 0.996473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly70.AddVertexAt(1, new Point2d(scale1 * 0.996706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly70.AddVertexAt(2, new Point2d(scale1 * 0.995070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly70.AddVertexAt(3, new Point2d(scale1 * 0.99086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly70.AddVertexAt(4, new Point2d(scale1 * 0.986888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly70.AddVertexAt(5, new Point2d(scale1 * 0.983849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly70.AddVertexAt(6, new Point2d(scale1 * 0.980576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly70.AddVertexAt(7, new Point2d(scale1 * 0.977537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly70.AddVertexAt(8, new Point2d(scale1 * 0.975666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly70.AddVertexAt(9, new Point2d(scale1 * 0.975666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly70.AddVertexAt(10, new Point2d(scale1 * 0.979173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly70.AddVertexAt(11, new Point2d(scale1 * 0.985953114052606, scale1 * 0.253818527788335), 0, 0, 0);
+            poly70.AddVertexAt(12, new Point2d(scale1 * 0.992732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly70.Closed = true;
+            poly70.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly70.Layer = "0";
+            poly70.Color = color_GPGM;
+            poly70.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly70);
+            Polyline poly71 = new Polyline();
+            poly71.AddVertexAt(0, new Point2d(scale1 * 0.962107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly71.AddVertexAt(1, new Point2d(scale1 * 0.959302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly71.AddVertexAt(2, new Point2d(scale1 * 0.960237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly71.AddVertexAt(3, new Point2d(scale1 * 0.961640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly71.AddVertexAt(4, new Point2d(scale1 * 0.964679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly71.AddVertexAt(5, new Point2d(scale1 * 0.968185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly71.AddVertexAt(6, new Point2d(scale1 * 0.968185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly71.AddVertexAt(7, new Point2d(scale1 * 0.965848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly71.AddVertexAt(8, new Point2d(scale1 * 0.962107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly71.Closed = true;
+            poly71.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly71.Layer = "0";
+            poly71.Color = color_GPGM;
+            poly71.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly71);
+            Polyline poly72 = new Polyline();
+            poly72.AddVertexAt(0, new Point2d(scale1 * 0.916520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly72.AddVertexAt(1, new Point2d(scale1 * 0.923066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly72.AddVertexAt(2, new Point2d(scale1 * 0.935924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly72.AddVertexAt(3, new Point2d(scale1 * 0.942470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly72.AddVertexAt(4, new Point2d(scale1 * 0.943639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly72.AddVertexAt(5, new Point2d(scale1 * 0.943873016976452, scale1 * 0.244981707402343), 0, 0, 0);
+            poly72.AddVertexAt(6, new Point2d(scale1 * 0.944106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly72.AddVertexAt(7, new Point2d(scale1 * 0.94597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly72.AddVertexAt(8, new Point2d(scale1 * 0.944574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly72.AddVertexAt(9, new Point2d(scale1 * 0.939431228951747, scale1 * 0.235583819055336), 0, 0, 0);
+            poly72.AddVertexAt(10, new Point2d(scale1 * 0.929378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly72.AddVertexAt(11, new Point2d(scale1 * 0.924469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly72.AddVertexAt(12, new Point2d(scale1 * 0.920962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly72.AddVertexAt(13, new Point2d(scale1 * 0.917689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly72.AddVertexAt(14, new Point2d(scale1 * 0.915819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly72.Closed = true;
+            poly72.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly72.Layer = "0";
+            poly72.Color = color_GPGM;
+            poly72.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly72);
+            Polyline poly73 = new Polyline();
+            poly73.AddVertexAt(0, new Point2d(scale1 * 0.860285741001707, scale1 * 0.3), 0, 0, 0);
+            poly73.AddVertexAt(1, new Point2d(scale1 * 0.861640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly73.AddVertexAt(2, new Point2d(scale1 * 0.864679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly73.AddVertexAt(3, new Point2d(scale1 * 0.868185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly73.AddVertexAt(4, new Point2d(scale1 * 0.868185961953785, scale1 * 0.3), 0, 0, 0);
+            poly73.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly73.Layer = "0";
+            poly73.Color = color_GPGM;
+            poly73.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly73);
+            Polyline poly74 = new Polyline();
+            poly74.AddVertexAt(0, new Point2d(scale1 * 0.84565464779079, scale1 * 0.3), 0, 0, 0);
+            poly74.AddVertexAt(1, new Point2d(scale1 * 0.844574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly74.AddVertexAt(2, new Point2d(scale1 * 0.839431228951747, scale1 * 0.295583819055336), 0, 0, 0);
+            poly74.AddVertexAt(3, new Point2d(scale1 * 0.829378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly74.AddVertexAt(4, new Point2d(scale1 * 0.824469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly74.AddVertexAt(5, new Point2d(scale1 * 0.820962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly74.AddVertexAt(6, new Point2d(scale1 * 0.818759355857569, scale1 * 0.3), 0, 0, 0);
+            poly74.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly74.Layer = "0";
+            poly74.Color = color_GPGM;
+            poly74.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly74);
+            Polyline poly75 = new Polyline();
+            poly75.AddVertexAt(0, new Point2d(scale1 * 0.858367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly75.AddVertexAt(1, new Point2d(scale1 * 0.856497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly75.AddVertexAt(2, new Point2d(scale1 * 0.854159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly75.AddVertexAt(3, new Point2d(scale1 * 0.852289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly75.AddVertexAt(4, new Point2d(scale1 * 0.853925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly75.AddVertexAt(5, new Point2d(scale1 * 0.858367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly75.AddVertexAt(6, new Point2d(scale1 * 0.859536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly75.Closed = true;
+            poly75.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly75.Layer = "0";
+            poly75.Color = color_GPGM;
+            poly75.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly75);
+            Polyline poly76 = new Polyline();
+            poly76.AddVertexAt(0, new Point2d(scale1 * 0.867952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly76.AddVertexAt(1, new Point2d(scale1 * 0.866081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly76.AddVertexAt(2, new Point2d(scale1 * 0.865848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly76.AddVertexAt(3, new Point2d(scale1 * 0.868419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly76.AddVertexAt(4, new Point2d(scale1 * 0.871692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly76.AddVertexAt(5, new Point2d(scale1 * 0.872393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly76.AddVertexAt(6, new Point2d(scale1 * 0.871926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly76.AddVertexAt(7, new Point2d(scale1 * 0.867952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly76.Closed = true;
+            poly76.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly76.Layer = "0";
+            poly76.Color = color_GPGM;
+            poly76.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly76);
+            Polyline poly77 = new Polyline();
+            poly77.AddVertexAt(0, new Point2d(scale1 * 0.816577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly77.AddVertexAt(1, new Point2d(scale1 * 0.814239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly77.AddVertexAt(2, new Point2d(scale1 * 0.815641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly77.AddVertexAt(3, new Point2d(scale1 * 0.819616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly77.AddVertexAt(4, new Point2d(scale1 * 0.822655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly77.AddVertexAt(5, new Point2d(scale1 * 0.822655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly77.AddVertexAt(6, new Point2d(scale1 * 0.816577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly77.Closed = true;
+            poly77.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly77.Layer = "0";
+            poly77.Color = color_GPGM;
+            poly77.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly77);
+            Polyline poly78 = new Polyline();
+            poly78.AddVertexAt(0, new Point2d(scale1 * 0.811080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly78.AddVertexAt(1, new Point2d(scale1 * 0.809476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly78.AddVertexAt(2, new Point2d(scale1 * 0.809710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly78.AddVertexAt(3, new Point2d(scale1 * 0.810645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly78.AddVertexAt(4, new Point2d(scale1 * 0.814853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly78.AddVertexAt(5, new Point2d(scale1 * 0.819061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly78.AddVertexAt(6, new Point2d(scale1 * 0.822568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly78.AddVertexAt(7, new Point2d(scale1 * 0.819061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly78.AddVertexAt(8, new Point2d(scale1 * 0.811080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly78.Closed = true;
+            poly78.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly78.Layer = "0";
+            poly78.Color = color_GPGM;
+            poly78.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly78);
+            Polyline poly79 = new Polyline();
+            poly79.AddVertexAt(0, new Point2d(scale1 * 0.887975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly79.AddVertexAt(1, new Point2d(scale1 * 0.884702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly79.AddVertexAt(2, new Point2d(scale1 * 0.882598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly79.AddVertexAt(3, new Point2d(scale1 * 0.882598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly79.AddVertexAt(4, new Point2d(scale1 * 0.881897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly79.AddVertexAt(5, new Point2d(scale1 * 0.885403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly79.AddVertexAt(6, new Point2d(scale1 * 0.890313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly79.AddVertexAt(7, new Point2d(scale1 * 0.901768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly79.AddVertexAt(8, new Point2d(scale1 * 0.904807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly79.AddVertexAt(9, new Point2d(scale1 * 0.905742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly79.AddVertexAt(10, new Point2d(scale1 * 0.902703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly79.AddVertexAt(11, new Point2d(scale1 * 0.899898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly79.AddVertexAt(12, new Point2d(scale1 * 0.89756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly79.AddVertexAt(13, new Point2d(scale1 * 0.895690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly79.AddVertexAt(14, new Point2d(scale1 * 0.891482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly79.AddVertexAt(15, new Point2d(scale1 * 0.887975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly79.Closed = true;
+            poly79.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly79.Layer = "0";
+            poly79.Color = color_GPGM;
+            poly79.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly79);
+            Polyline poly80 = new Polyline();
+            poly80.AddVertexAt(0, new Point2d(scale1 * 0.858367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly80.AddVertexAt(1, new Point2d(scale1 * 0.866081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly80.AddVertexAt(2, new Point2d(scale1 * 0.869354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly80.AddVertexAt(3, new Point2d(scale1 * 0.866081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly80.AddVertexAt(4, new Point2d(scale1 * 0.858367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly80.AddVertexAt(5, new Point2d(scale1 * 0.849717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly80.AddVertexAt(6, new Point2d(scale1 * 0.845041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly80.AddVertexAt(7, new Point2d(scale1 * 0.841301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly80.AddVertexAt(8, new Point2d(scale1 * 0.830781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly80.AddVertexAt(9, new Point2d(scale1 * 0.825170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly80.AddVertexAt(10, new Point2d(scale1 * 0.826573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly80.AddVertexAt(11, new Point2d(scale1 * 0.834989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly80.AddVertexAt(12, new Point2d(scale1 * 0.841535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly80.AddVertexAt(13, new Point2d(scale1 * 0.84574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly80.AddVertexAt(14, new Point2d(scale1 * 0.851353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly80.AddVertexAt(15, new Point2d(scale1 * 0.855795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly80.Closed = true;
+            poly80.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly80.Layer = "0";
+            poly80.Color = color_GPGM;
+            poly80.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly80);
+            Polyline poly81 = new Polyline();
+            poly81.AddVertexAt(0, new Point2d(scale1 * 0.878898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly81.AddVertexAt(1, new Point2d(scale1 * 0.872741026607183, scale1 * 0.262017770945895), 0, 0, 0);
+            poly81.AddVertexAt(2, new Point2d(scale1 * 0.86743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly81.AddVertexAt(3, new Point2d(scale1 * 0.866370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly81.AddVertexAt(4, new Point2d(scale1 * 0.87167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly81.AddVertexAt(5, new Point2d(scale1 * 0.878261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly81.AddVertexAt(6, new Point2d(scale1 * 0.882084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly81.AddVertexAt(7, new Point2d(scale1 * 0.878898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly81.Closed = true;
+            poly81.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly81.Layer = "0";
+            poly81.Color = color_GPGM;
+            poly81.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly81);
+            Polyline poly82 = new Polyline();
+            poly82.AddVertexAt(0, new Point2d(scale1 * 0.896473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly82.AddVertexAt(1, new Point2d(scale1 * 0.896706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly82.AddVertexAt(2, new Point2d(scale1 * 0.895070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly82.AddVertexAt(3, new Point2d(scale1 * 0.89086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly82.AddVertexAt(4, new Point2d(scale1 * 0.886888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly82.AddVertexAt(5, new Point2d(scale1 * 0.883849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly82.AddVertexAt(6, new Point2d(scale1 * 0.880576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly82.AddVertexAt(7, new Point2d(scale1 * 0.877537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly82.AddVertexAt(8, new Point2d(scale1 * 0.875666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly82.AddVertexAt(9, new Point2d(scale1 * 0.875666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly82.AddVertexAt(10, new Point2d(scale1 * 0.879173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly82.AddVertexAt(11, new Point2d(scale1 * 0.885953114052606, scale1 * 0.253818527788335), 0, 0, 0);
+            poly82.AddVertexAt(12, new Point2d(scale1 * 0.892732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly82.Closed = true;
+            poly82.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly82.Layer = "0";
+            poly82.Color = color_GPGM;
+            poly82.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly82);
+            Polyline poly83 = new Polyline();
+            poly83.AddVertexAt(0, new Point2d(scale1 * 0.862107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly83.AddVertexAt(1, new Point2d(scale1 * 0.859302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly83.AddVertexAt(2, new Point2d(scale1 * 0.860237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly83.AddVertexAt(3, new Point2d(scale1 * 0.861640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly83.AddVertexAt(4, new Point2d(scale1 * 0.864679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly83.AddVertexAt(5, new Point2d(scale1 * 0.868185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly83.AddVertexAt(6, new Point2d(scale1 * 0.868185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly83.AddVertexAt(7, new Point2d(scale1 * 0.865848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly83.AddVertexAt(8, new Point2d(scale1 * 0.862107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly83.Closed = true;
+            poly83.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly83.Layer = "0";
+            poly83.Color = color_GPGM;
+            poly83.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly83);
+            Polyline poly84 = new Polyline();
+            poly84.AddVertexAt(0, new Point2d(scale1 * 0.816520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly84.AddVertexAt(1, new Point2d(scale1 * 0.823066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly84.AddVertexAt(2, new Point2d(scale1 * 0.835924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly84.AddVertexAt(3, new Point2d(scale1 * 0.842470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly84.AddVertexAt(4, new Point2d(scale1 * 0.843639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly84.AddVertexAt(5, new Point2d(scale1 * 0.843873016976453, scale1 * 0.244981707402343), 0, 0, 0);
+            poly84.AddVertexAt(6, new Point2d(scale1 * 0.844106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly84.AddVertexAt(7, new Point2d(scale1 * 0.84597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly84.AddVertexAt(8, new Point2d(scale1 * 0.844574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly84.AddVertexAt(9, new Point2d(scale1 * 0.839431228951747, scale1 * 0.235583819055336), 0, 0, 0);
+            poly84.AddVertexAt(10, new Point2d(scale1 * 0.829378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly84.AddVertexAt(11, new Point2d(scale1 * 0.824469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly84.AddVertexAt(12, new Point2d(scale1 * 0.820962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly84.AddVertexAt(13, new Point2d(scale1 * 0.817689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly84.AddVertexAt(14, new Point2d(scale1 * 0.815819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly84.Closed = true;
+            poly84.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly84.Layer = "0";
+            poly84.Color = color_GPGM;
+            poly84.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly84);
+            Polyline poly85 = new Polyline();
+            poly85.AddVertexAt(0, new Point2d(scale1 * 0.760285741001707, scale1 * 0.3), 0, 0, 0);
+            poly85.AddVertexAt(1, new Point2d(scale1 * 0.761640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly85.AddVertexAt(2, new Point2d(scale1 * 0.764679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly85.AddVertexAt(3, new Point2d(scale1 * 0.768185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly85.AddVertexAt(4, new Point2d(scale1 * 0.768185961953785, scale1 * 0.3), 0, 0, 0);
+            poly85.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly85.Layer = "0";
+            poly85.Color = color_GPGM;
+            poly85.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly85);
+            Polyline poly86 = new Polyline();
+            poly86.AddVertexAt(0, new Point2d(scale1 * 0.74565464779079, scale1 * 0.3), 0, 0, 0);
+            poly86.AddVertexAt(1, new Point2d(scale1 * 0.744574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly86.AddVertexAt(2, new Point2d(scale1 * 0.739431228951748, scale1 * 0.295583819055336), 0, 0, 0);
+            poly86.AddVertexAt(3, new Point2d(scale1 * 0.729378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly86.AddVertexAt(4, new Point2d(scale1 * 0.724469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly86.AddVertexAt(5, new Point2d(scale1 * 0.720962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly86.AddVertexAt(6, new Point2d(scale1 * 0.718759355857569, scale1 * 0.3), 0, 0, 0);
+            poly86.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly86.Layer = "0";
+            poly86.Color = color_GPGM;
+            poly86.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly86);
+            Polyline poly87 = new Polyline();
+            poly87.AddVertexAt(0, new Point2d(scale1 * 0.758367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly87.AddVertexAt(1, new Point2d(scale1 * 0.756497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly87.AddVertexAt(2, new Point2d(scale1 * 0.754159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly87.AddVertexAt(3, new Point2d(scale1 * 0.752289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly87.AddVertexAt(4, new Point2d(scale1 * 0.753925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly87.AddVertexAt(5, new Point2d(scale1 * 0.758367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly87.AddVertexAt(6, new Point2d(scale1 * 0.759536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly87.Closed = true;
+            poly87.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly87.Layer = "0";
+            poly87.Color = color_GPGM;
+            poly87.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly87);
+            Polyline poly88 = new Polyline();
+            poly88.AddVertexAt(0, new Point2d(scale1 * 0.767952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly88.AddVertexAt(1, new Point2d(scale1 * 0.766081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly88.AddVertexAt(2, new Point2d(scale1 * 0.765848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly88.AddVertexAt(3, new Point2d(scale1 * 0.768419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly88.AddVertexAt(4, new Point2d(scale1 * 0.771692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly88.AddVertexAt(5, new Point2d(scale1 * 0.772393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly88.AddVertexAt(6, new Point2d(scale1 * 0.771926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly88.AddVertexAt(7, new Point2d(scale1 * 0.767952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly88.Closed = true;
+            poly88.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly88.Layer = "0";
+            poly88.Color = color_GPGM;
+            poly88.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly88);
+            Polyline poly89 = new Polyline();
+            poly89.AddVertexAt(0, new Point2d(scale1 * 0.716577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly89.AddVertexAt(1, new Point2d(scale1 * 0.714239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly89.AddVertexAt(2, new Point2d(scale1 * 0.715641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly89.AddVertexAt(3, new Point2d(scale1 * 0.719616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly89.AddVertexAt(4, new Point2d(scale1 * 0.722655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly89.AddVertexAt(5, new Point2d(scale1 * 0.722655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly89.AddVertexAt(6, new Point2d(scale1 * 0.716577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly89.Closed = true;
+            poly89.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly89.Layer = "0";
+            poly89.Color = color_GPGM;
+            poly89.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly89);
+            Polyline poly90 = new Polyline();
+            poly90.AddVertexAt(0, new Point2d(scale1 * 0.711080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly90.AddVertexAt(1, new Point2d(scale1 * 0.70947696180731, scale1 * 0.263254670769046), 0, 0, 0);
+            poly90.AddVertexAt(2, new Point2d(scale1 * 0.709710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly90.AddVertexAt(3, new Point2d(scale1 * 0.710645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly90.AddVertexAt(4, new Point2d(scale1 * 0.714853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly90.AddVertexAt(5, new Point2d(scale1 * 0.719061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly90.AddVertexAt(6, new Point2d(scale1 * 0.722568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly90.AddVertexAt(7, new Point2d(scale1 * 0.719061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly90.AddVertexAt(8, new Point2d(scale1 * 0.711080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly90.Closed = true;
+            poly90.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly90.Layer = "0";
+            poly90.Color = color_GPGM;
+            poly90.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly90);
+            Polyline poly91 = new Polyline();
+            poly91.AddVertexAt(0, new Point2d(scale1 * 0.787975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly91.AddVertexAt(1, new Point2d(scale1 * 0.784702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly91.AddVertexAt(2, new Point2d(scale1 * 0.782598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly91.AddVertexAt(3, new Point2d(scale1 * 0.782598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly91.AddVertexAt(4, new Point2d(scale1 * 0.781897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly91.AddVertexAt(5, new Point2d(scale1 * 0.785403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly91.AddVertexAt(6, new Point2d(scale1 * 0.790313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly91.AddVertexAt(7, new Point2d(scale1 * 0.801768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly91.AddVertexAt(8, new Point2d(scale1 * 0.804807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly91.AddVertexAt(9, new Point2d(scale1 * 0.805742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly91.AddVertexAt(10, new Point2d(scale1 * 0.802703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly91.AddVertexAt(11, new Point2d(scale1 * 0.799898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly91.AddVertexAt(12, new Point2d(scale1 * 0.79756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly91.AddVertexAt(13, new Point2d(scale1 * 0.795690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly91.AddVertexAt(14, new Point2d(scale1 * 0.791482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly91.AddVertexAt(15, new Point2d(scale1 * 0.787975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly91.Closed = true;
+            poly91.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly91.Layer = "0";
+            poly91.Color = color_GPGM;
+            poly91.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly91);
+            Polyline poly92 = new Polyline();
+            poly92.AddVertexAt(0, new Point2d(scale1 * 0.758367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly92.AddVertexAt(1, new Point2d(scale1 * 0.766081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly92.AddVertexAt(2, new Point2d(scale1 * 0.769354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly92.AddVertexAt(3, new Point2d(scale1 * 0.766081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly92.AddVertexAt(4, new Point2d(scale1 * 0.758367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly92.AddVertexAt(5, new Point2d(scale1 * 0.749717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly92.AddVertexAt(6, new Point2d(scale1 * 0.745041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly92.AddVertexAt(7, new Point2d(scale1 * 0.741301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly92.AddVertexAt(8, new Point2d(scale1 * 0.730781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly92.AddVertexAt(9, new Point2d(scale1 * 0.725170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly92.AddVertexAt(10, new Point2d(scale1 * 0.726573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly92.AddVertexAt(11, new Point2d(scale1 * 0.734989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly92.AddVertexAt(12, new Point2d(scale1 * 0.741535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly92.AddVertexAt(13, new Point2d(scale1 * 0.74574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly92.AddVertexAt(14, new Point2d(scale1 * 0.751353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly92.AddVertexAt(15, new Point2d(scale1 * 0.755795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly92.Closed = true;
+            poly92.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly92.Layer = "0";
+            poly92.Color = color_GPGM;
+            poly92.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly92);
+            Polyline poly93 = new Polyline();
+            poly93.AddVertexAt(0, new Point2d(scale1 * 0.778898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly93.AddVertexAt(1, new Point2d(scale1 * 0.772741026607183, scale1 * 0.262017770945895), 0, 0, 0);
+            poly93.AddVertexAt(2, new Point2d(scale1 * 0.767432516861809, scale1 * 0.259722492923566), 0, 0, 0);
+            poly93.AddVertexAt(3, new Point2d(scale1 * 0.766370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly93.AddVertexAt(4, new Point2d(scale1 * 0.77167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly93.AddVertexAt(5, new Point2d(scale1 * 0.778261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly93.AddVertexAt(6, new Point2d(scale1 * 0.782084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly93.AddVertexAt(7, new Point2d(scale1 * 0.778898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly93.Closed = true;
+            poly93.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly93.Layer = "0";
+            poly93.Color = color_GPGM;
+            poly93.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly93);
+            Polyline poly94 = new Polyline();
+            poly94.AddVertexAt(0, new Point2d(scale1 * 0.796473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly94.AddVertexAt(1, new Point2d(scale1 * 0.796706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly94.AddVertexAt(2, new Point2d(scale1 * 0.795070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly94.AddVertexAt(3, new Point2d(scale1 * 0.79086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly94.AddVertexAt(4, new Point2d(scale1 * 0.786888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly94.AddVertexAt(5, new Point2d(scale1 * 0.783849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly94.AddVertexAt(6, new Point2d(scale1 * 0.780576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly94.AddVertexAt(7, new Point2d(scale1 * 0.777537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly94.AddVertexAt(8, new Point2d(scale1 * 0.775666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly94.AddVertexAt(9, new Point2d(scale1 * 0.775666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly94.AddVertexAt(10, new Point2d(scale1 * 0.779173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly94.AddVertexAt(11, new Point2d(scale1 * 0.785953114052606, scale1 * 0.253818527788335), 0, 0, 0);
+            poly94.AddVertexAt(12, new Point2d(scale1 * 0.792732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly94.Closed = true;
+            poly94.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly94.Layer = "0";
+            poly94.Color = color_GPGM;
+            poly94.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly94);
+            Polyline poly95 = new Polyline();
+            poly95.AddVertexAt(0, new Point2d(scale1 * 0.762107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly95.AddVertexAt(1, new Point2d(scale1 * 0.759302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly95.AddVertexAt(2, new Point2d(scale1 * 0.760237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly95.AddVertexAt(3, new Point2d(scale1 * 0.761640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly95.AddVertexAt(4, new Point2d(scale1 * 0.764679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly95.AddVertexAt(5, new Point2d(scale1 * 0.768185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly95.AddVertexAt(6, new Point2d(scale1 * 0.768185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly95.AddVertexAt(7, new Point2d(scale1 * 0.765848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly95.AddVertexAt(8, new Point2d(scale1 * 0.762107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly95.Closed = true;
+            poly95.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly95.Layer = "0";
+            poly95.Color = color_GPGM;
+            poly95.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly95);
+            Polyline poly96 = new Polyline();
+            poly96.AddVertexAt(0, new Point2d(scale1 * 0.716520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly96.AddVertexAt(1, new Point2d(scale1 * 0.723066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly96.AddVertexAt(2, new Point2d(scale1 * 0.735924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly96.AddVertexAt(3, new Point2d(scale1 * 0.742470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly96.AddVertexAt(4, new Point2d(scale1 * 0.743639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly96.AddVertexAt(5, new Point2d(scale1 * 0.743873016976452, scale1 * 0.244981707402343), 0, 0, 0);
+            poly96.AddVertexAt(6, new Point2d(scale1 * 0.744106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly96.AddVertexAt(7, new Point2d(scale1 * 0.74597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly96.AddVertexAt(8, new Point2d(scale1 * 0.744574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly96.AddVertexAt(9, new Point2d(scale1 * 0.739431228951748, scale1 * 0.235583819055336), 0, 0, 0);
+            poly96.AddVertexAt(10, new Point2d(scale1 * 0.729378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly96.AddVertexAt(11, new Point2d(scale1 * 0.724469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly96.AddVertexAt(12, new Point2d(scale1 * 0.720962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly96.AddVertexAt(13, new Point2d(scale1 * 0.717689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly96.AddVertexAt(14, new Point2d(scale1 * 0.715819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly96.Closed = true;
+            poly96.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly96.Layer = "0";
+            poly96.Color = color_GPGM;
+            poly96.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly96);
+            Polyline poly97 = new Polyline();
+            poly97.AddVertexAt(0, new Point2d(scale1 * 0.660285741001707, scale1 * 0.3), 0, 0, 0);
+            poly97.AddVertexAt(1, new Point2d(scale1 * 0.661640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly97.AddVertexAt(2, new Point2d(scale1 * 0.664679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly97.AddVertexAt(3, new Point2d(scale1 * 0.668185961953786, scale1 * 0.29937102779219), 0, 0, 0);
+            poly97.AddVertexAt(4, new Point2d(scale1 * 0.668185961953786, scale1 * 0.3), 0, 0, 0);
+            poly97.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly97.Layer = "0";
+            poly97.Color = color_GPGM;
+            poly97.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly97);
+            Polyline poly98 = new Polyline();
+            poly98.AddVertexAt(0, new Point2d(scale1 * 0.645654647790791, scale1 * 0.3), 0, 0, 0);
+            poly98.AddVertexAt(1, new Point2d(scale1 * 0.644574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly98.AddVertexAt(2, new Point2d(scale1 * 0.639431228951748, scale1 * 0.295583819055336), 0, 0, 0);
+            poly98.AddVertexAt(3, new Point2d(scale1 * 0.629378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly98.AddVertexAt(4, new Point2d(scale1 * 0.624469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly98.AddVertexAt(5, new Point2d(scale1 * 0.620962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly98.AddVertexAt(6, new Point2d(scale1 * 0.618759355857569, scale1 * 0.3), 0, 0, 0);
+            poly98.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly98.Layer = "0";
+            poly98.Color = color_GPGM;
+            poly98.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly98);
+            Polyline poly99 = new Polyline();
+            poly99.AddVertexAt(0, new Point2d(scale1 * 0.658367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly99.AddVertexAt(1, new Point2d(scale1 * 0.656497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly99.AddVertexAt(2, new Point2d(scale1 * 0.654159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly99.AddVertexAt(3, new Point2d(scale1 * 0.652289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly99.AddVertexAt(4, new Point2d(scale1 * 0.653925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly99.AddVertexAt(5, new Point2d(scale1 * 0.658367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly99.AddVertexAt(6, new Point2d(scale1 * 0.659536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly99.Closed = true;
+            poly99.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly99.Layer = "0";
+            poly99.Color = color_GPGM;
+            poly99.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly99);
+            Polyline poly100 = new Polyline();
+            poly100.AddVertexAt(0, new Point2d(scale1 * 0.667952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly100.AddVertexAt(1, new Point2d(scale1 * 0.666081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly100.AddVertexAt(2, new Point2d(scale1 * 0.665848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly100.AddVertexAt(3, new Point2d(scale1 * 0.668419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly100.AddVertexAt(4, new Point2d(scale1 * 0.671692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly100.AddVertexAt(5, new Point2d(scale1 * 0.672393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly100.AddVertexAt(6, new Point2d(scale1 * 0.671926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly100.AddVertexAt(7, new Point2d(scale1 * 0.667952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly100.Closed = true;
+            poly100.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly100.Layer = "0";
+            poly100.Color = color_GPGM;
+            poly100.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly100);
+            Polyline poly101 = new Polyline();
+            poly101.AddVertexAt(0, new Point2d(scale1 * 0.616577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly101.AddVertexAt(1, new Point2d(scale1 * 0.614239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly101.AddVertexAt(2, new Point2d(scale1 * 0.615641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly101.AddVertexAt(3, new Point2d(scale1 * 0.619616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly101.AddVertexAt(4, new Point2d(scale1 * 0.622655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly101.AddVertexAt(5, new Point2d(scale1 * 0.622655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly101.AddVertexAt(6, new Point2d(scale1 * 0.616577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly101.Closed = true;
+            poly101.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly101.Layer = "0";
+            poly101.Color = color_GPGM;
+            poly101.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly101);
+            Polyline poly102 = new Polyline();
+            poly102.AddVertexAt(0, new Point2d(scale1 * 0.611080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly102.AddVertexAt(1, new Point2d(scale1 * 0.609476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly102.AddVertexAt(2, new Point2d(scale1 * 0.609710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly102.AddVertexAt(3, new Point2d(scale1 * 0.610645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly102.AddVertexAt(4, new Point2d(scale1 * 0.614853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly102.AddVertexAt(5, new Point2d(scale1 * 0.619061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly102.AddVertexAt(6, new Point2d(scale1 * 0.622568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly102.AddVertexAt(7, new Point2d(scale1 * 0.619061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly102.AddVertexAt(8, new Point2d(scale1 * 0.611080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly102.Closed = true;
+            poly102.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly102.Layer = "0";
+            poly102.Color = color_GPGM;
+            poly102.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly102);
+            Polyline poly103 = new Polyline();
+            poly103.AddVertexAt(0, new Point2d(scale1 * 0.687975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly103.AddVertexAt(1, new Point2d(scale1 * 0.684702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly103.AddVertexAt(2, new Point2d(scale1 * 0.682598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly103.AddVertexAt(3, new Point2d(scale1 * 0.682598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly103.AddVertexAt(4, new Point2d(scale1 * 0.681897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly103.AddVertexAt(5, new Point2d(scale1 * 0.685403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly103.AddVertexAt(6, new Point2d(scale1 * 0.690313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly103.AddVertexAt(7, new Point2d(scale1 * 0.701768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly103.AddVertexAt(8, new Point2d(scale1 * 0.704807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly103.AddVertexAt(9, new Point2d(scale1 * 0.705742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly103.AddVertexAt(10, new Point2d(scale1 * 0.702703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly103.AddVertexAt(11, new Point2d(scale1 * 0.699898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly103.AddVertexAt(12, new Point2d(scale1 * 0.69756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly103.AddVertexAt(13, new Point2d(scale1 * 0.695690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly103.AddVertexAt(14, new Point2d(scale1 * 0.691482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly103.AddVertexAt(15, new Point2d(scale1 * 0.687975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly103.Closed = true;
+            poly103.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly103.Layer = "0";
+            poly103.Color = color_GPGM;
+            poly103.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly103);
+            Polyline poly104 = new Polyline();
+            poly104.AddVertexAt(0, new Point2d(scale1 * 0.658367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly104.AddVertexAt(1, new Point2d(scale1 * 0.666081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly104.AddVertexAt(2, new Point2d(scale1 * 0.669354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly104.AddVertexAt(3, new Point2d(scale1 * 0.666081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly104.AddVertexAt(4, new Point2d(scale1 * 0.658367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly104.AddVertexAt(5, new Point2d(scale1 * 0.649717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly104.AddVertexAt(6, new Point2d(scale1 * 0.645041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly104.AddVertexAt(7, new Point2d(scale1 * 0.641301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly104.AddVertexAt(8, new Point2d(scale1 * 0.630781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly104.AddVertexAt(9, new Point2d(scale1 * 0.625170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly104.AddVertexAt(10, new Point2d(scale1 * 0.626573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly104.AddVertexAt(11, new Point2d(scale1 * 0.634989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly104.AddVertexAt(12, new Point2d(scale1 * 0.641535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly104.AddVertexAt(13, new Point2d(scale1 * 0.64574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly104.AddVertexAt(14, new Point2d(scale1 * 0.651353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly104.AddVertexAt(15, new Point2d(scale1 * 0.655795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly104.Closed = true;
+            poly104.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly104.Layer = "0";
+            poly104.Color = color_GPGM;
+            poly104.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly104);
+            Polyline poly105 = new Polyline();
+            poly105.AddVertexAt(0, new Point2d(scale1 * 0.678898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly105.AddVertexAt(1, new Point2d(scale1 * 0.672741026607184, scale1 * 0.262017770945895), 0, 0, 0);
+            poly105.AddVertexAt(2, new Point2d(scale1 * 0.66743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly105.AddVertexAt(3, new Point2d(scale1 * 0.666370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly105.AddVertexAt(4, new Point2d(scale1 * 0.67167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly105.AddVertexAt(5, new Point2d(scale1 * 0.678261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly105.AddVertexAt(6, new Point2d(scale1 * 0.682084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly105.AddVertexAt(7, new Point2d(scale1 * 0.678898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly105.Closed = true;
+            poly105.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly105.Layer = "0";
+            poly105.Color = color_GPGM;
+            poly105.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly105);
+            Polyline poly106 = new Polyline();
+            poly106.AddVertexAt(0, new Point2d(scale1 * 0.696473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly106.AddVertexAt(1, new Point2d(scale1 * 0.696706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly106.AddVertexAt(2, new Point2d(scale1 * 0.695070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly106.AddVertexAt(3, new Point2d(scale1 * 0.69086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly106.AddVertexAt(4, new Point2d(scale1 * 0.686888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly106.AddVertexAt(5, new Point2d(scale1 * 0.683849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly106.AddVertexAt(6, new Point2d(scale1 * 0.680576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly106.AddVertexAt(7, new Point2d(scale1 * 0.677537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly106.AddVertexAt(8, new Point2d(scale1 * 0.675666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly106.AddVertexAt(9, new Point2d(scale1 * 0.675666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly106.AddVertexAt(10, new Point2d(scale1 * 0.679173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly106.AddVertexAt(11, new Point2d(scale1 * 0.685953114052606, scale1 * 0.253818527788335), 0, 0, 0);
+            poly106.AddVertexAt(12, new Point2d(scale1 * 0.692732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly106.Closed = true;
+            poly106.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly106.Layer = "0";
+            poly106.Color = color_GPGM;
+            poly106.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly106);
+            Polyline poly107 = new Polyline();
+            poly107.AddVertexAt(0, new Point2d(scale1 * 0.662107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly107.AddVertexAt(1, new Point2d(scale1 * 0.659302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly107.AddVertexAt(2, new Point2d(scale1 * 0.660237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly107.AddVertexAt(3, new Point2d(scale1 * 0.661640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly107.AddVertexAt(4, new Point2d(scale1 * 0.664679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly107.AddVertexAt(5, new Point2d(scale1 * 0.668185961953786, scale1 * 0.23937102779219), 0, 0, 0);
+            poly107.AddVertexAt(6, new Point2d(scale1 * 0.668185961953786, scale1 * 0.241615299636252), 0, 0, 0);
+            poly107.AddVertexAt(7, new Point2d(scale1 * 0.665848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly107.AddVertexAt(8, new Point2d(scale1 * 0.662107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly107.Closed = true;
+            poly107.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly107.Layer = "0";
+            poly107.Color = color_GPGM;
+            poly107.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly107);
+            Polyline poly108 = new Polyline();
+            poly108.AddVertexAt(0, new Point2d(scale1 * 0.616520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly108.AddVertexAt(1, new Point2d(scale1 * 0.623066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly108.AddVertexAt(2, new Point2d(scale1 * 0.635924554195402, scale1 * 0.249750785070974), 0, 0, 0);
+            poly108.AddVertexAt(3, new Point2d(scale1 * 0.642470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly108.AddVertexAt(4, new Point2d(scale1 * 0.643639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly108.AddVertexAt(5, new Point2d(scale1 * 0.643873016976453, scale1 * 0.244981707402343), 0, 0, 0);
+            poly108.AddVertexAt(6, new Point2d(scale1 * 0.644106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly108.AddVertexAt(7, new Point2d(scale1 * 0.64597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly108.AddVertexAt(8, new Point2d(scale1 * 0.644574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly108.AddVertexAt(9, new Point2d(scale1 * 0.639431228951748, scale1 * 0.235583819055336), 0, 0, 0);
+            poly108.AddVertexAt(10, new Point2d(scale1 * 0.629378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly108.AddVertexAt(11, new Point2d(scale1 * 0.624469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly108.AddVertexAt(12, new Point2d(scale1 * 0.620962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly108.AddVertexAt(13, new Point2d(scale1 * 0.617689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly108.AddVertexAt(14, new Point2d(scale1 * 0.615819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly108.Closed = true;
+            poly108.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly108.Layer = "0";
+            poly108.Color = color_GPGM;
+            poly108.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly108);
+            Polyline poly109 = new Polyline();
+            poly109.AddVertexAt(0, new Point2d(scale1 * 0.560285741001707, scale1 * 0.3), 0, 0, 0);
+            poly109.AddVertexAt(1, new Point2d(scale1 * 0.561640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly109.AddVertexAt(2, new Point2d(scale1 * 0.564679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly109.AddVertexAt(3, new Point2d(scale1 * 0.568185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly109.AddVertexAt(4, new Point2d(scale1 * 0.568185961953785, scale1 * 0.3), 0, 0, 0);
+            poly109.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly109.Layer = "0";
+            poly109.Color = color_GPGM;
+            poly109.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly109);
+            Polyline poly110 = new Polyline();
+            poly110.AddVertexAt(0, new Point2d(scale1 * 0.54565464779079, scale1 * 0.3), 0, 0, 0);
+            poly110.AddVertexAt(1, new Point2d(scale1 * 0.544574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly110.AddVertexAt(2, new Point2d(scale1 * 0.539431228951748, scale1 * 0.295583819055336), 0, 0, 0);
+            poly110.AddVertexAt(3, new Point2d(scale1 * 0.529378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly110.AddVertexAt(4, new Point2d(scale1 * 0.524469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly110.AddVertexAt(5, new Point2d(scale1 * 0.520962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly110.AddVertexAt(6, new Point2d(scale1 * 0.518759355857569, scale1 * 0.3), 0, 0, 0);
+            poly110.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly110.Layer = "0";
+            poly110.Color = color_GPGM;
+            poly110.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly110);
+            Polyline poly111 = new Polyline();
+            poly111.AddVertexAt(0, new Point2d(scale1 * 0.558367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly111.AddVertexAt(1, new Point2d(scale1 * 0.556497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly111.AddVertexAt(2, new Point2d(scale1 * 0.554159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly111.AddVertexAt(3, new Point2d(scale1 * 0.552289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly111.AddVertexAt(4, new Point2d(scale1 * 0.553925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly111.AddVertexAt(5, new Point2d(scale1 * 0.558367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly111.AddVertexAt(6, new Point2d(scale1 * 0.559536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly111.Closed = true;
+            poly111.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly111.Layer = "0";
+            poly111.Color = color_GPGM;
+            poly111.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly111);
+            Polyline poly112 = new Polyline();
+            poly112.AddVertexAt(0, new Point2d(scale1 * 0.567952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly112.AddVertexAt(1, new Point2d(scale1 * 0.566081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly112.AddVertexAt(2, new Point2d(scale1 * 0.565848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly112.AddVertexAt(3, new Point2d(scale1 * 0.568419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly112.AddVertexAt(4, new Point2d(scale1 * 0.571692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly112.AddVertexAt(5, new Point2d(scale1 * 0.572393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly112.AddVertexAt(6, new Point2d(scale1 * 0.571926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly112.AddVertexAt(7, new Point2d(scale1 * 0.567952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly112.Closed = true;
+            poly112.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly112.Layer = "0";
+            poly112.Color = color_GPGM;
+            poly112.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly112);
+            Polyline poly113 = new Polyline();
+            poly113.AddVertexAt(0, new Point2d(scale1 * 0.516577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly113.AddVertexAt(1, new Point2d(scale1 * 0.514239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly113.AddVertexAt(2, new Point2d(scale1 * 0.515641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly113.AddVertexAt(3, new Point2d(scale1 * 0.519616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly113.AddVertexAt(4, new Point2d(scale1 * 0.522655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly113.AddVertexAt(5, new Point2d(scale1 * 0.522655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly113.AddVertexAt(6, new Point2d(scale1 * 0.516577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly113.Closed = true;
+            poly113.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly113.Layer = "0";
+            poly113.Color = color_GPGM;
+            poly113.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly113);
+            Polyline poly114 = new Polyline();
+            poly114.AddVertexAt(0, new Point2d(scale1 * 0.511080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly114.AddVertexAt(1, new Point2d(scale1 * 0.509476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly114.AddVertexAt(2, new Point2d(scale1 * 0.509710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly114.AddVertexAt(3, new Point2d(scale1 * 0.510645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly114.AddVertexAt(4, new Point2d(scale1 * 0.514853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly114.AddVertexAt(5, new Point2d(scale1 * 0.519061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly114.AddVertexAt(6, new Point2d(scale1 * 0.522568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly114.AddVertexAt(7, new Point2d(scale1 * 0.519061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly114.AddVertexAt(8, new Point2d(scale1 * 0.511080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly114.Closed = true;
+            poly114.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly114.Layer = "0";
+            poly114.Color = color_GPGM;
+            poly114.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly114);
+            Polyline poly115 = new Polyline();
+            poly115.AddVertexAt(0, new Point2d(scale1 * 0.587975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly115.AddVertexAt(1, new Point2d(scale1 * 0.584702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly115.AddVertexAt(2, new Point2d(scale1 * 0.582598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly115.AddVertexAt(3, new Point2d(scale1 * 0.582598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly115.AddVertexAt(4, new Point2d(scale1 * 0.581897208718847, scale1 * 0.275751184446203), 0, 0, 0);
+            poly115.AddVertexAt(5, new Point2d(scale1 * 0.585403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly115.AddVertexAt(6, new Point2d(scale1 * 0.590313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly115.AddVertexAt(7, new Point2d(scale1 * 0.601768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly115.AddVertexAt(8, new Point2d(scale1 * 0.604807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly115.AddVertexAt(9, new Point2d(scale1 * 0.605742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly115.AddVertexAt(10, new Point2d(scale1 * 0.602703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly115.AddVertexAt(11, new Point2d(scale1 * 0.599898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly115.AddVertexAt(12, new Point2d(scale1 * 0.59756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly115.AddVertexAt(13, new Point2d(scale1 * 0.595690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly115.AddVertexAt(14, new Point2d(scale1 * 0.591482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly115.AddVertexAt(15, new Point2d(scale1 * 0.587975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly115.Closed = true;
+            poly115.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly115.Layer = "0";
+            poly115.Color = color_GPGM;
+            poly115.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly115);
+            Polyline poly116 = new Polyline();
+            poly116.AddVertexAt(0, new Point2d(scale1 * 0.558367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly116.AddVertexAt(1, new Point2d(scale1 * 0.566081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly116.AddVertexAt(2, new Point2d(scale1 * 0.569354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly116.AddVertexAt(3, new Point2d(scale1 * 0.566081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly116.AddVertexAt(4, new Point2d(scale1 * 0.558367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly116.AddVertexAt(5, new Point2d(scale1 * 0.549717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly116.AddVertexAt(6, new Point2d(scale1 * 0.545041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly116.AddVertexAt(7, new Point2d(scale1 * 0.541301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly116.AddVertexAt(8, new Point2d(scale1 * 0.530781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly116.AddVertexAt(9, new Point2d(scale1 * 0.525170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly116.AddVertexAt(10, new Point2d(scale1 * 0.526573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly116.AddVertexAt(11, new Point2d(scale1 * 0.534989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly116.AddVertexAt(12, new Point2d(scale1 * 0.541535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly116.AddVertexAt(13, new Point2d(scale1 * 0.54574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly116.AddVertexAt(14, new Point2d(scale1 * 0.551353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly116.AddVertexAt(15, new Point2d(scale1 * 0.555795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly116.Closed = true;
+            poly116.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly116.Layer = "0";
+            poly116.Color = color_GPGM;
+            poly116.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly116);
+            Polyline poly117 = new Polyline();
+            poly117.AddVertexAt(0, new Point2d(scale1 * 0.578898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly117.AddVertexAt(1, new Point2d(scale1 * 0.572741026607184, scale1 * 0.262017770945895), 0, 0, 0);
+            poly117.AddVertexAt(2, new Point2d(scale1 * 0.56743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly117.AddVertexAt(3, new Point2d(scale1 * 0.566370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly117.AddVertexAt(4, new Point2d(scale1 * 0.57167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly117.AddVertexAt(5, new Point2d(scale1 * 0.578261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly117.AddVertexAt(6, new Point2d(scale1 * 0.582084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly117.AddVertexAt(7, new Point2d(scale1 * 0.578898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly117.Closed = true;
+            poly117.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly117.Layer = "0";
+            poly117.Color = color_GPGM;
+            poly117.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly117);
+            Polyline poly118 = new Polyline();
+            poly118.AddVertexAt(0, new Point2d(scale1 * 0.596473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly118.AddVertexAt(1, new Point2d(scale1 * 0.596706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly118.AddVertexAt(2, new Point2d(scale1 * 0.595070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly118.AddVertexAt(3, new Point2d(scale1 * 0.59086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly118.AddVertexAt(4, new Point2d(scale1 * 0.586888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly118.AddVertexAt(5, new Point2d(scale1 * 0.583849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly118.AddVertexAt(6, new Point2d(scale1 * 0.580576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly118.AddVertexAt(7, new Point2d(scale1 * 0.577537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly118.AddVertexAt(8, new Point2d(scale1 * 0.575666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly118.AddVertexAt(9, new Point2d(scale1 * 0.575666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly118.AddVertexAt(10, new Point2d(scale1 * 0.579173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly118.AddVertexAt(11, new Point2d(scale1 * 0.585953114052606, scale1 * 0.253818527788335), 0, 0, 0);
+            poly118.AddVertexAt(12, new Point2d(scale1 * 0.592732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly118.Closed = true;
+            poly118.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly118.Layer = "0";
+            poly118.Color = color_GPGM;
+            poly118.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly118);
+            Polyline poly119 = new Polyline();
+            poly119.AddVertexAt(0, new Point2d(scale1 * 0.562107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly119.AddVertexAt(1, new Point2d(scale1 * 0.559302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly119.AddVertexAt(2, new Point2d(scale1 * 0.560237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly119.AddVertexAt(3, new Point2d(scale1 * 0.561640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly119.AddVertexAt(4, new Point2d(scale1 * 0.564679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly119.AddVertexAt(5, new Point2d(scale1 * 0.568185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly119.AddVertexAt(6, new Point2d(scale1 * 0.568185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly119.AddVertexAt(7, new Point2d(scale1 * 0.565848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly119.AddVertexAt(8, new Point2d(scale1 * 0.562107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly119.Closed = true;
+            poly119.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly119.Layer = "0";
+            poly119.Color = color_GPGM;
+            poly119.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly119);
+            Polyline poly120 = new Polyline();
+            poly120.AddVertexAt(0, new Point2d(scale1 * 0.516520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly120.AddVertexAt(1, new Point2d(scale1 * 0.523066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly120.AddVertexAt(2, new Point2d(scale1 * 0.535924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly120.AddVertexAt(3, new Point2d(scale1 * 0.542470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly120.AddVertexAt(4, new Point2d(scale1 * 0.543639238659362, scale1 * 0.246805178275643), 0, 0, 0);
+            poly120.AddVertexAt(5, new Point2d(scale1 * 0.543873016976453, scale1 * 0.244981707402343), 0, 0, 0);
+            poly120.AddVertexAt(6, new Point2d(scale1 * 0.544106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly120.AddVertexAt(7, new Point2d(scale1 * 0.54597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly120.AddVertexAt(8, new Point2d(scale1 * 0.544574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly120.AddVertexAt(9, new Point2d(scale1 * 0.539431228951748, scale1 * 0.235583819055336), 0, 0, 0);
+            poly120.AddVertexAt(10, new Point2d(scale1 * 0.529378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly120.AddVertexAt(11, new Point2d(scale1 * 0.524469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly120.AddVertexAt(12, new Point2d(scale1 * 0.520962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly120.AddVertexAt(13, new Point2d(scale1 * 0.517689845462401, scale1 * 0.241054231675236), 0, 0, 0);
+            poly120.AddVertexAt(14, new Point2d(scale1 * 0.515819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly120.Closed = true;
+            poly120.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly120.Layer = "0";
+            poly120.Color = color_GPGM;
+            poly120.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly120);
+            Polyline poly121 = new Polyline();
+            poly121.AddVertexAt(0, new Point2d(scale1 * 0.460285741001707, scale1 * 0.3), 0, 0, 0);
+            poly121.AddVertexAt(1, new Point2d(scale1 * 0.461640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly121.AddVertexAt(2, new Point2d(scale1 * 0.464679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly121.AddVertexAt(3, new Point2d(scale1 * 0.468185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly121.AddVertexAt(4, new Point2d(scale1 * 0.468185961953785, scale1 * 0.3), 0, 0, 0);
+            poly121.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly121.Layer = "0";
+            poly121.Color = color_GPGM;
+            poly121.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly121);
+            Polyline poly122 = new Polyline();
+            poly122.AddVertexAt(0, new Point2d(scale1 * 0.44565464779079, scale1 * 0.3), 0, 0, 0);
+            poly122.AddVertexAt(1, new Point2d(scale1 * 0.444574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly122.AddVertexAt(2, new Point2d(scale1 * 0.439431228951747, scale1 * 0.295583819055336), 0, 0, 0);
+            poly122.AddVertexAt(3, new Point2d(scale1 * 0.429378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly122.AddVertexAt(4, new Point2d(scale1 * 0.424469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly122.AddVertexAt(5, new Point2d(scale1 * 0.420962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly122.AddVertexAt(6, new Point2d(scale1 * 0.418759355857569, scale1 * 0.3), 0, 0, 0);
+            poly122.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly122.Layer = "0";
+            poly122.Color = color_GPGM;
+            poly122.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly122);
+            Polyline poly123 = new Polyline();
+            poly123.AddVertexAt(0, new Point2d(scale1 * 0.458367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly123.AddVertexAt(1, new Point2d(scale1 * 0.456497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly123.AddVertexAt(2, new Point2d(scale1 * 0.454159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly123.AddVertexAt(3, new Point2d(scale1 * 0.452289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly123.AddVertexAt(4, new Point2d(scale1 * 0.453925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly123.AddVertexAt(5, new Point2d(scale1 * 0.458367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly123.AddVertexAt(6, new Point2d(scale1 * 0.459536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly123.Closed = true;
+            poly123.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly123.Layer = "0";
+            poly123.Color = color_GPGM;
+            poly123.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly123);
+            Polyline poly124 = new Polyline();
+            poly124.AddVertexAt(0, new Point2d(scale1 * 0.467952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly124.AddVertexAt(1, new Point2d(scale1 * 0.466081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly124.AddVertexAt(2, new Point2d(scale1 * 0.465848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly124.AddVertexAt(3, new Point2d(scale1 * 0.468419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly124.AddVertexAt(4, new Point2d(scale1 * 0.471692636710132, scale1 * 0.278926319043773), 0, 0, 0);
+            poly124.AddVertexAt(5, new Point2d(scale1 * 0.472393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly124.AddVertexAt(6, new Point2d(scale1 * 0.471926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly124.AddVertexAt(7, new Point2d(scale1 * 0.467952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly124.Closed = true;
+            poly124.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly124.Layer = "0";
+            poly124.Color = color_GPGM;
+            poly124.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly124);
+            Polyline poly125 = new Polyline();
+            poly125.AddVertexAt(0, new Point2d(scale1 * 0.416577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly125.AddVertexAt(1, new Point2d(scale1 * 0.414239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly125.AddVertexAt(2, new Point2d(scale1 * 0.415641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly125.AddVertexAt(3, new Point2d(scale1 * 0.419616230249211, scale1 * 0.282726279325197), 0, 0, 0);
+            poly125.AddVertexAt(4, new Point2d(scale1 * 0.422655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly125.AddVertexAt(5, new Point2d(scale1 * 0.422655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly125.AddVertexAt(6, new Point2d(scale1 * 0.416577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly125.Closed = true;
+            poly125.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly125.Layer = "0";
+            poly125.Color = color_GPGM;
+            poly125.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly125);
+            Polyline poly126 = new Polyline();
+            poly126.AddVertexAt(0, new Point2d(scale1 * 0.411080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly126.AddVertexAt(1, new Point2d(scale1 * 0.409476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly126.AddVertexAt(2, new Point2d(scale1 * 0.409710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly126.AddVertexAt(3, new Point2d(scale1 * 0.410645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly126.AddVertexAt(4, new Point2d(scale1 * 0.414853863100374, scale1 * 0.255960787275844), 0, 0, 0);
+            poly126.AddVertexAt(5, new Point2d(scale1 * 0.419061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly126.AddVertexAt(6, new Point2d(scale1 * 0.422568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly126.AddVertexAt(7, new Point2d(scale1 * 0.419061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly126.AddVertexAt(8, new Point2d(scale1 * 0.411080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly126.Closed = true;
+            poly126.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly126.Layer = "0";
+            poly126.Color = color_GPGM;
+            poly126.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly126);
+            Polyline poly127 = new Polyline();
+            poly127.AddVertexAt(0, new Point2d(scale1 * 0.487975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly127.AddVertexAt(1, new Point2d(scale1 * 0.484702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly127.AddVertexAt(2, new Point2d(scale1 * 0.482598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly127.AddVertexAt(3, new Point2d(scale1 * 0.482598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly127.AddVertexAt(4, new Point2d(scale1 * 0.481897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly127.AddVertexAt(5, new Point2d(scale1 * 0.485403883475193, scale1 * 0.273366645611888), 0, 0, 0);
+            poly127.AddVertexAt(6, new Point2d(scale1 * 0.490313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly127.AddVertexAt(7, new Point2d(scale1 * 0.501768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly127.AddVertexAt(8, new Point2d(scale1 * 0.504807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly127.AddVertexAt(9, new Point2d(scale1 * 0.505742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly127.AddVertexAt(10, new Point2d(scale1 * 0.502703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly127.AddVertexAt(11, new Point2d(scale1 * 0.499898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly127.AddVertexAt(12, new Point2d(scale1 * 0.49756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly127.AddVertexAt(13, new Point2d(scale1 * 0.495690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly127.AddVertexAt(14, new Point2d(scale1 * 0.491482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly127.AddVertexAt(15, new Point2d(scale1 * 0.487975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly127.Closed = true;
+            poly127.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly127.Layer = "0";
+            poly127.Color = color_GPGM;
+            poly127.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly127);
+            Polyline poly128 = new Polyline();
+            poly128.AddVertexAt(0, new Point2d(scale1 * 0.458367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly128.AddVertexAt(1, new Point2d(scale1 * 0.466081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly128.AddVertexAt(2, new Point2d(scale1 * 0.469354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly128.AddVertexAt(3, new Point2d(scale1 * 0.466081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly128.AddVertexAt(4, new Point2d(scale1 * 0.458367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly128.AddVertexAt(5, new Point2d(scale1 * 0.449717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly128.AddVertexAt(6, new Point2d(scale1 * 0.445041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly128.AddVertexAt(7, new Point2d(scale1 * 0.441301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly128.AddVertexAt(8, new Point2d(scale1 * 0.430781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly128.AddVertexAt(9, new Point2d(scale1 * 0.425170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly128.AddVertexAt(10, new Point2d(scale1 * 0.426573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly128.AddVertexAt(11, new Point2d(scale1 * 0.434989440927043, scale1 * 0.278365251082757), 0, 0, 0);
+            poly128.AddVertexAt(12, new Point2d(scale1 * 0.441535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly128.AddVertexAt(13, new Point2d(scale1 * 0.445743243513171, scale1 * 0.277804183121743), 0, 0, 0);
+            poly128.AddVertexAt(14, new Point2d(scale1 * 0.451353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly128.AddVertexAt(15, new Point2d(scale1 * 0.455795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly128.Closed = true;
+            poly128.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly128.Layer = "0";
+            poly128.Color = color_GPGM;
+            poly128.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly128);
+            Polyline poly129 = new Polyline();
+            poly129.AddVertexAt(0, new Point2d(scale1 * 0.478898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly129.AddVertexAt(1, new Point2d(scale1 * 0.472741026607183, scale1 * 0.262017770945895), 0, 0, 0);
+            poly129.AddVertexAt(2, new Point2d(scale1 * 0.46743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly129.AddVertexAt(3, new Point2d(scale1 * 0.466370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly129.AddVertexAt(4, new Point2d(scale1 * 0.47167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly129.AddVertexAt(5, new Point2d(scale1 * 0.478261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly129.AddVertexAt(6, new Point2d(scale1 * 0.482084003759041, scale1 * 0.259467462032192), 0, 0, 0);
+            poly129.AddVertexAt(7, new Point2d(scale1 * 0.478898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly129.Closed = true;
+            poly129.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly129.Layer = "0";
+            poly129.Color = color_GPGM;
+            poly129.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly129);
+            Polyline poly130 = new Polyline();
+            poly130.AddVertexAt(0, new Point2d(scale1 * 0.496473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly130.AddVertexAt(1, new Point2d(scale1 * 0.496706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly130.AddVertexAt(2, new Point2d(scale1 * 0.495070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly130.AddVertexAt(3, new Point2d(scale1 * 0.49086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly130.AddVertexAt(4, new Point2d(scale1 * 0.486888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly130.AddVertexAt(5, new Point2d(scale1 * 0.483849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly130.AddVertexAt(6, new Point2d(scale1 * 0.480576212759541, scale1 * 0.243298503519296), 0, 0, 0);
+            poly130.AddVertexAt(7, new Point2d(scale1 * 0.477537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly130.AddVertexAt(8, new Point2d(scale1 * 0.475666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly130.AddVertexAt(9, new Point2d(scale1 * 0.475666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly130.AddVertexAt(10, new Point2d(scale1 * 0.479173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly130.AddVertexAt(11, new Point2d(scale1 * 0.485953114052605, scale1 * 0.253818527788335), 0, 0, 0);
+            poly130.AddVertexAt(12, new Point2d(scale1 * 0.492732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly130.Closed = true;
+            poly130.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly130.Layer = "0";
+            poly130.Color = color_GPGM;
+            poly130.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly130);
+            Polyline poly131 = new Polyline();
+            poly131.AddVertexAt(0, new Point2d(scale1 * 0.462107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly131.AddVertexAt(1, new Point2d(scale1 * 0.459302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly131.AddVertexAt(2, new Point2d(scale1 * 0.460237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly131.AddVertexAt(3, new Point2d(scale1 * 0.461640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly131.AddVertexAt(4, new Point2d(scale1 * 0.464679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly131.AddVertexAt(5, new Point2d(scale1 * 0.468185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly131.AddVertexAt(6, new Point2d(scale1 * 0.468185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly131.AddVertexAt(7, new Point2d(scale1 * 0.465848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly131.AddVertexAt(8, new Point2d(scale1 * 0.462107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly131.Closed = true;
+            poly131.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly131.Layer = "0";
+            poly131.Color = color_GPGM;
+            poly131.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly131);
+            Polyline poly132 = new Polyline();
+            poly132.AddVertexAt(0, new Point2d(scale1 * 0.416520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly132.AddVertexAt(1, new Point2d(scale1 * 0.423066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly132.AddVertexAt(2, new Point2d(scale1 * 0.435924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly132.AddVertexAt(3, new Point2d(scale1 * 0.442470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly132.AddVertexAt(4, new Point2d(scale1 * 0.443639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly132.AddVertexAt(5, new Point2d(scale1 * 0.443873016976452, scale1 * 0.244981707402343), 0, 0, 0);
+            poly132.AddVertexAt(6, new Point2d(scale1 * 0.444106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly132.AddVertexAt(7, new Point2d(scale1 * 0.44597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly132.AddVertexAt(8, new Point2d(scale1 * 0.444574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly132.AddVertexAt(9, new Point2d(scale1 * 0.439431228951747, scale1 * 0.235583819055336), 0, 0, 0);
+            poly132.AddVertexAt(10, new Point2d(scale1 * 0.429378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly132.AddVertexAt(11, new Point2d(scale1 * 0.424469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly132.AddVertexAt(12, new Point2d(scale1 * 0.420962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly132.AddVertexAt(13, new Point2d(scale1 * 0.417689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly132.AddVertexAt(14, new Point2d(scale1 * 0.415819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly132.Closed = true;
+            poly132.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly132.Layer = "0";
+            poly132.Color = color_GPGM;
+            poly132.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly132);
+            Polyline poly133 = new Polyline();
+            poly133.AddVertexAt(0, new Point2d(scale1 * 0.360285741001707, scale1 * 0.3), 0, 0, 0);
+            poly133.AddVertexAt(1, new Point2d(scale1 * 0.361640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly133.AddVertexAt(2, new Point2d(scale1 * 0.364679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly133.AddVertexAt(3, new Point2d(scale1 * 0.368185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly133.AddVertexAt(4, new Point2d(scale1 * 0.368185961953785, scale1 * 0.3), 0, 0, 0);
+            poly133.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly133.Layer = "0";
+            poly133.Color = color_GPGM;
+            poly133.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly133);
+            Polyline poly134 = new Polyline();
+            poly134.AddVertexAt(0, new Point2d(scale1 * 0.34565464779079, scale1 * 0.3), 0, 0, 0);
+            poly134.AddVertexAt(1, new Point2d(scale1 * 0.344574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly134.AddVertexAt(2, new Point2d(scale1 * 0.339431228951747, scale1 * 0.295583819055336), 0, 0, 0);
+            poly134.AddVertexAt(3, new Point2d(scale1 * 0.329378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly134.AddVertexAt(4, new Point2d(scale1 * 0.324469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly134.AddVertexAt(5, new Point2d(scale1 * 0.320962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly134.AddVertexAt(6, new Point2d(scale1 * 0.318759355857569, scale1 * 0.3), 0, 0, 0);
+            poly134.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly134.Layer = "0";
+            poly134.Color = color_GPGM;
+            poly134.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly134);
+            Polyline poly135 = new Polyline();
+            poly135.AddVertexAt(0, new Point2d(scale1 * 0.358367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly135.AddVertexAt(1, new Point2d(scale1 * 0.356497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly135.AddVertexAt(2, new Point2d(scale1 * 0.354159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly135.AddVertexAt(3, new Point2d(scale1 * 0.352289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly135.AddVertexAt(4, new Point2d(scale1 * 0.353925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly135.AddVertexAt(5, new Point2d(scale1 * 0.358367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly135.AddVertexAt(6, new Point2d(scale1 * 0.359536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly135.Closed = true;
+            poly135.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly135.Layer = "0";
+            poly135.Color = color_GPGM;
+            poly135.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly135);
+            Polyline poly136 = new Polyline();
+            poly136.AddVertexAt(0, new Point2d(scale1 * 0.367952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly136.AddVertexAt(1, new Point2d(scale1 * 0.366081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly136.AddVertexAt(2, new Point2d(scale1 * 0.365848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly136.AddVertexAt(3, new Point2d(scale1 * 0.368419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly136.AddVertexAt(4, new Point2d(scale1 * 0.371692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly136.AddVertexAt(5, new Point2d(scale1 * 0.372393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly136.AddVertexAt(6, new Point2d(scale1 * 0.371926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly136.AddVertexAt(7, new Point2d(scale1 * 0.367952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly136.Closed = true;
+            poly136.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly136.Layer = "0";
+            poly136.Color = color_GPGM;
+            poly136.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly136);
+            Polyline poly137 = new Polyline();
+            poly137.AddVertexAt(0, new Point2d(scale1 * 0.316577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly137.AddVertexAt(1, new Point2d(scale1 * 0.314239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly137.AddVertexAt(2, new Point2d(scale1 * 0.315641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly137.AddVertexAt(3, new Point2d(scale1 * 0.319616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly137.AddVertexAt(4, new Point2d(scale1 * 0.322655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly137.AddVertexAt(5, new Point2d(scale1 * 0.322655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly137.AddVertexAt(6, new Point2d(scale1 * 0.316577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly137.Closed = true;
+            poly137.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly137.Layer = "0";
+            poly137.Color = color_GPGM;
+            poly137.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly137);
+            Polyline poly138 = new Polyline();
+            poly138.AddVertexAt(0, new Point2d(scale1 * 0.311080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly138.AddVertexAt(1, new Point2d(scale1 * 0.309476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly138.AddVertexAt(2, new Point2d(scale1 * 0.309710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly138.AddVertexAt(3, new Point2d(scale1 * 0.310645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly138.AddVertexAt(4, new Point2d(scale1 * 0.314853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly138.AddVertexAt(5, new Point2d(scale1 * 0.319061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly138.AddVertexAt(6, new Point2d(scale1 * 0.322568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly138.AddVertexAt(7, new Point2d(scale1 * 0.319061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly138.AddVertexAt(8, new Point2d(scale1 * 0.311080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly138.Closed = true;
+            poly138.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly138.Layer = "0";
+            poly138.Color = color_GPGM;
+            poly138.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly138);
+            Polyline poly139 = new Polyline();
+            poly139.AddVertexAt(0, new Point2d(scale1 * 0.387975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly139.AddVertexAt(1, new Point2d(scale1 * 0.384702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly139.AddVertexAt(2, new Point2d(scale1 * 0.382598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly139.AddVertexAt(3, new Point2d(scale1 * 0.382598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly139.AddVertexAt(4, new Point2d(scale1 * 0.381897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly139.AddVertexAt(5, new Point2d(scale1 * 0.385403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly139.AddVertexAt(6, new Point2d(scale1 * 0.390313228134078, scale1 * 0.272525043670365), 0, 0, 0);
+            poly139.AddVertexAt(7, new Point2d(scale1 * 0.401768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly139.AddVertexAt(8, new Point2d(scale1 * 0.404807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly139.AddVertexAt(9, new Point2d(scale1 * 0.405742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly139.AddVertexAt(10, new Point2d(scale1 * 0.402703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly139.AddVertexAt(11, new Point2d(scale1 * 0.399898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly139.AddVertexAt(12, new Point2d(scale1 * 0.39756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly139.AddVertexAt(13, new Point2d(scale1 * 0.395690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly139.AddVertexAt(14, new Point2d(scale1 * 0.391482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly139.AddVertexAt(15, new Point2d(scale1 * 0.387975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly139.Closed = true;
+            poly139.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly139.Layer = "0";
+            poly139.Color = color_GPGM;
+            poly139.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly139);
+            Polyline poly140 = new Polyline();
+            poly140.AddVertexAt(0, new Point2d(scale1 * 0.358367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly140.AddVertexAt(1, new Point2d(scale1 * 0.366081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly140.AddVertexAt(2, new Point2d(scale1 * 0.369354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly140.AddVertexAt(3, new Point2d(scale1 * 0.366081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly140.AddVertexAt(4, new Point2d(scale1 * 0.358367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly140.AddVertexAt(5, new Point2d(scale1 * 0.349717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly140.AddVertexAt(6, new Point2d(scale1 * 0.345041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly140.AddVertexAt(7, new Point2d(scale1 * 0.341301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly140.AddVertexAt(8, new Point2d(scale1 * 0.330781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly140.AddVertexAt(9, new Point2d(scale1 * 0.325170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly140.AddVertexAt(10, new Point2d(scale1 * 0.326573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly140.AddVertexAt(11, new Point2d(scale1 * 0.334989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly140.AddVertexAt(12, new Point2d(scale1 * 0.341535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly140.AddVertexAt(13, new Point2d(scale1 * 0.34574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly140.AddVertexAt(14, new Point2d(scale1 * 0.351353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly140.AddVertexAt(15, new Point2d(scale1 * 0.355795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly140.Closed = true;
+            poly140.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly140.Layer = "0";
+            poly140.Color = color_GPGM;
+            poly140.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly140);
+            Polyline poly141 = new Polyline();
+            poly141.AddVertexAt(0, new Point2d(scale1 * 0.378898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly141.AddVertexAt(1, new Point2d(scale1 * 0.372741026607184, scale1 * 0.262017770945895), 0, 0, 0);
+            poly141.AddVertexAt(2, new Point2d(scale1 * 0.36743251686181, scale1 * 0.259722492923566), 0, 0, 0);
+            poly141.AddVertexAt(3, new Point2d(scale1 * 0.366370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly141.AddVertexAt(4, new Point2d(scale1 * 0.37167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly141.AddVertexAt(5, new Point2d(scale1 * 0.378261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly141.AddVertexAt(6, new Point2d(scale1 * 0.382084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly141.AddVertexAt(7, new Point2d(scale1 * 0.378898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly141.Closed = true;
+            poly141.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly141.Layer = "0";
+            poly141.Color = color_GPGM;
+            poly141.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly141);
+            Polyline poly142 = new Polyline();
+            poly142.AddVertexAt(0, new Point2d(scale1 * 0.396473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly142.AddVertexAt(1, new Point2d(scale1 * 0.396706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly142.AddVertexAt(2, new Point2d(scale1 * 0.395070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly142.AddVertexAt(3, new Point2d(scale1 * 0.39086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly142.AddVertexAt(4, new Point2d(scale1 * 0.386888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly142.AddVertexAt(5, new Point2d(scale1 * 0.383849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly142.AddVertexAt(6, new Point2d(scale1 * 0.380576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly142.AddVertexAt(7, new Point2d(scale1 * 0.377537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly142.AddVertexAt(8, new Point2d(scale1 * 0.375666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly142.AddVertexAt(9, new Point2d(scale1 * 0.375666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly142.AddVertexAt(10, new Point2d(scale1 * 0.379173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly142.AddVertexAt(11, new Point2d(scale1 * 0.385953114052606, scale1 * 0.253818527788335), 0, 0, 0);
+            poly142.AddVertexAt(12, new Point2d(scale1 * 0.392732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly142.Closed = true;
+            poly142.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly142.Layer = "0";
+            poly142.Color = color_GPGM;
+            poly142.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly142);
+            Polyline poly143 = new Polyline();
+            poly143.AddVertexAt(0, new Point2d(scale1 * 0.362107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly143.AddVertexAt(1, new Point2d(scale1 * 0.359302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly143.AddVertexAt(2, new Point2d(scale1 * 0.360237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly143.AddVertexAt(3, new Point2d(scale1 * 0.361640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly143.AddVertexAt(4, new Point2d(scale1 * 0.364679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly143.AddVertexAt(5, new Point2d(scale1 * 0.368185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly143.AddVertexAt(6, new Point2d(scale1 * 0.368185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly143.AddVertexAt(7, new Point2d(scale1 * 0.365848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly143.AddVertexAt(8, new Point2d(scale1 * 0.362107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly143.Closed = true;
+            poly143.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly143.Layer = "0";
+            poly143.Color = color_GPGM;
+            poly143.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly143);
+            Polyline poly144 = new Polyline();
+            poly144.AddVertexAt(0, new Point2d(scale1 * 0.316520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly144.AddVertexAt(1, new Point2d(scale1 * 0.323066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly144.AddVertexAt(2, new Point2d(scale1 * 0.335924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly144.AddVertexAt(3, new Point2d(scale1 * 0.342470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly144.AddVertexAt(4, new Point2d(scale1 * 0.343639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly144.AddVertexAt(5, new Point2d(scale1 * 0.343873016976453, scale1 * 0.244981707402343), 0, 0, 0);
+            poly144.AddVertexAt(6, new Point2d(scale1 * 0.344106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly144.AddVertexAt(7, new Point2d(scale1 * 0.34597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly144.AddVertexAt(8, new Point2d(scale1 * 0.344574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly144.AddVertexAt(9, new Point2d(scale1 * 0.339431228951747, scale1 * 0.235583819055336), 0, 0, 0);
+            poly144.AddVertexAt(10, new Point2d(scale1 * 0.329378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly144.AddVertexAt(11, new Point2d(scale1 * 0.324469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly144.AddVertexAt(12, new Point2d(scale1 * 0.320962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly144.AddVertexAt(13, new Point2d(scale1 * 0.317689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly144.AddVertexAt(14, new Point2d(scale1 * 0.315819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly144.Closed = true;
+            poly144.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly144.Layer = "0";
+            poly144.Color = color_GPGM;
+            poly144.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly144);
+            Polyline poly145 = new Polyline();
+            poly145.AddVertexAt(0, new Point2d(scale1 * 0.260285741001707, scale1 * 0.3), 0, 0, 0);
+            poly145.AddVertexAt(1, new Point2d(scale1 * 0.261640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly145.AddVertexAt(2, new Point2d(scale1 * 0.264679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly145.AddVertexAt(3, new Point2d(scale1 * 0.268185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly145.AddVertexAt(4, new Point2d(scale1 * 0.268185961953785, scale1 * 0.3), 0, 0, 0);
+            poly145.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly145.Layer = "0";
+            poly145.Color = color_GPGM;
+            poly145.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly145);
+            Polyline poly146 = new Polyline();
+            poly146.AddVertexAt(0, new Point2d(scale1 * 0.24565464779079, scale1 * 0.3), 0, 0, 0);
+            poly146.AddVertexAt(1, new Point2d(scale1 * 0.244574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly146.AddVertexAt(2, new Point2d(scale1 * 0.239431228951748, scale1 * 0.295583819055336), 0, 0, 0);
+            poly146.AddVertexAt(3, new Point2d(scale1 * 0.229378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly146.AddVertexAt(4, new Point2d(scale1 * 0.224469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly146.AddVertexAt(5, new Point2d(scale1 * 0.220962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly146.AddVertexAt(6, new Point2d(scale1 * 0.218759355857569, scale1 * 0.3), 0, 0, 0);
+            poly146.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly146.Layer = "0";
+            poly146.Color = color_GPGM;
+            poly146.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly146);
+            Polyline poly147 = new Polyline();
+            poly147.AddVertexAt(0, new Point2d(scale1 * 0.258367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly147.AddVertexAt(1, new Point2d(scale1 * 0.256497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly147.AddVertexAt(2, new Point2d(scale1 * 0.254159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly147.AddVertexAt(3, new Point2d(scale1 * 0.252289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly147.AddVertexAt(4, new Point2d(scale1 * 0.253925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly147.AddVertexAt(5, new Point2d(scale1 * 0.258367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly147.AddVertexAt(6, new Point2d(scale1 * 0.259536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly147.Closed = true;
+            poly147.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly147.Layer = "0";
+            poly147.Color = color_GPGM;
+            poly147.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly147);
+            Polyline poly148 = new Polyline();
+            poly148.AddVertexAt(0, new Point2d(scale1 * 0.267952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly148.AddVertexAt(1, new Point2d(scale1 * 0.266081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly148.AddVertexAt(2, new Point2d(scale1 * 0.265848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly148.AddVertexAt(3, new Point2d(scale1 * 0.268419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly148.AddVertexAt(4, new Point2d(scale1 * 0.271692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly148.AddVertexAt(5, new Point2d(scale1 * 0.272393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly148.AddVertexAt(6, new Point2d(scale1 * 0.271926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly148.AddVertexAt(7, new Point2d(scale1 * 0.267952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly148.Closed = true;
+            poly148.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly148.Layer = "0";
+            poly148.Color = color_GPGM;
+            poly148.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly148);
+            Polyline poly149 = new Polyline();
+            poly149.AddVertexAt(0, new Point2d(scale1 * 0.216577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly149.AddVertexAt(1, new Point2d(scale1 * 0.214239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly149.AddVertexAt(2, new Point2d(scale1 * 0.215641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly149.AddVertexAt(3, new Point2d(scale1 * 0.219616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly149.AddVertexAt(4, new Point2d(scale1 * 0.222655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly149.AddVertexAt(5, new Point2d(scale1 * 0.222655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly149.AddVertexAt(6, new Point2d(scale1 * 0.216577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly149.Closed = true;
+            poly149.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly149.Layer = "0";
+            poly149.Color = color_GPGM;
+            poly149.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly149);
+            Polyline poly150 = new Polyline();
+            poly150.AddVertexAt(0, new Point2d(scale1 * 0.211080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly150.AddVertexAt(1, new Point2d(scale1 * 0.209476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly150.AddVertexAt(2, new Point2d(scale1 * 0.209710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly150.AddVertexAt(3, new Point2d(scale1 * 0.210645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly150.AddVertexAt(4, new Point2d(scale1 * 0.214853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly150.AddVertexAt(5, new Point2d(scale1 * 0.219061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly150.AddVertexAt(6, new Point2d(scale1 * 0.222568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly150.AddVertexAt(7, new Point2d(scale1 * 0.219061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly150.AddVertexAt(8, new Point2d(scale1 * 0.211080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly150.Closed = true;
+            poly150.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly150.Layer = "0";
+            poly150.Color = color_GPGM;
+            poly150.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly150);
+            Polyline poly151 = new Polyline();
+            poly151.AddVertexAt(0, new Point2d(scale1 * 0.287975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly151.AddVertexAt(1, new Point2d(scale1 * 0.284702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly151.AddVertexAt(2, new Point2d(scale1 * 0.282598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly151.AddVertexAt(3, new Point2d(scale1 * 0.282598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly151.AddVertexAt(4, new Point2d(scale1 * 0.281897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly151.AddVertexAt(5, new Point2d(scale1 * 0.285403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly151.AddVertexAt(6, new Point2d(scale1 * 0.290313228134079, scale1 * 0.272525043670365), 0, 0, 0);
+            poly151.AddVertexAt(7, new Point2d(scale1 * 0.301768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly151.AddVertexAt(8, new Point2d(scale1 * 0.304807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly151.AddVertexAt(9, new Point2d(scale1 * 0.305742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly151.AddVertexAt(10, new Point2d(scale1 * 0.302703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly151.AddVertexAt(11, new Point2d(scale1 * 0.299898139134757, scale1 * 0.282764533958894), 0, 0, 0);
+            poly151.AddVertexAt(12, new Point2d(scale1 * 0.29756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly151.AddVertexAt(13, new Point2d(scale1 * 0.295690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly151.AddVertexAt(14, new Point2d(scale1 * 0.291482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly151.AddVertexAt(15, new Point2d(scale1 * 0.287975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly151.Closed = true;
+            poly151.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly151.Layer = "0";
+            poly151.Color = color_GPGM;
+            poly151.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly151);
+            Polyline poly152 = new Polyline();
+            poly152.AddVertexAt(0, new Point2d(scale1 * 0.258367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly152.AddVertexAt(1, new Point2d(scale1 * 0.266081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly152.AddVertexAt(2, new Point2d(scale1 * 0.269354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly152.AddVertexAt(3, new Point2d(scale1 * 0.266081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly152.AddVertexAt(4, new Point2d(scale1 * 0.258367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly152.AddVertexAt(5, new Point2d(scale1 * 0.249717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly152.AddVertexAt(6, new Point2d(scale1 * 0.245041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly152.AddVertexAt(7, new Point2d(scale1 * 0.241301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly152.AddVertexAt(8, new Point2d(scale1 * 0.230781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly152.AddVertexAt(9, new Point2d(scale1 * 0.225170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly152.AddVertexAt(10, new Point2d(scale1 * 0.226573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly152.AddVertexAt(11, new Point2d(scale1 * 0.234989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly152.AddVertexAt(12, new Point2d(scale1 * 0.241535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly152.AddVertexAt(13, new Point2d(scale1 * 0.24574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly152.AddVertexAt(14, new Point2d(scale1 * 0.251353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly152.AddVertexAt(15, new Point2d(scale1 * 0.255795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly152.Closed = true;
+            poly152.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly152.Layer = "0";
+            poly152.Color = color_GPGM;
+            poly152.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly152);
+            Polyline poly153 = new Polyline();
+            poly153.AddVertexAt(0, new Point2d(scale1 * 0.278898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly153.AddVertexAt(1, new Point2d(scale1 * 0.272741026607183, scale1 * 0.262017770945895), 0, 0, 0);
+            poly153.AddVertexAt(2, new Point2d(scale1 * 0.267432516861809, scale1 * 0.259722492923566), 0, 0, 0);
+            poly153.AddVertexAt(3, new Point2d(scale1 * 0.266370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly153.AddVertexAt(4, new Point2d(scale1 * 0.27167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly153.AddVertexAt(5, new Point2d(scale1 * 0.278261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly153.AddVertexAt(6, new Point2d(scale1 * 0.282084003759042, scale1 * 0.259467462032192), 0, 0, 0);
+            poly153.AddVertexAt(7, new Point2d(scale1 * 0.278898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly153.Closed = true;
+            poly153.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly153.Layer = "0";
+            poly153.Color = color_GPGM;
+            poly153.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly153);
+            Polyline poly154 = new Polyline();
+            poly154.AddVertexAt(0, new Point2d(scale1 * 0.296473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly154.AddVertexAt(1, new Point2d(scale1 * 0.296706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly154.AddVertexAt(2, new Point2d(scale1 * 0.295070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly154.AddVertexAt(3, new Point2d(scale1 * 0.29086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly154.AddVertexAt(4, new Point2d(scale1 * 0.286888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly154.AddVertexAt(5, new Point2d(scale1 * 0.283849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly154.AddVertexAt(6, new Point2d(scale1 * 0.280576212759541, scale1 * 0.243298503519296), 0, 0, 0);
+            poly154.AddVertexAt(7, new Point2d(scale1 * 0.277537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly154.AddVertexAt(8, new Point2d(scale1 * 0.275666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly154.AddVertexAt(9, new Point2d(scale1 * 0.275666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly154.AddVertexAt(10, new Point2d(scale1 * 0.279173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly154.AddVertexAt(11, new Point2d(scale1 * 0.285953114052605, scale1 * 0.253818527788335), 0, 0, 0);
+            poly154.AddVertexAt(12, new Point2d(scale1 * 0.292732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly154.Closed = true;
+            poly154.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly154.Layer = "0";
+            poly154.Color = color_GPGM;
+            poly154.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly154);
+            Polyline poly155 = new Polyline();
+            poly155.AddVertexAt(0, new Point2d(scale1 * 0.262107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly155.AddVertexAt(1, new Point2d(scale1 * 0.259302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly155.AddVertexAt(2, new Point2d(scale1 * 0.260237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly155.AddVertexAt(3, new Point2d(scale1 * 0.261640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly155.AddVertexAt(4, new Point2d(scale1 * 0.264679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly155.AddVertexAt(5, new Point2d(scale1 * 0.268185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly155.AddVertexAt(6, new Point2d(scale1 * 0.268185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly155.AddVertexAt(7, new Point2d(scale1 * 0.265848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly155.AddVertexAt(8, new Point2d(scale1 * 0.262107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly155.Closed = true;
+            poly155.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly155.Layer = "0";
+            poly155.Color = color_GPGM;
+            poly155.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly155);
+            Polyline poly156 = new Polyline();
+            poly156.AddVertexAt(0, new Point2d(scale1 * 0.216520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly156.AddVertexAt(1, new Point2d(scale1 * 0.223066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly156.AddVertexAt(2, new Point2d(scale1 * 0.235924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly156.AddVertexAt(3, new Point2d(scale1 * 0.242470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly156.AddVertexAt(4, new Point2d(scale1 * 0.243639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly156.AddVertexAt(5, new Point2d(scale1 * 0.243873016976452, scale1 * 0.244981707402343), 0, 0, 0);
+            poly156.AddVertexAt(6, new Point2d(scale1 * 0.244106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly156.AddVertexAt(7, new Point2d(scale1 * 0.24597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly156.AddVertexAt(8, new Point2d(scale1 * 0.244574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly156.AddVertexAt(9, new Point2d(scale1 * 0.239431228951748, scale1 * 0.235583819055336), 0, 0, 0);
+            poly156.AddVertexAt(10, new Point2d(scale1 * 0.229378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly156.AddVertexAt(11, new Point2d(scale1 * 0.224469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly156.AddVertexAt(12, new Point2d(scale1 * 0.220962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly156.AddVertexAt(13, new Point2d(scale1 * 0.217689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly156.AddVertexAt(14, new Point2d(scale1 * 0.215819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly156.Closed = true;
+            poly156.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly156.Layer = "0";
+            poly156.Color = color_GPGM;
+            poly156.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly156);
+            Polyline poly157 = new Polyline();
+            poly157.AddVertexAt(0, new Point2d(scale1 * 0.160285741001707, scale1 * 0.3), 0, 0, 0);
+            poly157.AddVertexAt(1, new Point2d(scale1 * 0.161640169075273, scale1 * 0.297968357889651), 0, 0, 0);
+            poly157.AddVertexAt(2, new Point2d(scale1 * 0.164679287197439, scale1 * 0.297687823909144), 0, 0, 0);
+            poly157.AddVertexAt(3, new Point2d(scale1 * 0.168185961953785, scale1 * 0.29937102779219), 0, 0, 0);
+            poly157.AddVertexAt(4, new Point2d(scale1 * 0.168185961953785, scale1 * 0.3), 0, 0, 0);
+            poly157.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly157.Layer = "0";
+            poly157.Color = color_GPGM;
+            poly157.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly157);
+            Polyline poly158 = new Polyline();
+            poly158.AddVertexAt(0, new Point2d(scale1 * 0.14565464779079, scale1 * 0.3), 0, 0, 0);
+            poly158.AddVertexAt(1, new Point2d(scale1 * 0.144574351927722, scale1 * 0.297407289928637), 0, 0, 0);
+            poly158.AddVertexAt(2, new Point2d(scale1 * 0.139431228951747, scale1 * 0.295583819055336), 0, 0, 0);
+            poly158.AddVertexAt(3, new Point2d(scale1 * 0.129378761316889, scale1 * 0.295303285074829), 0, 0, 0);
+            poly158.AddVertexAt(4, new Point2d(scale1 * 0.124469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly158.AddVertexAt(5, new Point2d(scale1 * 0.120962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly158.AddVertexAt(6, new Point2d(scale1 * 0.118759355857569, scale1 * 0.3), 0, 0, 0);
+            poly158.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly158.Layer = "0";
+            poly158.Color = color_GPGM;
+            poly158.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly158);
+            Polyline poly159 = new Polyline();
+            poly159.AddVertexAt(0, new Point2d(scale1 * 0.158367272636016, scale1 * 0.282994061761134), 0, 0, 0);
+            poly159.AddVertexAt(1, new Point2d(scale1 * 0.156497046099298, scale1 * 0.282853794770882), 0, 0, 0);
+            poly159.AddVertexAt(2, new Point2d(scale1 * 0.154159262928401, scale1 * 0.28355512972215), 0, 0, 0);
+            poly159.AddVertexAt(3, new Point2d(scale1 * 0.152289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly159.AddVertexAt(4, new Point2d(scale1 * 0.153925484611311, scale1 * 0.287061804478495), 0, 0, 0);
+            poly159.AddVertexAt(5, new Point2d(scale1 * 0.158367272636016, scale1 * 0.286220202536974), 0, 0, 0);
+            poly159.AddVertexAt(6, new Point2d(scale1 * 0.159536164221465, scale1 * 0.284817532634435), 0, 0, 0);
+            poly159.Closed = true;
+            poly159.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly159.Layer = "0";
+            poly159.Color = color_GPGM;
+            poly159.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly159);
+            Polyline poly160 = new Polyline();
+            poly160.AddVertexAt(0, new Point2d(scale1 * 0.167952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly160.AddVertexAt(1, new Point2d(scale1 * 0.166081957099978, scale1 * 0.282012192829359), 0, 0, 0);
+            poly160.AddVertexAt(2, new Point2d(scale1 * 0.165848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly160.AddVertexAt(3, new Point2d(scale1 * 0.168419740270875, scale1 * 0.278505518073012), 0, 0, 0);
+            poly160.AddVertexAt(4, new Point2d(scale1 * 0.171692636710131, scale1 * 0.278926319043773), 0, 0, 0);
+            poly160.AddVertexAt(5, new Point2d(scale1 * 0.172393971661401, scale1 * 0.281030323897581), 0, 0, 0);
+            poly160.AddVertexAt(6, new Point2d(scale1 * 0.171926415027221, scale1 * 0.282713527780627), 0, 0, 0);
+            poly160.AddVertexAt(7, new Point2d(scale1 * 0.167952183636696, scale1 * 0.28355512972215), 0, 0, 0);
+            poly160.Closed = true;
+            poly160.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly160.Layer = "0";
+            poly160.Color = color_GPGM;
+            poly160.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly160);
+            Polyline poly161 = new Polyline();
+            poly161.AddVertexAt(0, new Point2d(scale1 * 0.116577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly161.AddVertexAt(1, new Point2d(scale1 * 0.114239328956148, scale1 * 0.285251085149766), 0, 0, 0);
+            poly161.AddVertexAt(2, new Point2d(scale1 * 0.115641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly161.AddVertexAt(3, new Point2d(scale1 * 0.119616230249212, scale1 * 0.282726279325197), 0, 0, 0);
+            poly161.AddVertexAt(4, new Point2d(scale1 * 0.122655348371378, scale1 * 0.283988682237481), 0, 0, 0);
+            poly161.AddVertexAt(5, new Point2d(scale1 * 0.122655348371378, scale1 * 0.286653755052303), 0, 0, 0);
+            poly161.AddVertexAt(6, new Point2d(scale1 * 0.116577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly161.Closed = true;
+            poly161.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly161.Layer = "0";
+            poly161.Color = color_GPGM;
+            poly161.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly161);
+            Polyline poly162 = new Polyline();
+            poly162.AddVertexAt(0, new Point2d(scale1 * 0.111080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly162.AddVertexAt(1, new Point2d(scale1 * 0.109476961807309, scale1 * 0.263254670769046), 0, 0, 0);
+            poly162.AddVertexAt(2, new Point2d(scale1 * 0.109710740124399, scale1 * 0.259607729022446), 0, 0, 0);
+            poly162.AddVertexAt(3, new Point2d(scale1 * 0.110645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly162.AddVertexAt(4, new Point2d(scale1 * 0.114853863100373, scale1 * 0.255960787275844), 0, 0, 0);
+            poly162.AddVertexAt(5, new Point2d(scale1 * 0.119061872807989, scale1 * 0.256521855236861), 0, 0, 0);
+            poly162.AddVertexAt(6, new Point2d(scale1 * 0.122568547564335, scale1 * 0.258625860090668), 0, 0, 0);
+            poly162.AddVertexAt(7, new Point2d(scale1 * 0.119061872807989, scale1 * 0.263535204749552), 0, 0, 0);
+            poly162.AddVertexAt(8, new Point2d(scale1 * 0.111080758243531, scale1 * 0.266735842436258), 0, 0, 0);
+            poly162.Closed = true;
+            poly162.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly162.Layer = "0";
+            poly162.Color = color_GPGM;
+            poly162.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly162);
+            Polyline poly163 = new Polyline();
+            poly163.AddVertexAt(0, new Point2d(scale1 * 0.187975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly163.AddVertexAt(1, new Point2d(scale1 * 0.184702548523924, scale1 * 0.288936281530065), 0, 0, 0);
+            poly163.AddVertexAt(2, new Point2d(scale1 * 0.182598543670117, scale1 * 0.283746402890672), 0, 0, 0);
+            poly163.AddVertexAt(3, new Point2d(scale1 * 0.182598543670117, scale1 * 0.281221597066103), 0, 0, 0);
+            poly163.AddVertexAt(4, new Point2d(scale1 * 0.181897208718848, scale1 * 0.275751184446203), 0, 0, 0);
+            poly163.AddVertexAt(5, new Point2d(scale1 * 0.185403883475194, scale1 * 0.273366645611888), 0, 0, 0);
+            poly163.AddVertexAt(6, new Point2d(scale1 * 0.190313228134078, scale1 * 0.272525043670365), 0, 0, 0);
+            poly163.AddVertexAt(7, new Point2d(scale1 * 0.201768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly163.AddVertexAt(8, new Point2d(scale1 * 0.204807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly163.AddVertexAt(9, new Point2d(scale1 * 0.205742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly163.AddVertexAt(10, new Point2d(scale1 * 0.202703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly163.AddVertexAt(11, new Point2d(scale1 * 0.199898139134758, scale1 * 0.282764533958894), 0, 0, 0);
+            poly163.AddVertexAt(12, new Point2d(scale1 * 0.19756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly163.AddVertexAt(13, new Point2d(scale1 * 0.195690129427142, scale1 * 0.288796014539811), 0, 0, 0);
+            poly163.AddVertexAt(14, new Point2d(scale1 * 0.191482119719527, scale1 * 0.289777883471588), 0, 0, 0);
+            poly163.AddVertexAt(15, new Point2d(scale1 * 0.187975444963181, scale1 * 0.290759752403364), 0, 0, 0);
+            poly163.Closed = true;
+            poly163.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly163.Layer = "0";
+            poly163.Color = color_GPGM;
+            poly163.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly163);
+            Polyline poly164 = new Polyline();
+            poly164.AddVertexAt(0, new Point2d(scale1 * 0.158367272636016, scale1 * 0.274437775355651), 0, 0, 0);
+            poly164.AddVertexAt(1, new Point2d(scale1 * 0.166081957099978, scale1 * 0.272754571472604), 0, 0, 0);
+            poly164.AddVertexAt(2, new Point2d(scale1 * 0.169354853539234, scale1 * 0.268125760794228), 0, 0, 0);
+            poly164.AddVertexAt(3, new Point2d(scale1 * 0.166081957099978, scale1 * 0.263637217106105), 0, 0, 0);
+            poly164.AddVertexAt(4, new Point2d(scale1 * 0.158367272636016, scale1 * 0.261954013223059), 0, 0, 0);
+            poly164.AddVertexAt(5, new Point2d(scale1 * 0.149717474903696, scale1 * 0.261392945262043), 0, 0, 0);
+            poly164.AddVertexAt(6, new Point2d(scale1 * 0.145041908561901, scale1 * 0.26237481419382), 0, 0, 0);
+            poly164.AddVertexAt(7, new Point2d(scale1 * 0.141301455488465, scale1 * 0.26489962001839), 0, 0, 0);
+            poly164.AddVertexAt(8, new Point2d(scale1 * 0.130781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly164.AddVertexAt(9, new Point2d(scale1 * 0.125170751609273, scale1 * 0.272894838462859), 0, 0, 0);
+            poly164.AddVertexAt(10, new Point2d(scale1 * 0.126573421511812, scale1 * 0.27471830933616), 0, 0, 0);
+            poly164.AddVertexAt(11, new Point2d(scale1 * 0.134989440927042, scale1 * 0.278365251082757), 0, 0, 0);
+            poly164.AddVertexAt(12, new Point2d(scale1 * 0.141535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly164.AddVertexAt(13, new Point2d(scale1 * 0.14574324351317, scale1 * 0.277804183121743), 0, 0, 0);
+            poly164.AddVertexAt(14, new Point2d(scale1 * 0.151353923123324, scale1 * 0.276541780209458), 0, 0, 0);
+            poly164.AddVertexAt(15, new Point2d(scale1 * 0.155795711148029, scale1 * 0.275840445258188), 0, 0, 0);
+            poly164.Closed = true;
+            poly164.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly164.Layer = "0";
+            poly164.Color = color_GPGM;
+            poly164.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly164);
+            Polyline poly165 = new Polyline();
+            poly165.AddVertexAt(0, new Point2d(scale1 * 0.178898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly165.AddVertexAt(1, new Point2d(scale1 * 0.172741026607183, scale1 * 0.262017770945895), 0, 0, 0);
+            poly165.AddVertexAt(2, new Point2d(scale1 * 0.167432516861809, scale1 * 0.259722492923566), 0, 0, 0);
+            poly165.AddVertexAt(3, new Point2d(scale1 * 0.166370814912736, scale1 * 0.256662122227115), 0, 0, 0);
+            poly165.AddVertexAt(4, new Point2d(scale1 * 0.17167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly165.AddVertexAt(5, new Point2d(scale1 * 0.178261876742373, scale1 * 0.2567896376728), 0, 0, 0);
+            poly165.AddVertexAt(6, new Point2d(scale1 * 0.182084003759041, scale1 * 0.259467462032192), 0, 0, 0);
+            poly165.AddVertexAt(7, new Point2d(scale1 * 0.178898897911817, scale1 * 0.261890255500208), 0, 0, 0);
+            poly165.Closed = true;
+            poly165.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly165.Layer = "0";
+            poly165.Color = color_GPGM;
+            poly165.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly165);
+            Polyline poly166 = new Polyline();
+            poly166.AddVertexAt(0, new Point2d(scale1 * 0.196473138321644, scale1 * 0.248628649148944), 0, 0, 0);
+            poly166.AddVertexAt(1, new Point2d(scale1 * 0.196706916638733, scale1 * 0.243298503519296), 0, 0, 0);
+            poly166.AddVertexAt(2, new Point2d(scale1 * 0.195070468419106, scale1 * 0.242036100607014), 0, 0, 0);
+            poly166.AddVertexAt(3, new Point2d(scale1 * 0.19086245871149, scale1 * 0.240633430704475), 0, 0, 0);
+            poly166.AddVertexAt(4, new Point2d(scale1 * 0.186888227320964, scale1 * 0.240773697694727), 0, 0, 0);
+            poly166.AddVertexAt(5, new Point2d(scale1 * 0.183849109198798, scale1 * 0.242036100607014), 0, 0, 0);
+            poly166.AddVertexAt(6, new Point2d(scale1 * 0.180576212759542, scale1 * 0.243298503519296), 0, 0, 0);
+            poly166.AddVertexAt(7, new Point2d(scale1 * 0.177537094637375, scale1 * 0.244560906431583), 0, 0, 0);
+            poly166.AddVertexAt(8, new Point2d(scale1 * 0.175666868100657, scale1 * 0.246945445265898), 0, 0, 0);
+            poly166.AddVertexAt(9, new Point2d(scale1 * 0.175666868100657, scale1 * 0.248628649148944), 0, 0, 0);
+            poly166.AddVertexAt(10, new Point2d(scale1 * 0.179173542857003, scale1 * 0.252275590895543), 0, 0, 0);
+            poly166.AddVertexAt(11, new Point2d(scale1 * 0.185953114052605, scale1 * 0.253818527788335), 0, 0, 0);
+            poly166.AddVertexAt(12, new Point2d(scale1 * 0.192732685248208, scale1 * 0.252275590895543), 0, 0, 0);
+            poly166.Closed = true;
+            poly166.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly166.Layer = "0";
+            poly166.Color = color_GPGM;
+            poly166.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly166);
+            Polyline poly167 = new Polyline();
+            poly167.AddVertexAt(0, new Point2d(scale1 * 0.162107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly167.AddVertexAt(1, new Point2d(scale1 * 0.159302385904375, scale1 * 0.241895833616759), 0, 0, 0);
+            poly167.AddVertexAt(2, new Point2d(scale1 * 0.160237499172734, scale1 * 0.240072362743458), 0, 0, 0);
+            poly167.AddVertexAt(3, new Point2d(scale1 * 0.161640169075273, scale1 * 0.237968357889651), 0, 0, 0);
+            poly167.AddVertexAt(4, new Point2d(scale1 * 0.164679287197439, scale1 * 0.237687823909144), 0, 0, 0);
+            poly167.AddVertexAt(5, new Point2d(scale1 * 0.168185961953785, scale1 * 0.23937102779219), 0, 0, 0);
+            poly167.AddVertexAt(6, new Point2d(scale1 * 0.168185961953785, scale1 * 0.241615299636252), 0, 0, 0);
+            poly167.AddVertexAt(7, new Point2d(scale1 * 0.165848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly167.AddVertexAt(8, new Point2d(scale1 * 0.162107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly167.Closed = true;
+            poly167.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly167.Layer = "0";
+            poly167.Color = color_GPGM;
+            poly167.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly167);
+            Polyline poly168 = new Polyline();
+            poly168.AddVertexAt(0, new Point2d(scale1 * 0.116520953876953, scale1 * 0.248628649148944), 0, 0, 0);
+            poly168.AddVertexAt(1, new Point2d(scale1 * 0.123066746755466, scale1 * 0.250452120022245), 0, 0, 0);
+            poly168.AddVertexAt(2, new Point2d(scale1 * 0.135924554195401, scale1 * 0.249750785070974), 0, 0, 0);
+            poly168.AddVertexAt(3, new Point2d(scale1 * 0.142470347073914, scale1 * 0.248628649148944), 0, 0, 0);
+            poly168.AddVertexAt(4, new Point2d(scale1 * 0.143639238659363, scale1 * 0.246805178275643), 0, 0, 0);
+            poly168.AddVertexAt(5, new Point2d(scale1 * 0.143873016976452, scale1 * 0.244981707402343), 0, 0, 0);
+            poly168.AddVertexAt(6, new Point2d(scale1 * 0.144106795293542, scale1 * 0.242737435558282), 0, 0, 0);
+            poly168.AddVertexAt(7, new Point2d(scale1 * 0.14597702183026, scale1 * 0.240773697694727), 0, 0, 0);
+            poly168.AddVertexAt(8, new Point2d(scale1 * 0.144574351927722, scale1 * 0.237407289928637), 0, 0, 0);
+            poly168.AddVertexAt(9, new Point2d(scale1 * 0.139431228951747, scale1 * 0.235583819055336), 0, 0, 0);
+            poly168.AddVertexAt(10, new Point2d(scale1 * 0.129378761316889, scale1 * 0.235303285074829), 0, 0, 0);
+            poly168.AddVertexAt(11, new Point2d(scale1 * 0.124469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly168.AddVertexAt(12, new Point2d(scale1 * 0.120962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly168.AddVertexAt(13, new Point2d(scale1 * 0.117689845462402, scale1 * 0.241054231675236), 0, 0, 0);
+            poly168.AddVertexAt(14, new Point2d(scale1 * 0.115819618925684, scale1 * 0.244420639441328), 0, 0, 0);
+            poly168.Closed = true;
+            poly168.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly168.Layer = "0";
+            poly168.Color = color_GPGM;
+            poly168.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly168);
+            Polyline poly169 = new Polyline();
+            poly169.AddVertexAt(0, new Point2d(scale1 * 0.0602857410017066, scale1 * 0.3), 0, 0, 0);
+            poly169.AddVertexAt(1, new Point2d(scale1 * 0.0616401690752726, scale1 * 0.297968357889651), 0, 0, 0);
+            poly169.AddVertexAt(2, new Point2d(scale1 * 0.0646792871974391, scale1 * 0.297687823909144), 0, 0, 0);
+            poly169.AddVertexAt(3, new Point2d(scale1 * 0.0681859619537855, scale1 * 0.29937102779219), 0, 0, 0);
+            poly169.AddVertexAt(4, new Point2d(scale1 * 0.0681859619537855, scale1 * 0.3), 0, 0, 0);
+            poly169.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly169.Layer = "0";
+            poly169.Color = color_GPGM;
+            poly169.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly169);
+            Polyline poly170 = new Polyline();
+            poly170.AddVertexAt(0, new Point2d(scale1 * 0.0456546477907903, scale1 * 0.3), 0, 0, 0);
+            poly170.AddVertexAt(1, new Point2d(scale1 * 0.0445743519277215, scale1 * 0.297407289928637), 0, 0, 0);
+            poly170.AddVertexAt(2, new Point2d(scale1 * 0.0394312289517476, scale1 * 0.295583819055336), 0, 0, 0);
+            poly170.AddVertexAt(3, new Point2d(scale1 * 0.0293787613168888, scale1 * 0.295303285074829), 0, 0, 0);
+            poly170.AddVertexAt(4, new Point2d(scale1 * 0.024469416658004, scale1 * 0.296144887016352), 0, 0, 0);
+            poly170.AddVertexAt(5, new Point2d(scale1 * 0.020962741901658, scale1 * 0.297828090899398), 0, 0, 0);
+            poly170.AddVertexAt(6, new Point2d(scale1 * 0.0187593558575691, scale1 * 0.3), 0, 0, 0);
+            poly170.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly170.Layer = "0";
+            poly170.Color = color_GPGM;
+            poly170.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly170);
+            Polyline poly171 = new Polyline();
+            poly171.AddVertexAt(0, new Point2d(scale1 * 0.0583672726360163, scale1 * 0.282994061761134), 0, 0, 0);
+            poly171.AddVertexAt(1, new Point2d(scale1 * 0.0564970460992982, scale1 * 0.282853794770882), 0, 0, 0);
+            poly171.AddVertexAt(2, new Point2d(scale1 * 0.0541592629284009, scale1 * 0.28355512972215), 0, 0, 0);
+            poly171.AddVertexAt(3, new Point2d(scale1 * 0.052289036391683, scale1 * 0.285518867585705), 0, 0, 0);
+            poly171.AddVertexAt(4, new Point2d(scale1 * 0.0539254846113113, scale1 * 0.287061804478495), 0, 0, 0);
+            poly171.AddVertexAt(5, new Point2d(scale1 * 0.0583672726360163, scale1 * 0.286220202536974), 0, 0, 0);
+            poly171.AddVertexAt(6, new Point2d(scale1 * 0.0595361642214651, scale1 * 0.284817532634435), 0, 0, 0);
+            poly171.Closed = true;
+            poly171.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly171.Layer = "0";
+            poly171.Color = color_GPGM;
+            poly171.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly171);
+            Polyline poly172 = new Polyline();
+            poly172.AddVertexAt(0, new Point2d(scale1 * 0.0679521836366956, scale1 * 0.28355512972215), 0, 0, 0);
+            poly172.AddVertexAt(1, new Point2d(scale1 * 0.0660819570999778, scale1 * 0.282012192829359), 0, 0, 0);
+            poly172.AddVertexAt(2, new Point2d(scale1 * 0.065848178782888, scale1 * 0.280048454965803), 0, 0, 0);
+            poly172.AddVertexAt(3, new Point2d(scale1 * 0.0684197402708751, scale1 * 0.278505518073012), 0, 0, 0);
+            poly172.AddVertexAt(4, new Point2d(scale1 * 0.0716926367101314, scale1 * 0.278926319043773), 0, 0, 0);
+            poly172.AddVertexAt(5, new Point2d(scale1 * 0.0723939716614006, scale1 * 0.281030323897581), 0, 0, 0);
+            poly172.AddVertexAt(6, new Point2d(scale1 * 0.0719264150272212, scale1 * 0.282713527780627), 0, 0, 0);
+            poly172.AddVertexAt(7, new Point2d(scale1 * 0.0679521836366956, scale1 * 0.28355512972215), 0, 0, 0);
+            poly172.Closed = true;
+            poly172.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly172.Layer = "0";
+            poly172.Color = color_GPGM;
+            poly172.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly172);
+            Polyline poly173 = new Polyline();
+            poly173.AddVertexAt(0, new Point2d(scale1 * 0.016577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly173.AddVertexAt(1, new Point2d(scale1 * 0.0142393289561475, scale1 * 0.285251085149766), 0, 0, 0);
+            poly173.AddVertexAt(2, new Point2d(scale1 * 0.015641998858686, scale1 * 0.283427614276465), 0, 0, 0);
+            poly173.AddVertexAt(3, new Point2d(scale1 * 0.0196162302492116, scale1 * 0.282726279325197), 0, 0, 0);
+            poly173.AddVertexAt(4, new Point2d(scale1 * 0.0226553483713783, scale1 * 0.283988682237481), 0, 0, 0);
+            poly173.AddVertexAt(5, new Point2d(scale1 * 0.0226553483713783, scale1 * 0.286653755052303), 0, 0, 0);
+            poly173.AddVertexAt(6, new Point2d(scale1 * 0.016577112127045, scale1 * 0.287355090003573), 0, 0, 0);
+            poly173.Closed = true;
+            poly173.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly173.Layer = "0";
+            poly173.Color = color_GPGM;
+            poly173.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly173);
+            Polyline poly174 = new Polyline();
+            poly174.AddVertexAt(0, new Point2d(scale1 * 0.0110807582435306, scale1 * 0.266735842436258), 0, 0, 0);
+            poly174.AddVertexAt(1, new Point2d(scale1 * 0.00947696180730939, scale1 * 0.263254670769046), 0, 0, 0);
+            poly174.AddVertexAt(2, new Point2d(scale1 * 0.00971074012439921, scale1 * 0.259607729022446), 0, 0, 0);
+            poly174.AddVertexAt(3, new Point2d(scale1 * 0.010645853392758, scale1 * 0.256802389217368), 0, 0, 0);
+            poly174.AddVertexAt(4, new Point2d(scale1 * 0.0148538631003734, scale1 * 0.255960787275844), 0, 0, 0);
+            poly174.AddVertexAt(5, new Point2d(scale1 * 0.0190618728079888, scale1 * 0.256521855236861), 0, 0, 0);
+            poly174.AddVertexAt(6, new Point2d(scale1 * 0.0225685475643347, scale1 * 0.258625860090668), 0, 0, 0);
+            poly174.AddVertexAt(7, new Point2d(scale1 * 0.0190618728079888, scale1 * 0.263535204749552), 0, 0, 0);
+            poly174.AddVertexAt(8, new Point2d(scale1 * 0.0110807582435306, scale1 * 0.266735842436258), 0, 0, 0);
+            poly174.Closed = true;
+            poly174.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly174.Layer = "0";
+            poly174.Color = color_GPGM;
+            poly174.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly174);
+            Polyline poly175 = new Polyline();
+            poly175.AddVertexAt(0, new Point2d(scale1 * 0.0879754449631811, scale1 * 0.290759752403364), 0, 0, 0);
+            poly175.AddVertexAt(1, new Point2d(scale1 * 0.0847025485239243, scale1 * 0.288936281530065), 0, 0, 0);
+            poly175.AddVertexAt(2, new Point2d(scale1 * 0.0825985436701167, scale1 * 0.283746402890672), 0, 0, 0);
+            poly175.AddVertexAt(3, new Point2d(scale1 * 0.0825985436701167, scale1 * 0.281221597066103), 0, 0, 0);
+            poly175.AddVertexAt(4, new Point2d(scale1 * 0.0818972087188476, scale1 * 0.275751184446203), 0, 0, 0);
+            poly175.AddVertexAt(5, new Point2d(scale1 * 0.0854038834751936, scale1 * 0.273366645611888), 0, 0, 0);
+            poly175.AddVertexAt(6, new Point2d(scale1 * 0.0903132281340784, scale1 * 0.272525043670365), 0, 0, 0);
+            poly175.AddVertexAt(7, new Point2d(scale1 * 0.101768365671475, scale1 * 0.272945844641126), 0, 0, 0);
+            poly175.AddVertexAt(8, new Point2d(scale1 * 0.104807483793642, scale1 * 0.274488781533918), 0, 0, 0);
+            poly175.AddVertexAt(9, new Point2d(scale1 * 0.105742597062001, scale1 * 0.278275990270772), 0, 0, 0);
+            poly175.AddVertexAt(10, new Point2d(scale1 * 0.102703478939834, scale1 * 0.28037999512458), 0, 0, 0);
+            poly175.AddVertexAt(11, new Point2d(scale1 * 0.0998981391347575, scale1 * 0.282764533958894), 0, 0, 0);
+            poly175.AddVertexAt(12, new Point2d(scale1 * 0.09756035596386, scale1 * 0.286271208715241), 0, 0, 0);
+            poly175.AddVertexAt(13, new Point2d(scale1 * 0.0956901294271417, scale1 * 0.288796014539811), 0, 0, 0);
+            poly175.AddVertexAt(14, new Point2d(scale1 * 0.0914821197195268, scale1 * 0.289777883471588), 0, 0, 0);
+            poly175.AddVertexAt(15, new Point2d(scale1 * 0.0879754449631811, scale1 * 0.290759752403364), 0, 0, 0);
+            poly175.Closed = true;
+            poly175.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly175.Layer = "0";
+            poly175.Color = color_GPGM;
+            poly175.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly175);
+            Polyline poly176 = new Polyline();
+            poly176.AddVertexAt(0, new Point2d(scale1 * 0.0583672726360163, scale1 * 0.274437775355651), 0, 0, 0);
+            poly176.AddVertexAt(1, new Point2d(scale1 * 0.0660819570999778, scale1 * 0.272754571472604), 0, 0, 0);
+            poly176.AddVertexAt(2, new Point2d(scale1 * 0.0693548535392339, scale1 * 0.268125760794228), 0, 0, 0);
+            poly176.AddVertexAt(3, new Point2d(scale1 * 0.0660819570999778, scale1 * 0.263637217106105), 0, 0, 0);
+            poly176.AddVertexAt(4, new Point2d(scale1 * 0.0583672726360163, scale1 * 0.261954013223059), 0, 0, 0);
+            poly176.AddVertexAt(5, new Point2d(scale1 * 0.0497174749036959, scale1 * 0.261392945262043), 0, 0, 0);
+            poly176.AddVertexAt(6, new Point2d(scale1 * 0.0450419085619012, scale1 * 0.26237481419382), 0, 0, 0);
+            poly176.AddVertexAt(7, new Point2d(scale1 * 0.0413014554884654, scale1 * 0.26489962001839), 0, 0, 0);
+            poly176.AddVertexAt(8, new Point2d(scale1 * 0.030781431219427, scale1 * 0.268967362735751), 0, 0, 0);
+            poly176.AddVertexAt(9, new Point2d(scale1 * 0.0251707516092734, scale1 * 0.272894838462859), 0, 0, 0);
+            poly176.AddVertexAt(10, new Point2d(scale1 * 0.0265734215118119, scale1 * 0.27471830933616), 0, 0, 0);
+            poly176.AddVertexAt(11, new Point2d(scale1 * 0.0349894409270424, scale1 * 0.278365251082757), 0, 0, 0);
+            poly176.AddVertexAt(12, new Point2d(scale1 * 0.041535233805555, scale1 * 0.279066586034028), 0, 0, 0);
+            poly176.AddVertexAt(13, new Point2d(scale1 * 0.0457432435131704, scale1 * 0.277804183121743), 0, 0, 0);
+            poly176.AddVertexAt(14, new Point2d(scale1 * 0.0513539231233242, scale1 * 0.276541780209458), 0, 0, 0);
+            poly176.AddVertexAt(15, new Point2d(scale1 * 0.0557957111480292, scale1 * 0.275840445258188), 0, 0, 0);
+            poly176.Closed = true;
+            poly176.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly176.Layer = "0";
+            poly176.Color = color_GPGM;
+            poly176.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly176);
+            Polyline poly177 = new Polyline();
+            poly177.AddVertexAt(0, new Point2d(scale1 * 0.0788988979118168, scale1 * 0.261890255500208), 0, 0, 0);
+            poly177.AddVertexAt(1, new Point2d(scale1 * 0.0727410266071835, scale1 * 0.262017770945895), 0, 0, 0);
+            poly177.AddVertexAt(2, new Point2d(scale1 * 0.0674325168618095, scale1 * 0.259722492923566), 0, 0, 0);
+            poly177.AddVertexAt(3, new Point2d(scale1 * 0.0663708149127362, scale1 * 0.256662122227115), 0, 0, 0);
+            poly177.AddVertexAt(4, new Point2d(scale1 * 0.07167932465811, scale1 * 0.255769514107321), 0, 0, 0);
+            poly177.AddVertexAt(5, new Point2d(scale1 * 0.0782618767423733, scale1 * 0.2567896376728), 0, 0, 0);
+            poly177.AddVertexAt(6, new Point2d(scale1 * 0.0820840037590416, scale1 * 0.259467462032192), 0, 0, 0);
+            poly177.AddVertexAt(7, new Point2d(scale1 * 0.0788988979118168, scale1 * 0.261890255500208), 0, 0, 0);
+            poly177.Closed = true;
+            poly177.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly177.Layer = "0";
+            poly177.Color = color_GPGM;
+            poly177.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly177);
+            Polyline poly178 = new Polyline();
+            poly178.AddVertexAt(0, new Point2d(scale1 * 0.0964731383216439, scale1 * 0.248628649148944), 0, 0, 0);
+            poly178.AddVertexAt(1, new Point2d(scale1 * 0.0967069166387331, scale1 * 0.243298503519296), 0, 0, 0);
+            poly178.AddVertexAt(2, new Point2d(scale1 * 0.0950704684191055, scale1 * 0.242036100607014), 0, 0, 0);
+            poly178.AddVertexAt(3, new Point2d(scale1 * 0.0908624587114899, scale1 * 0.240633430704475), 0, 0, 0);
+            poly178.AddVertexAt(4, new Point2d(scale1 * 0.0868882273209644, scale1 * 0.240773697694727), 0, 0, 0);
+            poly178.AddVertexAt(5, new Point2d(scale1 * 0.0838491091987978, scale1 * 0.242036100607014), 0, 0, 0);
+            poly178.AddVertexAt(6, new Point2d(scale1 * 0.0805762127595415, scale1 * 0.243298503519296), 0, 0, 0);
+            poly178.AddVertexAt(7, new Point2d(scale1 * 0.0775370946373748, scale1 * 0.244560906431583), 0, 0, 0);
+            poly178.AddVertexAt(8, new Point2d(scale1 * 0.0756668681006569, scale1 * 0.246945445265898), 0, 0, 0);
+            poly178.AddVertexAt(9, new Point2d(scale1 * 0.0756668681006569, scale1 * 0.248628649148944), 0, 0, 0);
+            poly178.AddVertexAt(10, new Point2d(scale1 * 0.0791735428570031, scale1 * 0.252275590895543), 0, 0, 0);
+            poly178.AddVertexAt(11, new Point2d(scale1 * 0.0859531140526055, scale1 * 0.253818527788335), 0, 0, 0);
+            poly178.AddVertexAt(12, new Point2d(scale1 * 0.0927326852482082, scale1 * 0.252275590895543), 0, 0, 0);
+            poly178.Closed = true;
+            poly178.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly178.Layer = "0";
+            poly178.Color = color_GPGM;
+            poly178.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly178);
+            Polyline poly179 = new Polyline();
+            poly179.AddVertexAt(0, new Point2d(scale1 * 0.062107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly179.AddVertexAt(1, new Point2d(scale1 * 0.0593023859043753, scale1 * 0.241895833616759), 0, 0, 0);
+            poly179.AddVertexAt(2, new Point2d(scale1 * 0.0602374991727341, scale1 * 0.240072362743458), 0, 0, 0);
+            poly179.AddVertexAt(3, new Point2d(scale1 * 0.0616401690752726, scale1 * 0.237968357889651), 0, 0, 0);
+            poly179.AddVertexAt(4, new Point2d(scale1 * 0.0646792871974391, scale1 * 0.237687823909144), 0, 0, 0);
+            poly179.AddVertexAt(5, new Point2d(scale1 * 0.0681859619537855, scale1 * 0.23937102779219), 0, 0, 0);
+            poly179.AddVertexAt(6, new Point2d(scale1 * 0.0681859619537855, scale1 * 0.241615299636252), 0, 0, 0);
+            poly179.AddVertexAt(7, new Point2d(scale1 * 0.065848178782888, scale1 * 0.244140105460821), 0, 0, 0);
+            poly179.AddVertexAt(8, new Point2d(scale1 * 0.062107725709452, scale1 * 0.243438770509551), 0, 0, 0);
+            poly179.Closed = true;
+            poly179.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly179.Layer = "0";
+            poly179.Color = color_GPGM;
+            poly179.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly179);
+            Polyline poly180 = new Polyline();
+            poly180.AddVertexAt(0, new Point2d(scale1 * 0.0165209538769528, scale1 * 0.248628649148944), 0, 0, 0);
+            poly180.AddVertexAt(1, new Point2d(scale1 * 0.0230667467554657, scale1 * 0.250452120022245), 0, 0, 0);
+            poly180.AddVertexAt(2, new Point2d(scale1 * 0.0359245541954014, scale1 * 0.249750785070974), 0, 0, 0);
+            poly180.AddVertexAt(3, new Point2d(scale1 * 0.0424703470739138, scale1 * 0.248628649148944), 0, 0, 0);
+            poly180.AddVertexAt(4, new Point2d(scale1 * 0.0436392386593627, scale1 * 0.246805178275643), 0, 0, 0);
+            poly180.AddVertexAt(5, new Point2d(scale1 * 0.0438730169764525, scale1 * 0.244981707402343), 0, 0, 0);
+            poly180.AddVertexAt(6, new Point2d(scale1 * 0.0441067952935421, scale1 * 0.242737435558282), 0, 0, 0);
+            poly180.AddVertexAt(7, new Point2d(scale1 * 0.0459770218302602, scale1 * 0.240773697694727), 0, 0, 0);
+            poly180.AddVertexAt(8, new Point2d(scale1 * 0.0445743519277215, scale1 * 0.237407289928637), 0, 0, 0);
+            poly180.AddVertexAt(9, new Point2d(scale1 * 0.0394312289517476, scale1 * 0.235583819055336), 0, 0, 0);
+            poly180.AddVertexAt(10, new Point2d(scale1 * 0.0293787613168888, scale1 * 0.235303285074829), 0, 0, 0);
+            poly180.AddVertexAt(11, new Point2d(scale1 * 0.024469416658004, scale1 * 0.236144887016352), 0, 0, 0);
+            poly180.AddVertexAt(12, new Point2d(scale1 * 0.020962741901658, scale1 * 0.237828090899398), 0, 0, 0);
+            poly180.AddVertexAt(13, new Point2d(scale1 * 0.0176898454624017, scale1 * 0.241054231675236), 0, 0, 0);
+            poly180.AddVertexAt(14, new Point2d(scale1 * 0.0158196189256838, scale1 * 0.244420639441328), 0, 0, 0);
+            poly180.Closed = true;
+            poly180.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly180.Layer = "0";
+            poly180.Color = color_GPGM;
+            poly180.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly180);
+
+            #endregion
+
+            string nume_hatch = "ANSI31";
+            double hatch_scale1 = 0.3 * scale1;
+            double hatch_angle1 = 45;
+
+
+            Polyline poly2 = new Polyline();
+            poly2.AddVertexAt(0, new Point2d((poly1.GetPoint2dAt(0).X + poly1.GetPoint2dAt(1).X) / 2, (poly1.GetPoint2dAt(0).Y + poly1.GetPoint2dAt(1).Y) / 2), 0, 0, 0);
+            poly2.AddVertexAt(1, poly1.GetPoint2dAt(1), 0, 0, 0);
+            poly2.AddVertexAt(2, poly1.GetPoint2dAt(2), 0, 0, 0);
+            poly2.AddVertexAt(3, new Point2d((poly1.GetPoint2dAt(2).X + poly1.GetPoint2dAt(3).X) / 2, (poly1.GetPoint2dAt(2).Y + poly1.GetPoint2dAt(3).Y) / 2), 0, 0, 0);
+            poly2.Closed = true;
+
+
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch1 = CreateHatch(poly2, nume_hatch, hatch_scale1, hatch_angle1 * Math.PI / 180);
+            hatch1.Layer = "0";
+            hatch1.LineWeight = LineWeight.LineWeight000;
+            hatch1.Color = color_GPGM;
+            bltrec1.AppendEntity(hatch1);
+
+
+
+            poly2.Erase();
+
+        }
+
+
+
+        private void add_pattern_DECOMPOSED_ROCK(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 63, 63);
+
+            int nr_rows = 0;
+            int nr_col = 0;
+
+            double w1 = 0.04 * scale1;
+            double h1 = 0.1 * scale1;
+            double spc_X = 0.05 * scale1;
+            double spc_Y = 0.05 * scale1;
+            double edge_y = 0.02;
+            double edge_x = 0.02;
+
+
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (stick_height >= h1 && stick_width >= w1)
+            {
+                if (stick_height < h1)
+                {
+                    nr_rows = 1;
+                }
+                else
+                {
+                    double nr2 = Math.Floor((stick_height - 2 * edge_y - h1) / (h1 + spc_Y)) + 1;
+                    nr_rows = Convert.ToInt32(nr2);
+                }
+
+
+                if (stick_width < w1)
+                {
+                    nr_col = 1;
+                }
+                else
+                {
+                    double nr2 = Math.Floor((stick_width - 2 * edge_x - w1) / (w1 + spc_X)) + 1;
+                    nr_col = Convert.ToInt32(nr2);
+                }
+
+
+
+
+
+                double deltaY = stick_height - (nr_rows * (h1 + spc_Y) - spc_Y);
+                double deltaX = stick_width - (nr_col * (w1 + spc_X) - spc_X);
+                
+                double x0 = poly1.GetPoint3dAt(3).X;
+                double y0 = poly1.GetPoint3dAt(3).Y;
+
+                for (int m = 0; m < nr_col; ++m)
+                {
+                    for (int n = 0; n < nr_rows; ++n)
+                    {
+
+
+
+                        Polyline polyDR = new Polyline();
+                        polyDR.AddVertexAt(0, new Point2d(scale1 * 0.0168389309334101 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.202654617807617 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(1, new Point2d(scale1 * 0.0275326812984001 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.204086338591118 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(2, new Point2d(scale1 * 0.0579201653784103 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.18412673350042 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(3, new Point2d(scale1 * 0.0716677730139504 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.160245000042821 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(4, new Point2d(scale1 * 0.0757264267106803 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.110421977389421 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(5, new Point2d(scale1 * 0.0796038306346401 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.0950774293148768 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(6, new Point2d(scale1 * 0.0772336400814602 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.0736575833013262 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(7, new Point2d(scale1 * 0.0818144106231103 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.0356874297369174 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(8, new Point2d(scale1 * 0.0656302850016801 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.00425576062342259 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(9, new Point2d(scale1 * 0.0395956738118202 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(10, new Point2d(scale1 * 0.01942644526358 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.0247932547175225 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(11, new Point2d(scale1 * 0.00295336793267012 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.0577826539520245 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(12, new Point2d(scale1 * 0 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.0806451346725225 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(13, new Point2d(scale1 * 0.00569134185560019 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.105743184282723 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.AddVertexAt(14, new Point2d(scale1 * 0.00765240733096009 * 0.5 + m * scale1 * (w1 + spc_X), scale1 * 0.164458503675618 * 0.5 + n * scale1 * (h1 + spc_Y)), 0, 0, 0);
+                        polyDR.Closed = true;
+
+
+                        polyDR.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x0 + deltaX/2, y0 + deltaY/2, 0))));
+
+                        BTrecord.AppendEntity(polyDR);
+                        Trans1.AddNewlyCreatedDBObject(polyDR, true);
+                        Hatch hatch1 = CreateHatch(polyDR, "SOLID", 1, 0);
+                        hatch1.Layer = "0";
+                        hatch1.LineWeight = LineWeight.LineWeight000;
+                        hatch1.Color = color1;
+                        bltrec1.AppendEntity(hatch1);
+                        polyDR.Erase();
+
+
+                    }
+                }
+            }
+            else
+            {
+                Polyline poly2 = new Polyline();
+                poly2 = poly1.Clone() as Polyline;
+                BTrecord.AppendEntity(poly2);
+                Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+                Hatch hatch1 = CreateHatch(poly2, "SOLID", 1, 0);
+                hatch1.Layer = "0";
+                hatch1.Color = color1;
+                hatch1.LineWeight = LineWeight.LineWeight000;
+                bltrec1.AppendEntity(hatch1);
+                poly2.Erase();
+            }
+
+
+        }
+
+
+
+        #region Build Extra Polylines 
         private Polyline get_poly_gm1(double scale1)
         {
             Polyline poly1 = new Polyline();
@@ -15836,6 +19676,7 @@ namespace Alignment_mdi
             poly1.Closed = true;
             return poly1;
         }
+        #endregion
 
         private void textBox_pozitive_KeyPress(object sender, KeyPressEventArgs e)
         {

@@ -6018,10 +6018,12 @@ namespace Alignment_mdi
             return Index1;
         }
 
-        public static List<double> Equation_to_measured(double valoare, Polyline3d Poly3d, Polyline Poly2d, System.Data.DataTable Data_table_station_equation)
+        public static List<double> Equation_to_measured(double station, Polyline3d Poly3d, Polyline Poly2d, System.Data.DataTable Data_table_station_equation)
         {
 
             List<double> lista1 = new List<double>();
+
+            double first_ahead = -1;
 
             if (Data_table_station_equation != null && Data_table_station_equation.Rows.Count > 0)
             {
@@ -6055,7 +6057,10 @@ namespace Alignment_mdi
                         }
                         Data_table_station_equation.Rows[i]["measured value from start"] = dist0;
 
-
+                        if(i==0)
+                        {
+                            first_ahead = Last_ahead;
+                        }
 
 
                     }
@@ -6085,9 +6090,9 @@ namespace Alignment_mdi
                         double Station_ahead = Convert.ToDouble(Data_table_station_equation.Rows[i][Col_Station_ahead]);
                         double len1 = Convert.ToDouble(Data_table_station_equation.Rows[i]["measured value from start"]);
 
-                        if (valoare >= Station_ahead && valoare <= last_back)
+                        if (station >= Station_ahead && station <= last_back)
                         {
-                            lista1.Add(len1 + valoare - Station_ahead);
+                            lista1.Add(len1 + station - Station_ahead);
                         }
 
                         last_back = Station_back;
@@ -6095,11 +6100,14 @@ namespace Alignment_mdi
                 }
 
 
-                if (valoare <= last_back)
+                if (station <= last_back)
                 {
-                    lista1.Add(valoare);
+                    lista1.Add(station);
                 }
-
+                if(station<=first_ahead)
+                {
+                    lista1.Add(0);
+                }
                 Data_table_station_equation.Columns.Remove("measured value from start");
 
 
@@ -6107,7 +6115,7 @@ namespace Alignment_mdi
             }
             else
             {
-                lista1.Add(valoare);
+                lista1.Add(station);
             }
             return lista1;
         }

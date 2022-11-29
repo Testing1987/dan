@@ -1602,7 +1602,7 @@ namespace Alignment_mdi
 
                                                         if (poly3d == null)
                                                         {
-                                                            if (sta1 >= 0 && sta1 < +poly2d.Length)
+                                                            if (sta1 >= 0 && sta1 <= poly2d.Length)
                                                             {
                                                                 dt1.Rows[i][Col_x] = poly2d.GetPointAtDist(sta1).X;
                                                                 dt1.Rows[i][Col_y] = poly2d.GetPointAtDist(sta1).Y;
@@ -1611,7 +1611,7 @@ namespace Alignment_mdi
                                                         }
                                                         else
                                                         {
-                                                            if (sta1 >= 0 && sta1 < +poly3d.Length)
+                                                            if (sta1 >= 0 && sta1 <= poly3d.Length)
                                                             {
                                                                 dt1.Rows[i][Col_x] = poly3d.GetPointAtDist(sta1).X;
                                                                 dt1.Rows[i][Col_y] = poly3d.GetPointAtDist(sta1).Y;
