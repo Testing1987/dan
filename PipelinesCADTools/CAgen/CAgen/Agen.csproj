@@ -51,6 +51,9 @@
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\C3D\AeccDbMgd.dll</HintPath>
+    </Reference>
     <Reference Include="Autodesk.Map.Platform">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\Autodesk.Map.Platform.dll</HintPath>
       <Private>False</Private>

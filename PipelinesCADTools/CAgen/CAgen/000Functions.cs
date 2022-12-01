@@ -6094,7 +6094,10 @@ namespace Alignment_mdi
                         {
                             lista1.Add(len1 + station - Station_ahead);
                         }
-
+                        if (station> Station_back && station < Station_ahead)
+                        {
+                            lista1.Add(len1);
+                        }    
                         last_back = Station_back;
                     }
                 }
