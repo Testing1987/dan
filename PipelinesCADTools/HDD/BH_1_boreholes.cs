@@ -2287,7 +2287,11 @@ namespace Alignment_mdi
                                                             add_pattern_BOULDERS(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
 
                                                         }
+                                                        if (desc.ToUpper() == "SILTSTONE")
+                                                        {
+                                                            add_pattern_SILTSTONE(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
 
+                                                        }
                                                         #endregion
 
                                                         MText string_desc = new MText();
@@ -3262,6 +3266,10 @@ namespace Alignment_mdi
                                                     if (lista_legend[i] == "BOULDERS")
                                                     {
                                                         add_pattern_BOULDERS(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+                                                    if (lista_legend[i] == "SILTSTONE")
+                                                    {
+                                                        add_pattern_SILTSTONE(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
                                                     }
                                                 }
 
@@ -8533,7 +8541,7 @@ namespace Alignment_mdi
 
                     Circle cerc12 = new Circle(new Point3d(0.0396875000015522 * scale1 + m * Xmax, 0.0645833333333333 * scale1 + n * Ymax, 0), Vector3d.ZAxis, r1);
                     cerc12.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(x2, y2, 0))));
-                    
+
                     using (Autodesk.AutoCAD.BoundaryRepresentation.Brep Brep_obj = new Autodesk.AutoCAD.BoundaryRepresentation.Brep(reg1))
                     {
                         if (Brep_obj != null)
@@ -14435,8 +14443,8 @@ namespace Alignment_mdi
                 double nr2 = Math.Ceiling(stick_width / Xmax);
                 nr_col = Convert.ToInt32(nr2);
             }
-           
-            
+
+
 
 
             DBObjectCollection Poly_Colection = new DBObjectCollection();
@@ -17213,6 +17221,94 @@ namespace Alignment_mdi
 
         }
 
+
+
+        private void add_pattern_SILTSTONE(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(132, 132, 132);
+            int nr_rows = 0;
+            int nr_col = 0;
+
+            double w1 = 0.0394 * scale1;
+            double h1 = 0.0394 * scale1;
+            double spc_X = w1;
+            double spc_Y = h1;
+            double edge_y = 0.0128 * scale1;
+            double edge_x = 0.0128 * scale1;
+
+
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+
+            if (stick_height < h1)
+            {
+                nr_rows = 1;
+                if (stick_height - h1 > 0.5 * h1)
+                {
+                    nr_rows = 2;
+                }
+            }
+            else
+            {
+                double nr2 = Math.Floor((stick_height - 2 * edge_y - h1) / (h1 + spc_Y)) + 1;
+                nr_rows = Convert.ToInt32(nr2);
+                if (stick_height - h1 * nr_rows > 0.5 * h1)
+                {
+                    ++nr_rows;
+                }
+            }
+
+
+            if (stick_width < w1)
+            {
+                nr_col = 1;
+                if (stick_width - w1 > 0.5 * w1)
+                {
+                    // nr_col = 2;
+                }
+            }
+            else
+            {
+                double nr2 = Math.Floor((stick_width - edge_x - 2 * w1) / (3 * w1)) + 1;
+                nr_col = Convert.ToInt32(nr2);
+                if (stick_width - w1 * nr_col > 0.5 * w1)
+                {
+                    ++nr_col;
+                }
+
+
+            }
+
+            for (int m = 0; m < nr_col; ++m)
+            {
+                for (int n = 0; n < nr_rows; ++n)
+                {
+
+                    Polyline poly_silt_1 = new Polyline();
+                    poly_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1) ), 0 + n * ((2 * h1) )), 0, 0, 0);
+                    poly_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1) ), h1  + n * ((2 * h1) )), 0, 0, 0);
+
+                    poly_silt_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
+                    poly_silt_1.Layer = "0";
+                    poly_silt_1.Color = color1;
+                    poly_silt_1.LineWeight = LineWeight.LineWeight000;
+                    bltrec1.AppendEntity(poly_silt_1);
+
+                    Polyline poly_silt_2 = new Polyline();
+                    poly_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1 ,  h1 + 2 * n * h1 ), 0, 0, 0);
+                    poly_silt_2.AddVertexAt(1, new Point2d( w1 + 3 * m * w1 ,  0 + 2 * n * h1 ), 0, 0, 0);
+                    poly_silt_2.Closed = true;
+                    poly_silt_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
+                    poly_silt_2.Layer = "0";
+                    poly_silt_2.Color = color1;
+                    poly_silt_2.LineWeight = LineWeight.LineWeight000;
+                    bltrec1.AppendEntity(poly_silt_2);
+
+                }
+            }
+
+        }
 
 
         #region Build Extra Polylines 
