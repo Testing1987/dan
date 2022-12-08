@@ -754,10 +754,25 @@ namespace Alignment_mdi
                         Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                         Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as BlockTableRecord;
 
+                        Polyline3d poly3d = null;
+                        Polyline poly2d = null;
 
-                        _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
-                        _AGEN_mainform.dt_sheet_index = Functions.Redefine_stations_for_sheet_index(_AGEN_mainform.dt_sheet_index);
+                        double poly_length = 0;
+                        if (_AGEN_mainform.Project_type == "3D")
+                        {
+                            poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                            poly_length = poly3d.Length;
+                        }
+
+
+                        poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+
+                        if (_AGEN_mainform.Project_type == "2D")
+                        {
+                            poly_length = poly2d.Length;
+                        }
+
+                        _AGEN_mainform.dt_sheet_index = Functions.Redefine_stations_for_sheet_index(_AGEN_mainform.dt_sheet_index, poly3d, poly2d);
 
 
                         #region USA
@@ -777,14 +792,16 @@ namespace Alignment_mdi
                                         double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
                                         double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
 
+                                        Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                                        double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
 
-                                        Point3d pt_on_2d = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                                        double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt_on_2d);
-                                        if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
-
-                                        double eq_meas = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+                                            if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+                                            eq_meas = poly3d.GetDistanceAtParameter(param1);
+                                        }
                                         _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
-
                                     }
                                 }
                             }
@@ -810,7 +827,7 @@ namespace Alignment_mdi
                             double Station1_labeled = -1.123;
                             double Station2_labeled = -1.123;
 
-                            if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                            if (_AGEN_mainform.Project_type == "2D")
                             {
                                 if (_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1] != DBNull.Value && _AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta2] != DBNull.Value)
                                 {
@@ -849,23 +866,32 @@ namespace Alignment_mdi
                                     double y1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["Y_Beg"]);
                                     double x2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["X_End"]);
                                     double y2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["Y_End"]);
-                                    Point3d point_on_poly2D1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                    Point3d point_on_poly2D2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                    double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D1);
-                                    double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D2);
-                                    if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
-                                    if (param2 > _AGEN_mainform.Poly3D.EndParam) param2 = _AGEN_mainform.Poly3D.EndParam;
+                                    Point3d point_on_poly2D1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, poly2d.Elevation), Vector3d.ZAxis, false);
+                                    Point3d point_on_poly2D2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, poly2d.Elevation), Vector3d.ZAxis, false);
 
-                                    Station1 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                    Station2 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param2);
+                                    Station1 = poly2d.GetDistAtPoint(point_on_poly2D1);
+                                    Station2 = poly2d.GetDistAtPoint(point_on_poly2D2);
+
+                                    if (_AGEN_mainform.Project_type == "3D")
+                                    {
+                                        double param1 = poly2d.GetParameterAtPoint(point_on_poly2D1);
+                                        double param2 = poly2d.GetParameterAtPoint(point_on_poly2D2);
+                                        if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+                                        if (param2 > poly3d.EndParam) param2 = poly3d.EndParam;
+
+                                        Station1 = poly3d.GetDistanceAtParameter(param1);
+                                        Station2 = poly3d.GetDistanceAtParameter(param2);
+                                    }
+
+
                                     if (_AGEN_mainform.COUNTRY == "CANADA")
                                     {
-                                        double d2d1 = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
-                                        double d2d2 = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param2);
+                                        double d2d1 = poly2d.GetDistAtPoint(point_on_poly2D1);
+                                        double d2d2 = poly2d.GetDistAtPoint(point_on_poly2D2);
                                         double b1 = -1.23456;
                                         double b2 = -1.23456;
-                                        Station1_labeled = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2D1, d2d1, _AGEN_mainform.dt_centerline, ref b1);
-                                        Station2_labeled = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2D2, d2d2, _AGEN_mainform.dt_centerline, ref b2);
+                                        Station1_labeled = Functions.get_stationCSF_from_point(poly2d, point_on_poly2D1, d2d1, _AGEN_mainform.dt_centerline, ref b1);
+                                        Station2_labeled = Functions.get_stationCSF_from_point(poly2d, point_on_poly2D2, d2d2, _AGEN_mainform.dt_centerline, ref b2);
                                     }
                                     else
                                     {
@@ -896,11 +922,11 @@ namespace Alignment_mdi
                                             MessageBox.Show("End Station is smaller than Start Station on row " + (j).ToString() + "\r\n" + _AGEN_mainform.sheet_index_excel_name);
                                             return;
                                         }
-                                        if (M2 > _AGEN_mainform.Poly3D.Length)
+                                        if (M2 > poly_length)
                                         {
-                                            if (Math.Abs(M2 - _AGEN_mainform.Poly3D.Length) < 0.99)
+                                            if (Math.Abs(M2 - poly_length) < 0.99)
                                             {
-                                                M2 = _AGEN_mainform.Poly3D.Length;
+                                                M2 = poly_length;
                                             }
                                             else
                                             {
@@ -910,13 +936,23 @@ namespace Alignment_mdi
                                                 return;
                                             }
                                         }
-                                        if (M1 >= _AGEN_mainform.Poly3D.Length) M1 = _AGEN_mainform.Poly3D.Length - 0.0001;
-                                        if (M2 >= _AGEN_mainform.Poly3D.Length) M2 = _AGEN_mainform.Poly3D.Length - 0.0001;
-                                        Point3d pm1 = _AGEN_mainform.Poly3D.GetPointAtDist(M1);
-                                        Point3d pm2 = _AGEN_mainform.Poly3D.GetPointAtDist(M2);
+                                        if (M1 >= poly_length) M1 = poly_length - 0.0001;
+                                        if (M2 >= poly_length) M2 = poly_length - 0.0001;
+
+
+                                        Point3d pm1 = poly2d.GetPointAtDist(M1);
+                                        Point3d pm2 = poly2d.GetPointAtDist(M2);
+
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            pm1 = poly3d.GetPointAtDist(M1);
+                                            pm2 = poly3d.GetPointAtDist(M2);
+                                        }
                                         pm1 = new Point3d(pm1.X, pm1.Y, 0);
                                         pm2 = new Point3d(pm2.X, pm2.Y, 0);
+
                                         Autodesk.AutoCAD.DatabaseServices.Line Linie_M1_M2 = new Autodesk.AutoCAD.DatabaseServices.Line(new Point3d(pm1.X, pm1.Y, 0), new Point3d(pm2.X, pm2.Y, 0));
+
                                         if (Boolean_go_to_check_s1_s2 == true)
                                         {
                                             if (Math.Round(Station1, 0) == Math.Round(Station2, 0))
@@ -928,7 +964,13 @@ namespace Alignment_mdi
 
                                         if (Math.Round(M1, 2) <= Math.Round(Station1, 2) && Math.Round(M2, 2) <= Math.Round(Station2, 2) && Math.Round(M1, 2) <= Math.Round(Station2, 2) && Math.Round(M2, 2) > Math.Round(Station1, 2))
                                         {
-                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+
+                                            }
+
                                             double stretch01 = Pt1.DistanceTo(pm2) * _AGEN_mainform.Vw_scale;
                                             double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                             dt_compiled.Rows.Add();
@@ -971,8 +1013,14 @@ namespace Alignment_mdi
 
                                         if (Math.Round(Station1, 2) >= Math.Round(M1, 2) && Math.Round(Station2, 2) <= Math.Round(M2, 2) && Math.Round(Station1, 2) < Math.Round(M2, 2))
                                         {
-                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
-                                            Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                            Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Pt2 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                            }
                                             double stretch01 = Pt1.DistanceTo(Pt2) * _AGEN_mainform.Vw_scale;
                                             double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                             dt_compiled.Rows.Add();
@@ -1003,8 +1051,15 @@ namespace Alignment_mdi
                                     LS1S2:
                                         if (Math.Round(Station1, 2) >= Math.Round(M1, 2) && Math.Round(Station2, 2) <= Math.Round(M2, 2) && Math.Round(Station1, 2) < Math.Round(M2, 2))
                                         {
-                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
-                                            Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                            Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Pt2 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                            }
+
                                             double stretch01 = Pt1.DistanceTo(Pt2) * _AGEN_mainform.Vw_scale;
                                             double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                             dt_compiled.Rows.Add();
@@ -1033,7 +1088,13 @@ namespace Alignment_mdi
                                         }
                                         else if (Math.Round(Station1, 2) < Math.Round(M2, 2) && Math.Round(Station1, 2) >= Math.Round(M1, 2))
                                         {
-                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                            Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                            }
+
                                             double stretch01 = Pt1.DistanceTo(pm2) * _AGEN_mainform.Vw_scale;
                                             double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                             dt_compiled.Rows.Add();
@@ -1136,22 +1197,31 @@ namespace Alignment_mdi
                                         double y1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[i]["Y_Beg"]);
                                         double x2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[i]["X_End"]);
                                         double y2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[i]["Y_End"]);
-                                        Point3d point_on_poly2D1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                        Point3d point_on_poly2D2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                        double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D1);
-                                        double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D2);
-                                        if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
-                                        if (param2 > _AGEN_mainform.Poly3D.EndParam) param2 = _AGEN_mainform.Poly3D.EndParam;
-                                        Station1 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                        Station2 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param2);
+                                        Point3d point_on_poly2D1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, poly2d.Elevation), Vector3d.ZAxis, false);
+                                        Point3d point_on_poly2D2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, poly2d.Elevation), Vector3d.ZAxis, false);
+
+                                        Station1 = poly2d.GetDistAtPoint(point_on_poly2D1);
+                                        Station2 = poly2d.GetDistAtPoint(point_on_poly2D2);
+
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            double param1 = poly2d.GetParameterAtPoint(point_on_poly2D1);
+                                            double param2 = poly2d.GetParameterAtPoint(point_on_poly2D2);
+                                            if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+                                            if (param2 > poly3d.EndParam) param2 = poly3d.EndParam;
+                                            Station1 = poly3d.GetDistanceAtParameter(param1);
+                                            Station2 = poly3d.GetDistanceAtParameter(param2);
+                                        }
+
+
                                         if (_AGEN_mainform.COUNTRY == "CANADA")
                                         {
-                                            double d2d1 = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
-                                            double d2d2 = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param2);
+                                            double d2d1 = poly2d.GetDistAtPoint(point_on_poly2D1);
+                                            double d2d2 = poly2d.GetDistAtPoint(point_on_poly2D2);
                                             double b1 = -1.23456;
-                                            Station1_labeled = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2D1, d2d1, _AGEN_mainform.dt_centerline, ref b1);
+                                            Station1_labeled = Functions.get_stationCSF_from_point(poly2d, point_on_poly2D1, d2d1, _AGEN_mainform.dt_centerline, ref b1);
                                             double b2 = -1.23456;
-                                            Station2_labeled = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2D2, d2d2, _AGEN_mainform.dt_centerline, ref b2);
+                                            Station2_labeled = Functions.get_stationCSF_from_point(poly2d, point_on_poly2D2, d2d2, _AGEN_mainform.dt_centerline, ref b2);
                                         }
                                         else
                                         {
@@ -1184,11 +1254,11 @@ namespace Alignment_mdi
                                                 MessageBox.Show("End Station is smaller than Start Station on row " + (j).ToString() + "\r\n" + _AGEN_mainform.sheet_index_excel_name);
                                                 return;
                                             }
-                                            if (M2 > _AGEN_mainform.Poly3D.Length)
+                                            if (M2 > poly_length)
                                             {
-                                                if (Math.Abs(M2 - _AGEN_mainform.Poly3D.Length) < 0.99)
+                                                if (Math.Abs(M2 - poly_length) < 0.99)
                                                 {
-                                                    M2 = _AGEN_mainform.Poly3D.Length;
+                                                    M2 = poly_length;
                                                 }
                                                 else
                                                 {
@@ -1198,10 +1268,18 @@ namespace Alignment_mdi
                                                     return;
                                                 }
                                             }
-                                            if (M1 >= _AGEN_mainform.Poly3D.Length) M1 = _AGEN_mainform.Poly3D.Length - 0.0001;
-                                            if (M2 >= _AGEN_mainform.Poly3D.Length) M2 = _AGEN_mainform.Poly3D.Length - 0.0001;
-                                            Point3d pm1 = _AGEN_mainform.Poly3D.GetPointAtDist(M1);
-                                            Point3d pm2 = _AGEN_mainform.Poly3D.GetPointAtDist(M2);
+                                            if (M1 >= poly_length) M1 = poly_length - 0.0001;
+                                            if (M2 >= poly_length) M2 = poly_length - 0.0001;
+
+                                            Point3d pm1 = poly2d.GetPointAtDist(M1);
+                                            Point3d pm2 = poly2d.GetPointAtDist(M2);
+
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                pm1 = poly3d.GetPointAtDist(M1);
+                                                pm2 = poly3d.GetPointAtDist(M2);
+                                            }
+
                                             pm1 = new Point3d(pm1.X, pm1.Y, 0);
                                             pm2 = new Point3d(pm2.X, pm2.Y, 0);
                                             Autodesk.AutoCAD.DatabaseServices.Line Linie_M1_M2 = new Autodesk.AutoCAD.DatabaseServices.Line(new Point3d(pm1.X, pm1.Y, 0), new Point3d(pm2.X, pm2.Y, 0));
@@ -1216,7 +1294,12 @@ namespace Alignment_mdi
 
                                             if (Math.Round(M1, 2) <= Math.Round(Station1, 2) && Math.Round(M2, 2) <= Math.Round(Station2, 2) && Math.Round(M1, 2) <= Math.Round(Station2, 2) && Math.Round(M2, 2) > Math.Round(Station1, 2))
                                             {
-                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                }
                                                 double stretch01 = Pt1.DistanceTo(pm2) * _AGEN_mainform.Vw_scale;
                                                 double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                                 Data_table_compiled_extra.Rows.Add();
@@ -1366,8 +1449,15 @@ namespace Alignment_mdi
 
                                             if (Math.Round(Station1, 2) >= Math.Round(M1, 2) && Math.Round(Station2, 2) <= Math.Round(M2, 2) && Math.Round(Station1, 2) < Math.Round(M2, 2))
                                             {
-                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
-                                                Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                    Pt2 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                                }
+
                                                 double stretch01 = Pt1.DistanceTo(Pt2) * _AGEN_mainform.Vw_scale;
                                                 double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                                 Data_table_compiled_extra.Rows.Add();
@@ -1505,8 +1595,15 @@ namespace Alignment_mdi
                                         LS1S2:
                                             if (Math.Round(Station1, 2) >= Math.Round(M1, 2) && Math.Round(Station2, 2) <= Math.Round(M2, 2) && Math.Round(Station1, 2) < Math.Round(M2, 2))
                                             {
-                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
-                                                Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Point3d Pt2 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                    Pt2 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station2), Vector3d.ZAxis, false);
+                                                }
+
                                                 double stretch01 = Pt1.DistanceTo(Pt2) * _AGEN_mainform.Vw_scale;
                                                 double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                                 Data_table_compiled_extra.Rows.Add();
@@ -1642,7 +1739,12 @@ namespace Alignment_mdi
                                             }
                                             else if (Math.Round(Station1, 2) < Math.Round(M2, 2) && Math.Round(Station1, 2) >= Math.Round(M1, 2))
                                             {
-                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(_AGEN_mainform.Poly3D.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                Point3d Pt1 = Linie_M1_M2.GetClosestPointTo(poly2d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    Pt1 = Linie_M1_M2.GetClosestPointTo(poly3d.GetPointAtDist(Station1), Vector3d.ZAxis, false);
+                                                }
+
                                                 double stretch01 = Pt1.DistanceTo(pm2) * _AGEN_mainform.Vw_scale;
                                                 double deltax1 = Pt1.DistanceTo(pm1) * _AGEN_mainform.Vw_scale;
                                                 Data_table_compiled_extra.Rows.Add();
@@ -1949,10 +2051,15 @@ namespace Alignment_mdi
                                             {
                                                 double x1 = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k]["X"]);
                                                 double y1 = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k]["Y"]);
-                                                Point3d point_on_poly2D1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D1);
-                                                if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
-                                                Station_pt = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                                                Point3d point_on_poly2D1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, poly2d.Elevation), Vector3d.ZAxis, false);
+                                                Station_pt = poly2d.GetDistAtPoint(point_on_poly2D1);
+
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    double param1 = poly2d.GetParameterAtPoint(point_on_poly2D1);
+                                                    if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+                                                    Station_pt = poly3d.GetDistanceAtParameter(param1);
+                                                }
                                             }
                                         }
 
@@ -2047,19 +2154,27 @@ namespace Alignment_mdi
                                                 double x2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["X_End"]);
                                                 double y2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["Y_End"]);
 
-                                                Point3d point_on_poly2D1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D1);
-                                                if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
+                                                Point3d point_on_poly2D1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, poly2d.Elevation), Vector3d.ZAxis, false);
+                                                Station_pt1 = poly2d.GetDistAtPoint(point_on_poly2D1);
 
-                                                Station_pt1 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    double param1 = poly2d.GetParameterAtPoint(point_on_poly2D1);
+                                                    if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
 
+                                                    Station_pt1 = poly3d.GetDistanceAtParameter(param1);
+                                                }
 
-                                                Point3d point_on_poly2D2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                                double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D2);
+                                                Point3d point_on_poly2D2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, poly2d.Elevation), Vector3d.ZAxis, false);
+                                                Station_pt2 = poly3d.GetDistAtPoint(point_on_poly2D2);
 
-                                                if (param2 > _AGEN_mainform.Poly3D.EndParam) param2 = _AGEN_mainform.Poly3D.EndParam;
-                                                Station_pt2 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param2);
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    double param2 = poly2d.GetParameterAtPoint(point_on_poly2D2);
 
+                                                    if (param2 > poly3d.EndParam) param2 = poly3d.EndParam;
+                                                    Station_pt2 = poly3d.GetDistanceAtParameter(param2);
+                                                }
                                             }
                                         }
 
@@ -2346,19 +2461,25 @@ namespace Alignment_mdi
                                                     double X_pt = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k]["X"]);
                                                     double Y_pt = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k]["Y"]);
 
-                                                    Point3d point_on_poly2D1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(X_pt, Y_pt, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
+                                                    Point3d point_on_poly2D1 = poly2d.GetClosestPointTo(new Point3d(X_pt, Y_pt, poly2d.Elevation), Vector3d.ZAxis, false);
+                                                    Station_pt = poly2d.GetDistAtPoint(point_on_poly2D1);
 
-                                                    double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2D1);
-                                                    if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
+                                                    if (_AGEN_mainform.Project_type == "3D")
+                                                    {
+                                                        double param1 = poly2d.GetParameterAtPoint(point_on_poly2D1);
+                                                        if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
 
-                                                    Station_pt = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                                    Station_pt = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                                                        Station_pt = poly3d.GetDistanceAtParameter(param1);
+                                                    }
+
+
+
 
                                                     if (_AGEN_mainform.COUNTRY == "CANADA")
                                                     {
-                                                        double d2d1 = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
+                                                        double d2d1 = poly2d.GetDistAtPoint(point_on_poly2D1);
                                                         double b1 = -1.23456;
-                                                        Station_labeled = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2D1, d2d1, _AGEN_mainform.dt_centerline, ref b1);
+                                                        Station_labeled = Functions.get_stationCSF_from_point(poly2d, point_on_poly2D1, d2d1, _AGEN_mainform.dt_centerline, ref b1);
                                                     }
                                                     else
                                                     {
@@ -2832,7 +2953,12 @@ namespace Alignment_mdi
 
                         //Alignment_generator.Functions.Transfer_datatable_to_new_excel_spreadsheet(Data_table_compiled);
 
-                        _AGEN_mainform.Poly3D.Erase();
+                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased == false)
+                        {
+                            poly3d.Erase();
+                        }
+
+
                         Trans1.Commit();
 
                         dataGridView_materials.DataSource = dtmc;
@@ -3141,7 +3267,7 @@ namespace Alignment_mdi
                 MessageBox.Show("Please close the " + _AGEN_mainform.materials_excel_name + " file");
                 return;
             }
-         
+
 
 
             try
@@ -3155,7 +3281,7 @@ namespace Alignment_mdi
                 if (System.IO.Directory.Exists(ProjFolder) == true)
                 {
                     string fisier_mat = ProjFolder + _AGEN_mainform.materials_excel_name;
-                   System.Data.DataTable dt_lin = null;
+                    System.Data.DataTable dt_lin = null;
                     System.Data.DataTable dt_extra = null;
                     System.Data.DataTable dt_points = null;
 
@@ -3168,7 +3294,7 @@ namespace Alignment_mdi
 
 
 
-                    creaza_headers_for_mat_files(fisier_mat,dt_lin,  dt_points, dt_extra);
+                    creaza_headers_for_mat_files(fisier_mat, dt_lin, dt_points, dt_extra);
 
                 }
                 else
@@ -3185,7 +3311,7 @@ namespace Alignment_mdi
             set_enable_true();
         }
 
-        private void creaza_headers_for_mat_files(string fis_mat,System.Data.DataTable dt_lin,  System.Data.DataTable dt_pts, System.Data.DataTable dt_extra)
+        private void creaza_headers_for_mat_files(string fis_mat, System.Data.DataTable dt_lin, System.Data.DataTable dt_pts, System.Data.DataTable dt_extra)
         {
 
             if (dt_lin != null || dt_extra != null || dt_pts != null)

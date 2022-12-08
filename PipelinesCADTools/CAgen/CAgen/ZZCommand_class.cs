@@ -27,75 +27,15 @@ namespace Alignment_mdi
 
             switch (number_drive)
             {
-                case "8CDA6CE3":
+                case "94B9DF56":
                     return true;
-                case "36D79DE5":
-                    return true;
-                case "FEA3192C":
-                    return true;
-                case "B454BD5B":
-                    return true;
-                case "6E40460D":
-                    return true;
-                case "0892E01D":
-                    return true;
-                case "4ED21ABF":
-                    return true;
-                case "56766C69":
-                    return true;
-                case "DA214366":
-                    return true;
-                case "3CF68AF2":
-                    return true;
-                case "389A2249":
-                    return true;
-                case "AED6B68E":
-                    return true;
-                case "8C040338":
-                    return true;
-                case "8CD08F48":
-                    return true;
-                case "0E26E402":
-                    return true;
-                case "4A123A50":
-                    return true;
-
-                case "98D9B617":
-                    return true;
-                case "B838FEB4":
-                    return true;
-                case "1AE1721C":
-                    return true;
-                case "CA9E6FFE":
-                    return true;
-                case "DE281128":
-                    return true;
-                case "FC7C4F1":
-                    return true;
-                case "B67EC134":
-                    return true;
-                case "E64DBF0A":
-                    return true;
-                case "561F1509":
-                    return true;
-
-                case "120E4B54":
-                    return true;
-                case "F6633173":
-                    return true;
-                case "40D6BDCB":
-                    return true;
-                case "18399D24":
-                    return true;
-
-
-                case "B63AD3F6":
+                case "2E697378":
                     return true;
                 default:
                     try
                     {
                         string UserDNS = Environment.GetEnvironmentVariable("USERDNSDOMAIN");
-                        if (UserDNS.ToUpper() == "HMMG.CC" | UserDNS.ToLower() == "mottmac.group.int")
+                        if (UserDNS.ToLower()== "mottmac.group.int"  || UserDNS.ToUpper() == "HMMG.CC")
                         {
                             return true;
                         }
@@ -4050,7 +3990,7 @@ namespace Alignment_mdi
                                             dt1.Rows[dt1.Rows.Count - 1][col_bulge] = bulge1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_layer] = poly1.Layer;
 
-                                            if (bulge1 != 0)
+                                            if (bulge1 != 0 && j < poly1.NumberOfVertices-1)
                                             {
                                                 CircularArc2d arc1 = poly1.GetArcSegment2dAt(j);
 
@@ -5300,7 +5240,7 @@ namespace Alignment_mdi
                                             dt1.Rows[dt1.Rows.Count - 1][col_bulge] = bulge1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_layer] = poly1.Layer;
 
-                                            if (bulge1 != 0)
+                                            if (bulge1 != 0 && j < poly1.NumberOfVertices - 1)
                                             {
                                                 CircularArc2d arc1 = poly1.GetArcSegment2dAt(j);
 

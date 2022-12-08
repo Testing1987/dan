@@ -2292,6 +2292,13 @@ namespace Alignment_mdi
                                                             add_pattern_SILTSTONE(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
 
                                                         }
+
+                                                        if (desc.ToUpper() == "CONGLOMERATE")
+                                                        {
+                                                            add_pattern_CONGLOMERATE(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
+
+                                                        }
+
                                                         #endregion
 
                                                         MText string_desc = new MText();
@@ -3270,6 +3277,10 @@ namespace Alignment_mdi
                                                     if (lista_legend[i] == "SILTSTONE")
                                                     {
                                                         add_pattern_SILTSTONE(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+                                                    if (lista_legend[i] == "CONGLOMERATE")
+                                                    {
+                                                        add_pattern_CONGLOMERATE(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
                                                     }
                                                 }
 
@@ -17286,8 +17297,8 @@ namespace Alignment_mdi
                 {
 
                     Polyline poly_silt_1 = new Polyline();
-                    poly_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1) ), 0 + n * ((2 * h1) )), 0, 0, 0);
-                    poly_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1) ), h1  + n * ((2 * h1) )), 0, 0, 0);
+                    poly_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1)), 0 + n * ((2 * h1))), 0, 0, 0);
+                    poly_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1)), h1 + n * ((2 * h1))), 0, 0, 0);
 
                     poly_silt_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
                     poly_silt_1.Layer = "0";
@@ -17296,8 +17307,8 @@ namespace Alignment_mdi
                     bltrec1.AppendEntity(poly_silt_1);
 
                     Polyline poly_silt_2 = new Polyline();
-                    poly_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1 ,  h1 + 2 * n * h1 ), 0, 0, 0);
-                    poly_silt_2.AddVertexAt(1, new Point2d( w1 + 3 * m * w1 ,  0 + 2 * n * h1 ), 0, 0, 0);
+                    poly_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1, h1 + 2 * n * h1), 0, 0, 0);
+                    poly_silt_2.AddVertexAt(1, new Point2d(w1 + 3 * m * w1, 0 + 2 * n * h1), 0, 0, 0);
                     poly_silt_2.Closed = true;
                     poly_silt_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
                     poly_silt_2.Layer = "0";
@@ -17309,6 +17320,116 @@ namespace Alignment_mdi
             }
 
         }
+
+
+        private void add_pattern_CONGLOMERATE(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(51, 51, 51);
+            double rec_hght = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+            double spc = scale1 / 14;
+            int nr_col = 0;
+            double rad1 = scale1 / 120;
+            int nr_rows = 0;
+            double spc_h_edge = scale1 / 600;
+            double spc_v_edge = scale1 / 600;
+
+
+            double x1 = poly1.GetPoint2dAt(3).X + spc_h_edge;
+            double y1 = poly1.GetPoint2dAt(3).Y + spc_v_edge;
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+
+            if (rec_hght >= rad1 && stick_width >= rad1)
+            {
+                if (rec_hght < spc + rad1)
+                {
+                    nr_rows = 1;
+                }
+                else
+                {
+                    nr_rows = Convert.ToInt32(Math.Round(rec_hght / spc, 0, MidpointRounding.AwayFromZero) + 1);
+                }
+                if (stick_width < spc + rad1)
+                {
+                    nr_col = 1;
+                }
+                else
+                {
+                    nr_col = Convert.ToInt32(Math.Round(stick_width / spc, 0, MidpointRounding.AwayFromZero) + 1);
+                }
+                double dif1 = stick_width - (nr_col - 1) * spc;
+                double dif2 = rec_hght - (nr_rows - 1) * spc;
+                if (dif1 < 2 * rad1)
+                {
+                    nr_col = nr_col - 1;
+                    dif1 = stick_width - (nr_col - 1) * spc;
+                }
+                if (dif2 < 2 * rad1)
+                {
+                    nr_rows = nr_rows - 1;
+                    dif2 = rec_hght - (nr_rows - 1) * spc;
+                }
+                if (nr_rows > 0 && nr_col > 0)
+                {
+                    bool is_odd = false;
+                    for (int m = 0; m < nr_col; ++m)
+                    {
+                        double x2 = -1;
+
+
+                        for (int n = 0; n < nr_rows; ++n)
+                        {
+
+                            if (is_odd == false)
+                            {
+                                x2 = x1 + dif1 / 2 + m * spc;
+                            }
+                            else
+                            {
+                                x2 = x1 + dif1 / 2 + m * spc + spc / 2;
+
+                            }
+
+
+                            double y2 = y1 + dif2 / 2 + n * spc;
+                            if (m < nr_col - 1 || (is_odd == false && m == nr_col - 1))
+                            {
+                                Circle c1 = new Circle(new Point3d(x2, y2, 0), Vector3d.ZAxis, rad1);
+                                BTrecord.AppendEntity(c1);
+                                Trans1.AddNewlyCreatedDBObject(c1, true);
+                                Hatch hatch1 = CreateHatch(c1, "SOLID", 1, 0);
+                                hatch1.Layer = "0";
+                                hatch1.Color = color1;
+                                hatch1.LineWeight = LineWeight.LineWeight000;
+                                bltrec1.AppendEntity(hatch1);
+                                c1.Erase();
+                            }
+
+
+                            if (is_odd == true)
+                            {
+                                is_odd = false;
+                            }
+                            else
+                            {
+                                is_odd = true;
+                            }
+
+                            if (n == nr_rows - 1)
+                            {
+                                is_odd = false;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+            else
+            {
+            }
+
+        }
+
 
 
         #region Build Extra Polylines 

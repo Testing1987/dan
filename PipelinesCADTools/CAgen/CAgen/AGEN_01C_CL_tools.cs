@@ -253,7 +253,7 @@ namespace Alignment_mdi
                                 if (W1 != null)
                                 {
                                     _AGEN_mainform.dt_centerline = Functions.build_data_table_from_excel_based_on_columns_with_type_check(_AGEN_mainform.dt_centerline, W1, start1, end1, Col_x, textBox_col_e.Text,
-                                        Col_y, textBox_col_n.Text, Col_z, textBox_col_z.Text, Col_3DSta, textBox_chainage.Text, Col_CSF, textBox_col_csf.Text, Col_rr, textBox_col_reroute.Text);
+                                        Col_y, textBox_col_n.Text, Col_z, textBox_col_z.Text, Col_3DSta, textBox_chainage.Text,"","", Col_CSF, textBox_col_csf.Text, Col_rr, textBox_col_reroute.Text);
 
                                     append_deflections_to_dtcl(_AGEN_mainform.dt_centerline);
 
@@ -1342,7 +1342,7 @@ namespace Alignment_mdi
                                                                     Col_x, textBox_col_e.Text,
                                                                     Col_y, textBox_col_n.Text,
                                                                     textBox_chainage.Text, "",
-                                                                    "", "", "", "", "", "");
+                                                                    "", "", "", "", "", "", "", "");
 
                                                    
 
@@ -1548,7 +1548,7 @@ namespace Alignment_mdi
                                                                     start1, end1,
                                                                     "", "", "", "", "", "",
                                                                     Col_Sta, textBox_chainage.Text,
-                                                                    "", "", "", "");
+                                                                    "", "", "", "", "", "");
 
 
                                                     if (dt1.Rows.Count > 0)
@@ -1769,7 +1769,7 @@ namespace Alignment_mdi
                                         dt1 = Functions.build_data_table_from_excel_based_on_columns_with_type_check(dt1, W1,
                                                         start1, end1,
                                                         "sta1", textBoxH1.Text, "sta2", textBoxH2.Text,
-                                                        "layer", textBoxH3.Text, "", "", "", "", "", "");
+                                                        "layer", textBoxH3.Text, "", "", "", "", "", "", "", "");
 
                                         #region CANADA
                                         if (dt1.Rows.Count > 0 && _AGEN_mainform.COUNTRY == "CANADA")

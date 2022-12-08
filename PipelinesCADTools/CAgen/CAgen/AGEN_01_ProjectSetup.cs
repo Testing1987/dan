@@ -8751,7 +8751,7 @@ namespace Alignment_mdi
             else
             {
                 _AGEN_mainform.COUNTRY = "CANADA";
-                panel_USA.Visible = false;
+                panel_USA.Visible = true;
 
             }
 
