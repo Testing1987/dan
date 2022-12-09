@@ -2549,7 +2549,7 @@ namespace Alignment_mdi
 
             if (is_data == false)
             {
-                MessageBox.Show("no data found in the MATERIAL file {Column B is empty}");
+                MessageBox.Show("no data found in the MATERIAL EXTRA file {Column B is empty}");
                 return dtm;
             }
 

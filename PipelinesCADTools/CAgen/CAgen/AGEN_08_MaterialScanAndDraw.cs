@@ -271,6 +271,14 @@ namespace Alignment_mdi
                         {
                             W1 = W4;
                         }
+                        if (W4.Name.ToLower() == nume_tab_extra)
+                        {
+                            W2 = W4;
+                        }
+                        if (W4.Name.ToLower() == nume_tab_pts)
+                        {
+                            W3 = W4;
+                        }
                     }
                     if (W1 == null)
                     {
