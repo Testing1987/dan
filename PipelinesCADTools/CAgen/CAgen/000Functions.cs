@@ -19876,7 +19876,26 @@ namespace Alignment_mdi
                 }
             }
         }
+        public static Point3d Convert_coordinate_from_CS_to_new_CS(Point3d Point1, string from_coord_system, string to_coord_system)
+        {
+            Autodesk.Gis.Map.Platform.AcMapMap Acmap = Autodesk.Gis.Map.Platform.AcMapMap.GetCurrentMap();
+            Point3d Point2 = new Point3d();
 
+            OSGeo.MapGuide.MgCoordinateSystemFactory Coord_factory1 = new OSGeo.MapGuide.MgCoordinateSystemFactory();
+            OSGeo.MapGuide.MgCoordinateSystemCatalog Catalog1 = Coord_factory1.GetCatalog();
+            OSGeo.MapGuide.MgCoordinateSystemDictionary Dictionary1 = Catalog1.GetCoordinateSystemDictionary();
+
+
+            OSGeo.MapGuide.MgCoordinateSystem CoordSys1 = Dictionary1.GetCoordinateSystem(from_coord_system);
+
+            OSGeo.MapGuide.MgCoordinateSystem CoordSys2 = Dictionary1.GetCoordinateSystem(to_coord_system);
+
+            OSGeo.MapGuide.MgCoordinateSystemTransform Transform1 = Coord_factory1.GetTransform(CoordSys1, CoordSys2);
+            OSGeo.MapGuide.MgCoordinate Coord1 = Transform1.Transform(Point1.X, Point1.Y);
+
+            Point2 = new Point3d(Coord1.X, Coord1.Y, 0);
+            return Point2;
+        }
     }
 
 

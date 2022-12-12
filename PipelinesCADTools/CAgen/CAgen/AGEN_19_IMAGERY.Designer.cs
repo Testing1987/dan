@@ -1,7 +1,7 @@
 ﻿
 namespace Alignment_mdi
 {
-    partial class image_form
+    partial class imagery_form
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace Alignment_mdi
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(image_form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(cs_form));
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView_layout = new System.Windows.Forms.DataGridView();
             this.button_set_image = new System.Windows.Forms.Button();

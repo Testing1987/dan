@@ -106,6 +106,12 @@
     <Compile Include="AGEN_01A_Segments.designer.cs">
       <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
     </Compile>
+    <Compile Include="AGEN_20_coord_systems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_20_coord_systems.Designer.cs">
+      <DependentUpon>AGEN_20_coord_systems.cs</DependentUpon>
+    </Compile>
     <Compile Include="AGEN_19_IMAGERY.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -356,6 +362,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AGEN_01A_Segments.resx">
       <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_20_coord_systems.resx">
+      <DependentUpon>AGEN_20_coord_systems.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AGEN_19_IMAGERY.resx">
       <DependentUpon>AGEN_19_IMAGERY.cs</DependentUpon>

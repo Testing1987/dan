@@ -58,10 +58,12 @@
             System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Rename Layout");
             System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Viewport to poly");
             System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("IMAGERY");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Extra tools", new System.Windows.Forms.TreeNode[] {
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Convert Coordinates");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Extra tools", new System.Windows.Forms.TreeNode[] {
             treeNode16,
             treeNode17,
-            treeNode18});
+            treeNode18,
+            treeNode19});
             this.label_projectpath = new System.Windows.Forms.Label();
             this.textBox_config_file_path = new System.Windows.Forms.TextBox();
             this.panel_header = new System.Windows.Forms.Panel();
@@ -284,14 +286,18 @@
             treeNode18.Name = "Node43";
             treeNode18.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             treeNode18.Text = "IMAGERY";
-            treeNode19.Name = "Node4";
-            treeNode19.Text = "Extra tools";
+            treeNode19.ForeColor = System.Drawing.Color.White;
+            treeNode19.Name = "Node44";
+            treeNode19.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode19.Text = "Convert Coordinates";
+            treeNode20.Name = "Node4";
+            treeNode20.Text = "Extra tools";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode5,
             treeNode7,
             treeNode13,
             treeNode15,
-            treeNode19});
+            treeNode20});
             this.treeView1.ShowLines = false;
             this.treeView1.Size = new System.Drawing.Size(201, 482);
             this.treeView1.TabIndex = 47;
