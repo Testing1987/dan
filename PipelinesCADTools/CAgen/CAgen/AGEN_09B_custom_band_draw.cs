@@ -605,8 +605,7 @@ namespace Alignment_mdi
             Data_table_compiled.Columns.Add(colm1csf, typeof(double));
             Data_table_compiled.Columns.Add(colm2csf, typeof(double));
 
-            Polyline3d poly3d = null;
-            Polyline poly2d = null;
+
 
             try
             {
@@ -632,14 +631,19 @@ namespace Alignment_mdi
                             return;
                         }
 
+                        Polyline3d poly3d = null;
+
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                        double poly_length = poly2d.Length;
+
                         if (_AGEN_mainform.Project_type == "3D")
                         {
                             poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                            poly_length = poly3d.Length;
                         }
 
 
 
-                        poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
 
                         if (_AGEN_mainform.dt_sheet_index == null || _AGEN_mainform.dt_sheet_index.Rows.Count == 0)
@@ -724,11 +728,6 @@ namespace Alignment_mdi
                         }
 
 
-                        double poly_len = poly2d.Length;
-                        if (_AGEN_mainform.Project_type == "3D")
-                        {
-                            poly_len = poly3d.Length;
-                        }
 
                         for (int i = 0; i < dt_cus_data.Rows.Count; ++i)
                         {
@@ -764,14 +763,14 @@ namespace Alignment_mdi
                             Station1 = Math.Round(Station1, _AGEN_mainform.round1);
                             Station2 = Math.Round(Station2, _AGEN_mainform.round1);
 
-                            if (Station1 > poly_len)
+                            if (Station1 > poly_length)
                             {
-                                Station1 = poly_len;
+                                Station1 = poly_length;
                             }
 
-                            if (Station2 > poly_len)
+                            if (Station2 > poly_length)
                             {
-                                Station2 = poly_len;
+                                Station2 = poly_length;
                             }
 
                             if (Station1 < 0) Station1 = 0;
@@ -859,14 +858,23 @@ namespace Alignment_mdi
 
                                                 Point3d p1a = poly1.GetPointAtDist(diferenta1);
                                                 Point3d pt_on_poly1 = poly2d.GetClosestPointTo(p1a, Vector3d.ZAxis, false);
-                                                double param1 = poly2d.GetParameterAtPoint(pt_on_poly1);
-                                                px_start = poly2d.GetPointAtParameter(param1).X;
-                                                py_start = poly2d.GetPointAtParameter(param1).Y;
-                                                if (param1 > poly3d.EndParam)
+                                                px_start = pt_on_poly1.X;
+                                                py_start = pt_on_poly1.Y;
+
+                                                if (_AGEN_mainform.Project_type == "3D")
                                                 {
-                                                    param1 = poly3d.EndParam;
+                                                    double param1 = poly2d.GetParameterAtPoint(pt_on_poly1);
+                                                    if (param1 > poly3d.EndParam)
+                                                    {
+                                                        param1 = poly3d.EndParam;
+                                                    }
+                                                    Station1 = poly3d.GetDistanceAtParameter(param1);
                                                 }
-                                                Station1 = poly3d.GetDistanceAtParameter(param1);
+                                                else
+                                                {
+                                                    Station1 = poly3d.GetDistAtPoint(pt_on_poly1);
+                                                }
+
                                                 is_found1 = true;
                                             }
 
@@ -884,15 +892,24 @@ namespace Alignment_mdi
 
 
                                                 Point3d p2a = poly1.GetPointAtDist(diferenta2);
+
                                                 Point3d pt_on_poly2 = poly2d.GetClosestPointTo(p2a, Vector3d.ZAxis, false);
-                                                double param2 = poly2d.GetParameterAtPoint(pt_on_poly2);
-                                                px_end = poly2d.GetPointAtParameter(param2).X;
-                                                py_end = poly2d.GetPointAtParameter(param2).Y;
-                                                if (param2 > poly3d.EndParam)
+                                                px_end = pt_on_poly2.X;
+                                                py_end = pt_on_poly2.Y;
+
+                                                if (_AGEN_mainform.Project_type == "3D")
                                                 {
-                                                    param2 = poly3d.EndParam;
+                                                    double param2 = poly2d.GetParameterAtPoint(pt_on_poly2);
+                                                    if (param2 > poly3d.EndParam)
+                                                    {
+                                                        param2 = poly3d.EndParam;
+                                                    }
+                                                    Station2 = poly3d.GetDistanceAtParameter(param2);
                                                 }
-                                                Station2 = poly3d.GetDistanceAtParameter(param2);
+                                                else
+                                                {
+                                                    Station2 = poly3d.GetDistAtPoint(pt_on_poly2);
+                                                }
                                                 is_found2 = true;
                                             }
 
@@ -1033,11 +1050,11 @@ namespace Alignment_mdi
                                             return;
                                         }
 
-                                        if (M2 > poly_len)
+                                        if (M2 > poly_length)
                                         {
-                                            if (Math.Abs(M2 - poly_len) < 0.99)
+                                            if (Math.Abs(M2 - poly_length) < 0.99)
                                             {
-                                                M2 = poly_len;
+                                                M2 = poly_length;
                                             }
                                             else
                                             {
@@ -1053,8 +1070,8 @@ namespace Alignment_mdi
                                         Point3d pm1 = new Point3d();
                                         Point3d pm2 = new Point3d();
 
-                                        if (M1 > poly_len) M1 = poly_len - 0.0001;
-                                        if (M2 > poly_len) M2 = poly_len - 0.0001;
+                                        if (M1 > poly_length) M1 = poly_length - 0.0001;
+                                        if (M2 > poly_length) M2 = poly_length - 0.0001;
 
                                         try
                                         {
@@ -1226,7 +1243,7 @@ namespace Alignment_mdi
 
                                         #region sta1<=M1, sta2>=M2 (M2 AND M1 between sta1 and sta2)
 
-                                        if (Math.Round(M1, 2) >= Math.Round(Station1, 2) && Math.Round(M2, 2) <= Math.Round(Station2, 2) )
+                                        if (Math.Round(M1, 2) >= Math.Round(Station1, 2) && Math.Round(M2, 2) <= Math.Round(Station2, 2))
                                         {
                                             Point3d ppt1 = new Point3d();
                                             try

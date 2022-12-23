@@ -117,7 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="label80.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="comboBox_prop_owner_od.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="comboBox_prop_linelist_od.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="comboBox_prop_od_table.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="panel1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="panel2.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="label_ownership.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="panel3.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="panel11.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="label12.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="button_show_scan_and_draw_ownership.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="button_show_scan_and_draw_ownership.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        EAAACxABrSO9dQAAAAd0SU1FB+EIAxMdHMYEq9IAAAEaSURBVEhLYxghoOoMlIEEqs4wYhWnCFSdEQPi
+        XUD8EYiToGJgijqg6gw7EG8B4v9Q/BeIM6ByVLKs6owAEMMsgOEfQJwJladC0FWd4QTiI0CMbhHIRyVQ
+        NVTwUdUZJSC+BsToFoFwHlQVBRbBNFad0QTiq0CMbslPIE6DqqGKRfJAfA6IsVkE8RFFcYSwSAqILwIx
+        ukUgjIgjikHVGXUgxhZ0v4DYH6qKAoDwUTjUYHTcAVFAKcDvE1+oKjIAzeMEYQGNUhfCAprnE3w5Phuq
+        iiIL8JRdp3Mgas5SYAEIYC+FvwEtSIbKMzJWHAczyQeQ+mQr1HAQ/gO0AFJxVZ9loNwCGECtGePAYk13
+        wBR1ALawpkoQDU3AwAAAh0lJESkopjMAAAAASUVORK5CYII=
+</value>
+  </data>
+  <metadata name="button_open_ownership_xlxs.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="button_open_ownership_xlxs.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -143,6 +190,15 @@
         yO0digAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="panel7.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="comboBox_segment_name.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="button_scan_properties.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <data name="button_scan_properties.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
@@ -175,15 +231,13 @@
         vYgr9yy00qYbMtOUWcQgE1QTkmCtlP4FTvL713nWn/EAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button_show_scan_and_draw_ownership.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAAd0SU1FB+EIAxMdHMYEq9IAAAEaSURBVEhLYxghoOoMlIEEqs4wYhWnCFSdEQPi
-        XUD8EYiToGJgijqg6gw7EG8B4v9Q/BeIM6ByVLKs6owAEMMsgOEfQJwJladC0FWd4QTiI0CMbhHIRyVQ
-        NVTwUdUZJSC+BsToFoFwHlQVBRbBNFad0QTiq0CMbslPIE6DqqGKRfJAfA6IsVkE8RFFcYSwSAqILwIx
-        ukUgjIgjikHVGXUgxhZ0v4DYH6qKAoDwUTjUYHTcAVFAKcDvE1+oKjIAzeMEYQGNUhfCAprnE3w5Phuq
-        iiIL8JRdp3Mgas5SYAEIYC+FvwEtSIbKMzJWHAczyQeQ+mQr1HAQ/gO0AFJxVZ9loNwCGECtGePAYk13
-        wBR1ALawpkoQDU3AwAAAh0lJESkopjMAAAAASUVORK5CYII=
-</value>
-  </data>
+  <metadata name="label3.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="label5.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

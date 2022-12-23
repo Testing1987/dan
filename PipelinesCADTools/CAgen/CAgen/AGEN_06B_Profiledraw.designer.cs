@@ -35,6 +35,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBox_cover = new System.Windows.Forms.CheckBox();
+            this.checkBox_pipes = new System.Windows.Forms.CheckBox();
             this.checkBox_elevation = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.checkBox_no_station = new System.Windows.Forms.CheckBox();
@@ -103,7 +104,6 @@
             this.button_show_scan_profile = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label_draw_profile = new System.Windows.Forms.Label();
-            this.checkBox_pipes = new System.Windows.Forms.CheckBox();
             this.panel_profile_parameters.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -214,6 +214,19 @@
             this.checkBox_cover.Text = "Cover";
             this.checkBox_cover.UseVisualStyleBackColor = true;
             this.checkBox_cover.CheckedChanged += new System.EventHandler(this.checkBox_cover_CheckedChanged);
+            // 
+            // checkBox_pipes
+            // 
+            this.checkBox_pipes.AutoSize = true;
+            this.checkBox_pipes.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_pipes.ForeColor = System.Drawing.Color.White;
+            this.checkBox_pipes.Location = new System.Drawing.Point(59, 100);
+            this.checkBox_pipes.Name = "checkBox_pipes";
+            this.checkBox_pipes.Size = new System.Drawing.Size(180, 18);
+            this.checkBox_pipes.TabIndex = 161;
+            this.checkBox_pipes.Text = "Create Pipe and Cable Block";
+            this.checkBox_pipes.UseVisualStyleBackColor = true;
+            this.checkBox_pipes.CheckedChanged += new System.EventHandler(this.checkBox_elevation_CheckedChanged);
             // 
             // checkBox_elevation
             // 
@@ -1117,19 +1130,6 @@
             this.label_draw_profile.TabIndex = 2054;
             this.label_draw_profile.Text = "Draw Profile";
             this.label_draw_profile.Click += new System.EventHandler(this.label_draw_profile_Click);
-            // 
-            // checkBox_pipes
-            // 
-            this.checkBox_pipes.AutoSize = true;
-            this.checkBox_pipes.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_pipes.ForeColor = System.Drawing.Color.White;
-            this.checkBox_pipes.Location = new System.Drawing.Point(59, 100);
-            this.checkBox_pipes.Name = "checkBox_pipes";
-            this.checkBox_pipes.Size = new System.Drawing.Size(180, 18);
-            this.checkBox_pipes.TabIndex = 161;
-            this.checkBox_pipes.Text = "Create Pipe and Cable Block";
-            this.checkBox_pipes.UseVisualStyleBackColor = true;
-            this.checkBox_pipes.CheckedChanged += new System.EventHandler(this.checkBox_elevation_CheckedChanged);
             // 
             // AGEN_Profile_draw
             // 

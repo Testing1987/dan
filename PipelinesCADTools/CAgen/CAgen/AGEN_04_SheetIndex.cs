@@ -1646,11 +1646,12 @@ namespace Alignment_mdi
                                 _AGEN_mainform.Data_table_Main_VP.Columns.Add(_AGEN_mainform.Col_Width, typeof(double));
                                 _AGEN_mainform.Data_table_Main_VP.Columns.Add(_AGEN_mainform.Col_Height, typeof(double));
                                 _AGEN_mainform.Data_table_Main_VP.Columns.Add(_AGEN_mainform.Col_dwg_name, typeof(string));
+
                                 for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; ++i)
                                 {
                                     _AGEN_mainform.Data_table_Main_VP.Rows.Add();
-
                                 }
+
                                 for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; ++i)
                                 {
                                     double X = (double)_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_x];
@@ -1658,11 +1659,10 @@ namespace Alignment_mdi
                                     double Rotation1 = (double)_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_rot];
 
                                     string Objectid_string = _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_handle].ToString();
-
                                     ObjectId ObjectID1 = Functions.GetObjectId(ThisDrawing.Database, Objectid_string);
 
                                     int CI = 256;
-                                    if (ObjectID1 != null)
+                                    if (ObjectID1 != ObjectId.Null && ObjectID1 != null)
                                     {
                                         Entity Ent1 = (Entity)Trans1.GetObject(ObjectID1, OpenMode.ForRead);
                                         if (Ent1 != null)
@@ -1670,6 +1670,7 @@ namespace Alignment_mdi
                                             CI = Ent1.ColorIndex;
                                         }
                                     }
+
                                     Polyline Poly1 = creaza_rectangle_from_one_point(new Point3d(X, Y, 0), Rotation1 * Math.PI / 180, _AGEN_mainform.Vw_width / _AGEN_mainform.Vw_scale, _AGEN_mainform.Vw_height / _AGEN_mainform.Vw_scale, CI);
                                     Poly1.Layer = _AGEN_mainform.Layer_name_VP_rectangle;
                                     BTrecord.AppendEntity(Poly1);
@@ -1682,7 +1683,6 @@ namespace Alignment_mdi
                                     _AGEN_mainform.Data_table_Main_VP.Rows[i][_AGEN_mainform.Col_Width] = _AGEN_mainform.Vw_width;
                                     _AGEN_mainform.Data_table_Main_VP.Rows[i][_AGEN_mainform.Col_Height] = _AGEN_mainform.Vw_height;
                                     _AGEN_mainform.Data_table_Main_VP.Rows[i][_AGEN_mainform.Col_dwg_name] = _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_dwg_name].ToString();
-
                                 }
 
                                 label_vp.Visible = true;

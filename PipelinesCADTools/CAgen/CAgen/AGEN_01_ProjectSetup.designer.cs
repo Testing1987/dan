@@ -256,7 +256,7 @@
             this.panel17.Controls.Add(this.radioButton_usa);
             this.panel17.Location = new System.Drawing.Point(172, 147);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(165, 25);
+            this.panel17.Size = new System.Drawing.Size(180, 25);
             this.panel17.TabIndex = 2091;
             // 
             // radioButton_canada
@@ -266,9 +266,9 @@
             this.radioButton_canada.ForeColor = System.Drawing.Color.White;
             this.radioButton_canada.Location = new System.Drawing.Point(81, 3);
             this.radioButton_canada.Name = "radioButton_canada";
-            this.radioButton_canada.Size = new System.Drawing.Size(65, 18);
+            this.radioButton_canada.Size = new System.Drawing.Size(97, 18);
             this.radioButton_canada.TabIndex = 115;
-            this.radioButton_canada.Text = "Canada";
+            this.radioButton_canada.Text = "Canada (CSF)";
             this.radioButton_canada.UseVisualStyleBackColor = true;
             // 
             // radioButton_usa

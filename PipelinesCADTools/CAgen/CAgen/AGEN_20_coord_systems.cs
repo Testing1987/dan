@@ -162,16 +162,16 @@ namespace Alignment_mdi
 
             System.Data.DataTable dt1 = Creaza_dt_coordinates_datatable_structure();
 
-            string Col1 = textBox_X.Text;
-            string Col2 = textBox_Y.Text;
+            string Col1 = textBox_X.Text.ToUpper();
+            string Col2 = textBox_Y.Text.ToUpper();
 
 
-            Range range1 = W1.Range[Col1 + Start_row.ToString() + ":" + Col1 + "100000"];
-            object[,] values1 = new object[100000, 1];
+            Range range1 = W1.Range[Col1 + Start_row.ToString() + ":" + Col1 + "1000000"];
+            object[,] values1 = new object[1000000, 1];
             values1 = range1.Value2;
 
-            Range range2 = W1.Range[Col2 + Start_row.ToString() + ":" + Col2 + "100000"];
-            object[,] values2 = new object[100000, 1];
+            Range range2 = W1.Range[Col2 + Start_row.ToString() + ":" + Col2 + "1000000"];
+            object[,] values2 = new object[1000000, 1];
             values2 = range2.Value2;
 
 
@@ -191,6 +191,10 @@ namespace Alignment_mdi
                         dt1.Rows[dt1.Rows.Count - 1][1] = Valoare2;
                         dt1.Rows[dt1.Rows.Count - 1][2] = comboBox_from.Text;
                     }
+                    else
+                    {
+                        i = values1.Length + 1;
+                    }
                 }
                 else
                 {
@@ -204,7 +208,6 @@ namespace Alignment_mdi
         private void comboBox_xl_DropDown(object sender, EventArgs e)
         {
             Functions.Load_opened_worksheets_to_combobox(comboBox_xl);
-
         }
 
         private void button_load_cs_Click(object sender, EventArgs e)

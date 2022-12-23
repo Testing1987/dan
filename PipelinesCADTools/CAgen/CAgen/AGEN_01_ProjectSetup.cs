@@ -1314,7 +1314,7 @@ namespace Alignment_mdi
                             #endregion
 
                             #region Ownership_data_config
-                            else if (W1.Name == "Ownership_data_config_" + segment1)
+                            else if (W1.Name == "O_dc_" + segment1)
                             {
                                 transfer_ownership_band_settings_to_controls(W1);
 
@@ -5085,7 +5085,10 @@ namespace Alignment_mdi
         {
             Ag = this.MdiParent as _AGEN_mainform;
 
-            
+            _AGEN_mainform.current_segment = comboBox_segment_name.Text;
+            _AGEN_mainform.layer_stationing = _AGEN_mainform.layer_stationing_original + "_" + comboBox_segment_name.Text;
+            _AGEN_mainform.layer_centerline = _AGEN_mainform.layer_centerline_original + "_" + comboBox_segment_name.Text;
+
             string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
 
             if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
@@ -5233,8 +5236,7 @@ namespace Alignment_mdi
                 if (_AGEN_mainform.dt_centerline.Rows.Count > 0)
                 {
 
-                    _AGEN_mainform.layer_stationing = _AGEN_mainform.layer_stationing_original + "_" + _AGEN_mainform.current_segment;
-                    _AGEN_mainform.layer_centerline = _AGEN_mainform.layer_centerline_original + "_" + _AGEN_mainform.current_segment;
+
 
                     try
                     {

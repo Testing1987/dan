@@ -291,7 +291,7 @@ namespace Alignment_mdi
 
                 try
                 {
-                    dtml = Functions.Build_Data_table_mat_linear_from_excel(W1, _AGEN_mainform.Start_row_mat_lin + 1);
+                     dtml = Functions.Build_Data_table_mat_linear_from_excel(W1, _AGEN_mainform.Start_row_mat_lin + 1);
                     if (W2 != null) dtextra = Functions.Build_Data_table_mat_linear_from_excel(W2, _AGEN_mainform.Start_row_mat_lin + 1);
                     if (W3 != null) dtpt = Functions.Build_Data_table_mat_point_from_excel(W3, _AGEN_mainform.Start_row_mat_point + 1);
                     if (close_excel == true) Workbook1.Close();
@@ -3669,9 +3669,10 @@ namespace Alignment_mdi
                             double Station1_labeled = -1.123;
                             double Station2_labeled = -1.123;
 
-                            if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                            if (_AGEN_mainform.Project_type=="2D")
                             {
-                                if (_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1] != DBNull.Value && _AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta2] != DBNull.Value)
+                                if (_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1] != DBNull.Value && 
+                                    _AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta2] != DBNull.Value)
                                 {
                                     Station1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1]);
                                     Station2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta2]);
@@ -3688,22 +3689,6 @@ namespace Alignment_mdi
 
 
 
-                            if (_AGEN_mainform.dt_mat_lin.Rows[i]["X_Beg"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_mat_lin.Rows[i]["X_Beg"])) == true &&
-                                _AGEN_mainform.dt_mat_lin.Rows[i]["Y_Beg"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_mat_lin.Rows[i]["Y_Beg"])) == true &&
-                                _AGEN_mainform.dt_mat_lin.Rows[i]["X_End"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_mat_lin.Rows[i]["X_End"])) == true &&
-                                _AGEN_mainform.dt_mat_lin.Rows[i]["Y_End"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_mat_lin.Rows[i]["Y_End"])) == true)
-                            {
-                                double x1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["X_Beg"]);
-                                double y1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["Y_Beg"]);
-                                double x2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["X_End"]);
-                                double y2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i]["Y_End"]);
-                                Point3d point_on_poly2D1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, poly2d.Elevation), Vector3d.ZAxis, false);
-                                Point3d point_on_poly2D2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, poly2d.Elevation), Vector3d.ZAxis, false);
-
-                                Station1 = poly2d.GetDistAtPoint(point_on_poly2D1);
-                                Station2 = poly2d.GetDistAtPoint(point_on_poly2D2);
-
-                            }
 
                             Station1_labeled = Functions.Station_equation_ofV2(Station1, _AGEN_mainform.dt_station_equation);
                             Station2_labeled = Functions.Station_equation_ofV2(Station2, _AGEN_mainform.dt_station_equation);

@@ -19,13 +19,51 @@ namespace Alignment_mdi
     public partial class AGEN_custom_band_scan : Form
     {
 
-        bool Freeze_operations = false;
-        System.Data.DataTable dt_custom = null;
+
+
 
 
         public AGEN_custom_band_scan()
         {
             InitializeComponent();
+        }
+
+
+        private void set_enable_false()
+        {
+            List<System.Windows.Forms.Control> lista_butoane = new List<Control>();
+            lista_butoane.Add(button_new_custom);
+            lista_butoane.Add(button_open_excel_custom);
+            lista_butoane.Add(button_scan_custom_data);
+            lista_butoane.Add(comboBox_segment_name);
+            lista_butoane.Add(comboBox_custom_od_table);
+            lista_butoane.Add(comboBox_custom_field1_od);
+            lista_butoane.Add(comboBox_custom_field2_od);
+
+            foreach (System.Windows.Forms.Control bt1 in lista_butoane)
+            {
+
+                bt1.Enabled = false;
+
+            }
+        }
+
+        private void set_enable_true()
+        {
+            List<System.Windows.Forms.Control> lista_butoane = new List<Control>();
+            lista_butoane.Add(button_new_custom);
+            lista_butoane.Add(button_open_excel_custom);
+            lista_butoane.Add(button_scan_custom_data);
+            lista_butoane.Add(comboBox_segment_name);
+            lista_butoane.Add(comboBox_custom_od_table);
+            lista_butoane.Add(comboBox_custom_field1_od);
+            lista_butoane.Add(comboBox_custom_field2_od);
+
+
+            foreach (System.Windows.Forms.Control bt1 in lista_butoane)
+            {
+                bt1.Enabled = true;
+            }
         }
 
         private void TextBox_pt0_KeyPress(object sender, KeyPressEventArgs e)
@@ -104,8 +142,9 @@ namespace Alignment_mdi
         }
 
 
-        private void button_scan_custom_data_Click(object sender, EventArgs e)
+        private void button_scan_custom_data_old()
         {
+            bool Freeze_operations = false;
             if (comboBox_band_excel_name.Text == "")
             {
                 MessageBox.Show("you did not specified the excel file name");
@@ -206,7 +245,7 @@ namespace Alignment_mdi
 
 
 
-                    dt_custom = Functions.Creaza_custom_datatable_structure(od_field1, od_field2);
+               System.Data.DataTable     dt_custom = Functions.Creaza_custom_datatable_structure(od_field1, od_field2);
                     System.Data.DataTable dt_int = new System.Data.DataTable();
 
                     dt_int.Columns.Add(_AGEN_mainform.Col_handle, typeof(string));
@@ -529,7 +568,7 @@ namespace Alignment_mdi
                             }
 
                             dt_int = Functions.Sort_data_table(dt_int, _AGEN_mainform.Col_station);
-                            dt_int = Functions.Elimina_duplicates_from_data_table(dt_int);
+
 
 
 
@@ -752,7 +791,7 @@ namespace Alignment_mdi
                                     }
                                 }
                             }
-                            Populate_custom_file(fisier_custom, _AGEN_mainform.config_path);
+                            Populate_custom_file(fisier_custom, dt_custom,_AGEN_mainform.config_path);
                         }
                     }
                     ThisDrawing.Editor.WriteMessage("\nCommand:");
@@ -768,9 +807,279 @@ namespace Alignment_mdi
             Ag.WindowState = FormWindowState.Normal;
 
         }
+        private void button_scan_custom_data_Click(object sender, EventArgs e)
+        {
+            if (comboBox_band_excel_name.Text == "")
+            {
+                MessageBox.Show("you did not specified the excel file name");
+                return;
+            }
+
+            string custom_excel_name = comboBox_band_excel_name.Text + ".xlsx";
+
+            Functions.Kill_excel();
+
+            if (Functions.Get_if_workbook_is_open_in_Excel(custom_excel_name) == true)
+            {
+                MessageBox.Show("Please close the " + custom_excel_name + " file");
+                return;
+            }
+
+            string cfg1 = System.IO.Path.GetFileName(_AGEN_mainform.config_path);
+            if (Functions.Get_if_workbook_is_open_in_Excel(cfg1) == true)
+            {
+                MessageBox.Show("Please close the " + cfg1 + " file");
+                return;
+            }
+
+            string ProjF = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+            if (ProjF.Substring(ProjF.Length - 1, 1) != "\\")
+            {
+                ProjF = ProjF + "\\";
+            }
+
+            if (System.IO.Directory.Exists(ProjF) == true)
+            {
+
+                string fisier_cl = ProjF + _AGEN_mainform.cl_excel_name;
+
+                if (System.IO.File.Exists(fisier_cl) == false)
+                {
+                    set_enable_true();
+                    MessageBox.Show("the centerline data file does not exist");
+                    _AGEN_mainform.dt_station_equation = null;
+                    return;
+                }
+
+                if (_AGEN_mainform.dt_centerline == null || _AGEN_mainform.dt_centerline.Rows.Count == 0)
+                {
+                    _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
+                }
 
 
-        public void Populate_custom_file(string file_custom, string cfg1)
+
+            }
+            else
+            {
+                set_enable_true();
+                MessageBox.Show("the project folder does not exist");
+                return;
+            }
+
+
+
+
+            if (_AGEN_mainform.dt_centerline.Rows.Count == 0)
+            {
+                set_enable_true();
+                MessageBox.Show("the centerline file does not have any data");
+                return;
+            }
+
+            string fisier_custom = ProjF + custom_excel_name;
+            Functions.create_backup(fisier_custom);
+
+            _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
+
+         
+
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+
+            ObjectId[] Empty_array = null;
+            Editor1.SetImpliedSelection(Empty_array);
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            _AGEN_mainform.tpage_processing.Show();
+
+            set_enable_false();
+
+            // Ag.WindowState = FormWindowState.Minimized;
+
+
+            try
+            {
+
+
+
+
+                string od_field1 = comboBox_custom_field1_od.Text;
+                string od_field2 = comboBox_custom_field2_od.Text;
+                string custom_table_name = comboBox_custom_od_table.Text;
+
+
+
+
+
+
+                int index_custom = -1;
+
+                if (custom_table_name != "")
+                {
+                    if (_AGEN_mainform.Data_Table_custom_bands != null)
+                    {
+                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count > 0)
+                        {
+
+                            for (int i = 0; i < _AGEN_mainform.Data_Table_custom_bands.Rows.Count; ++i)
+                            {
+                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[i]["band_name"] != DBNull.Value)
+                                {
+                                    string bn = Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[i]["band_name"]);
+                                    if (bn == custom_table_name)
+                                    {
+                                        index_custom = i;
+
+
+                                        i = _AGEN_mainform.Data_Table_custom_bands.Rows.Count;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable1 = (Autodesk.AutoCAD.DatabaseServices.BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                        BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+
+
+                        Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+
+                        LayerTable Layer_table = Trans1.GetObject(ThisDrawing.Database.LayerTableId, OpenMode.ForRead) as LayerTable;
+
+                        Autodesk.Gis.Map.ObjectData.Table Tabla0;
+
+                        if (Tables1.IsTableDefined(custom_table_name) == true)
+                        {
+                            Tabla0 = Tables1[custom_table_name];
+
+                            if (index_custom >= 0)
+                            {
+                                _AGEN_mainform.Data_Table_custom_bands.Rows[index_custom]["OD_table_name"] = custom_table_name;
+                            }
+
+                            bool field1_defined = false;
+                            bool field2_defined = false;
+
+                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla0.FieldDefinitions;
+                            for (int i = 0; i < Field_defs1.Count; ++i)
+                            {
+                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                string Nume_field = Field_def1.Name;
+
+                                if (od_field1 != "")
+                                {
+                                    if (Nume_field == od_field1)
+                                    {
+
+                                        if (index_custom >= 0) _AGEN_mainform.Data_Table_custom_bands.Rows[index_custom]["OD_field1"] = Nume_field;
+                                    }
+                                }
+
+                                if (od_field2 != "")
+                                {
+                                    if (Nume_field == od_field2)
+                                    {
+                                        if (index_custom >= 0) _AGEN_mainform.Data_Table_custom_bands.Rows[index_custom]["OD_field2"] = Nume_field;
+                                    }
+                                }
+                            }
+
+                            if (index_custom >= 0)
+                            {
+
+                                if (field1_defined == false) _AGEN_mainform.Data_Table_regular_bands.Rows[index_custom]["OD_field1"] = DBNull.Value;
+                                if (field2_defined == false) _AGEN_mainform.Data_Table_regular_bands.Rows[index_custom]["OD_field2"] = DBNull.Value;
+                            }
+                        }
+                        else
+                        {
+                            set_enable_true();
+                            MessageBox.Show("please specify an object data table!");
+                            _AGEN_mainform.tpage_processing.Hide();
+                            return;
+                        }
+
+
+                        string Layer_custom = "";
+
+                        foreach (ObjectId ObjID in BTrecord)
+                        {
+                            Entity Ent_intersection = Trans1.GetObject(ObjID, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead) as Entity;
+                            if (Ent_intersection != null && Ent_intersection.IsErased == false)
+                            {
+                                LayerTableRecord Layer_rec = Trans1.GetObject(Layer_table[Ent_intersection.Layer], OpenMode.ForRead) as LayerTableRecord;
+                                if (Ent_intersection is Polyline && Layer_rec.IsOff == false && Layer_rec.IsFrozen == false)
+                                {
+                                    Polyline Poly_int = Ent_intersection as Polyline;
+                                    using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla0.GetObjectTableRecords(Convert.ToUInt32(0), Ent_intersection.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, false))
+                                    {
+                                        if (Records1 != null)
+                                        {
+                                            Layer_custom = Ent_intersection.Layer;
+                                            goto jump;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    jump:
+
+                        if (Layer_custom == "")
+                        {
+
+                            MessageBox.Show("The object data table you specified is not attached to any parcel polyline in the drawing\r\nmaybe you shoud map import shp current....");
+                            Ag.WindowState = FormWindowState.Normal;
+                            _AGEN_mainform.tpage_processing.Hide();
+                            set_enable_true();
+                            return;
+                        }
+
+                        System.Data.DataTable dt1 = Functions.Creaza_custom_datatable_structure(od_field1, od_field2);
+
+                        System.Data.DataTable dt_custom = Functions.Scan_parcels(_AGEN_mainform.dt_centerline, _AGEN_mainform.dt_station_equation, dt1, Layer_custom, _AGEN_mainform.Project_type, custom_table_name, od_field1, od_field2, od_field1, od_field2);
+
+
+                        if (dt_custom != null)
+                        {
+                            if (dt_custom.Rows.Count > 0)
+                            {
+                                Populate_custom_file(fisier_custom, dt_custom,_AGEN_mainform.config_path);
+                            }
+                        }
+
+
+
+
+
+
+                        Trans1.Commit();
+                    }
+                }
+
+
+                ThisDrawing.Editor.WriteMessage("\nCommand:");
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            _AGEN_mainform.tpage_processing.Hide();
+
+
+            set_enable_true();
+            Ag.WindowState = FormWindowState.Normal;
+
+        }
+
+        public void Populate_custom_file(string file_custom, System.Data.DataTable dt_custom, string cfg_file)
         {
             try
             {
@@ -799,7 +1108,7 @@ namespace Alignment_mdi
                     Workbook1 = Excel1.Workbooks.Open(file_custom);
                 }
                 Microsoft.Office.Interop.Excel.Worksheet W1 = Workbook1.Worksheets[1];
-                Microsoft.Office.Interop.Excel.Workbook Workbook2 = Excel1.Workbooks.Open(cfg1);
+                Microsoft.Office.Interop.Excel.Workbook Workbook2 = Excel1.Workbooks.Open(cfg_file);
                 Microsoft.Office.Interop.Excel.Worksheet W2 = null;
 
                 string segment1 = _AGEN_mainform.current_segment;
@@ -916,6 +1225,8 @@ namespace Alignment_mdi
                 {
                     if (W1 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W1);
                     if (Workbook1 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workbook1);
+                    if (W2 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W2);
+                    if (Workbook2 != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workbook2);
                     if (Excel1 != null && Excel1.Workbooks.Count == 0) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
                 }
             }
@@ -929,52 +1240,6 @@ namespace Alignment_mdi
 
 
 
-        private void button_custom_refresh_Click(object sender, EventArgs e)
-        {
-            if (Freeze_operations == false)
-            {
-                Freeze_operations = true;
-                try
-                {
-                    Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-                    Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
-                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
-
-                    using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
-                    {
-                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
-                        {
-                            comboBox_custom_od_table.Items.Clear();
-                            comboBox_custom_field1_od.Items.Clear();
-                            comboBox_custom_field2_od.Items.Clear();
-
-                            Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-                            System.Collections.Specialized.StringCollection Nume_tables = new System.Collections.Specialized.StringCollection();
-                            Nume_tables = Tables1.GetTableNames();
-
-                            for (int i = 0; i < Nume_tables.Count; i = i + 1)
-                            {
-                                String Tabla1 = Nume_tables[i];
-                                if (comboBox_custom_od_table.Items.Contains(Tabla1) == false)
-                                {
-                                    comboBox_custom_od_table.Items.Add(Tabla1);
-                                }
-                            }
-                            this.Refresh();
-                        }
-
-
-
-                    }
-
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                Freeze_operations = false;
-            }
-        }
 
         private void comboBox_custom_od_table_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1102,9 +1367,9 @@ namespace Alignment_mdi
 
         private void button_open_excel_custom_Click(object sender, EventArgs e)
         {
-            if (Freeze_operations == false)
-            {
-                Freeze_operations = true;
+           
+           
+               
                 try
                 {
                     string ProjF = _AGEN_mainform.tpage_setup.Get_project_database_folder();
@@ -1120,7 +1385,7 @@ namespace Alignment_mdi
 
                         if (System.IO.File.Exists(fisier_custom) == false)
                         {
-                            Freeze_operations = false;
+                            
                             MessageBox.Show("the layer alias data file does not exist");
                             return;
                         }
@@ -1152,16 +1417,16 @@ namespace Alignment_mdi
                     System.Windows.Forms.MessageBox.Show(ex.Message);
 
                 }
-                Freeze_operations = false;
+          
 
-            }
+           
         }
 
         private void button_Load_od_Click(object sender, EventArgs e)
         {
-            if (Freeze_operations == false)
-            {
-                Freeze_operations = true;
+
+
+            set_enable_false();
                 try
                 {
                     Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -1201,8 +1466,7 @@ namespace Alignment_mdi
                 {
                     MessageBox.Show(ex.Message);
                 }
-                Freeze_operations = false;
-            }
+            set_enable_true();
         }
 
         public void Fill_combobox_segments()
