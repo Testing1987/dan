@@ -439,7 +439,7 @@ namespace Alignment_mdi
             _AGEN_mainform.tpage_setup.Show();
             _AGEN_mainform.tpage_viewport_settings.Hide();
             _AGEN_mainform.tpage_tblk_attrib.Hide();
-            _AGEN_mainform.tpage_band_analize.Hide();
+           
             _AGEN_mainform.tpage_sheetindex.Hide();
             _AGEN_mainform.tpage_layer_alias.Hide();
             _AGEN_mainform.tpage_crossing_scan.Hide();
@@ -1115,8 +1115,8 @@ namespace Alignment_mdi
                         dataGridView_errors.DefaultCellStyle.ForeColor = Color.White;
                         dataGridView_errors.EnableHeadersVisualStyles = false;
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
-                        _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+
 
                         bool next1 = true;
                         bool pick_first = true;
@@ -1192,19 +1192,19 @@ namespace Alignment_mdi
                             Point3d pt2 = Point_res2.Value;
                             prev_pt = pt2;
 
-                            Point3d point_on_poly1 = _AGEN_mainform.Poly2D.GetClosestPointTo(pt1, Vector3d.ZAxis, false);
-                            Point3d point_on_poly2 = _AGEN_mainform.Poly2D.GetClosestPointTo(pt2, Vector3d.ZAxis, false);
-                            double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly1);
-                            double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2);
+                            Point3d point_on_poly1 = poly2d.GetClosestPointTo(pt1, Vector3d.ZAxis, false);
+                            Point3d point_on_poly2 = poly2d.GetClosestPointTo(pt2, Vector3d.ZAxis, false);
+                            double d1 = poly2d.GetDistAtPoint(point_on_poly1);
+                            double d2 = poly2d.GetDistAtPoint(point_on_poly2);
 
-                            if (param1 > param2)
+                            if (d1 > d2)
                             {
                                 Point3d t = point_on_poly1;
                                 point_on_poly1 = point_on_poly2;
                                 point_on_poly2 = t;
-                                double tt = param1;
-                                param1 = param2;
-                                param2 = tt;
+                                double tt = d1;
+                                d1 = d2;
+                                d2 = tt;
 
                             }
 
@@ -1220,18 +1220,15 @@ namespace Alignment_mdi
                             {
                                 double b11 = -1.23456;
                                 double b21 = -1.23456;
-                                double d1_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
-                                double d2_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param2);
-                                double Sta1 = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly1, d1_2d, _AGEN_mainform.dt_centerline, ref b11);
-                                double Sta2 = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2, d2_2d, _AGEN_mainform.dt_centerline, ref b21);
+                                double Sta1 = Functions.get_stationCSF_from_point(poly2d, point_on_poly1, d1, _AGEN_mainform.dt_centerline, ref b11);
+                                double Sta2 = Functions.get_stationCSF_from_point(poly2d, point_on_poly2, d2, _AGEN_mainform.dt_centerline, ref b21);
                                 dt1.Rows[dt1.Rows.Count - 1]["STA1"] = Math.Round(Sta1, _AGEN_mainform.round1);
                                 dt1.Rows[dt1.Rows.Count - 1]["STA2"] = Math.Round(Sta2, _AGEN_mainform.round1);
                             }
                             else
 
                             {
-                                double d1 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                double d2 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param2);
+
 
                                 dt1.Rows[dt1.Rows.Count - 1]["STA1"] = Math.Round(d1, _AGEN_mainform.round1);
                                 dt1.Rows[dt1.Rows.Count - 1]["STA2"] = Math.Round(d2, _AGEN_mainform.round1);
@@ -1748,7 +1745,7 @@ namespace Alignment_mdi
                         short ci = 1;
 
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         if (comboBox_ws1.Text != "")
                         {
@@ -1844,12 +1841,12 @@ namespace Alignment_mdi
                                                 double y1 = Convert.ToDouble(dt1.Rows[i]["y1"]);
                                                 double x2 = Convert.ToDouble(dt1.Rows[i]["x2"]);
                                                 double y2 = Convert.ToDouble(dt1.Rows[i]["y2"]);
-                                                Point3d pt1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
-                                                Point3d pt2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
+                                                Point3d pt1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
+                                                Point3d pt2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
 
-                                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt1);
-                                                double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt2);
-                                                Polyline poly_heavy_wall = Functions.get_part_of_poly(_AGEN_mainform.Poly2D, param1, param2);
+                                                double param1 = poly2d.GetParameterAtPoint(pt1);
+                                                double param2 = poly2d.GetParameterAtPoint(pt2);
+                                                Polyline poly_heavy_wall = Functions.get_part_of_poly(poly2d, param1, param2);
 
                                                 string layer1 = "0";
                                                 if (dt1.Rows[i]["layer"] != DBNull.Value)
@@ -1875,7 +1872,13 @@ namespace Alignment_mdi
                                         #region USA
                                         if (dt1.Rows.Count > 0 && _AGEN_mainform.COUNTRY == "USA")
                                         {
-                                            _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                            double poly_length = poly2d.Length;
+                                            Polyline3d poly3d = null;
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                                poly_length = poly3d.Length;
+                                            }
 
                                             for (int i = 0; i < dt1.Rows.Count; ++i)
                                             {
@@ -1886,26 +1889,26 @@ namespace Alignment_mdi
                                                     double sta1 = Convert.ToDouble(Convert.ToString(dt1.Rows[i]["sta1"]).Replace("+", ""));
                                                     double sta2 = Convert.ToDouble(Convert.ToString(dt1.Rows[i]["sta2"]).Replace("+", ""));
 
-                                                    if (sta1 >= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta1 >= poly_length)
                                                     {
-                                                        sta1 = _AGEN_mainform.Poly3D.Length - 0.00001;
+                                                        sta1 = poly_length - 0.00001;
                                                     }
 
-                                                    if (sta2 >= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta2 >= poly_length)
                                                     {
-                                                        sta2 = _AGEN_mainform.Poly3D.Length - 0.00001;
+                                                        sta2 = poly_length - 0.00001;
                                                     }
 
-                                                    if (sta1 >= 0 && sta1 <= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta1 >= 0 && sta1 <= poly_length)
                                                     {
-                                                        Point3d pt1 = _AGEN_mainform.Poly3D.GetPointAtDist(sta1);
+                                                        Point3d pt1 = poly2d.GetPointAtDist(sta1);
                                                         dt1.Rows[i]["x1"] = pt1.X;
                                                         dt1.Rows[i]["y1"] = pt1.Y;
 
                                                     }
-                                                    if (sta2 >= 0 && sta2 <= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta2 >= 0 && sta2 <= poly_length)
                                                     {
-                                                        Point3d pt2 = _AGEN_mainform.Poly3D.GetPointAtDist(sta2);
+                                                        Point3d pt2 = poly2d.GetPointAtDist(sta2);
                                                         dt1.Rows[i]["x2"] = pt2.X;
                                                         dt1.Rows[i]["y2"] = pt2.Y;
                                                     }
@@ -1923,22 +1926,15 @@ namespace Alignment_mdi
                                                     double y1 = Convert.ToDouble(dt1.Rows[i]["y1"]);
                                                     double x2 = Convert.ToDouble(dt1.Rows[i]["x2"]);
                                                     double y2 = Convert.ToDouble(dt1.Rows[i]["y2"]);
-                                                    Point3d pt1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
-                                                    Point3d pt2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
+                                                    Point3d pt1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
+                                                    Point3d pt2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
 
 
 
-                                                    double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt1);
-                                                    double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt2);
-                                                    if (param1 > _AGEN_mainform.Poly2D.EndParam)
-                                                    {
-                                                        param1 = _AGEN_mainform.Poly2D.EndParam;
-                                                    }
-                                                    if (param2 > _AGEN_mainform.Poly2D.EndParam)
-                                                    {
-                                                        param2 = _AGEN_mainform.Poly2D.EndParam;
-                                                    }
-                                                    Polyline poly_heavy_wall = Functions.get_part_of_poly(_AGEN_mainform.Poly2D, param1, param2);
+                                                    double param1 = poly2d.GetParameterAtPoint(pt1);
+                                                    double param2 = poly2d.GetParameterAtPoint(pt2);
+
+                                                    Polyline poly_heavy_wall = Functions.get_part_of_poly(poly2d, param1, param2);
 
 
 
@@ -1970,10 +1966,6 @@ namespace Alignment_mdi
                         }
 
 
-                        if (dt1.Rows.Count > 0 && _AGEN_mainform.COUNTRY == "USA")
-                        {
-                            _AGEN_mainform.Poly3D.Erase();
-                        }
                         Trans1.Commit();
                     }
                 }

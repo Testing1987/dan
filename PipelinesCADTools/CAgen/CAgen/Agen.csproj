@@ -280,12 +280,6 @@
     <Compile Include="Igen_02_Inquiry_Tool.designer.cs">
       <DependentUpon>Igen_02_Inquiry_Tool.cs</DependentUpon>
     </Compile>
-    <Compile Include="AGEN_13_band_analyze.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AGEN_13_band_analyze.designer.cs">
-      <DependentUpon>AGEN_13_band_analyze.cs</DependentUpon>
-    </Compile>
     <Compile Include="AGEN_14_band_filter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -453,9 +447,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Igen_02_Inquiry_Tool.resx">
       <DependentUpon>Igen_02_Inquiry_Tool.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AGEN_13_band_analyze.resx">
-      <DependentUpon>AGEN_13_band_analyze.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AGEN_14_band_filter.resx">
       <DependentUpon>AGEN_14_band_filter.cs</DependentUpon>

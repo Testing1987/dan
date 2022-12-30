@@ -657,13 +657,19 @@ namespace Alignment_mdi
                                     Btrecord.UpgradeOpen();
                                 }
 
-
                                 if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.COUNTRY == "USA")
                                 {
                                     if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                     {
-                                        _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+
+                                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                        Polyline3d poly3d = null;
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                        }
+
+
                                         if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false)
                                         {
                                             _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
@@ -675,13 +681,19 @@ namespace Alignment_mdi
                                             {
                                                 double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
                                                 double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
-                                                Point3d pt_on_2d = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt_on_2d);
-                                                double eq_meas = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                                                Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                                                double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+                                                    eq_meas = poly3d.GetDistanceAtParameter(param1);
+                                                }
+                                           
                                                 _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
                                             }
                                         }
-                                        _AGEN_mainform.Poly3D.Erase();
+
+                                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased==false) poly3d.Erase();
                                     }
                                 }
                                 else
@@ -3481,7 +3493,7 @@ namespace Alignment_mdi
                 Functions.creaza_anno_scales(Database2);
                 var ocm = Database2.ObjectContextManager;
                 var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
-               
+
 
                 Functions.make_first_layout_active(Trans2, Database2);
                 BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
@@ -3503,9 +3515,9 @@ namespace Alignment_mdi
                         }
                     }
                 }
-                
+
                 Viewport new_viewport = Functions.Create_viewport(MSpoint, PSpoint, width1, height1, scale1, twist1);
-              
+
                 new_viewport.Layer = Layer_name_Viewport;
                 BtrecordPS.AppendEntity(new_viewport);
 
@@ -3568,7 +3580,7 @@ namespace Alignment_mdi
                     {
                         new_viewport.AnnotationScale = (AnnotationScale)context1;
                     }
-                } 
+                }
                 #endregion
 
                 Trans2.AddNewlyCreatedDBObject(new_viewport, true);

@@ -266,12 +266,12 @@ namespace Alignment_mdi
                         double elev_at_distn = 0;
 
 
-                       
+
 
                         foreach (ObjectId ObjID in BTrecord)
                         {
 
-                            
+
                             Entity Ent_intersection = Trans1.GetObject(ObjID, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead) as Entity;
 
                             if (Ent_intersection != null)
@@ -553,15 +553,15 @@ namespace Alignment_mdi
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show(ex.Message+"\r\nsee blue contour line!");
+                MessageBox.Show(ex.Message + "\r\nsee blue contour line!");
 
-                if(ObjID_FAIL!= ObjectId.Null)
+                if (ObjID_FAIL != ObjectId.Null)
                 {
 
 
                     try
                     {
-                       
+
                         using (DocumentLock lock1 = ThisDrawing.LockDocument())
                         {
                             using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
@@ -569,7 +569,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
                                 Entity ent1 = Trans1.GetObject(ObjID_FAIL, OpenMode.ForWrite) as Entity;
-                                if (ent1!=null)
+                                if (ent1 != null)
                                 {
                                     ent1.ColorIndex = 5;
                                 }
@@ -1492,8 +1492,13 @@ namespace Alignment_mdi
                         dt1.Columns.Add("Z2", typeof(double));
                         dt1.Columns.Add("LAYER", typeof(string));
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
-                        _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                        Polyline3d poly3d = null;
+                        if (_AGEN_mainform.Project_type == "3D")
+                        {
+                            poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        }
+
 
                         for (int i = 0; i < Rezultat_poly.Value.Count; ++i)
                         {
@@ -1503,22 +1508,33 @@ namespace Alignment_mdi
                                 Curve line1 = Ent1 as Curve;
                                 Point3d p1 = line1.StartPoint;
                                 Point3d p2 = line1.EndPoint;
-                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(_AGEN_mainform.Poly2D.GetClosestPointTo(p1, Vector3d.ZAxis, false));
-                                double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(_AGEN_mainform.Poly2D.GetClosestPointTo(p2, Vector3d.ZAxis, false));
-                                Point3d pt1 = _AGEN_mainform.Poly3D.GetPointAtParameter(param1);
-                                Point3d pt2 = _AGEN_mainform.Poly3D.GetPointAtParameter(param2);
-                                double d1 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                double d2 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param2);
+
+
+                                Point3d pt1 = poly2d.GetClosestPointTo(p1, Vector3d.ZAxis, false);
+                                Point3d pt2 = poly2d.GetClosestPointTo(p2, Vector3d.ZAxis, false);
+                                double d1 = poly2d.GetDistAtPoint(pt1);
+                                double d2 = poly2d.GetDistAtPoint(pt2);
+
+                                if (_AGEN_mainform.Project_type == "3D")
+                                {
+                                    double param1 = poly2d.GetParameterAtPoint(pt1);
+                                    double param2 = poly2d.GetParameterAtPoint(pt2);
+
+
+                                    pt1 = poly3d.GetPointAtParameter(param1);
+                                    pt2 = poly3d.GetPointAtParameter(param2);
+                                    d1 = poly3d.GetDistanceAtParameter(param1);
+                                    d2 = poly3d.GetDistanceAtParameter(param2);
+                                }
+
 
                                 if (d1 > d2)
                                 {
                                     Point3d t = pt1;
                                     pt1 = pt2;
                                     pt2 = t;
-                                    double tt = param1;
-                                    param1 = param2;
-                                    param2 = tt;
-                                    tt = d1;
+
+                                    double tt = d1;
                                     d1 = d2;
                                     d2 = tt;
                                 }
@@ -1534,12 +1550,12 @@ namespace Alignment_mdi
 
                                 if (_AGEN_mainform.COUNTRY == "CANADA")
                                 {
-                                    double d1_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
-                                    double d2_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param2);
+                                    double d1_2d = poly2d.GetDistAtPoint(pt1);
+                                    double d2_2d = poly2d.GetDistAtPoint(pt2);
                                     double b1 = -1.23456;
                                     double b2 = -1.23456;
-                                    double Sta1 = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, pt1, d1_2d, _AGEN_mainform.dt_centerline, ref b1);
-                                    double Sta2 = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, pt2, d2_2d, _AGEN_mainform.dt_centerline, ref b2);
+                                    double Sta1 = Functions.get_stationCSF_from_point(poly2d, pt1, d1_2d, _AGEN_mainform.dt_centerline, ref b1);
+                                    double Sta2 = Functions.get_stationCSF_from_point(poly2d, pt2, d2_2d, _AGEN_mainform.dt_centerline, ref b2);
                                     dt1.Rows[dt1.Rows.Count - 1]["STA1"] = Math.Round(Sta1, _AGEN_mainform.round1);
                                     dt1.Rows[dt1.Rows.Count - 1]["STA2"] = Math.Round(Sta2, _AGEN_mainform.round1);
                                 }
@@ -1551,7 +1567,7 @@ namespace Alignment_mdi
                             }
                         }
 
-                        _AGEN_mainform.Poly3D.Erase();
+                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased == false) poly3d.Erase();
                         Trans1.Commit();
                         dt1 = Functions.Sort_data_table(dt1, "STA1");
                         Functions.Transfer_datatable_to_new_excel_spreadsheet_formated_general(dt1);

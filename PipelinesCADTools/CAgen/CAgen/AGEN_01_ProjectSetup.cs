@@ -90,7 +90,7 @@ namespace Alignment_mdi
             lista_butoane.Add(textBox_tic_major);
 
             lista_butoane.Add(textBox_tic_minor);
-      
+
 
 
 
@@ -154,7 +154,7 @@ namespace Alignment_mdi
             lista_butoane.Add(textBox_start_station_CL);
             lista_butoane.Add(textBox_tic_major);
 
-         
+
             lista_butoane.Add(textBox_tic_minor);
             foreach (System.Windows.Forms.Control bt1 in lista_butoane)
             {
@@ -4188,25 +4188,27 @@ namespace Alignment_mdi
                             return;
                         }
 
+                        Polyline3d poly3d = null;
+                        Polyline poly2d = null;
 
                         if (Curba1 is Polyline)
                         {
-                            _AGEN_mainform.Poly2D = (Polyline)Curba1;
-                            _AGEN_mainform.Poly3D = null;
+                            poly2d = (Polyline)Curba1;
+
                             _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(false);
                             _AGEN_mainform.Project_type = "2D";
-                            poly_length = _AGEN_mainform.Poly2D.Length;
-                            pt0 = _AGEN_mainform.Poly2D.StartPoint;
+                            poly_length = poly2d.Length;
+                            pt0 = poly2d.StartPoint;
                         }
 
                         else if (Curba1 is Polyline3d)
                         {
-                            _AGEN_mainform.Poly3D = (Polyline3d)Curba1;
-                            _AGEN_mainform.Poly2D = Functions.Build_2dpoly_from_3d(_AGEN_mainform.Poly3D);
+                            poly3d = (Polyline3d)Curba1;
+
                             _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(true);
                             _AGEN_mainform.Project_type = "3D";
-                            poly_length = _AGEN_mainform.Poly3D.Length;
-                            pt0 = _AGEN_mainform.Poly3D.StartPoint;
+                            poly_length = poly3d.Length;
+                            pt0 = poly3d.StartPoint;
                         }
 
                         else
@@ -4230,69 +4232,117 @@ namespace Alignment_mdi
 
                         _AGEN_mainform.dt_centerline = Functions.Creaza_centerline_datatable_structure();
 
-
-
-                        for (int i = 0; i < _AGEN_mainform.Poly2D.NumberOfVertices; ++i)
+                        if (_AGEN_mainform.Project_type == "2D")
                         {
-
-                            double x2 = _AGEN_mainform.Poly2D.GetPointAtParameter(i).X;
-                            double y2 = _AGEN_mainform.Poly2D.GetPointAtParameter(i).Y;
-                            double z2 = _AGEN_mainform.Poly2D.GetPointAtParameter(i).Z;
-                            double bulge = _AGEN_mainform.Poly2D.GetBulgeAt(i);
-
-                            if (_AGEN_mainform.Poly3D != null)
+                            for (int i = 0; i < poly2d.NumberOfVertices; ++i)
                             {
-                                z2 = _AGEN_mainform.Poly3D.GetPointAtParameter(i).Z;
-                            }
 
-                            _AGEN_mainform.dt_centerline.Rows.Add();
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_x] = x2;
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_y] = y2;
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = _AGEN_mainform.Poly2D.GetDistanceAtParameter(i);
-
-                           _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1]["BULGE"] = bulge;
+                                double x2 = poly2d.GetPointAtParameter(i).X;
+                                double y2 = poly2d.GetPointAtParameter(i).Y;
+                                double z2 = 0;
+                                double bulge = poly2d.GetBulgeAt(i);
 
 
-                            if (_AGEN_mainform.Poly3D != null)
-                            {
-                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_3DSta] = _AGEN_mainform.Poly3D.GetDistanceAtParameter(i);
-                                z2 = _AGEN_mainform.Poly3D.GetPointAtParameter(i).Z;
+                                _AGEN_mainform.dt_centerline.Rows.Add();
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_x] = x2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_y] = y2;
                                 _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = poly2d.GetDistanceAtParameter(i);
+
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1]["BULGE"] = bulge;
+
+
+
+
+                                if (i > 0 && i < poly2d.NumberOfVertices - 1)
+                                {
+                                    double x1 = poly2d.GetPointAtParameter(i - 1).X;
+                                    double y1 = poly2d.GetPointAtParameter(i - 1).Y;
+                                    double x3 = poly2d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly2d.GetPointAtParameter(i + 1).Y;
+
+                                    string Deflexia = Functions.Get_deflection_angle_dms(x1, y1, x2, y2, x3, y3);
+                                    double Defl1 = 180 * Functions.Get_deflection_angle_rad(x1, y1, x2, y2, x3, y3) / Math.PI;
+
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAng] = Defl1;
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAngDMS] = Deflexia;
+
+
+
+                                }
+
+
+
+
+                                if (i < poly2d.NumberOfVertices - 1)
+                                {
+                                    double x3 = poly2d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly2d.GetPointAtParameter(i + 1).Y;
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Bearing] = Functions.Get_Quadrant_bearing(Functions.GET_Bearing_rad(x2, y2, x3, y3));
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Distance] = Math.Pow((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3), 0.5);
+
+                                }
+
+
                             }
-
-
-                            if (i > 0 && i < _AGEN_mainform.Poly2D.NumberOfVertices - 1)
-                            {
-                                double x1 = _AGEN_mainform.Poly2D.GetPointAtParameter(i - 1).X;
-                                double y1 = _AGEN_mainform.Poly2D.GetPointAtParameter(i - 1).Y;
-                                double x3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).X;
-                                double y3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).Y;
-
-                                string Deflexia = Functions.Get_deflection_angle_dms(x1, y1, x2, y2, x3, y3);
-                                double Defl1 = 180 * Functions.Get_deflection_angle_rad(x1, y1, x2, y2, x3, y3) / Math.PI;
-
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAng] = Defl1;
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAngDMS] = Deflexia;
-
-
-
-                            }
-
-
-
-
-                            if (i < _AGEN_mainform.Poly2D.NumberOfVertices - 1)
-                            {
-                                double x3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).X;
-                                double y3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).Y;
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Bearing] = Functions.Get_Quadrant_bearing(Functions.GET_Bearing_rad(x2, y2, x3, y3));
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Distance] = Math.Pow((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3), 0.5);
-
-                            }
-
-
                         }
+                        else
+                        {
+                            for (int i = 0; i < poly3d.EndParam; ++i)
+                            {
+
+                                double x2 = poly3d.GetPointAtParameter(i).X;
+                                double y2 = poly3d.GetPointAtParameter(i).Y;
+                                double z2 = poly3d.GetPointAtParameter(i).Z;
+                               
+
+                                _AGEN_mainform.dt_centerline.Rows.Add();
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_x] = x2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_y] = y2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
+
+
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1]["BULGE"] = 0;
+
+
+                                    _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_3DSta] = poly3d.GetDistanceAtParameter(i);
+
+                          
+
+
+                                if (i > 0 && i < poly3d.EndParam - 1)
+                                {
+                                    double x1 = poly3d.GetPointAtParameter(i - 1).X;
+                                    double y1 = poly3d.GetPointAtParameter(i - 1).Y;
+                                    double x3 = poly3d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly3d.GetPointAtParameter(i + 1).Y;
+
+                                    string Deflexia = Functions.Get_deflection_angle_dms(x1, y1, x2, y2, x3, y3);
+                                    double Defl1 = 180 * Functions.Get_deflection_angle_rad(x1, y1, x2, y2, x3, y3) / Math.PI;
+
+                                   _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAng] = Defl1;
+                                   _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAngDMS] = Deflexia;
+
+
+
+                                }
+
+
+
+
+                                if (i < poly3d.EndParam - 1)
+                                {
+                                    double x3 = poly3d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly3d.GetPointAtParameter(i + 1).Y;
+                                   _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Bearing] = Functions.Get_Quadrant_bearing(Functions.GET_Bearing_rad(x2, y2, x3, y3));
+                                   _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Distance] = Math.Pow((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3), 0.5);
+
+                                }
+
+
+                            }
+                        }
+
                         Trans1.Commit();
                     }
                 }
@@ -4867,8 +4917,6 @@ namespace Alignment_mdi
 
                 }
 
-                _AGEN_mainform.Poly2D = Poly2D;
-                _AGEN_mainform.Poly3D = Poly3D;
 
                 if (_AGEN_mainform.Project_type == "3D")
                 {
@@ -5095,7 +5143,7 @@ namespace Alignment_mdi
             {
                 ProjFolder = ProjFolder + "\\";
             }
-         string   fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+            string fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
 
             if (System.IO.Directory.Exists(ProjFolder) == false)
             {
@@ -5108,17 +5156,17 @@ namespace Alignment_mdi
                 return;
             }
 
-#region object data stationing
+            #region object data stationing
             string od_name = "STA_V1";
             Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-            
+
             List<object> Lista_val_CL = new List<object>();
             List<Autodesk.Gis.Map.Constants.DataType> Lista_type_CL = new List<Autodesk.Gis.Map.Constants.DataType>();
 
             Lista_val_CL.Add(comboBox_segment_name.Text);
             Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
-            Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + 
+            Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " +
                                 System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToUpper());
             Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
@@ -5358,7 +5406,7 @@ namespace Alignment_mdi
 
                                                         double end_eq = SA + dist2 - dist1;
                                                         add_last_stationing(Poly2D, od_name, end_eq, gap1, texth, tick_major, 0);
-                                                        
+
                                                     }
 
                                                     if (_AGEN_mainform.Project_type == "3D")
@@ -5512,7 +5560,7 @@ namespace Alignment_mdi
 
                                     if (is_equated == false)
                                     {
-                                        
+
                                         create_stationing(Poly3D, Poly2D, od_name, start1, gap1, texth, spacing_major, spacing_minor, tick_major, tick_minor);
                                         add_zero_plus_zero_zero_stationing(Poly2D, od_name, 0, gap1, texth, tick_major, 0);
 
@@ -6385,7 +6433,7 @@ namespace Alignment_mdi
 
                     Point3d pt1 = Poly2D.GetPointAtParameter(Poly2D.NumberOfVertices - 2);
                     Point3d pt2 = Poly2D.EndPoint;
-                  
+
 
                     double bear1 = Functions.GET_Bearing_rad(pt1.X, pt1.Y, pt2.X, pt2.Y);
                     double rot1 = bear1 - lr * Math.PI / 2;
@@ -6578,7 +6626,7 @@ namespace Alignment_mdi
                     Polyline Poly2D = new Polyline();
                     Poly2D.AddVertexAt(0, new Point2d(pt0.X, pt0.Y), 0, 0, 0);
                     Poly2D.AddVertexAt(1, new Point2d(pt1.X, pt1.Y), 0, 0, 0);
-                  
+
                     #region object data stationing
 
                     string fisier_cl = "";
@@ -8744,10 +8792,10 @@ namespace Alignment_mdi
 
             if (radioButton_usa.Checked == true)
             {
-              
+
                 _AGEN_mainform.COUNTRY = "USA";
                 panel_USA.Visible = true;
-             
+
 
             }
             else
@@ -8795,7 +8843,7 @@ namespace Alignment_mdi
             _AGEN_mainform.tpage_setup.Hide();
             _AGEN_mainform.tpage_viewport_settings.Hide();
             _AGEN_mainform.tpage_tblk_attrib.Hide();
-            _AGEN_mainform.tpage_band_analize.Hide();
+           
             _AGEN_mainform.tpage_sheetindex.Hide();
             _AGEN_mainform.tpage_layer_alias.Hide();
             _AGEN_mainform.tpage_crossing_scan.Hide();

@@ -29,7 +29,6 @@ C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_dwg_selection.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.Controller_mainform.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.Igen_Inquiry_Tool.resources
-C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_band_analyze.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_band_filter.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_tools.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_Home.resources
