@@ -35,7 +35,7 @@ namespace Alignment_mdi
                     try
                     {
                         string UserDNS = Environment.GetEnvironmentVariable("USERDNSDOMAIN");
-                        if (UserDNS.ToLower()== "mottmac.group.int"  || UserDNS.ToUpper() == "HMMG.CC")
+                        if (UserDNS.ToLower() == "mottmac.group.int" || UserDNS.ToUpper() == "HMMG.CC")
                         {
                             return true;
                         }
@@ -722,7 +722,7 @@ namespace Alignment_mdi
 
         }
 
-     
+
 
         [CommandMethod("f_60_819")]
         public void fillet_60_819()
@@ -3990,7 +3990,7 @@ namespace Alignment_mdi
                                             dt1.Rows[dt1.Rows.Count - 1][col_bulge] = bulge1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_layer] = poly1.Layer;
 
-                                            if (bulge1 != 0 && j < poly1.NumberOfVertices-1)
+                                            if (bulge1 != 0 && j < poly1.NumberOfVertices - 1)
                                             {
                                                 CircularArc2d arc1 = poly1.GetArcSegment2dAt(j);
 
@@ -5720,7 +5720,7 @@ namespace Alignment_mdi
                                         string lr = Functions.Get_deflection_side(x1, y1, x2, y2, x3, y3);
 
                                         dt1.Rows[dt1.Rows.Count - 1]["Offset"] = dist;
-                                        dt1.Rows[dt1.Rows.Count - 1]["Side"] =  lr;
+                                        dt1.Rows[dt1.Rows.Count - 1]["Side"] = lr;
 
 
                                         Functions.add_object_data_to_datatable(dt1, Tables1, dbpt1.ObjectId);
@@ -5751,6 +5751,133 @@ namespace Alignment_mdi
                             poly3d.Erase();
                         }
                         Trans1.Commit();
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Editor1.SetImpliedSelection(Empty_array);
+            Editor1.WriteMessage("\nCommand:");
+        }
+
+
+        [CommandMethod("scan_cover")]
+        public void scan_cover()
+        {
+
+            Editor editor1 = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
+
+            ObjectId[] Empty_array = null;
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+            Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            try
+            {
+
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                        BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+
+                        Autodesk.AutoCAD.DatabaseServices.LayerTable layer_table = (Autodesk.AutoCAD.DatabaseServices.LayerTable)Trans1.GetObject(ThisDrawing.Database.LayerTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+                        Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+
+                        //Vous devez ajouter une référence à AecBaseMgd.dll(dans le répertoire d'installation).
+                        Matrix3d CurentUCSmatrix = Editor1.CurrentUserCoordinateSystem;
+
+                        Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_centerline;
+                        Autodesk.AutoCAD.EditorInput.PromptEntityOptions Prompt_centerline;
+                        Prompt_centerline = new Autodesk.AutoCAD.EditorInput.PromptEntityOptions("\nSelect the reference polyline:");
+                        Prompt_centerline.SetRejectMessage("\nSelect a polyline!");
+                        Prompt_centerline.AllowNone = true;
+                        Prompt_centerline.AddAllowedClass(typeof(Polyline), false);
+                        Rezultat_centerline = ThisDrawing.Editor.GetEntity(Prompt_centerline);
+
+                        if (Rezultat_centerline.Status != PromptStatus.OK)
+                        {
+                            ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                            return;
+                        }
+
+                        Polyline poly2d = Trans1.GetObject(Rezultat_centerline.ObjectId, OpenMode.ForRead) as Polyline;
+
+                        System.Data.DataTable dt1 = new System.Data.DataTable();
+                        dt1.Columns.Add("Type of object", typeof(string));
+                        dt1.Columns.Add("BlockName", typeof(string));
+                        dt1.Columns.Add("Layer", typeof(string));
+                        dt1.Columns.Add("X", typeof(double));
+                        dt1.Columns.Add("Y", typeof(double));
+                        dt1.Columns.Add("Distance", typeof(double));
+
+
+                        Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1;
+                        Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Prompt_rez = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
+                        Prompt_rez.MessageForAdding = "\nSelect the objects:";
+                        Prompt_rez.SingleOnly = false;
+                        Rezultat1 = ThisDrawing.Editor.GetSelection(Prompt_rez);
+
+                        if (Rezultat1.Status != PromptStatus.OK)
+                        {
+                            ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                            return;
+                        }
+
+
+                        for (int i = 0; i < Rezultat1.Value.Count; i++)
+                        {
+                            BlockReference block1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForRead) as BlockReference;
+
+                            if (block1 != null)
+                            {
+                                double x1 = block1.Position.X;
+                                double y1 = block1.Position.Y;
+                                {
+                                    dt1.Rows.Add();
+                                    dt1.Rows[dt1.Rows.Count - 1]["Type of object"] = "BLock reference";
+                                    dt1.Rows[dt1.Rows.Count - 1]["Layer"] = block1.Layer;
+                                    dt1.Rows[dt1.Rows.Count - 1]["X"] = x1;
+                                    dt1.Rows[dt1.Rows.Count - 1]["Y"] = y1;
+                                    dt1.Rows[dt1.Rows.Count - 1]["BlockName"] = Functions.get_block_name(block1);
+
+                                    Xline xline1 = new Xline();
+                                    xline1.BasePoint = new Point3d(x1, y1, poly2d.Elevation);
+                                    xline1.SecondPoint = new Point3d(x1, y1 + 10, poly2d.Elevation);
+
+                                    Point3dCollection col_int = Functions.Intersect_on_both_operands(xline1, poly2d);
+
+                                    if (col_int.Count > 0)
+                                    {
+                                        Point3d pt1 = col_int[0];
+                                        dt1.Rows[dt1.Rows.Count - 1]["Distance"] = pt1.Y - y1;
+                                    }
+
+                                    if (block1.AttributeCollection.Count>0)
+                                    {
+                                        foreach(ObjectId id1 in block1.AttributeCollection)
+                                        {
+                                            AttributeReference atr1 = Trans1.GetObject(id1, OpenMode.ForRead) as AttributeReference;
+                                            if(atr1!=null)
+                                            {
+                                                if(dt1.Columns.Contains("block_" + atr1.Tag)==false)
+                                                {
+                                                    dt1.Columns.Add("block_" + atr1.Tag, typeof(string));
+                                                }
+                                               dt1.Rows[dt1.Rows.Count - 1]["block_" + atr1.Tag] = atr1.TextString;
+                                            }
+                                        }
+                                    }
+
+                                    Functions.add_object_data_to_datatable(dt1, Tables1, block1.ObjectId);
+                                }
+                            }
+                        }
+                        Functions.Transfer_datatable_to_new_excel_spreadsheet(dt1, Convert.ToString(DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "hr" + DateTime.Now.Minute + "min" + DateTime.Now.Second) + "sec");                       
                     }
                 }
             }
