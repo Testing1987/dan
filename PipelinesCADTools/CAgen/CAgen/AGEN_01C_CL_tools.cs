@@ -2891,7 +2891,7 @@ namespace Alignment_mdi
                                                     double x = block1.Position.X;
                                                     double y = block1.Position.Y;
                                                     double z = block1.Position.Z;
-
+                                                    string Visibility = "";
                                                     for (int j = 0; j < dt1.Columns.Count; ++j)
                                                     {
                                                         string column_name = dt1.Columns[j].ColumnName;
@@ -2902,6 +2902,10 @@ namespace Alignment_mdi
                                                         if (column_name == "Y")
                                                         {
                                                             y = Convert.ToDouble(dt1.Rows[i][j]);
+                                                        }
+                                                        if (column_name == "Visibility")
+                                                        {
+                                                            Visibility = Convert.ToString(dt1.Rows[i][j]);
                                                         }
                                                     }
                                                     if (delete_block == false)
@@ -2949,6 +2953,10 @@ namespace Alignment_mdi
                                                     if (delete_block == true)
                                                     {
                                                         block1.Erase();
+                                                    }
+                                                    if(delete_block==false && Visibility!="")
+                                                    {
+                                                        Functions.set_block_visibility(block1, Visibility);
                                                     }
                                                 }
                                             }

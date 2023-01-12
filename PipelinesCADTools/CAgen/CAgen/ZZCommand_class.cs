@@ -5788,7 +5788,6 @@ namespace Alignment_mdi
                         Autodesk.AutoCAD.DatabaseServices.LayerTable layer_table = (Autodesk.AutoCAD.DatabaseServices.LayerTable)Trans1.GetObject(ThisDrawing.Database.LayerTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
                         Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
-                        //Vous devez ajouter une référence à AecBaseMgd.dll(dans le répertoire d'installation).
                         Matrix3d CurentUCSmatrix = Editor1.CurrentUserCoordinateSystem;
 
                         Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_centerline;
@@ -5864,11 +5863,11 @@ namespace Alignment_mdi
                                             AttributeReference atr1 = Trans1.GetObject(id1, OpenMode.ForRead) as AttributeReference;
                                             if(atr1!=null)
                                             {
-                                                if(dt1.Columns.Contains("block_" + atr1.Tag)==false)
+                                                if(dt1.Columns.Contains("BlockAttribute: " + atr1.Tag)==false)
                                                 {
-                                                    dt1.Columns.Add("block_" + atr1.Tag, typeof(string));
+                                                    dt1.Columns.Add("BlockAttribute: " + atr1.Tag, typeof(string));
                                                 }
-                                               dt1.Rows[dt1.Rows.Count - 1]["block_" + atr1.Tag] = atr1.TextString;
+                                               dt1.Rows[dt1.Rows.Count - 1]["BlockAttribute: " + atr1.Tag] = atr1.TextString;
                                             }
                                         }
                                     }
