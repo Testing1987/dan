@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AGEN_MaterialBand));
             this.panel_material = new System.Windows.Forms.Panel();
+            this.button_scan_heavy_wall = new System.Windows.Forms.Button();
             this.panel_dan = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.textBox_spacing = new System.Windows.Forms.TextBox();
@@ -47,7 +48,7 @@
             this.button_load_materials = new System.Windows.Forms.Button();
             this.label_mat_band = new System.Windows.Forms.Label();
             this.button_draw_mat_band = new System.Windows.Forms.Button();
-            this.button_scan_heavy_wall = new System.Windows.Forms.Button();
+            this.button_place_extra_pts = new System.Windows.Forms.Button();
             this.panel_material.SuspendLayout();
             this.panel_dan.SuspendLayout();
             this.panel9.SuspendLayout();
@@ -60,6 +61,7 @@
             // 
             this.panel_material.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel_material.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_material.Controls.Add(this.button_place_extra_pts);
             this.panel_material.Controls.Add(this.button_scan_heavy_wall);
             this.panel_material.Controls.Add(this.panel_dan);
             this.panel_material.Controls.Add(this.panel9);
@@ -76,6 +78,26 @@
             this.panel_material.Name = "panel_material";
             this.panel_material.Size = new System.Drawing.Size(855, 613);
             this.panel_material.TabIndex = 0;
+            // 
+            // button_scan_heavy_wall
+            // 
+            this.button_scan_heavy_wall.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_scan_heavy_wall.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.button_scan_heavy_wall.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_scan_heavy_wall.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_scan_heavy_wall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_scan_heavy_wall.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_scan_heavy_wall.ForeColor = System.Drawing.Color.White;
+            this.button_scan_heavy_wall.Image = ((System.Drawing.Image)(resources.GetObject("button_scan_heavy_wall.Image")));
+            this.button_scan_heavy_wall.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_scan_heavy_wall.Location = new System.Drawing.Point(3, 544);
+            this.button_scan_heavy_wall.Name = "button_scan_heavy_wall";
+            this.button_scan_heavy_wall.Size = new System.Drawing.Size(199, 28);
+            this.button_scan_heavy_wall.TabIndex = 2258;
+            this.button_scan_heavy_wall.Text = "Scan Materials";
+            this.button_scan_heavy_wall.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_scan_heavy_wall.UseVisualStyleBackColor = false;
+            this.button_scan_heavy_wall.Click += new System.EventHandler(this.button_scan_heavy_wall_Click);
             // 
             // panel_dan
             // 
@@ -319,25 +341,25 @@
             this.button_draw_mat_band.UseVisualStyleBackColor = false;
             this.button_draw_mat_band.Click += new System.EventHandler(this.button_draw_mat_band_Click);
             // 
-            // button_scan_heavy_wall
+            // button_place_extra_pts
             // 
-            this.button_scan_heavy_wall.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
-            this.button_scan_heavy_wall.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.button_scan_heavy_wall.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_scan_heavy_wall.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_scan_heavy_wall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_scan_heavy_wall.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_scan_heavy_wall.ForeColor = System.Drawing.Color.White;
-            this.button_scan_heavy_wall.Image = ((System.Drawing.Image)(resources.GetObject("button_scan_heavy_wall.Image")));
-            this.button_scan_heavy_wall.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_scan_heavy_wall.Location = new System.Drawing.Point(3, 578);
-            this.button_scan_heavy_wall.Name = "button_scan_heavy_wall";
-            this.button_scan_heavy_wall.Size = new System.Drawing.Size(199, 28);
-            this.button_scan_heavy_wall.TabIndex = 2258;
-            this.button_scan_heavy_wall.Text = "Scan Materials";
-            this.button_scan_heavy_wall.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button_scan_heavy_wall.UseVisualStyleBackColor = false;
-            this.button_scan_heavy_wall.Click += new System.EventHandler(this.button_scan_heavy_wall_Click);
+            this.button_place_extra_pts.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_place_extra_pts.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.button_place_extra_pts.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_place_extra_pts.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_place_extra_pts.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_place_extra_pts.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_place_extra_pts.ForeColor = System.Drawing.Color.White;
+            this.button_place_extra_pts.Image = ((System.Drawing.Image)(resources.GetObject("button_place_extra_pts.Image")));
+            this.button_place_extra_pts.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_place_extra_pts.Location = new System.Drawing.Point(3, 578);
+            this.button_place_extra_pts.Name = "button_place_extra_pts";
+            this.button_place_extra_pts.Size = new System.Drawing.Size(199, 28);
+            this.button_place_extra_pts.TabIndex = 2258;
+            this.button_place_extra_pts.Text = "Place points extra ";
+            this.button_place_extra_pts.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_place_extra_pts.UseVisualStyleBackColor = false;
+            this.button_place_extra_pts.Click += new System.EventHandler(this.button_place_extra_pts_Click);
             // 
             // AGEN_MaterialBand
             // 
@@ -384,5 +406,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox_spacing;
         private System.Windows.Forms.Button button_scan_heavy_wall;
+        private System.Windows.Forms.Button button_place_extra_pts;
     }
 }

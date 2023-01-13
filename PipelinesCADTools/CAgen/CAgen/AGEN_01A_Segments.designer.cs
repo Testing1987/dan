@@ -40,22 +40,22 @@
             this.button_close = new System.Windows.Forms.Button();
             this.label_header2 = new System.Windows.Forms.Label();
             this.label_header1 = new System.Windows.Forms.Label();
+            this.panel_button = new System.Windows.Forms.Panel();
             this.panel_segments.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel_button.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_segments
             // 
+            this.panel_segments.AutoScroll = true;
             this.panel_segments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel_segments.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel_segments.Controls.Add(this.button_remove_segment);
-            this.panel_segments.Controls.Add(this.button_add_segment);
             this.panel_segments.Controls.Add(this.textBox_name1);
             this.panel_segments.Controls.Add(this.label_name1);
-            this.panel_segments.Controls.Add(this.button_create);
             this.panel_segments.Location = new System.Drawing.Point(4, 43);
             this.panel_segments.Name = "panel_segments";
-            this.panel_segments.Size = new System.Drawing.Size(437, 81);
+            this.panel_segments.Size = new System.Drawing.Size(397, 35);
             this.panel_segments.TabIndex = 2056;
             // 
             // button_remove_segment
@@ -69,7 +69,7 @@
             this.button_remove_segment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_remove_segment.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_remove_segment.ForeColor = System.Drawing.Color.White;
-            this.button_remove_segment.Location = new System.Drawing.Point(402, 6);
+            this.button_remove_segment.Location = new System.Drawing.Point(30, 6);
             this.button_remove_segment.Name = "button_remove_segment";
             this.button_remove_segment.Size = new System.Drawing.Size(21, 21);
             this.button_remove_segment.TabIndex = 2067;
@@ -88,7 +88,7 @@
             this.button_add_segment.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_add_segment.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_add_segment.ForeColor = System.Drawing.Color.White;
-            this.button_add_segment.Location = new System.Drawing.Point(375, 6);
+            this.button_add_segment.Location = new System.Drawing.Point(3, 6);
             this.button_add_segment.Name = "button_add_segment";
             this.button_add_segment.Size = new System.Drawing.Size(21, 21);
             this.button_add_segment.TabIndex = 2066;
@@ -117,10 +117,10 @@
             this.label_name1.TabIndex = 94;
             this.label_name1.Text = "Segment 1 Name";
             // 
-            // button_create_segment
+            // button_create
             // 
             this.button_create.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_create.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_create_segment.BackgroundImage")));
+            this.button_create.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_create.BackgroundImage")));
             this.button_create.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.button_create.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
             this.button_create.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
@@ -129,8 +129,8 @@
             this.button_create.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.button_create.ForeColor = System.Drawing.Color.White;
             this.button_create.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_create.Location = new System.Drawing.Point(328, 49);
-            this.button_create.Name = "button_create_segment";
+            this.button_create.Location = new System.Drawing.Point(57, 5);
+            this.button_create.Name = "button_create";
             this.button_create.Size = new System.Drawing.Size(101, 25);
             this.button_create.TabIndex = 93;
             this.button_create.Text = "Create";
@@ -148,7 +148,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(446, 39);
+            this.panel1.Size = new System.Drawing.Size(570, 39);
             this.panel1.TabIndex = 2058;
             this.panel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.clickmove_MouseDown);
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.clickmove_MouseMove);
@@ -166,7 +166,7 @@
             this.button_minimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_minimize.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_minimize.ForeColor = System.Drawing.Color.White;
-            this.button_minimize.Location = new System.Drawing.Point(375, 11);
+            this.button_minimize.Location = new System.Drawing.Point(501, 11);
             this.button_minimize.Name = "button_minimize";
             this.button_minimize.Size = new System.Drawing.Size(27, 20);
             this.button_minimize.TabIndex = 166;
@@ -185,7 +185,7 @@
             this.button_close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_close.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_close.ForeColor = System.Drawing.Color.White;
-            this.button_close.Location = new System.Drawing.Point(408, 6);
+            this.button_close.Location = new System.Drawing.Point(534, 6);
             this.button_close.Name = "button_close";
             this.button_close.Size = new System.Drawing.Size(30, 30);
             this.button_close.TabIndex = 165;
@@ -214,12 +214,25 @@
             this.label_header1.TabIndex = 3;
             this.label_header1.Text = "Append Segments";
             // 
+            // panel_button
+            // 
+            this.panel_button.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel_button.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel_button.Controls.Add(this.button_remove_segment);
+            this.panel_button.Controls.Add(this.button_create);
+            this.panel_button.Controls.Add(this.button_add_segment);
+            this.panel_button.Location = new System.Drawing.Point(402, 43);
+            this.panel_button.Name = "panel_button";
+            this.panel_button.Size = new System.Drawing.Size(165, 35);
+            this.panel_button.TabIndex = 2056;
+            // 
             // AGEN_segments_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(62)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(446, 130);
+            this.ClientSize = new System.Drawing.Size(570, 82);
+            this.Controls.Add(this.panel_button);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel_segments);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -232,6 +245,7 @@
             this.panel_segments.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel_button.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -249,5 +263,6 @@
         private System.Windows.Forms.Button button_create;
         private System.Windows.Forms.Button button_remove_segment;
         private System.Windows.Forms.Button button_add_segment;
+        private System.Windows.Forms.Panel panel_button;
     }
 }

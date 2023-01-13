@@ -32,6 +32,8 @@ namespace Alignment_mdi
         string col_dist4 = "Distance4";
         string col_sta = "Reference Station";
 
+        System.Data.DataTable dt_pt_extra = null;
+
         public AGEN_MaterialBand()
         {
             InitializeComponent();
@@ -45,6 +47,7 @@ namespace Alignment_mdi
             lista_butoane.Add(button_load_materials);
 
             lista_butoane.Add(button_open_materials);
+            lista_butoane.Add(button_place_extra_pts);
 
 
 
@@ -63,6 +66,7 @@ namespace Alignment_mdi
             lista_butoane.Add(button_load_materials);
 
             lista_butoane.Add(button_open_materials);
+            lista_butoane.Add(button_place_extra_pts);
 
 
 
@@ -173,7 +177,7 @@ namespace Alignment_mdi
 
                 if (System.IO.File.Exists(fisier_mat) == true)
                 {
-                    Load_existing_materials(fisier_mat, ref _AGEN_mainform.dt_mat_lin, ref _AGEN_mainform.dt_mat_lin_extra, ref _AGEN_mainform.dt_mat_pt);
+                    Load_existing_materials(fisier_mat, ref _AGEN_mainform.dt_mat_lin, ref _AGEN_mainform.dt_mat_lin_extra, ref _AGEN_mainform.dt_mat_pt, ref dt_pt_extra);
                 }
                 else
                 {
@@ -201,7 +205,7 @@ namespace Alignment_mdi
         }
 
 
-        public void Load_existing_materials(string File1, ref System.Data.DataTable dtml, ref System.Data.DataTable dtextra, ref System.Data.DataTable dtpt)
+        public void Load_existing_materials(string File1, ref System.Data.DataTable dtml, ref System.Data.DataTable dtextra, ref System.Data.DataTable dtpt, ref System.Data.DataTable dtpt_extra)
         {
 
             if (System.IO.File.Exists(File1) == false)
@@ -216,10 +220,12 @@ namespace Alignment_mdi
             Microsoft.Office.Interop.Excel.Worksheet W1 = null;
             Microsoft.Office.Interop.Excel.Worksheet W2 = null;
             Microsoft.Office.Interop.Excel.Worksheet W3 = null;
+            Microsoft.Office.Interop.Excel.Worksheet W4 = null;
             bool close_excel = false;
             string nume_tab_lin = "linear";
             string nume_tab_extra = "linear extra";
             string nume_tab_pts = "points";
+            string nume_tab_pts_extra = "points extra";
             try
             {
                 Microsoft.Office.Interop.Excel.Application Excel1 = null;
@@ -232,19 +238,23 @@ namespace Alignment_mdi
                         if (Workbook2.FullName.ToLower() == File1.ToLower())
                         {
                             Workbook1 = Workbook2;
-                            foreach (Microsoft.Office.Interop.Excel.Worksheet W4 in Workbook1.Worksheets)
+                            foreach (Microsoft.Office.Interop.Excel.Worksheet W5 in Workbook1.Worksheets)
                             {
-                                if (W4.Name.ToLower() == nume_tab_lin)
+                                if (W5.Name.ToLower() == nume_tab_lin)
                                 {
-                                    W1 = W4;
+                                    W1 = W5;
                                 }
-                                if (W4.Name.ToLower() == nume_tab_extra)
+                                if (W5.Name.ToLower() == nume_tab_extra)
                                 {
-                                    W2 = W4;
+                                    W2 = W5;
                                 }
-                                if (W4.Name.ToLower() == nume_tab_pts)
+                                if (W5.Name.ToLower() == nume_tab_pts)
                                 {
-                                    W3 = W4;
+                                    W3 = W5;
+                                }
+                                if (W5.Name.ToLower() == nume_tab_pts_extra)
+                                {
+                                    W4 = W5;
                                 }
                             }
                         }
@@ -265,19 +275,23 @@ namespace Alignment_mdi
                 {
                     if (Excel1.Workbooks.Count == 0) Excel1.Visible = _AGEN_mainform.ExcelVisible;
                     Workbook1 = Excel1.Workbooks.Open(File1);
-                    foreach (Microsoft.Office.Interop.Excel.Worksheet W4 in Workbook1.Worksheets)
+                    foreach (Microsoft.Office.Interop.Excel.Worksheet W5 in Workbook1.Worksheets)
                     {
-                        if (W4.Name.ToLower() == nume_tab_lin)
+                        if (W5.Name.ToLower() == nume_tab_lin)
                         {
-                            W1 = W4;
+                            W1 = W5;
                         }
-                        if (W4.Name.ToLower() == nume_tab_extra)
+                        if (W5.Name.ToLower() == nume_tab_extra)
                         {
-                            W2 = W4;
+                            W2 = W5;
                         }
-                        if (W4.Name.ToLower() == nume_tab_pts)
+                        if (W5.Name.ToLower() == nume_tab_pts)
                         {
-                            W3 = W4;
+                            W3 = W5;
+                        }
+                        if (W5.Name.ToLower() == nume_tab_pts_extra)
+                        {
+                            W4 = W5;
                         }
                     }
                     if (W1 == null)
@@ -291,9 +305,10 @@ namespace Alignment_mdi
 
                 try
                 {
-                     dtml = Functions.Build_Data_table_mat_linear_from_excel(W1, _AGEN_mainform.Start_row_mat_lin + 1);
+                    dtml = Functions.Build_Data_table_mat_linear_from_excel(W1, _AGEN_mainform.Start_row_mat_lin + 1);
                     if (W2 != null) dtextra = Functions.Build_Data_table_mat_linear_from_excel(W2, _AGEN_mainform.Start_row_mat_lin + 1);
                     if (W3 != null) dtpt = Functions.Build_Data_table_mat_point_from_excel(W3, _AGEN_mainform.Start_row_mat_point + 1);
+                    if (W4 != null) dtpt_extra = Functions.Build_Data_table_mat_point_from_excel(W4, _AGEN_mainform.Start_row_mat_point + 1);
                     if (close_excel == true) Workbook1.Close();
                     if (Excel1.Workbooks.Count == 0)
                     {
@@ -2038,7 +2053,7 @@ namespace Alignment_mdi
                                     for (int k = 0; k < _AGEN_mainform.dt_mat_pt.Rows.Count; ++k)
                                     {
                                         double Station_pt = -1.123;
-                                        if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                        if (_AGEN_mainform.Project_type == "2D")
                                         {
                                             Station_pt = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k][_AGEN_mainform.Col_2DSta]);
                                         }
@@ -3669,9 +3684,9 @@ namespace Alignment_mdi
                             double Station1_labeled = -1.123;
                             double Station2_labeled = -1.123;
 
-                            if (_AGEN_mainform.Project_type=="2D")
+                            if (_AGEN_mainform.Project_type == "2D")
                             {
-                                if (_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1] != DBNull.Value && 
+                                if (_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1] != DBNull.Value &&
                                     _AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta2] != DBNull.Value)
                                 {
                                     Station1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin.Rows[i][_AGEN_mainform.Col_2DSta1]);
@@ -5832,6 +5847,249 @@ namespace Alignment_mdi
             set_enable_true();
 
             this.MdiParent.WindowState = FormWindowState.Normal;
+        }
+
+        private void button_place_extra_pts_Click(object sender, EventArgs e)
+        {
+            if (dt_pt_extra == null || dt_pt_extra.Rows.Count == 0) return;
+
+
+            ObjectId[] Empty_array = null;
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+            Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            try
+            {
+                set_enable_false();
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                        BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                        string ln = "_PTS_extra";
+
+                        Autodesk.AutoCAD.DatabaseServices.LayerTable LayerTable1 = Trans1.GetObject(ThisDrawing.Database.LayerTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as LayerTable;
+
+
+
+
+
+                        System.Data.DataTable dt1 = new System.Data.DataTable();
+                        dt1.Columns.Add("x0", typeof(double));
+                        dt1.Columns.Add("y0", typeof(double));
+                        dt1.Columns.Add("dist1", typeof(double));
+                        dt1.Columns.Add("sta1", typeof(double));
+                        dt1.Columns.Add("sta2", typeof(double));
+
+
+
+
+
+                        foreach (ObjectId id1 in BTrecord)
+                        {
+                            BlockReference block1 = Trans1.GetObject(id1, OpenMode.ForRead) as BlockReference;
+                            if (block1 != null)
+                            {
+                                LayerTableRecord layer1 = Trans1.GetObject(LayerTable1[block1.Layer], OpenMode.ForRead) as LayerTableRecord;
+                                if (layer1.IsFrozen == false && layer1.IsOff == false && layer1.IsDependent == false)
+                                {
+                                    if (block1.AttributeCollection.Count > 0 && block1.IsDynamicBlock == true)
+                                    {
+
+                                        double dist1 = Functions.Get_Param_Value_block(block1, "Distance1");
+
+
+                                        if (dist1 > 0)
+                                        {
+
+                                            double sta1 = -1;
+                                            double sta2 = -1;
+
+
+                                            foreach (ObjectId id2 in block1.AttributeCollection)
+                                            {
+                                                AttributeReference atr1 = Trans1.GetObject(id2, OpenMode.ForRead) as AttributeReference;
+                                                if (atr1 != null)
+                                                {
+                                                    string atr_name = atr1.Tag;
+                                                    string atr_val = atr1.TextString;
+
+
+                                                    if (atr_name.ToUpper() == "STA1")
+                                                    {
+                                                        if (Functions.IsNumeric(atr_val.Replace(" ", "").Replace("+", "")) == true)
+                                                        {
+                                                            sta1 = Convert.ToDouble(atr_val.Replace(" ", "").Replace("+", ""));
+
+
+                                                        }
+                                                    }
+
+                                                    if (atr_name.ToUpper() == "STA2")
+                                                    {
+                                                        if (Functions.IsNumeric(atr_val.Replace(" ", "").Replace("+", "")) == true)
+                                                        {
+                                                            sta2 = Convert.ToDouble(atr_val.Replace(" ", "").Replace("+", ""));
+
+                                                        }
+                                                    }
+
+
+                                                }
+                                            }
+
+
+                                            if (sta1 != sta2 && sta1 != -1 && sta2 != -1)
+                                            {
+
+                                                dt1.Rows.Add();
+                                                dt1.Rows[dt1.Rows.Count - 1]["x0"] = block1.Position.X;
+                                                dt1.Rows[dt1.Rows.Count - 1]["y0"] = block1.Position.Y;
+                                                dt1.Rows[dt1.Rows.Count - 1]["dist1"] = dist1;
+                                                dt1.Rows[dt1.Rows.Count - 1]["sta1"] = sta1;
+                                                dt1.Rows[dt1.Rows.Count - 1]["sta2"] = sta2;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        List<int> lista_processed = new List<int>();
+
+                        if (dt1.Rows.Count > 0)
+                        {
+                            Functions.Creaza_layer(ln, 2, true);
+                            System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+
+                            for (int i = 10; i < dt_pt_extra.Columns.Count - 1; i++)
+                            {
+                                col_atr.Add(dt_pt_extra.Columns[i].ColumnName);
+                            }
+                            col_atr.Add("STA");
+
+
+                            for (int i = 0; i < dt_pt_extra.Rows.Count; ++i)
+                            {
+                                double sta = -1.123;
+                                System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
+
+
+                                if (dt_pt_extra.Rows[i][9] != DBNull.Value)
+                                {
+                                    string bn = Convert.ToString(dt_pt_extra.Rows[i][9]);
+                                    if (_AGEN_mainform.Project_type == "2D")
+                                    {
+                                        if (dt_pt_extra.Rows[i][_AGEN_mainform.Col_2DSta] != DBNull.Value)
+                                        {
+                                            sta = Convert.ToDouble(dt_pt_extra.Rows[i][_AGEN_mainform.Col_2DSta]);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (dt_pt_extra.Rows[i][_AGEN_mainform.Col_3DSta] != DBNull.Value)
+                                        {
+                                            sta = Convert.ToDouble(dt_pt_extra.Rows[i][_AGEN_mainform.Col_3DSta]);
+                                        }
+                                    }
+
+                                    if (dt_pt_extra.Rows[i][_AGEN_mainform.Col_eqsta] != DBNull.Value)
+                                    {
+                                        sta = Convert.ToDouble(dt_pt_extra.Rows[i][_AGEN_mainform.Col_eqsta]);
+                                    }
+
+                                    if (sta != -1.123)
+                                    {
+                                        for (int j = 10; j < dt_pt_extra.Columns.Count - 1; j++)
+                                        {
+
+                                            if (dt_pt_extra.Rows[i][j] != DBNull.Value)
+                                            {
+                                                col_val.Add(Convert.ToString(dt_pt_extra.Rows[i][j]));
+                                            }
+                                            else
+                                            {
+                                                col_val.Add("");
+                                            }
+                                        }
+                                        for (int k = 0; k < dt1.Rows.Count; k++)
+                                        {
+                                            double x0 = Convert.ToDouble(dt1.Rows[k]["x0"]);
+                                            double y0 = Convert.ToDouble(dt1.Rows[k]["y0"]);
+                                            double dist1 = Convert.ToDouble(dt1.Rows[k]["dist1"]);
+                                            double sta1 = Convert.ToDouble(dt1.Rows[k]["sta1"]);
+                                            double sta2 = Convert.ToDouble(dt1.Rows[k]["sta2"]);
+
+                                            double x = -1.23456;
+
+                                            if (sta <= sta2 && sta >= sta1)
+                                            {
+                                                double deltax = (sta - sta1) * dist1 / (sta2 - sta1);
+                                                if (_AGEN_mainform.Left_to_Right == true)
+                                                {
+                                                    x = x0 + deltax;
+                                                }
+                                                else
+                                                {
+                                                    x = x0 - deltax;
+                                                }
+
+                                            }
+
+                                            if (x != -1.23456)
+                                            {
+                                                col_val.Add(Functions.Get_chainage_from_double(sta, _AGEN_mainform.units_of_measurement, _AGEN_mainform.round1));
+                                                BlockReference Block2 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "",
+                                                                    bn, new Point3d(x, y0, 0), 1, 0, ln, col_atr, col_val);
+                                                if (lista_processed.Contains(i) == false) lista_processed.Add(i);
+                                            }
+
+                                        }
+
+                                    }
+
+
+                                }
+
+
+                            }
+
+                        }
+
+                        Trans1.Commit();
+
+                        if (lista_processed.Count>0 && lista_processed.Count < dt_pt_extra.Rows.Count)
+                        {
+                            System.Data.DataTable dt2 = dt_pt_extra.Clone();
+                            for (int i = 0; i < dt_pt_extra.Rows.Count; ++i)
+                            {
+                                if (lista_processed.Contains(i) == false)
+                                {
+                                    System.Data.DataRow row2 = dt2.NewRow();
+                                    row2.ItemArray = dt_pt_extra.Rows[i].ItemArray;
+                                    dt2.Rows.Add(row2);
+                                }
+                            }
+
+                            Functions.Transfer_datatable_to_new_excel_spreadsheet_formated_general(dt2);
+                        }
+
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Editor1.SetImpliedSelection(Empty_array);
+            Editor1.WriteMessage("\nCommand:");
+            set_enable_true();
+
+
+
         }
     }
 }

@@ -130,6 +130,7 @@
             this.panel18 = new System.Windows.Forms.Panel();
             this.button_point2sta = new System.Windows.Forms.Button();
             this.button_sta2point = new System.Windows.Forms.Button();
+            this.button_generate_seq = new System.Windows.Forms.Button();
             this.panel_APT.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel_pipe_manifest.SuspendLayout();
@@ -1524,10 +1525,11 @@
             this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel18.Controls.Add(this.button_point2sta);
+            this.panel18.Controls.Add(this.button_generate_seq);
             this.panel18.Controls.Add(this.button_sta2point);
-            this.panel18.Location = new System.Drawing.Point(3, 238);
+            this.panel18.Location = new System.Drawing.Point(3, 244);
             this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(240, 75);
+            this.panel18.Size = new System.Drawing.Size(252, 98);
             this.panel18.TabIndex = 2142;
             // 
             // button_point2sta
@@ -1543,7 +1545,7 @@
             this.button_point2sta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button_point2sta.Location = new System.Drawing.Point(7, 5);
             this.button_point2sta.Name = "button_point2sta";
-            this.button_point2sta.Size = new System.Drawing.Size(224, 28);
+            this.button_point2sta.Size = new System.Drawing.Size(232, 28);
             this.button_point2sta.TabIndex = 2140;
             this.button_point2sta.Text = "Calculate Station from Point [US]";
             this.button_point2sta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1563,12 +1565,32 @@
             this.button_sta2point.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button_sta2point.Location = new System.Drawing.Point(7, 36);
             this.button_sta2point.Name = "button_sta2point";
-            this.button_sta2point.Size = new System.Drawing.Size(224, 28);
+            this.button_sta2point.Size = new System.Drawing.Size(232, 28);
             this.button_sta2point.TabIndex = 2140;
             this.button_sta2point.Text = "Generate point from Station [US]";
             this.button_sta2point.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button_sta2point.UseVisualStyleBackColor = false;
             this.button_sta2point.Click += new System.EventHandler(this.button_sta2point_Click);
+            // 
+            // button_generate_seq
+            // 
+            this.button_generate_seq.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_generate_seq.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.button_generate_seq.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_generate_seq.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_generate_seq.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_generate_seq.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_generate_seq.ForeColor = System.Drawing.Color.White;
+            this.button_generate_seq.Image = ((System.Drawing.Image)(resources.GetObject("button_generate_seq.Image")));
+            this.button_generate_seq.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_generate_seq.Location = new System.Drawing.Point(6, 67);
+            this.button_generate_seq.Name = "button_generate_seq";
+            this.button_generate_seq.Size = new System.Drawing.Size(233, 28);
+            this.button_generate_seq.TabIndex = 2140;
+            this.button_generate_seq.Text = "Generate Equated from Station [US]";
+            this.button_generate_seq.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_generate_seq.UseVisualStyleBackColor = false;
+            this.button_generate_seq.Click += new System.EventHandler(this.button_generate_seq_Click);
             // 
             // Agen_load_cl_from_xl
             // 
@@ -1724,5 +1746,6 @@
         private System.Windows.Forms.TextBox textBox_zero_Y;
         private System.Windows.Forms.Button button_create_offset;
         private System.Windows.Forms.TextBox textBox_offset;
+        private System.Windows.Forms.Button button_generate_seq;
     }
 }
