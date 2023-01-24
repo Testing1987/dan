@@ -1,0 +1,8 @@
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\Civil3DTools.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\Civil3DTools.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\Civil3DTools\obj\Debug\Civil3DTools.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\Civil3DTools\obj\Debug\Civil3DTools.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\Civil3DTools\obj\Debug\Civil3DTools.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\Civil3DTools\obj\Debug\Civil3DTools.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\Civil3DTools\obj\Debug\Civil3DTools.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\Civil3DTools\obj\Debug\Civil3DTools.pdb

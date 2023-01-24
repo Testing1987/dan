@@ -8,9 +8,9 @@ namespace CADTechnologiesSource.All.Savers
 {
     class StreamLabelsWPF
     {
-        private void GetObjectDataTablesReferenceCode()
-        {
-            Autodesk.Gis.Map.ObjectData.Tables objectDataTables = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-        }
+        //private void GetObjectDataTablesReferenceCode()
+        //{
+        //    Autodesk.Gis.Map.ObjectData.Tables objectDataTables = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+        //}
     }
 }

@@ -51,16 +51,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "BlockManager.AutoCAD", "Blo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlockManagerTest.UI", "BlockManager\BlockManagerTest.UI\BlockManagerTest.UI.csproj", "{958695B3-4CCF-4D02-B6F3-6C1D3F688385}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PlanBuilder", "PlanBuilder", "{8AD7860E-3569-4E35-A22F-0BF10D3B5AC1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanBuilder.2017", "PlanBuilder\PlanBuilder.2017\PlanBuilder.2017.csproj", "{7634E6F9-CDB4-435C-9EBA-A39694E14586}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanBuilder.UI", "PlanBuilder\PlanBuilder.UI\PlanBuilder.UI.csproj", "{016174CD-2FD0-42AB-A856-CAC80508737A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlanBuilder.Core", "PlanBuilder\PlanBuilder.Core\PlanBuilder.Core.csproj", "{E8AF1C29-F9B3-49FA-81E3-7224F6A3C8CE}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PlanBuilder.AutoCAD", "PlanBuilder\PlanBuilder.AutoCAD\PlanBuilder.AutoCAD.shproj", "{3797D60F-DBFC-4DEF-8237-31E6439BD709}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LinetypeBuilder", "LinetypeBuilder", "{DBAE41AF-7194-4BDE-AAAD-D70BFF85D773}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Civil3DTools", "Civil3DTools\Civil3DTools.csproj", "{C5988339-8051-466C-95A5-E6AABDD6B60A}"
@@ -181,18 +171,6 @@ Global
 		{958695B3-4CCF-4D02-B6F3-6C1D3F688385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{958695B3-4CCF-4D02-B6F3-6C1D3F688385}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{958695B3-4CCF-4D02-B6F3-6C1D3F688385}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7634E6F9-CDB4-435C-9EBA-A39694E14586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7634E6F9-CDB4-435C-9EBA-A39694E14586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7634E6F9-CDB4-435C-9EBA-A39694E14586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7634E6F9-CDB4-435C-9EBA-A39694E14586}.Release|Any CPU.Build.0 = Release|Any CPU
-		{016174CD-2FD0-42AB-A856-CAC80508737A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{016174CD-2FD0-42AB-A856-CAC80508737A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{016174CD-2FD0-42AB-A856-CAC80508737A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{016174CD-2FD0-42AB-A856-CAC80508737A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E8AF1C29-F9B3-49FA-81E3-7224F6A3C8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E8AF1C29-F9B3-49FA-81E3-7224F6A3C8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E8AF1C29-F9B3-49FA-81E3-7224F6A3C8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E8AF1C29-F9B3-49FA-81E3-7224F6A3C8CE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C5988339-8051-466C-95A5-E6AABDD6B60A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C5988339-8051-466C-95A5-E6AABDD6B60A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5988339-8051-466C-95A5-E6AABDD6B60A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -275,10 +253,6 @@ Global
 		{C8156226-444A-4AE1-A59C-C140FE43FC60} = {F6ADD0C9-63F7-459E-A500-DBF17B4704BF}
 		{4CE56162-3464-4984-B275-BFCC638AC4C6} = {F6ADD0C9-63F7-459E-A500-DBF17B4704BF}
 		{958695B3-4CCF-4D02-B6F3-6C1D3F688385} = {F6ADD0C9-63F7-459E-A500-DBF17B4704BF}
-		{7634E6F9-CDB4-435C-9EBA-A39694E14586} = {8AD7860E-3569-4E35-A22F-0BF10D3B5AC1}
-		{016174CD-2FD0-42AB-A856-CAC80508737A} = {8AD7860E-3569-4E35-A22F-0BF10D3B5AC1}
-		{E8AF1C29-F9B3-49FA-81E3-7224F6A3C8CE} = {8AD7860E-3569-4E35-A22F-0BF10D3B5AC1}
-		{3797D60F-DBFC-4DEF-8237-31E6439BD709} = {8AD7860E-3569-4E35-A22F-0BF10D3B5AC1}
 		{4936D4E8-581B-4E2E-99F9-B02458D3CC92} = {DBAE41AF-7194-4BDE-AAAD-D70BFF85D773}
 		{E11888DD-9489-4DC5-8815-1D35152EC63B} = {B1CC7E1B-EEB8-487C-99E4-D868F338A3F4}
 		{E0219A68-E4EF-4901-9CDA-26C18A1FB973} = {A69923B3-A851-4533-8E36-AC5775B80C7C}
@@ -298,19 +272,13 @@ Global
 		SolutionGuid = {1BAFE0F2-83B0-4A48-B401-15E528FB9998}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		PlanBuilder\PlanBuilder.AutoCAD\PlanBuilder.AutoCAD.projitems*{016174cd-2fd0-42ab-a856-cac80508737a}*SharedItemsImports = 4
 		TagDupeFix\TagDupeFix.AutoCAD\TagDupeFix.AutoCAD.projitems*{07f0a201-1050-4fe7-936f-077bf08cde50}*SharedItemsImports = 13
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{0f71984f-aa87-4873-ab28-bcddf561e719}*SharedItemsImports = 4
 		LayerComparison\LayerComparison.AutoCAD\LayerComparison.AutoCAD.projitems*{0f71984f-aa87-4873-ab28-bcddf561e719}*SharedItemsImports = 4
-		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{28b7e05a-952b-4f4b-95ac-2c5d51179e44}*SharedItemsImports = 4
 		MLineBlockAttributeEditor\MLineBlockAttributeEditor.AutoCAD\MLineBlockAttributeEditor.AutoCAD.projitems*{28b7e05a-952b-4f4b-95ac-2c5d51179e44}*SharedItemsImports = 4
-		PlanBuilder\PlanBuilder.AutoCAD\PlanBuilder.AutoCAD.projitems*{3797d60f-dbfc-4def-8237-31e6439bd709}*SharedItemsImports = 13
-		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{4259be9e-7741-4ec5-afa3-9d8f4195e92e}*SharedItemsImports = 4
 		BlockManager\BlockManager.AutoCAD\BlockManager.AutoCAD.projitems*{4ce56162-3464-4984-b275-bfcc638ac4c6}*SharedItemsImports = 13
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{5d0316c8-85ce-4d68-b728-026f0b4a1a95}*SharedItemsImports = 4
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{613c29c8-fc22-43d6-987f-8bc4eacd2f6c}*SharedItemsImports = 4
-		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{7634e6f9-cdb4-435c-9eba-a39694e14586}*SharedItemsImports = 4
-		PlanBuilder\PlanBuilder.AutoCAD\PlanBuilder.AutoCAD.projitems*{7634e6f9-cdb4-435c-9eba-a39694e14586}*SharedItemsImports = 4
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{7724fb85-8fd8-4426-90a1-b163e5e42524}*SharedItemsImports = 4
 		MLineBlockAttributeEditor\MLineBlockAttributeEditor.AutoCAD\MLineBlockAttributeEditor.AutoCAD.projitems*{7e7b7798-7fb2-4c4f-95eb-d95f75037897}*SharedItemsImports = 13
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{87cdda5a-2b27-4126-a419-ccecab0e5400}*SharedItemsImports = 4
@@ -328,7 +296,6 @@ Global
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{e0219a68-e4ef-4901-9cda-26c18a1fb973}*SharedItemsImports = 4
 		TagDupeFix\TagDupeFix.AutoCAD\TagDupeFix.AutoCAD.projitems*{e0219a68-e4ef-4901-9cda-26c18a1fb973}*SharedItemsImports = 4
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{e7629707-c773-44bc-a0c0-b7790d5d7ef0}*SharedItemsImports = 4
-		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{e8af1c29-f9b3-49fa-81e3-7224f6a3c8ce}*SharedItemsImports = 4
 		CADTechnologiesSource.All\CADTechnologiesSource.All.projitems*{f10256d7-2120-4574-83d1-05c157ad34a9}*SharedItemsImports = 4
 		TagDupeFix\TagDupeFix.AutoCAD\TagDupeFix.AutoCAD.projitems*{f10256d7-2120-4574-83d1-05c157ad34a9}*SharedItemsImports = 4
 		LayerComparison\LayerComparison.AutoCAD\LayerComparison.AutoCAD.projitems*{f5c00d3b-2cec-4176-a56e-bdb823de4372}*SharedItemsImports = 13

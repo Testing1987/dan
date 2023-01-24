@@ -1,0 +1,9 @@
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\TagDupeFIx.2017.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\TagDupeFIx.2017.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx.2017.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx._2017.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx.2017.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx.2017.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx.2017.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx.2017.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFIx.2017\obj\Debug\TagDupeFIx.2017.pdb

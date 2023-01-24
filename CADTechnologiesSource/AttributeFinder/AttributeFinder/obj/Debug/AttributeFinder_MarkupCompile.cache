@@ -4,21 +4,16 @@
 library
 C#
 .cs
-C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\AttributeFinder\AttributeFinder\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\AttributeFinder\AttributeFinder\obj\Debug\
 AttributeFinder
 none
 false
 DEBUG;TRACE
 
-61946081518
+6-535522686
 
-<<<<<<< HEAD
 511946096033
 21364230041
-=======
-51-1876275822
-15-766305889
->>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\MainWindow_AttributeFinder.xaml;Views\Styles\BaseStyles.xaml;Views\Styles\Buttons.xaml;Views\Styles\Colors.xaml;Views\Styles\FontAwesomeStrings.xaml;Views\Styles\Fonts.xaml;
 
 True

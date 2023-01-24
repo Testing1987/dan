@@ -1,0 +1,14 @@
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\Views\MainWindow_GFAR.g.cs
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI_MarkupCompile.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI_MarkupCompile.lref
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\GFAR.UI.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\GFAR.UI.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\Views\MainWindow_GFAR.baml
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.g.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.csproj.Fody.CopyLocal.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\GFAR.UI.pdb

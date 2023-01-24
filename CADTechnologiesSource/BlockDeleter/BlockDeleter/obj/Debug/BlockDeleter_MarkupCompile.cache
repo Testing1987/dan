@@ -4,21 +4,16 @@
 library
 C#
 .cs
-C:\Users\POP70694\Documents\Visual Studio 2019\Projects\CADTechnologiesSource\BlockDeleter\BlockDeleter\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockDeleter\BlockDeleter\obj\Debug\
 BlockDeleter
 none
 false
 DEBUG;TRACE
 
-61749420617
+6515044031
 
-<<<<<<< HEAD
 49-176239103
 21637966330
-=======
-49920554707
-15-766305889
->>>>>>> c663512d7aa6682300fa658c1d990449255c16b0
 Views\MainWindow.xaml;Views\Styles\BaseStyles.xaml;Views\Styles\Buttons.xaml;Views\Styles\Colors.xaml;Views\Styles\FontAwesomeStrings.xaml;Views\Styles\Fonts.xaml;
 
 True

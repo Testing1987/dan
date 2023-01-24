@@ -1,0 +1,7 @@
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.2017\obj\Debug\LayerComparison.2017.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.2017\obj\Debug\LayerComparison.2017.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\LayerComparison.2017.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\LayerComparison.2017.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.2017\obj\Debug\LayerComparison.2017.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.2017\obj\Debug\LayerComparison.2017.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.2017\obj\Debug\LayerComparison.2017.pdb

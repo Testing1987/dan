@@ -1,0 +1,11 @@
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.g.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\GFAR.Core.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\GFAR.Core.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.csproj.Fody.CopyLocal.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.Core\obj\Debug\GFAR.Core.pdb

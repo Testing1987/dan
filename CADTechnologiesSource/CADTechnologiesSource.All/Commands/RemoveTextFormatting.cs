@@ -2,6 +2,7 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
+using System.Windows;
 
 namespace CADTechnologiesSource.All.Commands
 {
@@ -16,40 +17,47 @@ namespace CADTechnologiesSource.All.Commands
 
             using (DocumentLock docLock = thisDrawing.LockDocument())
             {
-                PromptEntityOptions peo = new PromptEntityOptions("\nSelect an MTEXT object");
-                peo.SetRejectMessage("\r\nSelect an MTEXT.");
-                peo.AddAllowedClass(typeof(MText), true);
-
-                PromptEntityResult per = thisEditor.GetEntity(peo);
-
-                if (per.Status != PromptStatus.OK)
+                PromptSelectionResult psr = thisEditor.GetSelection();
+                if (psr.Status != PromptStatus.OK)
                 {
                     return;
                 }
                 else
                 {
+                    SelectionSet selectedItems = psr.Value;
                     try
                     {
                         using (Transaction thisTransaction = thisDatabase.TransactionManager.StartTransaction())
                         {
-                            MText mText = thisTransaction.GetObject(per.ObjectId, OpenMode.ForRead) as MText;
-                            if (mText != null)
+                            foreach (SelectedObject item in selectedItems)
                             {
-                                TextEditor textEditor = TextEditor.CreateTextEditor(mText);
-                                if (textEditor != null)
+                                if (item != null)
                                 {
-                                    mText.UpgradeOpen();
-                                    textEditor.SelectAll();
-                                    textEditor.Selection.RemoveAllFormatting();
-                                    textEditor.Close(TextEditor.ExitStatus.ExitSave);
-                                    thisTransaction.Commit();
+                                    RXClass mtextClass = RXObject.GetClass(typeof(MText));
+                                    ObjectId objectId = item.ObjectId;
+                                    if (objectId.ObjectClass == mtextClass)
+                                    {
+                                        MText mText = thisTransaction.GetObject(item.ObjectId, OpenMode.ForRead) as MText;
+                                        if (mText != null)
+                                        {
+                                            TextEditor textEditor = TextEditor.CreateTextEditor(mText);
+                                            if (textEditor != null)
+                                            {
+                                                mText.UpgradeOpen();
+                                                textEditor.SelectAll();
+                                                textEditor.Selection.RemoveAllFormatting();
+                                                textEditor.Close(TextEditor.ExitStatus.ExitSave);
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                            thisTransaction.Commit();
                         }
                     }
                     catch (System.Exception ex)
                     {
-                        throw;
+                        MessageBox.Show(ex.Message);
                     }
                 }
             }

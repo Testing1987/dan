@@ -1,0 +1,9 @@
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor.2017.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor._2017.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor.2017.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor.2017.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\MLineBlockAttributeEditor.2017.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\MLineBlockAttributeEditor.2017.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor.2017.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor.2017.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.2017\obj\Debug\MLineBlockAttributeEditor.2017.pdb

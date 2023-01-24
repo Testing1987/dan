@@ -30,7 +30,14 @@ namespace CADTechnologiesSource.All.Commands
                         {
                             if (scale.Name != "1:1")
                             {
-                                objectContexts.RemoveContext(scale.Name);
+                                try
+                                {
+                                    objectContexts.RemoveContext(scale.Name);
+                                }
+                                catch (System.Exception)
+                                {
+                                    continue;
+                                }
                             }
                         }
                     }
@@ -53,7 +60,10 @@ namespace CADTechnologiesSource.All.Commands
                             //Don't add 120, 140, 160, or 180
                             if (i > 100 && i / 200 == 1)
                             {
-                                objectContexts.AddContext(annotationScale);
+                                if (!objectContexts.HasContext(annotationScale.Name))
+                                {
+                                    objectContexts.AddContext(annotationScale); 
+                                }
                             }
                         }
                 }

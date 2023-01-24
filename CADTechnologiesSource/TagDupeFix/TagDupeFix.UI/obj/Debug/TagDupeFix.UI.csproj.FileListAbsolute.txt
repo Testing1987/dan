@@ -1,0 +1,15 @@
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\TagDupeFix.UI.dll
+C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\TagDupeFix.UI.pdb
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\Views\MainWindow.g.cs
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI_MarkupCompile.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI_MarkupCompile.lref
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\Views\MainWindow.baml
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.g.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.csproj.Fody.CopyLocal.cache
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.dll
+C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\TagDupeFix.UI.pdb

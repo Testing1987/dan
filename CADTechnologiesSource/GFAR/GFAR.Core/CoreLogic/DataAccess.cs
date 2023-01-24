@@ -1,7 +1,5 @@
 ﻿using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
-using Autodesk.Gis.Map.MapBook;
 using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
