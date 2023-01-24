@@ -253,7 +253,7 @@ namespace Alignment_mdi
                                 if (W1 != null)
                                 {
                                     _AGEN_mainform.dt_centerline = Functions.build_data_table_from_excel_based_on_columns_with_type_check(_AGEN_mainform.dt_centerline, W1, start1, end1, Col_x, textBox_col_e.Text,
-                                        Col_y, textBox_col_n.Text, Col_z, textBox_col_z.Text, Col_3DSta, textBox_chainage.Text, Col_CSF, textBox_col_csf.Text, Col_rr, textBox_col_reroute.Text);
+                                        Col_y, textBox_col_n.Text, Col_z, textBox_col_z.Text, Col_3DSta, textBox_chainage.Text,"","", Col_CSF, textBox_col_csf.Text, Col_rr, textBox_col_reroute.Text);
 
                                     append_deflections_to_dtcl(_AGEN_mainform.dt_centerline);
 
@@ -439,7 +439,7 @@ namespace Alignment_mdi
             _AGEN_mainform.tpage_setup.Show();
             _AGEN_mainform.tpage_viewport_settings.Hide();
             _AGEN_mainform.tpage_tblk_attrib.Hide();
-            _AGEN_mainform.tpage_band_analize.Hide();
+           
             _AGEN_mainform.tpage_sheetindex.Hide();
             _AGEN_mainform.tpage_layer_alias.Hide();
             _AGEN_mainform.tpage_crossing_scan.Hide();
@@ -510,7 +510,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -669,7 +669,7 @@ namespace Alignment_mdi
                     if (System.IO.File.Exists(fisier_cl) == true)
                     {
                         _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
-                        Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         string Col_x = "X";
                         string Col_y = "Y";
@@ -901,7 +901,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -1115,8 +1115,8 @@ namespace Alignment_mdi
                         dataGridView_errors.DefaultCellStyle.ForeColor = Color.White;
                         dataGridView_errors.EnableHeadersVisualStyles = false;
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                        _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+
 
                         bool next1 = true;
                         bool pick_first = true;
@@ -1192,19 +1192,19 @@ namespace Alignment_mdi
                             Point3d pt2 = Point_res2.Value;
                             prev_pt = pt2;
 
-                            Point3d point_on_poly1 = _AGEN_mainform.Poly2D.GetClosestPointTo(pt1, Vector3d.ZAxis, false);
-                            Point3d point_on_poly2 = _AGEN_mainform.Poly2D.GetClosestPointTo(pt2, Vector3d.ZAxis, false);
-                            double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly1);
-                            double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(point_on_poly2);
+                            Point3d point_on_poly1 = poly2d.GetClosestPointTo(pt1, Vector3d.ZAxis, false);
+                            Point3d point_on_poly2 = poly2d.GetClosestPointTo(pt2, Vector3d.ZAxis, false);
+                            double d1 = poly2d.GetDistAtPoint(point_on_poly1);
+                            double d2 = poly2d.GetDistAtPoint(point_on_poly2);
 
-                            if (param1 > param2)
+                            if (d1 > d2)
                             {
                                 Point3d t = point_on_poly1;
                                 point_on_poly1 = point_on_poly2;
                                 point_on_poly2 = t;
-                                double tt = param1;
-                                param1 = param2;
-                                param2 = tt;
+                                double tt = d1;
+                                d1 = d2;
+                                d2 = tt;
 
                             }
 
@@ -1220,18 +1220,15 @@ namespace Alignment_mdi
                             {
                                 double b11 = -1.23456;
                                 double b21 = -1.23456;
-                                double d1_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
-                                double d2_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param2);
-                                double Sta1 = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly1, d1_2d, _AGEN_mainform.dt_centerline, ref b11);
-                                double Sta2 = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, point_on_poly2, d2_2d, _AGEN_mainform.dt_centerline, ref b21);
+                                double Sta1 = Functions.get_stationCSF_from_point(poly2d, point_on_poly1, d1, _AGEN_mainform.dt_centerline, ref b11);
+                                double Sta2 = Functions.get_stationCSF_from_point(poly2d, point_on_poly2, d2, _AGEN_mainform.dt_centerline, ref b21);
                                 dt1.Rows[dt1.Rows.Count - 1]["STA1"] = Math.Round(Sta1, _AGEN_mainform.round1);
                                 dt1.Rows[dt1.Rows.Count - 1]["STA2"] = Math.Round(Sta2, _AGEN_mainform.round1);
                             }
                             else
 
                             {
-                                double d1 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                double d2 = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param2);
+
 
                                 dt1.Rows[dt1.Rows.Count - 1]["STA1"] = Math.Round(d1, _AGEN_mainform.round1);
                                 dt1.Rows[dt1.Rows.Count - 1]["STA2"] = Math.Round(d2, _AGEN_mainform.round1);
@@ -1299,8 +1296,12 @@ namespace Alignment_mdi
                                     BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                                     BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
-                                    _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                    _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                    Polyline3d poly3d = null;
+                                    if (_AGEN_mainform.Project_type == "3D")
+                                    {
+                                        poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    }
 
                                     string Col_x = "X";
                                     string Col_y = "Y";
@@ -1338,12 +1339,9 @@ namespace Alignment_mdi
                                                                     Col_x, textBox_col_e.Text,
                                                                     Col_y, textBox_col_n.Text,
                                                                     textBox_chainage.Text, "",
-                                                                    "", "", "", "", "", "");
+                                                                    "", "", "", "", "", "", "", "");
 
-                                                    dt_errors = new System.Data.DataTable();
-                                                    dt_errors.Columns.Add("Survey File Value", typeof(double));
-                                                    dt_errors.Columns.Add("Calculated Value", typeof(string));
-                                                    dt_errors.Columns.Add("Error Type", typeof(string));
+                                                   
 
                                                     if (dt1.Rows.Count > 0)
                                                     {
@@ -1363,38 +1361,66 @@ namespace Alignment_mdi
                                                                 y = Convert.ToDouble(dt1.Rows[i][Col_y]);
                                                             }
 
-                                                            Point3d pt2d = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                                                            double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt2d);
-                                                            if (param1 > _AGEN_mainform.Poly3D.EndParam) param1 = _AGEN_mainform.Poly3D.EndParam;
-
-                                                            if (x != -1.234 && y != -1.234)
+                                                            Point3d pt2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                                                            if (poly3d != null)
                                                             {
-                                                                double calc_sta = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                                                dt1.Rows[i][Col_Sta] = Convert.ToString(Math.Round(calc_sta, _AGEN_mainform.round1));
-                                                                dt1.Rows[i][Col_Sta_raw] = Convert.ToString(calc_sta);
-                                                                if (_AGEN_mainform.dt_station_equation != null)
+                                                                double param1 = poly2d.GetParameterAtPoint(pt2d);
+                                                                if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+
+                                                                if (x != -1.234 && y != -1.234)
                                                                 {
-                                                                    if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                                    double calc_sta = poly3d.GetDistanceAtParameter(param1);
+                                                                    dt1.Rows[i][Col_Sta] = Convert.ToString(Math.Round(calc_sta, _AGEN_mainform.round1));
+                                                                    dt1.Rows[i][Col_Sta_raw] = Convert.ToString(calc_sta);
+                                                                    if (_AGEN_mainform.dt_station_equation != null)
                                                                     {
-                                                                        double steq = Functions.Station_equation_ofV2(Math.Round(calc_sta, 3), _AGEN_mainform.dt_station_equation);
-                                                                        dt1.Rows[i][Col_steq_Sta] = Convert.ToString(steq);
+                                                                        if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                                        {
+                                                                            double steq = Functions.Station_equation_ofV2(Math.Round(calc_sta, 3), _AGEN_mainform.dt_station_equation);
+                                                                            dt1.Rows[i][Col_steq_Sta] = Convert.ToString(steq);
+                                                                        }
                                                                     }
+
+                                                                    Point3d pt_on_poly = poly2d.GetClosestPointTo(new Point3d(x, y, poly2d.Elevation), Vector3d.ZAxis, false);
+                                                                    double offset1 = Math.Pow(Math.Pow(x - pt_on_poly.X, 2) + Math.Pow(y - pt_on_poly.Y, 2), 0.5);
+                                                                    dt1.Rows[i][Col_offset] = Convert.ToString(offset1);
+
                                                                 }
-
-                                                                Point3d pt_on_poly = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                                                double offset1 = Math.Pow(Math.Pow(x - pt_on_poly.X, 2) + Math.Pow(y - pt_on_poly.Y, 2), 0.5);
-                                                                dt1.Rows[i][Col_offset] = Convert.ToString(offset1);
-
+                                                                else
+                                                                {
+                                                                    dt1.Rows[i][Col_Sta] = "-1";
+                                                                }
                                                             }
                                                             else
                                                             {
-                                                                dt_errors.Rows.Add();
-                                                                dt_errors.Rows[dt_errors.Rows.Count - 1]["Error Type"] = "Not numeric x or y";
-                                                                dt_errors.Rows[dt_errors.Rows.Count - 1]["Calculated Value"] = "See Row " + (start1 + i).ToString();
+                                                               
+                                                                if (x != -1.234 && y != -1.234)
+                                                                {
+                                                                    double calc_sta = poly2d.GetDistAtPoint(pt2d);
+                                                                    dt1.Rows[i][Col_Sta] = Convert.ToString(Math.Round(calc_sta, _AGEN_mainform.round1));
+                                                                    dt1.Rows[i][Col_Sta_raw] = Convert.ToString(calc_sta);
+                                                                    if (_AGEN_mainform.dt_station_equation != null)
+                                                                    {
+                                                                        if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                                        {
+                                                                            double steq = Functions.Station_equation_ofV2(Math.Round(calc_sta, 3), _AGEN_mainform.dt_station_equation);
+                                                                            dt1.Rows[i][Col_steq_Sta] = Convert.ToString(steq);
+                                                                        }
+                                                                    }
+
+                                                                    Point3d pt_on_poly = poly2d.GetClosestPointTo(new Point3d(x, y, poly2d.Elevation), Vector3d.ZAxis, false);
+                                                                    double offset1 = Math.Pow(Math.Pow(x - pt_on_poly.X, 2) + Math.Pow(y - pt_on_poly.Y, 2), 0.5);
+                                                                    dt1.Rows[i][Col_offset] = Convert.ToString(offset1);
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    dt1.Rows[i][Col_Sta] = "-1";
+                                                                }
                                                             }
+
                                                         }
 
-                                                        transfer_errors_to_panel(dt_errors);
                                                         Functions.Transfer_datatable_to_new_excel_spreadsheet_formated_general(dt1);
                                                     }
                                                 }
@@ -1402,7 +1428,7 @@ namespace Alignment_mdi
                                         }
                                     }
 
-                                    _AGEN_mainform.Poly3D.Erase();
+                                    if (poly3d != null && poly3d.IsErased==false) poly3d.Erase();
 
                                     Trans1.Commit();
                                 }
@@ -1464,9 +1490,8 @@ namespace Alignment_mdi
                     if (System.IO.File.Exists(fisier_cl) == true)
                     {
                         _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
-                        Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
 
-                        _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
+
                         Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
                         Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
                         try
@@ -1479,8 +1504,13 @@ namespace Alignment_mdi
                                     BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                                     BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
-                                    _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                    _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                    Polyline3d poly3d = null;
+                                    if (_AGEN_mainform.Project_type == "3D")
+                                    {
+                                        poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    }
+
 
                                     string Col_x = "X";
                                     string Col_y = "Y";
@@ -1511,14 +1541,11 @@ namespace Alignment_mdi
                                                     dt1.Columns.Add(Col_Sta, typeof(string));
                                                     dt1.Columns.Add(Col_steq_Sta, typeof(string));
 
-
-
-
                                                     dt1 = Functions.build_data_table_from_excel_based_on_columns_with_type_check(dt1, W1,
                                                                     start1, end1,
                                                                     "", "", "", "", "", "",
                                                                     Col_Sta, textBox_chainage.Text,
-                                                                    "", "", "", "");
+                                                                    "", "", "", "", "", "");
 
 
                                                     if (dt1.Rows.Count > 0)
@@ -1535,7 +1562,7 @@ namespace Alignment_mdi
 
                                                                 if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                                                 {
-                                                                    List<double> lista_measured = Functions.Equation_to_measured(sta, _AGEN_mainform.Poly3D, _AGEN_mainform.Poly2D, _AGEN_mainform.dt_station_equation);
+                                                                    List<double> lista_measured = Functions.Equation_to_measured(sta, poly3d, poly2d, _AGEN_mainform.dt_station_equation);
                                                                     dt1.Rows[i][Col_steq_Sta] = sta;
                                                                     dt1.Rows[i][Col_Sta] = Convert.ToString(lista_measured[0]);
 
@@ -1569,12 +1596,26 @@ namespace Alignment_mdi
                                                     for (int i = 0; i < dt1.Rows.Count; ++i)
                                                     {
                                                         double sta1 = Convert.ToDouble(dt1.Rows[i][Col_Sta]);
-                                                        if (sta1 >= 0 && sta1 < +_AGEN_mainform.Poly3D.Length)
+
+                                                        if (poly3d == null)
                                                         {
-                                                            dt1.Rows[i][Col_x] = _AGEN_mainform.Poly3D.GetPointAtDist(sta1).X;
-                                                            dt1.Rows[i][Col_y] = _AGEN_mainform.Poly3D.GetPointAtDist(sta1).Y;
-                                                            dt1.Rows[i][Col_z] = _AGEN_mainform.Poly3D.GetPointAtDist(sta1).Z;
+                                                            if (sta1 >= 0 && sta1 <= poly2d.Length)
+                                                            {
+                                                                dt1.Rows[i][Col_x] = poly2d.GetPointAtDist(sta1).X;
+                                                                dt1.Rows[i][Col_y] = poly2d.GetPointAtDist(sta1).Y;
+                                                                dt1.Rows[i][Col_z] = 0;
+                                                            }
                                                         }
+                                                        else
+                                                        {
+                                                            if (sta1 >= 0 && sta1 <= poly3d.Length)
+                                                            {
+                                                                dt1.Rows[i][Col_x] = poly3d.GetPointAtDist(sta1).X;
+                                                                dt1.Rows[i][Col_y] = poly3d.GetPointAtDist(sta1).Y;
+                                                                dt1.Rows[i][Col_z] = poly3d.GetPointAtDist(sta1).Z;
+                                                            }
+                                                        }
+
 
 
                                                     }
@@ -1584,7 +1625,7 @@ namespace Alignment_mdi
                                             }
                                         }
                                     }
-                                    _AGEN_mainform.Poly3D.Erase();
+                                    if (poly3d != null && poly3d.IsErased == false) poly3d.Erase();
 
                                     Trans1.Commit();
                                 }
@@ -1704,7 +1745,7 @@ namespace Alignment_mdi
                         short ci = 1;
 
 
-                        _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                         if (comboBox_ws1.Text != "")
                         {
@@ -1725,7 +1766,7 @@ namespace Alignment_mdi
                                         dt1 = Functions.build_data_table_from_excel_based_on_columns_with_type_check(dt1, W1,
                                                         start1, end1,
                                                         "sta1", textBoxH1.Text, "sta2", textBoxH2.Text,
-                                                        "layer", textBoxH3.Text, "", "", "", "", "", "");
+                                                        "layer", textBoxH3.Text, "", "", "", "", "", "", "", "");
 
                                         #region CANADA
                                         if (dt1.Rows.Count > 0 && _AGEN_mainform.COUNTRY == "CANADA")
@@ -1800,12 +1841,12 @@ namespace Alignment_mdi
                                                 double y1 = Convert.ToDouble(dt1.Rows[i]["y1"]);
                                                 double x2 = Convert.ToDouble(dt1.Rows[i]["x2"]);
                                                 double y2 = Convert.ToDouble(dt1.Rows[i]["y2"]);
-                                                Point3d pt1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
-                                                Point3d pt2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
+                                                Point3d pt1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
+                                                Point3d pt2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
 
-                                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt1);
-                                                double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt2);
-                                                Polyline poly_heavy_wall = Functions.get_part_of_poly(_AGEN_mainform.Poly2D, param1, param2);
+                                                double param1 = poly2d.GetParameterAtPoint(pt1);
+                                                double param2 = poly2d.GetParameterAtPoint(pt2);
+                                                Polyline poly_heavy_wall = Functions.get_part_of_poly(poly2d, param1, param2);
 
                                                 string layer1 = "0";
                                                 if (dt1.Rows[i]["layer"] != DBNull.Value)
@@ -1831,7 +1872,13 @@ namespace Alignment_mdi
                                         #region USA
                                         if (dt1.Rows.Count > 0 && _AGEN_mainform.COUNTRY == "USA")
                                         {
-                                            _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                            double poly_length = poly2d.Length;
+                                            Polyline3d poly3d = null;
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                                poly_length = poly3d.Length;
+                                            }
 
                                             for (int i = 0; i < dt1.Rows.Count; ++i)
                                             {
@@ -1842,26 +1889,26 @@ namespace Alignment_mdi
                                                     double sta1 = Convert.ToDouble(Convert.ToString(dt1.Rows[i]["sta1"]).Replace("+", ""));
                                                     double sta2 = Convert.ToDouble(Convert.ToString(dt1.Rows[i]["sta2"]).Replace("+", ""));
 
-                                                    if (sta1 >= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta1 >= poly_length)
                                                     {
-                                                        sta1 = _AGEN_mainform.Poly3D.Length - 0.00001;
+                                                        sta1 = poly_length - 0.00001;
                                                     }
 
-                                                    if (sta2 >= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta2 >= poly_length)
                                                     {
-                                                        sta2 = _AGEN_mainform.Poly3D.Length - 0.00001;
+                                                        sta2 = poly_length - 0.00001;
                                                     }
 
-                                                    if (sta1 >= 0 && sta1 <= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta1 >= 0 && sta1 <= poly_length)
                                                     {
-                                                        Point3d pt1 = _AGEN_mainform.Poly3D.GetPointAtDist(sta1);
+                                                        Point3d pt1 = poly2d.GetPointAtDist(sta1);
                                                         dt1.Rows[i]["x1"] = pt1.X;
                                                         dt1.Rows[i]["y1"] = pt1.Y;
 
                                                     }
-                                                    if (sta2 >= 0 && sta2 <= _AGEN_mainform.Poly3D.Length)
+                                                    if (sta2 >= 0 && sta2 <= poly_length)
                                                     {
-                                                        Point3d pt2 = _AGEN_mainform.Poly3D.GetPointAtDist(sta2);
+                                                        Point3d pt2 = poly2d.GetPointAtDist(sta2);
                                                         dt1.Rows[i]["x2"] = pt2.X;
                                                         dt1.Rows[i]["y2"] = pt2.Y;
                                                     }
@@ -1879,22 +1926,15 @@ namespace Alignment_mdi
                                                     double y1 = Convert.ToDouble(dt1.Rows[i]["y1"]);
                                                     double x2 = Convert.ToDouble(dt1.Rows[i]["x2"]);
                                                     double y2 = Convert.ToDouble(dt1.Rows[i]["y2"]);
-                                                    Point3d pt1 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
-                                                    Point3d pt2 = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
+                                                    Point3d pt1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
+                                                    Point3d pt2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
 
 
 
-                                                    double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt1);
-                                                    double param2 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt2);
-                                                    if (param1 > _AGEN_mainform.Poly2D.EndParam)
-                                                    {
-                                                        param1 = _AGEN_mainform.Poly2D.EndParam;
-                                                    }
-                                                    if (param2 > _AGEN_mainform.Poly2D.EndParam)
-                                                    {
-                                                        param2 = _AGEN_mainform.Poly2D.EndParam;
-                                                    }
-                                                    Polyline poly_heavy_wall = Functions.get_part_of_poly(_AGEN_mainform.Poly2D, param1, param2);
+                                                    double param1 = poly2d.GetParameterAtPoint(pt1);
+                                                    double param2 = poly2d.GetParameterAtPoint(pt2);
+
+                                                    Polyline poly_heavy_wall = Functions.get_part_of_poly(poly2d, param1, param2);
 
 
 
@@ -1926,10 +1966,6 @@ namespace Alignment_mdi
                         }
 
 
-                        if (dt1.Rows.Count > 0 && _AGEN_mainform.COUNTRY == "USA")
-                        {
-                            _AGEN_mainform.Poly3D.Erase();
-                        }
                         Trans1.Commit();
                     }
                 }
@@ -2203,7 +2239,7 @@ namespace Alignment_mdi
 
                                 System.Data.DataTable dt_cl = _AGEN_mainform.dt_centerline;
 
-                                Polyline poly1 = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly1 = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 this.MdiParent.WindowState = FormWindowState.Minimized;
                                 bool repeat = true;
@@ -2855,7 +2891,7 @@ namespace Alignment_mdi
                                                     double x = block1.Position.X;
                                                     double y = block1.Position.Y;
                                                     double z = block1.Position.Z;
-
+                                                    string Visibility = "";
                                                     for (int j = 0; j < dt1.Columns.Count; ++j)
                                                     {
                                                         string column_name = dt1.Columns[j].ColumnName;
@@ -2866,6 +2902,10 @@ namespace Alignment_mdi
                                                         if (column_name == "Y")
                                                         {
                                                             y = Convert.ToDouble(dt1.Rows[i][j]);
+                                                        }
+                                                        if (column_name == "Visibility")
+                                                        {
+                                                            Visibility = Convert.ToString(dt1.Rows[i][j]);
                                                         }
                                                     }
                                                     if (delete_block == false)
@@ -2913,6 +2953,10 @@ namespace Alignment_mdi
                                                     if (delete_block == true)
                                                     {
                                                         block1.Erase();
+                                                    }
+                                                    if(delete_block==false && Visibility!="")
+                                                    {
+                                                        Functions.set_block_visibility(block1, Visibility);
                                                     }
                                                 }
                                             }
@@ -3372,7 +3416,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -3551,7 +3595,7 @@ namespace Alignment_mdi
                                 BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
                                 _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Polyline3d poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
                                 string Col_x = "X";
                                 string Col_y = "Y";
@@ -3759,7 +3803,7 @@ namespace Alignment_mdi
 
                                 System.Data.DataTable dt_cl = _AGEN_mainform.dt_centerline;
 
-                                Polyline poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 this.MdiParent.WindowState = FormWindowState.Minimized;
                                 bool repeat = true;
@@ -3910,6 +3954,202 @@ namespace Alignment_mdi
             Editor1.WriteMessage("\nCommand:");
             set_enable_true();
 
+        }
+
+        private void button_generate_seq_Click(object sender, EventArgs e)
+        {
+            int start1 = 0;
+            int end1 = 0;
+
+            if (Functions.IsNumeric(textBox_row_start.Text) == true)
+            {
+                start1 = Convert.ToInt32(textBox_row_start.Text);
+            }
+
+            if (Functions.IsNumeric(textBox_row_end.Text) == true)
+            {
+                end1 = Convert.ToInt32(textBox_row_end.Text);
+            }
+
+            if (start1 <= 0 || end1 <= 0 || start1 > end1)
+            {
+                MessageBox.Show("specify the start/end row!");
+                return;
+            }
+
+            try
+            {
+                string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+                if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                {
+                    ProjFolder = ProjFolder + "\\";
+                }
+                if (System.IO.Directory.Exists(ProjFolder) == true)
+                {
+                    string fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+                    if (System.IO.File.Exists(fisier_cl) == true)
+                    {
+                        _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
+
+
+                        Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                        Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+                        try
+                        {
+                            set_enable_false();
+                            using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                            {
+                                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                                {
+                                    BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                                    BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+
+                                    Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                    Polyline3d poly3d = null;
+                                    if (_AGEN_mainform.Project_type == "3D")
+                                    {
+                                        poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    }
+
+
+                                    string Col_x = "X";
+                                    string Col_y = "Y";
+                                    string Col_z = "Z";
+                                    string Col_Sta = "Station";
+                                    string Col_steq_Sta = "Equated Station";
+
+
+                                    make_first_line_invisible();
+                                    if (comboBox_ws1.Text != "")
+                                    {
+                                        string string1 = comboBox_ws1.Text;
+                                        if (string1.Contains("[") == true && string1.Contains("]") == true)
+                                        {
+                                            string filename = string1.Substring(string1.IndexOf("]") + 4, string1.Length - (string1.IndexOf("]") + 4));
+
+                                            string sheet_name = string1.Substring(1, string1.IndexOf("]") - 1);
+                                            if (filename.Length > 0 && sheet_name.Length > 0)
+                                            {
+                                                set_enable_false();
+                                                Microsoft.Office.Interop.Excel.Worksheet W1 = Functions.Get_opened_worksheet_from_Excel_by_name(filename, sheet_name);
+                                                if (W1 != null)
+                                                {
+                                                    System.Data.DataTable dt1 = new System.Data.DataTable();
+                                                    dt1.Columns.Add(Col_x, typeof(double));
+                                                    dt1.Columns.Add(Col_y, typeof(double));
+                                                    dt1.Columns.Add(Col_z, typeof(double));
+                                                    dt1.Columns.Add(Col_Sta, typeof(double));
+                                                    dt1.Columns.Add(Col_steq_Sta, typeof(double));
+
+                                                    dt1 = Functions.build_data_table_from_excel_based_on_columns_with_type_check(dt1, W1,
+                                                                    start1, end1,
+                                                                    "", "", "", "", "", "",
+                                                                    Col_Sta, textBox_chainage.Text,
+                                                                    "", "", "", "", "", "");
+
+                                                    #region USA
+                                                    if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.COUNTRY == "USA")
+                                                    {
+                                                        if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                        {
+                                                            if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false)
+                                                            {
+                                                                _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
+                                                            }
+
+                                                            for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
+                                                            {
+                                                                if (_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"] != DBNull.Value)
+                                                                {
+                                                                    double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
+                                                                    double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
+
+                                                                    Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                                                                    double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
+
+                                                                    if (_AGEN_mainform.Project_type == "3D")
+                                                                    {
+                                                                        double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+                                                                        if (param1 > poly3d.EndParam) param1 = poly3d.EndParam;
+                                                                        eq_meas = poly3d.GetDistanceAtParameter(param1);
+                                                                    }
+                                                                    _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
+                                                                }
+                                                            }
+                                                        }
+
+                                                    }
+                                                    #endregion
+
+
+                                                    for (int i = 0; i < dt1.Rows.Count; ++i)
+                                                    {
+                                                        double sta1 = Convert.ToDouble(dt1.Rows[i][Col_Sta]);
+                                                        double x = -1;
+                                                        double y = -1;
+                                                        double z = -1;
+                                                        if (poly3d == null)
+                                                        {
+                                                            if (sta1 >= 0 && sta1 <= poly2d.Length)
+                                                            {
+                                                                x = poly2d.GetPointAtDist(sta1).X;
+                                                                y = poly2d.GetPointAtDist(sta1).Y;
+                                                                dt1.Rows[i][Col_x] = x;
+                                                                dt1.Rows[i][Col_y] = y;
+                                                                dt1.Rows[i][Col_z] = 0;
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (sta1 >= 0 && sta1 <= poly3d.Length)
+                                                            {
+                                                                x = poly3d.GetPointAtDist(sta1).X;
+                                                                y = poly3d.GetPointAtDist(sta1).Y;
+                                                                z = poly3d.GetPointAtDist(sta1).Z;
+                                                                dt1.Rows[i][Col_x] = x;
+                                                                dt1.Rows[i][Col_y] = y;
+                                                                dt1.Rows[i][Col_z] = z;
+                                                            }
+                                                        }
+
+                                                        dt1.Rows[i][Col_steq_Sta] = Functions.Station_equation_ofV2(sta1, _AGEN_mainform.dt_station_equation);
+
+
+                                                    }
+
+                                                    Functions.Transfer_datatable_to_new_excel_spreadsheet_formated_general(dt1);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (poly3d != null && poly3d.IsErased == false) poly3d.Erase();
+
+                                    Trans1.Commit();
+                                }
+
+                            }
+                        }
+
+
+                        catch (System.Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("no project folder!/r/noperation aborted");
+                }
+            }
+            catch (System.Exception ex)
+            {
+                _AGEN_mainform.tpage_setup.Set_centerline_label_to_red();
+                _AGEN_mainform.tpage_processing.Hide();
+                MessageBox.Show(ex.Message);
+            }
+            set_enable_true();
         }
     }
 }

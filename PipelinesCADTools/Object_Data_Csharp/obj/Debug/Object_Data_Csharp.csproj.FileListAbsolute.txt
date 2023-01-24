@@ -1,0 +1,7 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Object_Data_Csharp.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Alignment_mdi.OD_attach.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Alignment_mdi.OD_DATA_TRANSFER_FORM.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Alignment_mdi.OD_layer_change_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Alignment_mdi.OD_TABLE_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Object_Data_Csharp.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Object_Data_Csharp\obj\Debug\Object_Data_Csharp.csproj.CoreCompileInputs.cache

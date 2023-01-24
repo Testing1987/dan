@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Agen_load_cl_from_xl));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel_APT = new System.Windows.Forms.Panel();
             this.label36 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -113,6 +113,7 @@
             this.button_calc_2D_distance = new System.Windows.Forms.Button();
             this.button_generate_point_from_CSF = new System.Windows.Forms.Button();
             this.panel_err = new System.Windows.Forms.Panel();
+            this.textBox_offset = new System.Windows.Forms.TextBox();
             this.button_create_offset = new System.Windows.Forms.Button();
             this.dataGridView_errors = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -129,7 +130,7 @@
             this.panel18 = new System.Windows.Forms.Panel();
             this.button_point2sta = new System.Windows.Forms.Button();
             this.button_sta2point = new System.Windows.Forms.Button();
-            this.textBox_offset = new System.Windows.Forms.TextBox();
+            this.button_generate_seq = new System.Windows.Forms.Button();
             this.panel_APT.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel_pipe_manifest.SuspendLayout();
@@ -1331,6 +1332,19 @@
             this.panel_err.Size = new System.Drawing.Size(240, 139);
             this.panel_err.TabIndex = 2145;
             // 
+            // textBox_offset
+            // 
+            this.textBox_offset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.textBox_offset.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_offset.ForeColor = System.Drawing.Color.White;
+            this.textBox_offset.Location = new System.Drawing.Point(183, 11);
+            this.textBox_offset.Name = "textBox_offset";
+            this.textBox_offset.Size = new System.Drawing.Size(45, 20);
+            this.textBox_offset.TabIndex = 2117;
+            this.textBox_offset.Text = "0.1";
+            this.textBox_offset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_offset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_integers);
+            // 
             // button_create_offset
             // 
             this.button_create_offset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
@@ -1361,14 +1375,14 @@
             this.dataGridView_errors.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_errors.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_errors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_errors.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_errors.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_errors.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_errors.Location = new System.Drawing.Point(3, 1);
             this.dataGridView_errors.Name = "dataGridView_errors";
@@ -1396,9 +1410,9 @@
             this.label10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.label10.Location = new System.Drawing.Point(3, 3);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(142, 18);
+            this.label10.Size = new System.Drawing.Size(214, 18);
             this.label10.TabIndex = 2054;
-            this.label10.Text = "CSF Stations Tools";
+            this.label10.Text = "CSF Stations Tools - CANADA";
             // 
             // panel6
             // 
@@ -1511,10 +1525,11 @@
             this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel18.Controls.Add(this.button_point2sta);
+            this.panel18.Controls.Add(this.button_generate_seq);
             this.panel18.Controls.Add(this.button_sta2point);
-            this.panel18.Location = new System.Drawing.Point(3, 238);
+            this.panel18.Location = new System.Drawing.Point(3, 244);
             this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(240, 75);
+            this.panel18.Size = new System.Drawing.Size(252, 98);
             this.panel18.TabIndex = 2142;
             // 
             // button_point2sta
@@ -1530,7 +1545,7 @@
             this.button_point2sta.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button_point2sta.Location = new System.Drawing.Point(7, 5);
             this.button_point2sta.Name = "button_point2sta";
-            this.button_point2sta.Size = new System.Drawing.Size(224, 28);
+            this.button_point2sta.Size = new System.Drawing.Size(232, 28);
             this.button_point2sta.TabIndex = 2140;
             this.button_point2sta.Text = "Calculate Station from Point [US]";
             this.button_point2sta.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1550,25 +1565,32 @@
             this.button_sta2point.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button_sta2point.Location = new System.Drawing.Point(7, 36);
             this.button_sta2point.Name = "button_sta2point";
-            this.button_sta2point.Size = new System.Drawing.Size(224, 28);
+            this.button_sta2point.Size = new System.Drawing.Size(232, 28);
             this.button_sta2point.TabIndex = 2140;
             this.button_sta2point.Text = "Generate point from Station [US]";
             this.button_sta2point.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button_sta2point.UseVisualStyleBackColor = false;
             this.button_sta2point.Click += new System.EventHandler(this.button_sta2point_Click);
             // 
-            // textBox_offset
+            // button_generate_seq
             // 
-            this.textBox_offset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.textBox_offset.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_offset.ForeColor = System.Drawing.Color.White;
-            this.textBox_offset.Location = new System.Drawing.Point(183, 11);
-            this.textBox_offset.Name = "textBox_offset";
-            this.textBox_offset.Size = new System.Drawing.Size(45, 20);
-            this.textBox_offset.TabIndex = 2117;
-            this.textBox_offset.Text = "0.1";
-            this.textBox_offset.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBox_offset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_integers);
+            this.button_generate_seq.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_generate_seq.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
+            this.button_generate_seq.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_generate_seq.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_generate_seq.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_generate_seq.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_generate_seq.ForeColor = System.Drawing.Color.White;
+            this.button_generate_seq.Image = ((System.Drawing.Image)(resources.GetObject("button_generate_seq.Image")));
+            this.button_generate_seq.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_generate_seq.Location = new System.Drawing.Point(6, 67);
+            this.button_generate_seq.Name = "button_generate_seq";
+            this.button_generate_seq.Size = new System.Drawing.Size(233, 28);
+            this.button_generate_seq.TabIndex = 2140;
+            this.button_generate_seq.Text = "Generate Equated from Station [US]";
+            this.button_generate_seq.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_generate_seq.UseVisualStyleBackColor = false;
+            this.button_generate_seq.Click += new System.EventHandler(this.button_generate_seq_Click);
             // 
             // Agen_load_cl_from_xl
             // 
@@ -1724,5 +1746,6 @@
         private System.Windows.Forms.TextBox textBox_zero_Y;
         private System.Windows.Forms.Button button_create_offset;
         private System.Windows.Forms.TextBox textBox_offset;
+        private System.Windows.Forms.Button button_generate_seq;
     }
 }

@@ -16,7 +16,7 @@ using System.IO;
 
 namespace Alignment_mdi
 {
-    public partial class image_form : Form
+    public partial class imagery_form : Form
     {
         System.Data.DataTable dt_layout = null;
         List<Polyline> lista_poly = null;
@@ -26,7 +26,7 @@ namespace Alignment_mdi
         private ContextMenuStrip ContextMenuStrip_layout;
         System.Data.DataTable dt_image = null;
 
-        public image_form()
+        public imagery_form()
         {
             InitializeComponent();
 

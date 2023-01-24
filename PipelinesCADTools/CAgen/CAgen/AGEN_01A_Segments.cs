@@ -22,16 +22,18 @@ namespace Alignment_mdi
 
         int idx_segm = 0;
         double one_row_height = 0;
-        double last_Y1 = -1;
-        double last_Y2 = -1;
-
+        
+   
+        List<int> lista_y= null;
         public AGEN_segments_form()
         {
             InitializeComponent();
-            last_Y1 = label_name1.Location.Y;
-            last_Y2 = textBox_name1.Location.Y;
+          
+           
             one_row_height = panel_segments.Height;
+            lista_y = new List<int>();
             add_controls_to_segment_form();
+
         }
 
         private void add_controls_to_segment_form()
@@ -40,6 +42,7 @@ namespace Alignment_mdi
             {
 
                 textBox_name1.Text = _AGEN_mainform.lista_segments[0];
+               
 
                 if (_AGEN_mainform.lista_segments.Count > 1)
                 {
@@ -47,7 +50,7 @@ namespace Alignment_mdi
                     {
                         idx_segm = i;
                         string nume_segm = _AGEN_mainform.lista_segments[i];
-                        add_new_control_row(new object(), new EventArgs(), nume_segm, Alignment_mdi.Properties.Resources.check);
+                        add_new_control_row_at_load(new object(), new EventArgs(), nume_segm, Alignment_mdi.Properties.Resources.check);
                     }
                 }
 
@@ -96,6 +99,47 @@ namespace Alignment_mdi
             add_new_control_row(sender, e, "", Alignment_mdi.Properties.Resources.selectbluexs);
         }
 
+        private void add_new_control_row_at_load(object sender, EventArgs e, string nume_band, System.Drawing.Bitmap bitmap1)
+        {
+
+            Label label1 = new Label();
+            label1.Location = new Point(label_name1.Location.X, label_name1.Location.Y + idx_segm * (textBox_name1.Height + 4));
+            label1.BackColor = label_name1.BackColor;
+            label1.ForeColor = label_name1.ForeColor;
+            label1.Font = label_name1.Font;
+            label1.Text = "Segment " + (idx_segm + 1).ToString() + " Name";
+            label1.Size = new Size(label_name1.Size.Width + 20, label_name1.Size.Height);
+            panel_segments.Controls.Add(label1);
+            lista_y.Add(label1.Location.Y);
+
+            TextBox textbox1 = new TextBox();
+            textbox1.Location = new Point(textBox_name1.Location.X, textBox_name1.Location.Y + idx_segm * (textBox_name1.Height + 4));
+            textbox1.BackColor = textBox_name1.BackColor;
+            textbox1.ForeColor = textBox_name1.ForeColor;
+            textbox1.Font = textBox_name1.Font;
+            textbox1.Size = textBox_name1.Size;
+            textbox1.Text = nume_band;
+            panel_segments.Controls.Add(textbox1);
+            
+            lista_y.Add(textbox1.Location.Y);
+
+            if (this.Height < 610)
+            {
+
+                panel_button.Size = new Size(panel_button.Width, panel_button.Height + textBox_name1.Height + 4);
+                panel_segments.Size = new Size(panel_segments.Width, panel_segments.Height + textBox_name1.Height + 4);
+
+
+                this.Size = new Size(this.Width, this.Height + textBox_name1.Height + 4);
+                
+            }
+            else
+            {
+                panel_segments.SetAutoScrollMargin(0, idx_segm);
+            }
+
+            textbox1.Select();
+        }
         private void add_new_control_row(object sender, EventArgs e, string nume_band, System.Drawing.Bitmap bitmap1)
         {
 
@@ -107,7 +151,7 @@ namespace Alignment_mdi
             label1.Text = "Segment " + (idx_segm + 1).ToString() + " Name";
             label1.Size = new Size(label_name1.Size.Width + 20, label_name1.Size.Height);
             panel_segments.Controls.Add(label1);
-            last_Y1 = label1.Location.Y;
+            lista_y.Add(label1.Location.Y);
 
             TextBox textbox1 = new TextBox();
             textbox1.Location = new Point(textBox_name1.Location.X, textBox_name1.Location.Y + idx_segm * (textBox_name1.Height + 4));
@@ -117,38 +161,56 @@ namespace Alignment_mdi
             textbox1.Size = textBox_name1.Size;
             textbox1.Text = nume_band;
             panel_segments.Controls.Add(textbox1);
-            last_Y2 = textbox1.Location.Y;
+            lista_y.Add(textbox1.Location.Y);
 
 
-            button_create.Location = new Point(button_create.Location.X, button_create.Location.Y + textBox_name1.Height + 4);
+            if (this.Height < 610)
+            {
 
-            panel_segments.Size = new Size(panel_segments.Width, panel_segments.Height + textBox_name1.Height + 4);
-            this.Size = new Size(this.Width, this.Height + textBox_name1.Height + 4);
+                panel_button.Size = new Size(panel_button.Width, panel_button.Height + textBox_name1.Height + 4);
+                panel_segments.Size = new Size(panel_segments.Width, panel_segments.Height + textBox_name1.Height + 4);
+
+
+                this.Size = new Size(this.Width, this.Height + textBox_name1.Height + 4);
+            }
+            else
+            {
+                panel_segments.SetAutoScrollMargin(0, idx_segm);
+            }
+
+
             textbox1.Select();
         }
-
         private void button_remove_Click(object sender, EventArgs e)
         {
-            if (panel_segments.Height > one_row_height)
+            if (panel_segments.Height > one_row_height && lista_y.Count>1)
             {
+
+                int last_y21 = lista_y[lista_y.Count - 2];
+                int last_y22 = lista_y[lista_y.Count - 1];
                 for (int i = panel_segments.Controls.Count - 1; i >= 0; --i)
                 {
                     Control CTRL1 = panel_segments.Controls[i];
-                    if (CTRL1.Location.Y == last_Y1 || CTRL1.Location.Y == last_Y2)
+                    if (CTRL1.Location.Y == last_y21|| CTRL1.Location.Y == last_y22)
                     {
                         panel_segments.Controls.Remove(CTRL1);
-
                     }
                 }
-
+                panel_segments.Refresh();
                 idx_segm = idx_segm - 1;
-                last_Y1 = last_Y1 - textBox_name1.Height - 4;
-                last_Y2 = last_Y2 - textBox_name1.Height - 4;
+               
+                lista_y.RemoveAt(lista_y.Count - 1);
+                lista_y.RemoveAt(lista_y.Count - 1);
 
-                button_create.Location = new Point(button_create.Location.X, button_create.Location.Y - textBox_name1.Height - 4);
+                if (this.Height <= 610)
+                {
+                    panel_button.Size = new Size(panel_button.Width, panel_button.Height - textBox_name1.Height - 4);
+                    panel_segments.Size = new Size(panel_segments.Width, panel_segments.Height - textBox_name1.Height - 4);
 
-                panel_segments.Size = new Size(panel_segments.Width, panel_segments.Height - textBox_name1.Height - 4);
-                this.Size = new Size(this.Width, this.Height - textBox_name1.Height - 4);
+                    this.Size = new Size(this.Width, this.Height - textBox_name1.Height - 4);
+                    panel_segments.SetAutoScrollMargin(0, idx_segm);
+                }
+
             }
         }
 

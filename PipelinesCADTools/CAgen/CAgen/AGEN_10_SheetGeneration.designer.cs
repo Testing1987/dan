@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label56 = new System.Windows.Forms.Label();
             this.label65 = new System.Windows.Forms.Label();
             this.button_cut_sheets = new System.Windows.Forms.Button();
@@ -73,10 +73,6 @@
             this.checkBoxx2 = new System.Windows.Forms.CheckBox();
             this.checkBoxx1 = new System.Windows.Forms.CheckBox();
             this.panel_dan = new System.Windows.Forms.Panel();
-            this.label_brightness = new System.Windows.Forms.Label();
-            this.label_contrast = new System.Windows.Forms.Label();
-            this.textBox_image_contrast = new System.Windows.Forms.TextBox();
-            this.textBox_image_brightness = new System.Windows.Forms.TextBox();
             this.label40 = new System.Windows.Forms.Label();
             this.textBox_xref_name = new System.Windows.Forms.TextBox();
             this.checkBox_draw_rectangle_custom = new System.Windows.Forms.CheckBox();
@@ -171,14 +167,14 @@
             this.dataGridView_align_created.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_align_created.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_align_created.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_align_created.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_align_created.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_align_created.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_align_created.Location = new System.Drawing.Point(3, 37);
             this.dataGridView_align_created.Name = "dataGridView_align_created";
@@ -278,7 +274,7 @@
             this.panel_custom_bands.Controls.Add(this.checkBox1);
             this.panel_custom_bands.Location = new System.Drawing.Point(0, 178);
             this.panel_custom_bands.Name = "panel_custom_bands";
-            this.panel_custom_bands.Size = new System.Drawing.Size(181, 151);
+            this.panel_custom_bands.Size = new System.Drawing.Size(181, 209);
             this.panel_custom_bands.TabIndex = 161;
             // 
             // checkBox16
@@ -699,10 +695,6 @@
             // 
             // panel_dan
             // 
-            this.panel_dan.Controls.Add(this.label_brightness);
-            this.panel_dan.Controls.Add(this.label_contrast);
-            this.panel_dan.Controls.Add(this.textBox_image_contrast);
-            this.panel_dan.Controls.Add(this.textBox_image_brightness);
             this.panel_dan.Controls.Add(this.label40);
             this.panel_dan.Controls.Add(this.textBox_xref_name);
             this.panel_dan.Controls.Add(this.checkBox_draw_rectangle_custom);
@@ -710,57 +702,11 @@
             this.panel_dan.Controls.Add(this.checkBox_xref_clip);
             this.panel_dan.Controls.Add(this.checkBox_delete_vp);
             this.panel_dan.Controls.Add(this.checkBox_slope_band);
-            this.panel_dan.Location = new System.Drawing.Point(4, 335);
+            this.panel_dan.Location = new System.Drawing.Point(4, 393);
             this.panel_dan.Name = "panel_dan";
-            this.panel_dan.Size = new System.Drawing.Size(332, 245);
+            this.panel_dan.Size = new System.Drawing.Size(332, 187);
             this.panel_dan.TabIndex = 161;
             this.panel_dan.Visible = false;
-            // 
-            // label_brightness
-            // 
-            this.label_brightness.AutoSize = true;
-            this.label_brightness.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label_brightness.ForeColor = System.Drawing.Color.White;
-            this.label_brightness.Location = new System.Drawing.Point(120, 187);
-            this.label_brightness.Name = "label_brightness";
-            this.label_brightness.Size = new System.Drawing.Size(68, 14);
-            this.label_brightness.TabIndex = 2128;
-            this.label_brightness.Text = "Brightness";
-            // 
-            // label_contrast
-            // 
-            this.label_contrast.AutoSize = true;
-            this.label_contrast.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label_contrast.ForeColor = System.Drawing.Color.White;
-            this.label_contrast.Location = new System.Drawing.Point(199, 187);
-            this.label_contrast.Name = "label_contrast";
-            this.label_contrast.Size = new System.Drawing.Size(55, 14);
-            this.label_contrast.TabIndex = 2128;
-            this.label_contrast.Text = "Contrast";
-            // 
-            // textBox_image_contrast
-            // 
-            this.textBox_image_contrast.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.textBox_image_contrast.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_image_contrast.ForeColor = System.Drawing.Color.White;
-            this.textBox_image_contrast.Location = new System.Drawing.Point(205, 204);
-            this.textBox_image_contrast.Name = "textBox_image_contrast";
-            this.textBox_image_contrast.Size = new System.Drawing.Size(45, 20);
-            this.textBox_image_contrast.TabIndex = 2127;
-            this.textBox_image_contrast.Text = "50";
-            this.textBox_image_contrast.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox_image_brightness
-            // 
-            this.textBox_image_brightness.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.textBox_image_brightness.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_image_brightness.ForeColor = System.Drawing.Color.White;
-            this.textBox_image_brightness.Location = new System.Drawing.Point(132, 204);
-            this.textBox_image_brightness.Name = "textBox_image_brightness";
-            this.textBox_image_brightness.Size = new System.Drawing.Size(45, 20);
-            this.textBox_image_brightness.TabIndex = 2126;
-            this.textBox_image_brightness.Text = "50";
-            this.textBox_image_brightness.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label40
             // 
@@ -768,7 +714,7 @@
             this.label40.BackColor = System.Drawing.Color.Transparent;
             this.label40.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label40.ForeColor = System.Drawing.Color.White;
-            this.label40.Location = new System.Drawing.Point(168, 30);
+            this.label40.Location = new System.Drawing.Point(168, 34);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(105, 14);
             this.label40.TabIndex = 178;
@@ -779,7 +725,7 @@
             this.textBox_xref_name.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
             this.textBox_xref_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_xref_name.ForeColor = System.Drawing.Color.White;
-            this.textBox_xref_name.Location = new System.Drawing.Point(123, 47);
+            this.textBox_xref_name.Location = new System.Drawing.Point(123, 51);
             this.textBox_xref_name.Name = "textBox_xref_name";
             this.textBox_xref_name.Size = new System.Drawing.Size(193, 20);
             this.textBox_xref_name.TabIndex = 177;
@@ -790,7 +736,7 @@
             this.checkBox_draw_rectangle_custom.AutoSize = true;
             this.checkBox_draw_rectangle_custom.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_draw_rectangle_custom.ForeColor = System.Drawing.Color.White;
-            this.checkBox_draw_rectangle_custom.Location = new System.Drawing.Point(6, 130);
+            this.checkBox_draw_rectangle_custom.Location = new System.Drawing.Point(6, 134);
             this.checkBox_draw_rectangle_custom.Name = "checkBox_draw_rectangle_custom";
             this.checkBox_draw_rectangle_custom.Size = new System.Drawing.Size(178, 32);
             this.checkBox_draw_rectangle_custom.TabIndex = 160;
@@ -803,7 +749,7 @@
             this.checkBox_custom_vp_scale.AutoSize = true;
             this.checkBox_custom_vp_scale.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_custom_vp_scale.ForeColor = System.Drawing.Color.White;
-            this.checkBox_custom_vp_scale.Location = new System.Drawing.Point(7, 8);
+            this.checkBox_custom_vp_scale.Location = new System.Drawing.Point(7, 12);
             this.checkBox_custom_vp_scale.Name = "checkBox_custom_vp_scale";
             this.checkBox_custom_vp_scale.Size = new System.Drawing.Size(151, 18);
             this.checkBox_custom_vp_scale.TabIndex = 160;
@@ -816,7 +762,7 @@
             this.checkBox_xref_clip.AutoSize = true;
             this.checkBox_xref_clip.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_xref_clip.ForeColor = System.Drawing.Color.White;
-            this.checkBox_xref_clip.Location = new System.Drawing.Point(5, 48);
+            this.checkBox_xref_clip.Location = new System.Drawing.Point(5, 52);
             this.checkBox_xref_clip.Name = "checkBox_xref_clip";
             this.checkBox_xref_clip.Size = new System.Drawing.Size(112, 18);
             this.checkBox_xref_clip.TabIndex = 160;
@@ -829,7 +775,7 @@
             this.checkBox_delete_vp.AutoSize = true;
             this.checkBox_delete_vp.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_delete_vp.ForeColor = System.Drawing.Color.White;
-            this.checkBox_delete_vp.Location = new System.Drawing.Point(6, 106);
+            this.checkBox_delete_vp.Location = new System.Drawing.Point(6, 110);
             this.checkBox_delete_vp.Name = "checkBox_delete_vp";
             this.checkBox_delete_vp.Size = new System.Drawing.Size(115, 18);
             this.checkBox_delete_vp.TabIndex = 160;
@@ -842,7 +788,7 @@
             this.checkBox_slope_band.AutoSize = true;
             this.checkBox_slope_band.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_slope_band.ForeColor = System.Drawing.Color.White;
-            this.checkBox_slope_band.Location = new System.Drawing.Point(5, 84);
+            this.checkBox_slope_band.Location = new System.Drawing.Point(5, 88);
             this.checkBox_slope_band.Name = "checkBox_slope_band";
             this.checkBox_slope_band.Size = new System.Drawing.Size(87, 18);
             this.checkBox_slope_band.TabIndex = 160;
@@ -1015,10 +961,6 @@
         private System.Windows.Forms.CheckBox checkBoxx2;
         private System.Windows.Forms.CheckBox checkBoxx1;
         private System.Windows.Forms.CheckBox checkBox_mult_vp_prof;
-        private System.Windows.Forms.TextBox textBox_image_contrast;
-        private System.Windows.Forms.TextBox textBox_image_brightness;
-        private System.Windows.Forms.Label label_brightness;
-        private System.Windows.Forms.Label label_contrast;
         private System.Windows.Forms.CheckBox checkBox_delete_vp;
         private System.Windows.Forms.CheckBox checkBox_draw_rectangle_custom;
         private System.Windows.Forms.Button button_output_location;

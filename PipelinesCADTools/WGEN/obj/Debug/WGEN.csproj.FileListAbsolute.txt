@@ -1,0 +1,16 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\WGEN.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_extra_checks.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_feature.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_pipemanifest.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_pipetally.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_all_pts.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_weldmap.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_pipe_tally.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_duplicates.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_dismiss_errors.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_templates.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_Blank_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\Alignment_mdi.Wgen_main_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\WGEN.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\WGEN\obj\Debug\WGEN.csproj.CoreCompileInputs.cache

@@ -1,0 +1,5 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\DivBerm\obj\Debug\DivBerm.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\DivBerm\obj\Debug\Alignment_mdi.DivBerm.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\DivBerm\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\DivBerm\obj\Debug\DivBerm.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\DivBerm\obj\Debug\DivBerm.csproj.CoreCompileInputs.cache

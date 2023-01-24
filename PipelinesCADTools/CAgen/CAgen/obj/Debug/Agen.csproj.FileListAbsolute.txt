@@ -1,9 +1,7 @@
 C:\Users\POP70694\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\Agen.dll
 C:\Users\POP70694\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\Agen.pdb
-C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.csproj.AssemblyReference.cache
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi._AGEN_mainform.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_segments_form.resources
-C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.image_form.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.contours_form.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_Project_Setup.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_custom_band_form.resources
@@ -31,7 +29,6 @@ C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_dwg_selection.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.Controller_mainform.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.Igen_Inquiry_Tool.resources
-C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_band_analyze.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_band_filter.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_tools.resources
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.AGEN_Home.resources
@@ -47,3 +44,7 @@ C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.csproj.CoreCompileInputs.cache
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.dll
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.pdb
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Agen.csproj.CopyComplete
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.cs_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\CAgen\CAgen\obj\Debug\Alignment_mdi.imagery_form.resources

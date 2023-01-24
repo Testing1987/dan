@@ -448,7 +448,7 @@ namespace Alignment_mdi
                     {
                         Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
                         Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
-
+                        Polyline3d poly3d = null;
 
                         Autodesk.AutoCAD.EditorInput.PromptPointResult Point_res1;
                         Autodesk.AutoCAD.EditorInput.PromptPointOptions PP1;
@@ -589,8 +589,15 @@ namespace Alignment_mdi
                                 _AGEN_mainform.tpage_profdraw.set_textBox_prof_Elev_bottom(Downelev.ToString());
 
                                 Functions.create_backup(_AGEN_mainform.config_path);
-                                _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+
+                                Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+
+
+                                if (_AGEN_mainform.Project_type == "3D")
+                                {
+                                    poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                }
+
 
 
                                 if (_AGEN_mainform.dt_station_equation != null)
@@ -611,9 +618,16 @@ namespace Alignment_mdi
                                                 double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
 
 
-                                                Point3d pt_on_2d = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                                                double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt_on_2d);
-                                                double eq_meas = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                                                Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+
+                                                double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
+
+                                                if (_AGEN_mainform.Project_type == "3D")
+                                                {
+                                                    double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+                                                    eq_meas = poly3d.GetDistanceAtParameter(param1);
+                                                }
+
                                                 _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
                                             }
                                         }
@@ -636,13 +650,16 @@ namespace Alignment_mdi
                                                             _AGEN_mainform.layer_prof_pipe, Texth,
                                                                     Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle()),
                                                                             Suff, L1, L2, _AGEN_mainform.config_path, _AGEN_mainform.ExcelVisible, _AGEN_mainform.Start_row_1,
-                                                                                 _AGEN_mainform.units_of_measurement, _AGEN_mainform.dt_station_equation, draw_pipe);
+                                                                                 _AGEN_mainform.units_of_measurement, _AGEN_mainform.dt_station_equation, draw_pipe, poly2d, poly3d);
 
                             }
                         }
 
+                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased == false)
+                        {
+                            poly3d.Erase();
+                        }
 
-                        _AGEN_mainform.Poly3D.Erase();
                         Trans1.Commit();
 
                     }
@@ -827,6 +844,11 @@ namespace Alignment_mdi
 
         }
 
+        public bool get_checkbox_pipes_value()
+        {
+            return checkBox_pipes.Checked;
+        }
+
         #region profile label
         private void button_insert_labels_on_profile_Click(object sender, EventArgs e)
         {
@@ -906,7 +928,14 @@ namespace Alignment_mdi
 
             _AGEN_mainform.tpage_processing.Show();
             _AGEN_mainform.tpage_setup.Load_centerline_and_station_equation(fisier_cl);
-            _AGEN_mainform.Data_Table_crossings = _AGEN_mainform.tpage_crossing_draw.Load_existing_crossing(fisier_cs);
+
+            bool defineste_block = false;
+            if (checkBox_pipes.Checked == true && (checkBox_cover.Checked == true || checkBox_elevation.Checked == true))
+            {
+                defineste_block = true;
+            }
+
+            _AGEN_mainform.Data_Table_crossings = _AGEN_mainform.tpage_crossing_draw.Load_existing_crossing(fisier_cs, "", defineste_block);
 
             string fisier_prof = ProjFolder + _AGEN_mainform.prof_excel_name;
             if (System.IO.File.Exists(fisier_prof) == false)
@@ -921,6 +950,8 @@ namespace Alignment_mdi
 
             System.Data.DataTable dt_profile = Load_existing_profile_graph(fisier_prof, ref dt_null);
 
+            Polyline3d poly3d = null;
+            Polyline poly_cl1 = null;
 
             if (_AGEN_mainform.Data_Table_crossings != null)
             {
@@ -942,9 +973,12 @@ namespace Alignment_mdi
                         {
                             using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                             {
+                                if (_AGEN_mainform.Project_type == "3D")
+                                {
+                                    poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                }
 
-                                _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                poly_cl1 = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 int lr = 1;
 
@@ -995,85 +1029,154 @@ namespace Alignment_mdi
                                 Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
                                 string Agen_profile_band_V2 = "Agen_profile_band_V2";
+                                string Agen_profile_band_V3 = "Agen_profile_band_V3";
 
-                                if (Tables1.IsTableDefined(Agen_profile_band_V2) == true)
+
+                                foreach (ObjectId id1 in BTrecord)
                                 {
-                                    foreach (ObjectId id1 in BTrecord)
+                                    Polyline poly_ground = Trans1.GetObject(id1, OpenMode.ForRead) as Polyline;
+                                    if (poly_ground != null)
                                     {
-                                        Polyline poly_ground = Trans1.GetObject(id1, OpenMode.ForRead) as Polyline;
-                                        if (poly_ground != null)
+
+                                        if (Tables1.IsTableDefined(Agen_profile_band_V2) == true)
                                         {
-
-                                            if (Tables1.IsTableDefined(Agen_profile_band_V2) == true)
+                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
                                             {
-                                                using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
+
+                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), id1, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
                                                 {
-
-                                                    using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), id1, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                                    if (Records1.Count > 0)
                                                     {
-                                                        if (Records1.Count > 0)
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
                                                         {
-                                                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                            foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                            double start1 = -123.4;
+                                                            double end1 = -123.4;
+                                                            string segm1 = "123456";
+                                                            for (int i = 0; i < Record1.Count; ++i)
                                                             {
-                                                                double start1 = -123.4;
-                                                                double end1 = -123.4;
-                                                                string segm1 = "123456";
-                                                                for (int i = 0; i < Record1.Count; ++i)
+                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                                                string Nume_field = Field_def1.Name;
+                                                                string Valoare_field = Record1[i].StrValue;
+
+                                                                if (Nume_field.ToLower() == "beginsta")
                                                                 {
-                                                                    Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
-                                                                    string Nume_field = Field_def1.Name;
-                                                                    string Valoare_field = Record1[i].StrValue;
-
-                                                                    if (Nume_field.ToLower() == "beginsta")
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
                                                                     {
-                                                                        if (Functions.IsNumeric(Valoare_field) == true)
-                                                                        {
-                                                                            start1 = Convert.ToDouble(Valoare_field);
-                                                                        }
-                                                                    }
-
-                                                                    if (Nume_field.ToLower() == "endsta")
-                                                                    {
-                                                                        if (Functions.IsNumeric(Valoare_field) == true)
-                                                                        {
-                                                                            end1 = Convert.ToDouble(Valoare_field);
-                                                                        }
-                                                                    }
-                                                                    if (Nume_field.ToLower() == "segment")
-                                                                    {
-                                                                        segm1 = Convert.ToString(Valoare_field);
+                                                                        start1 = Convert.ToDouble(Valoare_field);
                                                                     }
                                                                 }
 
-                                                                string segment2 = _AGEN_mainform.tpage_setup.Get_segment_name1();
-                                                                if (_AGEN_mainform.tpage_setup.Get_segment_name1() == "not defined")
+                                                                if (Nume_field.ToLower() == "endsta")
                                                                 {
-                                                                    segment2 = "";
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        end1 = Convert.ToDouble(Valoare_field);
+                                                                    }
                                                                 }
-
-                                                                if (start1 != -123.4 && end1 != 123.4 && segm1.ToLower() == segment2.ToLower())
+                                                                if (Nume_field.ToLower() == "segment")
                                                                 {
-                                                                    lista_poly.Add(id1);
-                                                                    lista_start.Add(start1);
-                                                                    lista_end.Add(end1);
+                                                                    segm1 = Convert.ToString(Valoare_field);
                                                                 }
-
                                                             }
+
+                                                            string segment2 = _AGEN_mainform.tpage_setup.Get_segment_name1();
+                                                            if (_AGEN_mainform.tpage_setup.Get_segment_name1() == "not defined")
+                                                            {
+                                                                segment2 = "";
+                                                            }
+
+                                                            if (start1 != -123.4 && end1 != 123.4 && segm1.ToLower() == segment2.ToLower())
+                                                            {
+                                                                lista_poly.Add(id1);
+                                                                lista_start.Add(start1);
+                                                                lista_end.Add(end1);
+                                                            }
+
                                                         }
                                                     }
-
                                                 }
-                                            }
 
+                                            }
                                         }
+
+                                        if (Tables1.IsTableDefined(Agen_profile_band_V3) == true)
+                                        {
+                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
+                                            {
+
+                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), id1, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                                {
+                                                    if (Records1.Count > 0)
+                                                    {
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                        {
+                                                            double start1 = -123.4;
+                                                            double end1 = -123.4;
+                                                            string segm1 = "123456";
+                                                            for (int i = 0; i < Record1.Count; ++i)
+                                                            {
+                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
+                                                                string Nume_field = Field_def1.Name;
+                                                                string Valoare_field = Record1[i].StrValue;
+
+                                                                if (Nume_field.ToLower() == "beginsta")
+                                                                {
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        start1 = Convert.ToDouble(Valoare_field);
+                                                                    }
+                                                                }
+
+                                                                if (Nume_field.ToLower() == "endsta")
+                                                                {
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        end1 = Convert.ToDouble(Valoare_field);
+                                                                    }
+                                                                }
+                                                                if (Nume_field.ToLower() == "segment")
+                                                                {
+                                                                    segm1 = Convert.ToString(Valoare_field);
+                                                                }
+                                                            }
+
+                                                            string segment2 = _AGEN_mainform.tpage_setup.Get_segment_name1();
+                                                            if (_AGEN_mainform.tpage_setup.Get_segment_name1() == "not defined")
+                                                            {
+                                                                segment2 = "";
+                                                            }
+
+                                                            if (start1 != -123.4 && end1 != 123.4 && segm1.ToLower() == segment2.ToLower())
+                                                            {
+                                                                lista_poly.Add(id1);
+                                                                lista_start.Add(start1);
+                                                                lista_end.Add(end1);
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+
                                     }
+
                                 }
 
 
 
 
                                 Functions.Creaza_layer(_AGEN_mainform.layer_prof_block_labels, 2, true);
+
+                                if ((checkBox_cover.Checked == true || checkBox_elevation.Checked == true) && checkBox_pipes.Checked == true)
+                                {
+                                    Functions.Creaza_layer("Agen_symbols", 2, true);
+                                    Functions.Creaza_layer("NO PLOT", 40, false);
+                                }
+
                                 ObjectId text_style_id = Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle());
 
                                 if (Texth <= 0) Texth = 10;
@@ -1160,21 +1263,36 @@ namespace Alignment_mdi
                                             }
                                         }
 
-
-                                        if (_AGEN_mainform.COUNTRY == "CANADA" &&
-                                            _AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_x] != DBNull.Value &&
-                                            _AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_y] != DBNull.Value)
+                                        if (_AGEN_mainform.COUNTRY == "CANADA")
                                         {
-                                            double x = Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_x]);
-                                            double y = Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_y]);
-                                            pt_on_2d = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, _AGEN_mainform.Poly2D.Elevation), Vector3d.ZAxis, false);
-                                            double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt_on_2d);
-                                            Station = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
-                                            Station_2d = _AGEN_mainform.Poly2D.GetDistanceAtParameter(param1);
-                                            double b1 = -1.23456;
-                                            Station = Functions.get_stationCSF_from_point(_AGEN_mainform.Poly2D, pt_on_2d, Station_2d, _AGEN_mainform.dt_centerline, ref b1);
+                                            if (_AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_x] != DBNull.Value &&
+                                                _AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_y] != DBNull.Value)
+                                            {
+                                                double x = Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_x]);
+                                                double y = Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i][_AGEN_mainform.Col_y]);
+                                                pt_on_2d = poly_cl1.GetClosestPointTo(new Point3d(x, y, poly_cl1.Elevation), Vector3d.ZAxis, false);
+                                                double param1 = poly_cl1.GetParameterAtPoint(pt_on_2d);
+                                                Station = poly3d.GetDistanceAtParameter(param1);
+                                                Station_2d = poly_cl1.GetDistanceAtParameter(param1);
+                                                double b1 = -1.23456;
+                                                Station = Functions.get_stationCSF_from_point(poly_cl1, pt_on_2d, Station_2d, _AGEN_mainform.dt_centerline, ref b1);
+                                            }
                                         }
 
+
+
+                                        double vexag = 0;
+                                        if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
+                                        {
+                                            vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
+                                        }
+                                        else
+                                        {
+                                            _AGEN_mainform.tpage_processing.Hide();
+                                            set_enable_true();
+                                            MessageBox.Show("specify the profile vertical exaggeration");
+                                            return;
+                                        }
 
                                         if (lista_start.Count > 0 && lista_start.Count == lista_end.Count && lista_start.Count == lista_poly.Count)
                                         {
@@ -1213,37 +1331,41 @@ namespace Alignment_mdi
                                                             double x1 = Poly2d.StartPoint.X + lr * (Station - start1) * Hexag;
 
 
-                                                            if (_AGEN_mainform.COUNTRY == "CANADA" && _AGEN_mainform.dt_station_equation != null && _AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                            if (_AGEN_mainform.COUNTRY == "CANADA" && _AGEN_mainform.Project_type == "3D")
                                                             {
-
-
-                                                                double ahead0 = start1;
-                                                                double dif1 = 0;
-
-                                                                for (int j = 0; j < _AGEN_mainform.dt_station_equation.Rows.Count; ++j)
+                                                                if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                                                 {
-                                                                    if (_AGEN_mainform.dt_station_equation.Rows[j][Col_Station_ahead] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[j][Col_Station_back] != DBNull.Value)
+
+
+                                                                    double ahead0 = start1;
+                                                                    double dif1 = 0;
+
+                                                                    for (int j = 0; j < _AGEN_mainform.dt_station_equation.Rows.Count; ++j)
                                                                     {
-                                                                        double back1 = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[j][Col_Station_back]);
-                                                                        double ahead1 = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[j][Col_Station_ahead]);
-
-                                                                        if (start1 <= back1 && ahead1 <= end1)
+                                                                        if (_AGEN_mainform.dt_station_equation.Rows[j][Col_Station_ahead] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[j][Col_Station_back] != DBNull.Value)
                                                                         {
-                                                                            if (Station > ahead1)
-                                                                            {
-                                                                                dif1 = dif1 + back1 - ahead0;
-                                                                                ahead0 = ahead1;
-                                                                            }
+                                                                            double back1 = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[j][Col_Station_back]);
+                                                                            double ahead1 = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[j][Col_Station_ahead]);
 
+                                                                            if (start1 <= back1 && ahead1 <= end1)
+                                                                            {
+                                                                                if (Station > ahead1)
+                                                                                {
+                                                                                    dif1 = dif1 + back1 - ahead0;
+                                                                                    ahead0 = ahead1;
+                                                                                }
+
+                                                                            }
                                                                         }
                                                                     }
+
+
+
+                                                                    x1 = Poly2d.StartPoint.X + lr * (dif1 + (Station - ahead0)) * Hexag;
+
                                                                 }
-
-
-
-                                                                x1 = Poly2d.StartPoint.X + lr * (dif1 + (Station - ahead0)) * Hexag;
-
                                                             }
+
 
                                                             Line line1 = new Line(new Point3d(x1, ymin - 10000, Poly2d.Elevation), new Point3d(x1, ymax + 10000, Poly2d.Elevation));
 
@@ -1255,6 +1377,9 @@ namespace Alignment_mdi
                                                                 col1.Add(new Point3d(x1, Poly2d.GetPoint2dAt(0).Y, Poly2d.Elevation));
                                                             }
 
+
+
+
                                                             for (int n = 0; n < col1.Count; ++n)
                                                             {
                                                                 Point3d inspt = new Point3d();
@@ -1263,34 +1388,10 @@ namespace Alignment_mdi
 
                                                                 if (checkBox_cover.Checked == true)
                                                                 {
-                                                                    double vexag = 0;
-                                                                    if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
-                                                                    {
-                                                                        vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        _AGEN_mainform.tpage_processing.Hide();
-                                                                        set_enable_true();
-                                                                        MessageBox.Show("specify the profile vertical exaggeration");
-                                                                        return;
-                                                                    }
                                                                     inspt = new Point3d(inspt.X, inspt.Y - z * vexag, inspt.Z);
                                                                 }
                                                                 else if (checkBox_elevation.Checked == true)
                                                                 {
-                                                                    double vexag = 0;
-                                                                    if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
-                                                                    {
-                                                                        vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        _AGEN_mainform.tpage_processing.Hide();
-                                                                        set_enable_true();
-                                                                        MessageBox.Show("specify the profile vertical exaggeration");
-                                                                        return;
-                                                                    }
                                                                     inspt = new Point3d(inspt.X, inspt.Y - (z_on_cl - z) * vexag, inspt.Z);
                                                                 }
 
@@ -1340,7 +1441,7 @@ namespace Alignment_mdi
                                                                 }
 
 
-                                                                if (creaza_block == true)
+                                                                if (creaza_block == true && defineste_block == false)
                                                                 {
                                                                     BlockReference br1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "",
                                                                               block_name, inspt, 1 / _AGEN_mainform.Vw_scale, 0, _AGEN_mainform.layer_prof_block_labels, col_atr, col_val);
@@ -1354,12 +1455,80 @@ namespace Alignment_mdi
 
 
                                                                 }
-                                                                else
+                                                                else if (creaza_mleader == true && defineste_block == false)
                                                                 {
                                                                     Functions.Create_mleader_on_profile_with_database(ThisDrawing.Database, BTrecord, inspt, _AGEN_mainform.layer_prof_block_labels, mleader_descr, Texth, text_style_id);
                                                                 }
-                                                            }
+                                                                else if (defineste_block == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"] != DBNull.Value)
+                                                                    {
+                                                                        #region block creation
 
+                                                                        double diam1 = Math.Abs(Convert.ToDouble(_AGEN_mainform.Data_Table_crossings.Rows[i]["Pipe Size in feet"]));
+                                                                        string name_of_block = "_" + diam1;
+
+                                                                        string content1 = display_sta_string;
+                                                                        if (_AGEN_mainform.Data_Table_crossings.Rows[i][6] != DBNull.Value)
+                                                                        {
+                                                                            content1 = display_sta_string + "\r\n" + Convert.ToString(_AGEN_mainform.Data_Table_crossings.Rows[i][6]);
+                                                                        }
+
+
+                                                                        if (BlockTable1.Has(name_of_block) == false)
+                                                                        {
+                                                                            BlockTable1.UpgradeOpen();
+                                                                            using (BlockTableRecord bltrec1 = new BlockTableRecord())
+                                                                            {
+                                                                                bltrec1.Name = name_of_block;
+
+
+                                                                                Circle cerc1 = new Circle(new Point3d(0, -diam1 / 2, 0), Vector3d.ZAxis, diam1 / 2);
+                                                                                cerc1.Layer = "0";
+                                                                                bltrec1.AppendEntity(cerc1);
+
+
+
+                                                                                AttributeDefinition att1 = new AttributeDefinition();
+                                                                                att1.Tag = "DESCRIPTION";
+                                                                                att1.Layer = "NO PLOT";
+                                                                                att1.Height = diam1 / 4;
+                                                                                att1.Position = new Point3d(0, -diam1 - diam1 / 4, 0);
+                                                                                att1.IsMTextAttributeDefinition = true;
+                                                                                att1.Justify = AttachmentPoint.TopCenter;
+
+                                                                                att1.TextString = content1;
+                                                                                bltrec1.AppendEntity(att1);
+
+
+
+                                                                                BlockTable1.Add(bltrec1);
+                                                                                Trans1.AddNewlyCreatedDBObject(bltrec1, true);
+
+                                                                                col_atr = new System.Collections.Specialized.StringCollection();
+                                                                                col_val = new System.Collections.Specialized.StringCollection();
+                                                                                col_atr.Add("DESCRIPTION");
+                                                                                col_val.Add(content1);
+
+                                                                                BlockReference b1 = Functions.InsertBlock_with_multiple_atributes_with_database_2_SCALES(ThisDrawing.Database, BTrecord, "", name_of_block, inspt, Hexag, vexag, 0, "Agen_symbols", col_atr, col_val);
+                                                                                b1.ColorIndex = 256;
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            col_atr = new System.Collections.Specialized.StringCollection();
+                                                                            col_val = new System.Collections.Specialized.StringCollection();
+                                                                            col_atr.Add("DESCRIPTION");
+                                                                            col_val.Add(content1);
+
+                                                                            BlockReference b1 = Functions.InsertBlock_with_multiple_atributes_with_database_2_SCALES(ThisDrawing.Database, BTrecord, "", name_of_block, inspt, Hexag, vexag, 0, "Agen_symbols", col_atr, col_val);
+                                                                            b1.ColorIndex = 256;
+                                                                        }
+
+                                                                        #endregion
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -1367,9 +1536,10 @@ namespace Alignment_mdi
                                         }
                                     }
                                 }
-
-
-                                _AGEN_mainform.Poly3D.Erase();
+                                if (_AGEN_mainform.Project_type == "3D")
+                                {
+                                    poly3d.Erase();
+                                }
                                 Trans1.Commit();
                             }
                         }
@@ -1634,10 +1804,6 @@ namespace Alignment_mdi
                         {
                             _AGEN_mainform.dt_sheet_index = _AGEN_mainform.tpage_setup.Load_existing_sheet_index(fisier_si);
 
-                            _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                            _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-
-                            _AGEN_mainform.dt_sheet_index = Functions.Redefine_stations_for_sheet_index(_AGEN_mainform.dt_sheet_index);
                             if (_AGEN_mainform.Data_Table_profile_band == null || _AGEN_mainform.Data_Table_profile_band.Rows.Count == 0)
                             {
                                 _AGEN_mainform.Data_Table_profile_band = Functions.Creaza_profile_band_datatable_structure();
@@ -1792,9 +1958,14 @@ namespace Alignment_mdi
                 Functions.create_backup(fisier_prof_band);
             }
 
+            Polyline3d poly3d = null;
+            Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
-            _AGEN_mainform.Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-            _AGEN_mainform.Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+            if (_AGEN_mainform.Project_type == "3D")
+            {
+                poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+            }
+
 
             if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.COUNTRY == "USA")
             {
@@ -1814,9 +1985,15 @@ namespace Alignment_mdi
                             double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
 
 
-                            Point3d pt_on_2d = _AGEN_mainform.Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                            double param1 = _AGEN_mainform.Poly2D.GetParameterAtPoint(pt_on_2d);
-                            double eq_meas = _AGEN_mainform.Poly3D.GetDistanceAtParameter(param1);
+                            Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                            double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
+                            if (_AGEN_mainform.Project_type == "3D")
+                            {
+                                double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+                                eq_meas = poly3d.GetDistanceAtParameter(param1);
+                            }
+
+
                             _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
 
                         }
@@ -2023,12 +2200,12 @@ namespace Alignment_mdi
 
 
 
-                        if (_AGEN_mainform.Poly3D != null)
+                        if (poly3d != null && poly3d.IsErased == false)
                         {
                             try
                             {
-                                Polyline3d poly3 = Trans1.GetObject(_AGEN_mainform.Poly3D.ObjectId, OpenMode.ForWrite) as Polyline3d;
-                                poly3.Erase();
+
+                                poly3d.Erase();
                             }
                             catch (System.Exception ex)
                             {
@@ -2763,12 +2940,13 @@ namespace Alignment_mdi
             }
 
             string Agen_profile_band_V2 = "Agen_profile_band_V2";
+            string Agen_profile_band_V3 = "Agen_profile_band_V3";
             Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            if (Tables1.IsTableDefined(Agen_profile_band_V2) == false)
+            if (Tables1.IsTableDefined(Agen_profile_band_V2) == false && Tables1.IsTableDefined(Agen_profile_band_V3) == false)
             {
-                MessageBox.Show("no " + Agen_profile_band_V2 + " data table defined\r\noperation aborted", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("no " + Agen_profile_band_V3 + " data table defined\r\noperation aborted", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 set_enable_true();
                 ThisDrawing.Editor.WriteMessage("\n" + "Command:");
@@ -2917,49 +3095,97 @@ namespace Alignment_mdi
                                     double end1 = -123.4;
                                     string segm1 = "123456";
 
-                                    using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
+                                    if (Tables1.GetTableNames().Contains(Agen_profile_band_V2) == true)
                                     {
-
-                                        using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
                                         {
-                                            if (Records1.Count > 0)
+
+                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
                                             {
-                                                Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                if (Records1.Count > 0)
                                                 {
-
-                                                    for (int k = 0; k < Record1.Count; ++k)
+                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
                                                     {
-                                                        Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                        string Nume_field = Field_def1.Name;
-                                                        string Valoare_field = Record1[k].StrValue;
 
-                                                        if (Nume_field.ToLower() == "beginsta")
+                                                        for (int k = 0; k < Record1.Count; ++k)
                                                         {
-                                                            if (Functions.IsNumeric(Valoare_field) == true)
-                                                            {
-                                                                start1 = Convert.ToDouble(Valoare_field);
-                                                            }
-                                                        }
+                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                            string Nume_field = Field_def1.Name;
+                                                            string Valoare_field = Record1[k].StrValue;
 
-                                                        if (Nume_field.ToLower() == "endsta")
-                                                        {
-                                                            if (Functions.IsNumeric(Valoare_field) == true)
+                                                            if (Nume_field.ToLower() == "beginsta")
                                                             {
-                                                                end1 = Convert.ToDouble(Valoare_field);
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    start1 = Convert.ToDouble(Valoare_field);
+                                                                }
                                                             }
-                                                        }
-                                                        if (Nume_field.ToLower() == "segment")
-                                                        {
-                                                            segm1 = Convert.ToString(Valoare_field);
+
+                                                            if (Nume_field.ToLower() == "endsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    end1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+                                                            if (Nume_field.ToLower() == "segment")
+                                                            {
+                                                                segm1 = Convert.ToString(Valoare_field);
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            }
 
+                                            }
                                         }
                                     }
 
+                                    if (Tables1.GetTableNames().Contains(Agen_profile_band_V3) == true)
+                                    {
+                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
+                                        {
+
+                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                            {
+                                                if (Records1.Count > 0)
+                                                {
+                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                    {
+
+                                                        for (int k = 0; k < Record1.Count; ++k)
+                                                        {
+                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                            string Nume_field = Field_def1.Name;
+                                                            string Valoare_field = Record1[k].StrValue;
+
+                                                            if (Nume_field.ToLower() == "beginsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    start1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+
+                                                            if (Nume_field.ToLower() == "endsta")
+                                                            {
+                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                {
+                                                                    end1 = Convert.ToDouble(Valoare_field);
+                                                                }
+                                                            }
+                                                            if (Nume_field.ToLower() == "segment")
+                                                            {
+                                                                segm1 = Convert.ToString(Valoare_field);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+                                    }
                                     if (segm1.ToLower() != segm2.ToLower() || start1 == -123.4 || end1 == -123.4)
                                     {
                                         lista_ground.RemoveAt(j);
@@ -3006,46 +3232,88 @@ namespace Alignment_mdi
 
                                         double Sta_start = -123.4;
                                         double Sta_end = -123.4;
-
-                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
+                                        if (Tables1.GetTableNames().Contains(Agen_profile_band_V2) == true)
                                         {
-
-                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
                                             {
-                                                if (Records1.Count > 0)
+
+                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
                                                 {
-                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                    if (Records1.Count > 0)
                                                     {
-
-                                                        for (int k = 0; k < Record1.Count; ++k)
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
                                                         {
-                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                            string Nume_field = Field_def1.Name;
-                                                            string Valoare_field = Record1[k].StrValue;
 
-                                                            if (Nume_field.ToLower() == "beginsta")
+                                                            for (int k = 0; k < Record1.Count; ++k)
                                                             {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                                string Nume_field = Field_def1.Name;
+                                                                string Valoare_field = Record1[k].StrValue;
+
+                                                                if (Nume_field.ToLower() == "beginsta")
                                                                 {
-                                                                    Sta_start = Convert.ToDouble(Valoare_field);
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_start = Convert.ToDouble(Valoare_field);
+                                                                    }
                                                                 }
-                                                            }
 
-                                                            if (Nume_field.ToLower() == "endsta")
-                                                            {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
+                                                                if (Nume_field.ToLower() == "endsta")
                                                                 {
-                                                                    Sta_end = Convert.ToDouble(Valoare_field);
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_end = Convert.ToDouble(Valoare_field);
+                                                                    }
                                                                 }
                                                             }
                                                         }
                                                     }
-                                                }
 
+                                                }
                                             }
                                         }
+                                        if (Tables1.GetTableNames().Contains(Agen_profile_band_V3) == true)
+                                        {
+                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
+                                            {
 
+                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
+                                                {
+                                                    if (Records1.Count > 0)
+                                                    {
+                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                                        {
+
+                                                            for (int k = 0; k < Record1.Count; ++k)
+                                                            {
+                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
+                                                                string Nume_field = Field_def1.Name;
+                                                                string Valoare_field = Record1[k].StrValue;
+
+                                                                if (Nume_field.ToLower() == "beginsta")
+                                                                {
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_start = Convert.ToDouble(Valoare_field);
+                                                                    }
+                                                                }
+
+                                                                if (Nume_field.ToLower() == "endsta")
+                                                                {
+                                                                    if (Functions.IsNumeric(Valoare_field) == true)
+                                                                    {
+                                                                        Sta_end = Convert.ToDouble(Valoare_field);
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
                                         double Xstart = poly_ground.StartPoint.X;
                                         double Xend = poly_ground.EndPoint.X;
                                         double Ystart = poly_ground.StartPoint.Y;

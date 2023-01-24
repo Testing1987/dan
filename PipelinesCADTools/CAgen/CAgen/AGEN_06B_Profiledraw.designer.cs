@@ -35,6 +35,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBox_cover = new System.Windows.Forms.CheckBox();
+            this.checkBox_pipes = new System.Windows.Forms.CheckBox();
             this.checkBox_elevation = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.checkBox_no_station = new System.Windows.Forms.CheckBox();
@@ -170,10 +171,11 @@
             this.panel8.Controls.Add(this.label11);
             this.panel8.Controls.Add(this.label5);
             this.panel8.Controls.Add(this.checkBox_cover);
+            this.panel8.Controls.Add(this.checkBox_pipes);
             this.panel8.Controls.Add(this.checkBox_elevation);
-            this.panel8.Location = new System.Drawing.Point(586, 457);
+            this.panel8.Location = new System.Drawing.Point(586, 422);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(254, 88);
+            this.panel8.Size = new System.Drawing.Size(254, 123);
             this.panel8.TabIndex = 2089;
             // 
             // label11
@@ -193,7 +195,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Yellow;
-            this.label5.Location = new System.Drawing.Point(135, 55);
+            this.label5.Location = new System.Drawing.Point(84, 41);
             this.label5.MaximumSize = new System.Drawing.Size(260, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(126, 28);
@@ -212,6 +214,19 @@
             this.checkBox_cover.Text = "Cover";
             this.checkBox_cover.UseVisualStyleBackColor = true;
             this.checkBox_cover.CheckedChanged += new System.EventHandler(this.checkBox_cover_CheckedChanged);
+            // 
+            // checkBox_pipes
+            // 
+            this.checkBox_pipes.AutoSize = true;
+            this.checkBox_pipes.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_pipes.ForeColor = System.Drawing.Color.White;
+            this.checkBox_pipes.Location = new System.Drawing.Point(59, 100);
+            this.checkBox_pipes.Name = "checkBox_pipes";
+            this.checkBox_pipes.Size = new System.Drawing.Size(180, 18);
+            this.checkBox_pipes.TabIndex = 161;
+            this.checkBox_pipes.Text = "Create Pipe and Cable Block";
+            this.checkBox_pipes.UseVisualStyleBackColor = true;
+            this.checkBox_pipes.CheckedChanged += new System.EventHandler(this.checkBox_elevation_CheckedChanged);
             // 
             // checkBox_elevation
             // 
@@ -340,7 +355,7 @@
             this.panel_dan.Controls.Add(this.textBox_prof_grid_height);
             this.panel_dan.Location = new System.Drawing.Point(271, 3);
             this.panel_dan.Name = "panel_dan";
-            this.panel_dan.Size = new System.Drawing.Size(569, 448);
+            this.panel_dan.Size = new System.Drawing.Size(569, 399);
             this.panel_dan.TabIndex = 2089;
             this.panel_dan.Visible = false;
             // 
@@ -1223,5 +1238,6 @@
         private System.Windows.Forms.ComboBox comboBox_profile_tab;
         private System.Windows.Forms.Button button_load_tabs_cross_and_xing;
         private System.Windows.Forms.CheckBox checkBox_no_station;
+        private System.Windows.Forms.CheckBox checkBox_pipes;
     }
 }

@@ -54,11 +54,12 @@ namespace Alignment_mdi
         public static AGEN_Profile_draw tpage_profdraw = null;
         public static AGEN_ProfileScan tpage_profilescan = null;
         public static AGEN_Crossing_draw tpage_crossing_draw = null;
-        public static AGEN_band_analyze tpage_band_analize = null;
+
         public static AGEN_tools tpage_tools = null;
         public static Toolz_form tpage_toolz = null;
         public static VP2poly_form tpage_vp2poly = null;
-        public static image_form tpage_image = null;
+        public static imagery_form tpage_image = null;
+        public static cs_form tpage_cs = null;
 
         public static AGEN_station_equations tpage_st_eq = null;
         public static Agen_load_cl_from_xl tpage_cl_xl = null;
@@ -130,6 +131,8 @@ namespace Alignment_mdi
         public static string layer_ownership_band = "Agen_band_ownership";
         public static string layer_ownership_band_no_plot = "Agen_no_plot_prop";
         public static string layer_centerline = "P_PL_CL";
+        public static string layer_centerline_original = "P_PL_CL";
+      
         public static short color_index_cl = 1;
         public static LineWeight lw_cl = LineWeight.ByLineWeightDefault;
 
@@ -139,8 +142,8 @@ namespace Alignment_mdi
 
         public static string COUNTRY = "USA";
 
-        public static Polyline Poly2D;
-        public static Polyline3d Poly3D;
+        //public static Polyline Poly2D;
+        //public static Polyline3d Poly3D;
 
         public static string Layer_name_Main_Viewport = "AGEN_mainVP";
         public static string Layer_name_prof_main_viewport = "AGEN_VP_Prof_ON";
@@ -397,11 +400,15 @@ namespace Alignment_mdi
         {
             InitializeComponent();
 
-            tpage_image = new image_form();
+            tpage_image = new imagery_form();
             tpage_image.MdiParent = this;
             tpage_image.Dock = DockStyle.Fill;
             tpage_image.Hide();
 
+            tpage_cs = new cs_form();
+            tpage_cs.MdiParent = this;
+            tpage_cs.Dock = DockStyle.Fill;
+            tpage_cs.Hide();
 
             tpage_crossing_scan = new AGEN_CrossingScan();
             tpage_crossing_scan.MdiParent = this;
@@ -517,10 +524,6 @@ namespace Alignment_mdi
             tpage_crossing_draw.Dock = DockStyle.Fill;
             tpage_crossing_draw.Hide();
 
-            tpage_band_analize = new AGEN_band_analyze();
-            tpage_band_analize.MdiParent = this;
-            tpage_band_analize.Dock = DockStyle.Fill;
-            tpage_band_analize.Hide();
 
             tpage_tools = new AGEN_tools();
             tpage_tools.MdiParent = this;
@@ -624,8 +627,6 @@ namespace Alignment_mdi
                 current_segment = "";
                 COUNTRY = "USA";
                 units_of_measurement = "f";
-                Poly2D = null;
-                Poly3D = null;
                 _AGEN_mainform.ProjFolder = "";
                 _AGEN_mainform.dt_centerline = null;
                 _AGEN_mainform.dt_sheet_index = null;
@@ -701,7 +702,6 @@ namespace Alignment_mdi
                 tpage_setup.Show();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -720,6 +720,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
             }
 
 
@@ -731,7 +732,6 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Show();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -750,6 +750,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -760,7 +761,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Show();
-                tpage_band_analize.Hide();
+             
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -779,6 +780,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -789,7 +791,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Show();
+            
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -808,6 +810,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -818,7 +821,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+            
                 tpage_sheetindex.Show();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -837,6 +840,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -847,8 +851,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
-                tpage_sheetindex.Hide();
+                                tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
                 tpage_crossing_draw.Hide();
@@ -866,6 +869,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -877,7 +881,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+       
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -896,6 +900,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -906,7 +911,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+               
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Show();
                 tpage_crossing_scan.Hide();
@@ -925,6 +930,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
             if (e.Node.Text == "Material")
@@ -934,7 +940,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+              
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -953,6 +959,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
             if (e.Node.Text == "Profile")
@@ -962,7 +969,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+                
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -981,6 +988,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -991,7 +999,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+            
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -1010,6 +1018,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -1020,7 +1029,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+                
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -1039,6 +1048,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -1049,7 +1059,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+               
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -1068,6 +1078,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
 
@@ -1078,7 +1089,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+                
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -1097,6 +1108,7 @@ namespace Alignment_mdi
                 tpage_toolz.Show();
                 tpage_vp2poly.Hide();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
             if (e.Node.Name == "Node42")
@@ -1106,7 +1118,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+                
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -1125,6 +1137,7 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Show();
                 tpage_image.Hide();
+                tpage_cs.Hide();
 
             }
             if (e.Node.Name == "Node43")
@@ -1134,7 +1147,7 @@ namespace Alignment_mdi
                 tpage_setup.Hide();
                 tpage_viewport_settings.Hide();
                 tpage_tblk_attrib.Hide();
-                tpage_band_analize.Hide();
+                
                 tpage_sheetindex.Hide();
                 tpage_layer_alias.Hide();
                 tpage_crossing_scan.Hide();
@@ -1153,6 +1166,36 @@ namespace Alignment_mdi
                 tpage_toolz.Hide();
                 tpage_vp2poly.Hide();
                 tpage_image.Show();
+                tpage_cs.Hide();
+
+            }
+            if (e.Node.Name == "Node44")
+            {
+                tpage_processing.Hide();
+                tpage_blank.Hide();
+                tpage_setup.Hide();
+                tpage_viewport_settings.Hide();
+                tpage_tblk_attrib.Hide();
+                
+                tpage_sheetindex.Hide();
+                tpage_layer_alias.Hide();
+                tpage_crossing_scan.Hide();
+                tpage_crossing_draw.Hide();
+                tpage_profilescan.Hide();
+                tpage_profdraw.Hide();
+                tpage_owner_scan.Hide();
+                tpage_owner_draw.Hide();
+                tpage_mat.Hide();
+                tpage_cust_scan.Hide();
+                tpage_cust_draw.Hide();
+                tpage_sheet_gen.Hide();
+                tpage_tools.Hide();
+                tpage_st_eq.Hide();
+                tpage_cl_xl.Hide();
+                tpage_toolz.Hide();
+                tpage_vp2poly.Hide();
+                tpage_image.Hide();
+                tpage_cs.Show();
 
             }
         }

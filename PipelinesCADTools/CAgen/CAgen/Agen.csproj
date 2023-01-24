@@ -51,6 +51,9 @@
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\acmgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AeccDbMgd">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\C3D\AeccDbMgd.dll</HintPath>
+    </Reference>
     <Reference Include="Autodesk.Map.Platform">
       <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\Autodesk.Map.Platform.dll</HintPath>
       <Private>False</Private>
@@ -102,6 +105,12 @@
     </Compile>
     <Compile Include="AGEN_01A_Segments.designer.cs">
       <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AGEN_20_coord_systems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AGEN_20_coord_systems.Designer.cs">
+      <DependentUpon>AGEN_20_coord_systems.cs</DependentUpon>
     </Compile>
     <Compile Include="AGEN_19_IMAGERY.cs">
       <SubType>Form</SubType>
@@ -271,12 +280,6 @@
     <Compile Include="Igen_02_Inquiry_Tool.designer.cs">
       <DependentUpon>Igen_02_Inquiry_Tool.cs</DependentUpon>
     </Compile>
-    <Compile Include="AGEN_13_band_analyze.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AGEN_13_band_analyze.designer.cs">
-      <DependentUpon>AGEN_13_band_analyze.cs</DependentUpon>
-    </Compile>
     <Compile Include="AGEN_14_band_filter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -353,6 +356,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AGEN_01A_Segments.resx">
       <DependentUpon>AGEN_01A_Segments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AGEN_20_coord_systems.resx">
+      <DependentUpon>AGEN_20_coord_systems.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AGEN_19_IMAGERY.resx">
       <DependentUpon>AGEN_19_IMAGERY.cs</DependentUpon>
@@ -440,9 +447,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Igen_02_Inquiry_Tool.resx">
       <DependentUpon>Igen_02_Inquiry_Tool.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AGEN_13_band_analyze.resx">
-      <DependentUpon>AGEN_13_band_analyze.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AGEN_14_band_filter.resx">
       <DependentUpon>AGEN_14_band_filter.cs</DependentUpon>

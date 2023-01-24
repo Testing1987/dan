@@ -1,0 +1,5 @@
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Workspace_band_Csharp\obj\Debug\Workspace_band_Csharp.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Workspace_band_Csharp\obj\Debug\Workspace_band_Csharp.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Workspace_band_Csharp\obj\Debug\Workspace_band_Csharp.Workspace_band_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Workspace_band_Csharp\obj\Debug\Workspace_band_Csharp.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\Workspace_band_Csharp\obj\Debug\Workspace_band_Csharp.csproj.CoreCompileInputs.cache

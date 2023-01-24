@@ -90,7 +90,7 @@ namespace Alignment_mdi
             lista_butoane.Add(textBox_tic_major);
 
             lista_butoane.Add(textBox_tic_minor);
-            lista_butoane.Add(button_display_tpage_load_cl_xl);
+
 
 
 
@@ -154,7 +154,7 @@ namespace Alignment_mdi
             lista_butoane.Add(textBox_start_station_CL);
             lista_butoane.Add(textBox_tic_major);
 
-            lista_butoane.Add(button_display_tpage_load_cl_xl);
+
             lista_butoane.Add(textBox_tic_minor);
             foreach (System.Windows.Forms.Control bt1 in lista_butoane)
             {
@@ -725,7 +725,7 @@ namespace Alignment_mdi
 
                                 string template1 = "";
                                 string template2 = "";
-                                
+
 
                                 if (b3 != null)
                                 {
@@ -1314,7 +1314,7 @@ namespace Alignment_mdi
                             #endregion
 
                             #region Ownership_data_config
-                            else if (W1.Name == "Ownership_data_config_" + segment1)
+                            else if (W1.Name == "O_dc_" + segment1)
                             {
                                 transfer_ownership_band_settings_to_controls(W1);
 
@@ -4188,25 +4188,27 @@ namespace Alignment_mdi
                             return;
                         }
 
+                        Polyline3d poly3d = null;
+                        Polyline poly2d = null;
 
                         if (Curba1 is Polyline)
                         {
-                            _AGEN_mainform.Poly2D = (Polyline)Curba1;
-                            _AGEN_mainform.Poly3D = null;
+                            poly2d = (Polyline)Curba1;
+
                             _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(false);
                             _AGEN_mainform.Project_type = "2D";
-                            poly_length = _AGEN_mainform.Poly2D.Length;
-                            pt0 = _AGEN_mainform.Poly2D.StartPoint;
+                            poly_length = poly2d.Length;
+                            pt0 = poly2d.StartPoint;
                         }
 
                         else if (Curba1 is Polyline3d)
                         {
-                            _AGEN_mainform.Poly3D = (Polyline3d)Curba1;
-                            _AGEN_mainform.Poly2D = Functions.Build_2dpoly_from_3d(_AGEN_mainform.Poly3D);
+                            poly3d = (Polyline3d)Curba1;
+
                             _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(true);
                             _AGEN_mainform.Project_type = "3D";
-                            poly_length = _AGEN_mainform.Poly3D.Length;
-                            pt0 = _AGEN_mainform.Poly3D.StartPoint;
+                            poly_length = poly3d.Length;
+                            pt0 = poly3d.StartPoint;
                         }
 
                         else
@@ -4230,69 +4232,117 @@ namespace Alignment_mdi
 
                         _AGEN_mainform.dt_centerline = Functions.Creaza_centerline_datatable_structure();
 
-
-
-                        for (int i = 0; i < _AGEN_mainform.Poly2D.NumberOfVertices; ++i)
+                        if (_AGEN_mainform.Project_type == "2D")
                         {
-
-                            double x2 = _AGEN_mainform.Poly2D.GetPointAtParameter(i).X;
-                            double y2 = _AGEN_mainform.Poly2D.GetPointAtParameter(i).Y;
-                            double z2 = _AGEN_mainform.Poly2D.GetPointAtParameter(i).Z;
-                            double bulge = _AGEN_mainform.Poly2D.GetBulgeAt(i);
-
-                            if (_AGEN_mainform.Poly3D != null)
+                            for (int i = 0; i < poly2d.NumberOfVertices; ++i)
                             {
-                                z2 = _AGEN_mainform.Poly3D.GetPointAtParameter(i).Z;
-                            }
 
-                            _AGEN_mainform.dt_centerline.Rows.Add();
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_x] = x2;
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_y] = y2;
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
-                            _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = _AGEN_mainform.Poly2D.GetDistanceAtParameter(i);
-
-                            if (bulge != 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_MMid] = bulge;
+                                double x2 = poly2d.GetPointAtParameter(i).X;
+                                double y2 = poly2d.GetPointAtParameter(i).Y;
+                                double z2 = 0;
+                                double bulge = poly2d.GetBulgeAt(i);
 
 
-                            if (_AGEN_mainform.Poly3D != null)
-                            {
-                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_3DSta] = _AGEN_mainform.Poly3D.GetDistanceAtParameter(i);
-                                z2 = _AGEN_mainform.Poly3D.GetPointAtParameter(i).Z;
+                                _AGEN_mainform.dt_centerline.Rows.Add();
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_x] = x2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_y] = y2;
                                 _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = poly2d.GetDistanceAtParameter(i);
+
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1]["BULGE"] = bulge;
+
+
+
+
+                                if (i > 0 && i < poly2d.NumberOfVertices - 1)
+                                {
+                                    double x1 = poly2d.GetPointAtParameter(i - 1).X;
+                                    double y1 = poly2d.GetPointAtParameter(i - 1).Y;
+                                    double x3 = poly2d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly2d.GetPointAtParameter(i + 1).Y;
+
+                                    string Deflexia = Functions.Get_deflection_angle_dms(x1, y1, x2, y2, x3, y3);
+                                    double Defl1 = 180 * Functions.Get_deflection_angle_rad(x1, y1, x2, y2, x3, y3) / Math.PI;
+
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAng] = Defl1;
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAngDMS] = Deflexia;
+
+
+
+                                }
+
+
+
+
+                                if (i < poly2d.NumberOfVertices - 1)
+                                {
+                                    double x3 = poly2d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly2d.GetPointAtParameter(i + 1).Y;
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Bearing] = Functions.Get_Quadrant_bearing(Functions.GET_Bearing_rad(x2, y2, x3, y3));
+                                    if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Distance] = Math.Pow((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3), 0.5);
+
+                                }
+
+
                             }
-
-
-                            if (i > 0 && i < _AGEN_mainform.Poly2D.NumberOfVertices - 1)
-                            {
-                                double x1 = _AGEN_mainform.Poly2D.GetPointAtParameter(i - 1).X;
-                                double y1 = _AGEN_mainform.Poly2D.GetPointAtParameter(i - 1).Y;
-                                double x3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).X;
-                                double y3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).Y;
-
-                                string Deflexia = Functions.Get_deflection_angle_dms(x1, y1, x2, y2, x3, y3);
-                                double Defl1 = 180 * Functions.Get_deflection_angle_rad(x1, y1, x2, y2, x3, y3) / Math.PI;
-
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAng] = Defl1;
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAngDMS] = Deflexia;
-
-
-
-                            }
-
-
-
-
-                            if (i < _AGEN_mainform.Poly2D.NumberOfVertices - 1)
-                            {
-                                double x3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).X;
-                                double y3 = _AGEN_mainform.Poly2D.GetPointAtParameter(i + 1).Y;
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Bearing] = Functions.Get_Quadrant_bearing(Functions.GET_Bearing_rad(x2, y2, x3, y3));
-                                if (bulge == 0) _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Distance] = Math.Pow((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3), 0.5);
-
-                            }
-
-
                         }
+                        else
+                        {
+                            for (int i = 0; i < poly3d.EndParam; ++i)
+                            {
+
+                                double x2 = poly3d.GetPointAtParameter(i).X;
+                                double y2 = poly3d.GetPointAtParameter(i).Y;
+                                double z2 = poly3d.GetPointAtParameter(i).Z;
+
+
+                                _AGEN_mainform.dt_centerline.Rows.Add();
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_x] = x2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_y] = y2;
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_z] = z2;
+
+
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1]["BULGE"] = 0;
+
+
+                                _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_3DSta] = poly3d.GetDistanceAtParameter(i);
+
+
+
+
+                                if (i > 0 && i < poly3d.EndParam - 1)
+                                {
+                                    double x1 = poly3d.GetPointAtParameter(i - 1).X;
+                                    double y1 = poly3d.GetPointAtParameter(i - 1).Y;
+                                    double x3 = poly3d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly3d.GetPointAtParameter(i + 1).Y;
+
+                                    string Deflexia = Functions.Get_deflection_angle_dms(x1, y1, x2, y2, x3, y3);
+                                    double Defl1 = 180 * Functions.Get_deflection_angle_rad(x1, y1, x2, y2, x3, y3) / Math.PI;
+
+                                    _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAng] = Defl1;
+                                    _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_DeflAngDMS] = Deflexia;
+
+
+
+                                }
+
+
+
+
+                                if (i < poly3d.EndParam - 1)
+                                {
+                                    double x3 = poly3d.GetPointAtParameter(i + 1).X;
+                                    double y3 = poly3d.GetPointAtParameter(i + 1).Y;
+                                    _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Bearing] = Functions.Get_Quadrant_bearing(Functions.GET_Bearing_rad(x2, y2, x3, y3));
+                                    _AGEN_mainform.dt_centerline.Rows[_AGEN_mainform.dt_centerline.Rows.Count - 1][_AGEN_mainform.Col_Distance] = Math.Pow((x2 - x3) * (x2 - x3) + (y2 - y3) * (y2 - y3), 0.5);
+
+                                }
+
+
+                            }
+                        }
+
                         Trans1.Commit();
                     }
                 }
@@ -4633,7 +4683,7 @@ namespace Alignment_mdi
             using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
             {
                 Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                Polyline Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                 BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
 
@@ -4867,8 +4917,6 @@ namespace Alignment_mdi
 
                 }
 
-                _AGEN_mainform.Poly2D = Poly2D;
-                _AGEN_mainform.Poly3D = Poly3D;
 
                 if (_AGEN_mainform.Project_type == "3D")
                 {
@@ -5085,18 +5133,47 @@ namespace Alignment_mdi
         {
             Ag = this.MdiParent as _AGEN_mainform;
 
-            string od_name = "Agen_stationing";
-            Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+            _AGEN_mainform.current_segment = comboBox_segment_name.Text;
+            _AGEN_mainform.layer_stationing = _AGEN_mainform.layer_stationing_original + "_" + comboBox_segment_name.Text;
+            _AGEN_mainform.layer_centerline = _AGEN_mainform.layer_centerline_original + "_" + comboBox_segment_name.Text;
+
+            string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+
+            if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+            {
+                ProjFolder = ProjFolder + "\\";
+            }
+            string fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+
+            if (System.IO.Directory.Exists(ProjFolder) == false)
+            {
+                MessageBox.Show("No project Loaded");
+                return;
+            }
+            if (System.IO.File.Exists(fisier_cl) == false)
+            {
+                MessageBox.Show("No centerline file found");
+                return;
+            }
+
             #region object data stationing
+            string od_name = "STA_V1";
+            Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+
             List<object> Lista_val_CL = new List<object>();
             List<Autodesk.Gis.Map.Constants.DataType> Lista_type_CL = new List<Autodesk.Gis.Map.Constants.DataType>();
 
             Lista_val_CL.Add(comboBox_segment_name.Text);
             Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
-            Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToUpper());
+            Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " +
+                                System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToUpper());
             Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
+
+
+            Lista_val_CL.Add(fisier_cl);
+            Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
             #endregion
 
@@ -5172,7 +5249,7 @@ namespace Alignment_mdi
                 return;
             }
 
-         
+
             double texth = Functions.Get_text_height_from_textstyle(comboBox_text_styles.Text);
             double gap1 = texth;
 
@@ -5195,27 +5272,6 @@ namespace Alignment_mdi
                 return;
             }
 
-            string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
-
-            if (System.IO.Directory.Exists(ProjFolder) == false)
-            {
-                MessageBox.Show("No project Loaded");
-                return;
-            }
-
-            if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
-            {
-                ProjFolder = ProjFolder + "\\";
-            }
-
-            string fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
-
-
-            if (System.IO.File.Exists(fisier_cl) == false)
-            {
-                MessageBox.Show("No centerline file found");
-                return;
-            }
 
             _AGEN_mainform.tpage_processing.Show();
 
@@ -5228,15 +5284,15 @@ namespace Alignment_mdi
                 if (_AGEN_mainform.dt_centerline.Rows.Count > 0)
                 {
 
-                    _AGEN_mainform.layer_stationing = _AGEN_mainform.layer_stationing_original + "_" + _AGEN_mainform.current_segment;
+
 
                     try
                     {
 
                         Functions.Create_stationing_od_table();
 
-                        delete_entities_with_OD(_AGEN_mainform.layer_stationing, od_name);
-                        delete_entities_with_OD(_AGEN_mainform.layer_centerline, od_name);
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_stationing, od_name);
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_centerline, od_name);
 
                         Functions.Creaza_layer(_AGEN_mainform.layer_stationing, 2, true);
                         Functions.Creaza_layer(_AGEN_mainform.layer_centerline, _AGEN_mainform.color_index_cl, true);
@@ -5264,14 +5320,9 @@ namespace Alignment_mdi
                                     Poly3D.ColorIndex = 256;
 
                                 }
-                                else
-                                {
-                                    Poly3D = null;
-                                }
 
 
-
-                                Polyline Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                 Poly2D.Layer = _AGEN_mainform.layer_centerline;
                                 Poly2D.ColorIndex = 256;
 
@@ -5355,6 +5406,7 @@ namespace Alignment_mdi
 
                                                         double end_eq = SA + dist2 - dist1;
                                                         add_last_stationing(Poly2D, od_name, end_eq, gap1, texth, tick_major, 0);
+
                                                     }
 
                                                     if (_AGEN_mainform.Project_type == "3D")
@@ -5428,7 +5480,6 @@ namespace Alignment_mdi
                                                             }
 
                                                         }
-
 
 
 
@@ -5697,10 +5748,20 @@ namespace Alignment_mdi
                 Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
                 using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                 {
-                    Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                    Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
                     Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
 
+
                     #region object data stationing
+
+                    string fisier_cl = "";
+                    string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+
+                    if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                    {
+                        ProjFolder = ProjFolder + "\\";
+                    }
+                    fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
 
                     Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
@@ -5715,14 +5776,16 @@ namespace Alignment_mdi
                     Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute);
                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
+                    Lista_val.Add(fisier_cl);
+                    Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
                     #endregion
 
-                    double max_length = Poly2D.Length;
+                    double poly_length = Poly2D.Length;
 
                     if (_AGEN_mainform.Project_type == "3D")
                     {
-                        max_length = Poly3D.Length;
+                        poly_length = Poly3D.Length;
                     }
 
                     int lr = 1;
@@ -5734,11 +5797,348 @@ namespace Alignment_mdi
                     }
                     double first_label_major = Math.Floor((start1 + spacing_major) / spacing_major) * spacing_major;
 
-                    if (checkBox_create_major_labels.Checked == true)
+                    List<double> lista_major = new List<double>();
+
+                    if (checkBox_blocks.Checked == false)
                     {
-                        if (start1 + max_length >= first_label_major)
+
+
+                        if (checkBox_create_major_labels.Checked == true)
                         {
-                            int no_major = Convert.ToInt32(Math.Ceiling((start1 + max_length - first_label_major) / spacing_major));
+                            if (start1 + poly_length >= first_label_major)
+                            {
+                                int no_major = Convert.ToInt32(Math.Ceiling((start1 + poly_length - first_label_major) / spacing_major));
+
+                                if (no_major > 0)
+                                {
+                                    for (int i = 0; i < no_major; ++i)
+                                    {
+                                        Point3d pt0 = new Point3d();
+
+                                        lista_major.Add(first_label_major + i * spacing_major);
+
+                                        double dist1 = (first_label_major - start1) + i * spacing_major;
+                                        double dist1_2d = dist1;
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            pt0 = Poly3D.GetPointAtDist(dist1);
+                                            double param_for_2D = Poly3D.GetParameterAtDistance(dist1);
+                                            if (Poly2D.EndParam < param_for_2D)
+                                            {
+                                                param_for_2D = Poly2D.EndParam;
+                                            }
+                                            dist1_2d = Poly2D.GetDistanceAtParameter(param_for_2D);
+
+                                        }
+                                        else
+                                        {
+                                            pt0 = Poly2D.GetPointAtDist(dist1);
+
+                                        }
+
+
+
+                                        Line Big1 = new Line(new Point3d(pt0.X - tick_major / 2, pt0.Y, 0), new Point3d(pt0.X + tick_major / 2, pt0.Y, 0));
+
+                                        double param1 = Poly2D.GetParameterAtDistance(dist1_2d);
+                                        double param2 = param1 + 1;
+                                        if (Poly2D.EndParam < param2)
+                                        {
+                                            param1 = Poly2D.EndParam - 1;
+                                            param2 = Poly2D.EndParam;
+                                        }
+
+                                        double bulge = 0;
+
+                                        int par_bulge = Convert.ToInt32(Math.Floor(param1));
+
+
+                                        Point3d point1 = new Point3d();
+
+                                        Point3d point2 = new Point3d();
+
+                                        double bear1 = -1;
+
+                                        double rot1 = -1;
+
+                                        if (_AGEN_mainform.Project_type == "3D")
+
+                                        {
+                                            point1 = Poly3D.GetPointAtParameter(Math.Floor(param1));
+                                            point2 = Poly3D.GetPointAtParameter(Math.Floor(param2));
+
+                                            bear1 = Functions.GET_Bearing_rad(point1.X, point1.Y, point2.X, point2.Y);
+
+                                            rot1 = bear1 - lr * Math.PI / 2;
+                                        }
+                                        else
+                                        {
+                                            bulge = Poly2D.GetBulgeAt(par_bulge);
+                                            point1 = Poly2D.GetPointAtParameter(par_bulge);
+                                            point2 = Poly2D.GetPointAtParameter(Math.Floor(param2));
+
+                                            if (bulge != 0)
+                                            {
+                                                CircularArc3d arc3d = Poly2D.GetArcSegmentAt(par_bulge);
+                                                double bear_to_center = Functions.GET_Bearing_rad(pt0.X, pt0.Y, arc3d.Center.X, arc3d.Center.Y);
+                                                if (bulge > 0)
+                                                {
+                                                    if (lr == 1)
+                                                    {
+                                                        rot1 = Math.PI + bear_to_center;
+                                                    }
+                                                    else
+                                                    {
+                                                        rot1 = bear_to_center;
+                                                    }
+
+                                                }
+                                                else
+                                                {
+
+                                                    if (lr == 1)
+                                                    {
+                                                        rot1 = bear_to_center;
+                                                    }
+                                                    else
+                                                    {
+                                                        rot1 = Math.PI + bear_to_center;
+                                                    }
+
+                                                }
+
+                                                bear1 = rot1 + lr * Math.PI / 2;
+
+                                            }
+                                            else
+                                            {
+
+                                                bear1 = Functions.GET_Bearing_rad(point1.X, point1.Y, point2.X, point2.Y);
+
+                                                rot1 = bear1 - lr * Math.PI / 2;
+                                            }
+
+                                        }
+
+
+
+                                        Big1.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt0));
+
+                                        Big1.Layer = _AGEN_mainform.layer_stationing;
+                                        Big1.ColorIndex = 256;
+
+
+                                        BTrecord.AppendEntity(Big1);
+                                        Trans1.AddNewlyCreatedDBObject(Big1, true);
+                                        Functions.Populate_object_data_table_from_objectid(Tables1, Big1.ObjectId, od_name, Lista_val, Lista_type);
+
+
+                                        if (checkBox_create_major_labels.Checked == true)
+                                        {
+                                            MText mt1 = new MText();
+                                            if (checkBox_text_bottom.Checked == false)
+                                            {
+                                                Line temp_line1 = new Line(Big1.StartPoint, Big1.EndPoint);
+                                                temp_line1.TransformBy(Matrix3d.Scaling((Big1.Length + gap1) / Big1.Length, Big1.EndPoint));
+                                                mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(first_label_major + i * spacing_major, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
+                                            }
+                                            else
+                                            {
+                                                Line temp_line2 = new Line(Big1.StartPoint, Big1.EndPoint);
+                                                temp_line2.TransformBy(Matrix3d.Scaling((Big1.Length + gap1) / Big1.Length, Big1.StartPoint));
+                                                mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(first_label_major + i * spacing_major, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
+                                            }
+
+                                            mt1.Layer = _AGEN_mainform.layer_stationing;
+                                            BTrecord.AppendEntity(mt1);
+                                            Trans1.AddNewlyCreatedDBObject(mt1, true);
+                                            Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                        if (checkBox_draw_minor_lines.Checked == true)
+                        {
+                            double first_label_minor = Math.Floor((start1 + spacing_minor) / spacing_minor) * spacing_minor;
+
+                            if (start1 + poly_length >= first_label_minor)
+                            {
+                                int no_minor = Convert.ToInt32(Math.Ceiling((start1 + poly_length - first_label_minor) / spacing_minor));
+
+                                if (no_minor > 0)
+                                {
+                                    for (int i = 0; i < no_minor; ++i)
+                                    {
+                                        if (lista_major.Contains(first_label_minor + i * spacing_minor) == false)
+                                        {
+                                            Point3d pt0 = new Point3d();
+
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                pt0 = Poly3D.GetPointAtDist((first_label_minor - start1) + i * spacing_minor);
+                                            }
+                                            else
+                                            {
+                                                pt0 = Poly2D.GetPointAtDist((first_label_minor - start1) + i * spacing_minor);
+                                            }
+
+
+                                            Line small1 = new Line(new Point3d(pt0.X - tick_minor / 2, pt0.Y, 0), new Point3d(pt0.X + tick_minor / 2, pt0.Y, 0));
+
+                                            double param1 = Poly2D.GetParameterAtPoint(Poly2D.GetClosestPointTo(pt0, Vector3d.ZAxis, false));
+                                            double param2 = param1 + 1;
+                                            if (Poly2D.EndParam < param2)
+                                            {
+                                                param1 = Poly2D.EndParam - 1;
+                                                param2 = Poly2D.EndParam;
+                                            }
+                                            double bulge = 0;
+                                            int par_bulge = Convert.ToInt32(Math.Floor(param1));
+
+
+                                            Point3d point1 = new Point3d();
+
+                                            Point3d point2 = new Point3d();
+
+
+                                            double bear1 = -1;
+
+                                            double rot1 = -1;
+
+                                            if (_AGEN_mainform.Project_type == "3D")
+
+                                            {
+                                                point1 = Poly3D.GetPointAtParameter(Math.Floor(param1));
+                                                point2 = Poly3D.GetPointAtParameter(Math.Floor(param2));
+
+                                                bear1 = Functions.GET_Bearing_rad(point1.X, point1.Y, point2.X, point2.Y);
+
+                                                rot1 = bear1 - lr * Math.PI / 2;
+                                            }
+                                            else
+                                            {
+                                                bulge = Poly2D.GetBulgeAt(par_bulge);
+                                                point1 = Poly2D.GetPointAtParameter(par_bulge);
+                                                point2 = Poly2D.GetPointAtParameter(Math.Floor(param2));
+
+                                                if (bulge != 0)
+                                                {
+                                                    CircularArc3d arc3d = Poly2D.GetArcSegmentAt(par_bulge);
+                                                    double bear_to_center = Functions.GET_Bearing_rad(pt0.X, pt0.Y, arc3d.Center.X, arc3d.Center.Y);
+
+                                                    if (bulge > 0)
+                                                    {
+                                                        if (lr == 1)
+                                                        {
+                                                            rot1 = Math.PI + bear_to_center;
+                                                        }
+                                                        else
+                                                        {
+                                                            rot1 = bear_to_center;
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        if (lr == 1)
+                                                        {
+                                                            rot1 = bear_to_center;
+                                                        }
+                                                        else
+                                                        {
+                                                            rot1 = Math.PI + bear_to_center;
+                                                        }
+
+                                                    }
+
+                                                    bear1 = rot1 + lr * Math.PI / 2;
+
+                                                }
+                                                else
+                                                {
+
+                                                    bear1 = Functions.GET_Bearing_rad(point1.X, point1.Y, point2.X, point2.Y);
+
+                                                    rot1 = bear1 - lr * Math.PI / 2;
+                                                }
+
+                                            }
+
+
+                                            small1.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt0));
+
+                                            small1.Layer = _AGEN_mainform.layer_stationing;
+                                            small1.ColorIndex = 256;
+
+
+                                            BTrecord.AppendEntity(small1);
+                                            Trans1.AddNewlyCreatedDBObject(small1, true);
+
+                                            if (checkBox_create_minor_labels.Checked == true)
+                                            {
+
+
+                                                MText mt1 = new MText();
+                                                if (checkBox_text_bottom.Checked == false)
+                                                {
+                                                    Line temp_line1 = new Line(small1.StartPoint, small1.EndPoint);
+                                                    temp_line1.TransformBy(Matrix3d.Scaling((small1.Length + gap1) / small1.Length, small1.EndPoint));
+                                                    mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(first_label_minor + i * spacing_minor, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
+                                                }
+                                                else
+                                                {
+                                                    Line temp_line2 = new Line(small1.StartPoint, small1.EndPoint);
+                                                    temp_line2.TransformBy(Matrix3d.Scaling((small1.Length + gap1) / small1.Length, small1.StartPoint));
+                                                    mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(first_label_minor + i * spacing_minor, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
+                                                }
+
+
+
+
+
+                                                mt1.Layer = _AGEN_mainform.layer_stationing;
+                                                BTrecord.AppendEntity(mt1);
+                                                Trans1.AddNewlyCreatedDBObject(mt1, true);
+                                                Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
+                                            }
+
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else if (Functions.see_if_block_exists("STA_MAJOR") == true)
+                    {
+                        
+                        if (BlockTable1.Has("STA_MINOR") == false)
+                        {
+                            BlockTable1.UpgradeOpen();
+                            using (BlockTableRecord bltrec1 = new BlockTableRecord())
+                            {
+                                bltrec1.Name = "STA_MINOR";
+                                Polyline poly1 = new Polyline();
+                                poly1.AddVertexAt(0, new Point2d(0, -tick_minor / 2), 0, 0, 0);
+                                poly1.AddVertexAt(1, new Point2d(0, 0), 0, 0, 0);
+                                poly1.AddVertexAt(2, new Point2d(0, tick_minor / 2), 0, 0, 0);
+                                poly1.Layer = "0";
+                                poly1.ColorIndex = 0;
+                                bltrec1.AppendEntity(poly1);
+
+                                BlockTable1.Add(bltrec1);
+                                Trans1.AddNewlyCreatedDBObject(bltrec1, true);
+                            }
+
+                        }
+
+
+                        if (start1 + poly_length >= first_label_major)
+                        {
+                            int no_major = Convert.ToInt32(Math.Ceiling((start1 + poly_length - first_label_major) / spacing_major));
 
                             if (no_major > 0)
                             {
@@ -5767,7 +6167,7 @@ namespace Alignment_mdi
 
 
 
-                                    Line Big1 = new Line(new Point3d(pt0.X - tick_major / 2, pt0.Y, 0), new Point3d(pt0.X + tick_major / 2, pt0.Y, 0));
+
 
                                     double param1 = Poly2D.GetParameterAtDistance(dist1_2d);
                                     double param2 = param1 + 1;
@@ -5848,77 +6248,63 @@ namespace Alignment_mdi
                                         }
 
                                     }
+                                    lista_major.Add(first_label_major + i * spacing_major);
+                                    string sta1 = Functions.Get_chainage_from_double(first_label_major + i * spacing_major, _AGEN_mainform.units_of_measurement, 0);
+                                    System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+                                    System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
 
+                                    col_atr.Add("STA");
+                                    col_atr.Add("STA1");
+                                    col_atr.Add("STA11");
+                                    col_atr.Add("STA111");
+                                    col_atr.Add("STA1111");
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
 
+                                    BlockReference block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "", "STA_MAJOR", pt0, 1, rot1 + Math.PI / 2, _AGEN_mainform.layer_stationing, col_atr, col_val);
 
-                                    Big1.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt0));
+                                    Functions.Populate_object_data_table_from_objectid(Tables1, block1.ObjectId, od_name, Lista_val, Lista_type);
 
-                                    Big1.Layer = _AGEN_mainform.layer_stationing;
-                                    Big1.ColorIndex = 256;
-
-
-                                    BTrecord.AppendEntity(Big1);
-                                    Trans1.AddNewlyCreatedDBObject(Big1, true);
-                                    Functions.Populate_object_data_table_from_objectid(Tables1, Big1.ObjectId, od_name, Lista_val, Lista_type);
-
-
-                                    if (checkBox_create_major_labels.Checked == true)
-                                    {
-                                        MText mt1 = new MText();
-                                        if (checkBox_text_bottom.Checked == false)
-                                        {
-                                            Line temp_line1 = new Line(Big1.StartPoint, Big1.EndPoint);
-                                            temp_line1.TransformBy(Matrix3d.Scaling((Big1.Length + gap1) / Big1.Length, Big1.EndPoint));
-                                            mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(first_label_major + i * spacing_major, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
-                                        }
-                                        else
-                                        {
-                                            Line temp_line2 = new Line(Big1.StartPoint, Big1.EndPoint);
-                                            temp_line2.TransformBy(Matrix3d.Scaling((Big1.Length + gap1) / Big1.Length, Big1.StartPoint));
-                                            mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(first_label_major + i * spacing_major, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
-                                        }
-
-                                        mt1.Layer = _AGEN_mainform.layer_stationing;
-                                        BTrecord.AppendEntity(mt1);
-                                        Trans1.AddNewlyCreatedDBObject(mt1, true);
-                                        Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
-                                    }
 
                                 }
                             }
                         }
-                    }
 
-
-
-
-                    if (checkBox_draw_minor_lines.Checked == true)
-                    {
                         double first_label_minor = Math.Floor((start1 + spacing_minor) / spacing_minor) * spacing_minor;
+                        int no_minor = Convert.ToInt32(Math.Ceiling((start1 + poly_length - first_label_minor) / spacing_minor));
 
-                        if (start1 + max_length >= first_label_minor)
+                        if (no_minor > 0)
                         {
-                            int no_minor = Convert.ToInt32(Math.Ceiling((start1 + max_length - first_label_minor) / spacing_minor));
 
-                            if (no_minor > 0)
+
+                            for (int i = 1; i < no_minor; ++i)
                             {
-                                for (int i = 0; i < no_minor; ++i)
+                                Point3d pt0 = new Point3d();
+                                if (lista_major.Contains(first_label_minor + i * spacing_minor) == false)
                                 {
-                                    Point3d pt0 = new Point3d();
-
+                                    double dist1 = (first_label_minor - start1) + i * spacing_minor;
+                                    double dist1_2d = dist1;
                                     if (_AGEN_mainform.Project_type == "3D")
                                     {
-                                        pt0 = Poly3D.GetPointAtDist((first_label_minor - start1) + i * spacing_minor);
+                                        pt0 = Poly3D.GetPointAtDist(dist1);
+                                        double param_for_2D = Poly3D.GetParameterAtDistance(dist1);
+                                        if (Poly2D.EndParam < param_for_2D)
+                                        {
+                                            param_for_2D = Poly2D.EndParam;
+                                        }
+                                        dist1_2d = Poly2D.GetDistanceAtParameter(param_for_2D);
+
                                     }
                                     else
                                     {
-                                        pt0 = Poly2D.GetPointAtDist((first_label_minor - start1) + i * spacing_minor);
+                                        pt0 = Poly2D.GetPointAtDist(dist1);
+
                                     }
 
-
-                                    Line small1 = new Line(new Point3d(pt0.X - tick_minor / 2, pt0.Y, 0), new Point3d(pt0.X + tick_minor / 2, pt0.Y, 0));
-
-                                    double param1 = Poly2D.GetParameterAtPoint(Poly2D.GetClosestPointTo(pt0, Vector3d.ZAxis, false));
+                                    double param1 = Poly2D.GetParameterAtDistance(dist1_2d);
                                     double param2 = param1 + 1;
                                     if (Poly2D.EndParam < param2)
                                     {
@@ -5926,16 +6312,12 @@ namespace Alignment_mdi
                                         param2 = Poly2D.EndParam;
                                     }
 
-
                                     double bulge = 0;
-
                                     int par_bulge = Convert.ToInt32(Math.Floor(param1));
-
 
                                     Point3d point1 = new Point3d();
 
                                     Point3d point2 = new Point3d();
-
 
                                     double bear1 = -1;
 
@@ -5961,7 +6343,6 @@ namespace Alignment_mdi
                                         {
                                             CircularArc3d arc3d = Poly2D.GetArcSegmentAt(par_bulge);
                                             double bear_to_center = Functions.GET_Bearing_rad(pt0.X, pt0.Y, arc3d.Center.X, arc3d.Center.Y);
-
                                             if (bulge > 0)
                                             {
                                                 if (lr == 1)
@@ -6001,51 +6382,31 @@ namespace Alignment_mdi
 
                                     }
 
+                                    string sta1 = Functions.Get_chainage_from_double(first_label_minor + i * spacing_minor, _AGEN_mainform.units_of_measurement, 0);
 
-                                    small1.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt0));
+                                    System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+                                    System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
 
-                                    small1.Layer = _AGEN_mainform.layer_stationing;
-                                    small1.ColorIndex = 256;
+                                    col_atr.Add("STA");
+                                    col_atr.Add("STA1");
+                                    col_atr.Add("STA11");
+                                    col_atr.Add("STA111");
+                                    col_atr.Add("STA1111");
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
+                                    col_val.Add(sta1);
 
+                                    BlockReference block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "", "STA_MINOR", pt0, 1, rot1 + Math.PI / 2, _AGEN_mainform.layer_stationing, col_atr, col_val);
 
-                                    BTrecord.AppendEntity(small1);
-                                    Trans1.AddNewlyCreatedDBObject(small1, true);
-
-                                    if (checkBox_create_minor_labels.Checked == true)
-                                    {
-
-
-                                        MText mt1 = new MText();
-                                        if (checkBox_text_bottom.Checked == false)
-                                        {
-                                            Line temp_line1 = new Line(small1.StartPoint, small1.EndPoint);
-                                            temp_line1.TransformBy(Matrix3d.Scaling((small1.Length + gap1) / small1.Length, small1.EndPoint));
-                                            mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(first_label_minor + i * spacing_minor, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
-                                        }
-                                        else
-                                        {
-                                            Line temp_line2 = new Line(small1.StartPoint, small1.EndPoint);
-                                            temp_line2.TransformBy(Matrix3d.Scaling((small1.Length + gap1) / small1.Length, small1.StartPoint));
-                                            mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(first_label_minor + i * spacing_minor, _AGEN_mainform.units_of_measurement, 0), texth, bear1 + extra_rot);
-                                        }
-
-
-
-
-
-                                        mt1.Layer = _AGEN_mainform.layer_stationing;
-                                        BTrecord.AppendEntity(mt1);
-                                        Trans1.AddNewlyCreatedDBObject(mt1, true);
-                                        Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
-                                    }
-
-
-
+                                    Functions.Populate_object_data_table_from_objectid(Tables1, block1.ObjectId, od_name, Lista_val, Lista_type);
                                 }
+
                             }
                         }
-                    }
 
+                    }
 
 
 
@@ -6077,6 +6438,16 @@ namespace Alignment_mdi
 
 
                     #region object data stationing
+
+                    string fisier_cl = "";
+                    string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+
+                    if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                    {
+                        ProjFolder = ProjFolder + "\\";
+                    }
+                    fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+
                     Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
 
@@ -6088,6 +6459,10 @@ namespace Alignment_mdi
 
                     Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute);
                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+                    Lista_val.Add(fisier_cl);
+                    Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
                     #endregion
 
                     int lr = 1;
@@ -6100,40 +6475,64 @@ namespace Alignment_mdi
 
                     Point3d pt1 = Poly2D.GetPointAtDist(0);
                     Point3d pt2 = Poly2D.GetPointAtParameter(1);
-                    Line line_0 = new Line(new Point3d(pt1.X - thick / 2, pt1.Y, 0), new Point3d(pt1.X + thick / 2, pt1.Y, 0));
-
                     double bear1 = Functions.GET_Bearing_rad(pt1.X, pt1.Y, pt2.X, pt2.Y);
                     double rot1 = bear1 - lr * Math.PI / 2;
 
-                    line_0.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt1));
-                    line_0.Layer = _AGEN_mainform.layer_stationing;
-                    line_0.ColorIndex = 256;
-
-                    BTrecord.AppendEntity(line_0);
-                    Trans1.AddNewlyCreatedDBObject(line_0, true);
-                    Functions.Populate_object_data_table_from_objectid(Tables1, line_0.ObjectId, od_name, Lista_val, Lista_type);
-
-
-                    MText mt1 = new MText();
-                    if (checkBox_text_bottom.Checked == false)
+                    if (checkBox_blocks.Checked == false)
                     {
-                        Line temp_line1 = new Line(line_0.StartPoint, line_0.EndPoint);
-                        temp_line1.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.EndPoint));
-                        mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(start1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
 
+                        Line line_0 = new Line(new Point3d(pt1.X - thick / 2, pt1.Y, 0), new Point3d(pt1.X + thick / 2, pt1.Y, 0));
+
+                        line_0.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt1));
+                        line_0.Layer = _AGEN_mainform.layer_stationing;
+                        line_0.ColorIndex = 256;
+
+                        BTrecord.AppendEntity(line_0);
+                        Trans1.AddNewlyCreatedDBObject(line_0, true);
+                        Functions.Populate_object_data_table_from_objectid(Tables1, line_0.ObjectId, od_name, Lista_val, Lista_type);
+
+
+                        MText mt1 = new MText();
+                        if (checkBox_text_bottom.Checked == false)
+                        {
+                            Line temp_line1 = new Line(line_0.StartPoint, line_0.EndPoint);
+                            temp_line1.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.EndPoint));
+                            mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(start1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+
+                        }
+                        else
+                        {
+                            Line temp_line2 = new Line(line_0.StartPoint, line_0.EndPoint);
+                            temp_line2.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.StartPoint));
+                            mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(start1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+                        }
+
+                        mt1.Layer = _AGEN_mainform.layer_stationing;
+                        BTrecord.AppendEntity(mt1);
+                        Trans1.AddNewlyCreatedDBObject(mt1, true);
+                        Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
                     }
-                    else
+                    else if (Functions.see_if_block_exists("STA_MAJOR") == true)
                     {
-                        Line temp_line2 = new Line(line_0.StartPoint, line_0.EndPoint);
-                        temp_line2.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.StartPoint));
-                        mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(start1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+                        string sta1 = Functions.Get_chainage_from_double(start1, _AGEN_mainform.units_of_measurement, 0);
+                        System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+                        System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
+
+                        col_atr.Add("STA");
+                        col_atr.Add("STA1");
+                        col_atr.Add("STA11");
+                        col_atr.Add("STA111");
+                        col_atr.Add("STA1111");
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+
+                        BlockReference block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "", "STA_MAJOR", pt1, 1, rot1 + Math.PI / 2, _AGEN_mainform.layer_stationing, col_atr, col_val);
+
+                        Functions.Populate_object_data_table_from_objectid(Tables1, block1.ObjectId, od_name, Lista_val, Lista_type);
                     }
-
-                    mt1.Layer = _AGEN_mainform.layer_stationing;
-                    BTrecord.AppendEntity(mt1);
-                    Trans1.AddNewlyCreatedDBObject(mt1, true);
-                    Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
-
 
 
                     Trans1.Commit();
@@ -6158,6 +6557,16 @@ namespace Alignment_mdi
                     Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
 
                     #region object data stationing
+
+                    string fisier_cl = "";
+                    string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+
+                    if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                    {
+                        ProjFolder = ProjFolder + "\\";
+                    }
+                    fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+
                     Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
 
@@ -6169,6 +6578,10 @@ namespace Alignment_mdi
 
                     Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute);
                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+                    Lista_val.Add(fisier_cl);
+                    Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
                     #endregion
 
                     int lr = 1;
@@ -6181,39 +6594,66 @@ namespace Alignment_mdi
 
                     Point3d pt1 = Poly2D.GetPointAtParameter(Poly2D.NumberOfVertices - 2);
                     Point3d pt2 = Poly2D.EndPoint;
-                    Line line_0 = new Line(new Point3d(pt2.X - thick / 2, pt2.Y, 0), new Point3d(pt2.X + thick / 2, pt2.Y, 0));
+
 
                     double bear1 = Functions.GET_Bearing_rad(pt1.X, pt1.Y, pt2.X, pt2.Y);
                     double rot1 = bear1 - lr * Math.PI / 2;
-
-                    line_0.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt2));
-                    line_0.Layer = _AGEN_mainform.layer_stationing;
-                    line_0.ColorIndex = 256;
-
-                    BTrecord.AppendEntity(line_0);
-                    Trans1.AddNewlyCreatedDBObject(line_0, true);
-                    Functions.Populate_object_data_table_from_objectid(Tables1, line_0.ObjectId, od_name, Lista_val, Lista_type);
-
-                    MText mt1 = new MText();
-                    if (checkBox_text_bottom.Checked == false)
+                    if (checkBox_blocks.Checked == false)
                     {
-                        Line temp_line1 = new Line(line_0.StartPoint, line_0.EndPoint);
-                        temp_line1.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.EndPoint));
-                        mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(end1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+                        Line line_0 = new Line(new Point3d(pt2.X - thick / 2, pt2.Y, 0), new Point3d(pt2.X + thick / 2, pt2.Y, 0));
+
+                        line_0.TransformBy(Matrix3d.Rotation(rot1, Vector3d.ZAxis, pt2));
+                        line_0.Layer = _AGEN_mainform.layer_stationing;
+                        line_0.ColorIndex = 256;
+
+                        BTrecord.AppendEntity(line_0);
+                        Trans1.AddNewlyCreatedDBObject(line_0, true);
+                        Functions.Populate_object_data_table_from_objectid(Tables1, line_0.ObjectId, od_name, Lista_val, Lista_type);
+
+                        MText mt1 = new MText();
+                        if (checkBox_text_bottom.Checked == false)
+                        {
+                            Line temp_line1 = new Line(line_0.StartPoint, line_0.EndPoint);
+                            temp_line1.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.EndPoint));
+                            mt1 = creaza_mtext_sta_bottom_center(temp_line1.StartPoint, Functions.Get_chainage_from_double(end1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+                        }
+                        else
+                        {
+                            Line temp_line2 = new Line(line_0.StartPoint, line_0.EndPoint);
+                            temp_line2.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.StartPoint));
+                            mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(end1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+                        }
+
+
+
+                        mt1.Layer = _AGEN_mainform.layer_stationing;
+                        BTrecord.AppendEntity(mt1);
+                        Trans1.AddNewlyCreatedDBObject(mt1, true);
+                        Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
+
                     }
-                    else
+                    else if (Functions.see_if_block_exists("STA_MAJOR") == true)
                     {
-                        Line temp_line2 = new Line(line_0.StartPoint, line_0.EndPoint);
-                        temp_line2.TransformBy(Matrix3d.Scaling((line_0.Length + gap1) / line_0.Length, line_0.StartPoint));
-                        mt1 = creaza_mtext_sta_top_center(temp_line2.EndPoint, Functions.Get_chainage_from_double(end1, _AGEN_mainform.units_of_measurement, round1), texth, bear1 + extra_rot);
+                        string sta1 = Functions.Get_chainage_from_double(end1, _AGEN_mainform.units_of_measurement, 0);
+                        System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+                        System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
+
+                        col_atr.Add("STA");
+                        col_atr.Add("STA1");
+                        col_atr.Add("STA11");
+                        col_atr.Add("STA111");
+                        col_atr.Add("STA1111");
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+                        col_val.Add(sta1);
+
+                        BlockReference block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "", "STA_MAJOR", pt2, 1, rot1 + Math.PI / 2, _AGEN_mainform.layer_stationing, col_atr, col_val);
+
+                        Functions.Populate_object_data_table_from_objectid(Tables1, block1.ObjectId, od_name, Lista_val, Lista_type);
                     }
 
-
-
-                    mt1.Layer = _AGEN_mainform.layer_stationing;
-                    BTrecord.AppendEntity(mt1);
-                    Trans1.AddNewlyCreatedDBObject(mt1, true);
-                    Functions.Populate_object_data_table_from_objectid(Tables1, mt1.ObjectId, od_name, Lista_val, Lista_type);
 
                     Trans1.Commit();
                 }
@@ -6235,6 +6675,16 @@ namespace Alignment_mdi
                     Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
 
                     #region object data stationing
+
+                    string fisier_cl = "";
+                    string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+
+                    if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                    {
+                        ProjFolder = ProjFolder + "\\";
+                    }
+                    fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+
                     Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
 
@@ -6246,6 +6696,10 @@ namespace Alignment_mdi
 
                     Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute);
                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+                    Lista_val.Add(fisier_cl);
+                    Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
                     #endregion
 
 
@@ -6333,10 +6787,19 @@ namespace Alignment_mdi
                     Polyline Poly2D = new Polyline();
                     Poly2D.AddVertexAt(0, new Point2d(pt0.X, pt0.Y), 0, 0, 0);
                     Poly2D.AddVertexAt(1, new Point2d(pt1.X, pt1.Y), 0, 0, 0);
+
                     #region object data stationing
 
-                    Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+                    string fisier_cl = "";
+                    string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
 
+                    if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                    {
+                        ProjFolder = ProjFolder + "\\";
+                    }
+                    fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+
+                    Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
 
                     List<object> Lista_val = new List<object>();
@@ -6348,6 +6811,8 @@ namespace Alignment_mdi
                     Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute);
                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
+                    Lista_val.Add(fisier_cl);
+                    Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
                     #endregion
 
@@ -6603,69 +7068,7 @@ namespace Alignment_mdi
 
         }
 
-        public void delete_entities_with_OD(string layer_name, string od_table_name)
-        {
-            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            using (DocumentLock lock1 = ThisDrawing.LockDocument())
-            {
-                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.Database.TransactionManager.StartTransaction())
-                {
-                    BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
-                    Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-                    foreach (ObjectId id1 in BTrecord)
-                    {
-                        Entity ent1 = Trans1.GetObject(id1, OpenMode.ForRead) as Entity;
-                        if (ent1 != null)
-                        {
-                            if (ent1.Layer == layer_name)
-                            {
-                                Autodesk.Gis.Map.ObjectData.Records Records1;
-                                bool delete1 = false;
-                                if (Tables1.IsTableDefined(od_table_name) == true)
-                                {
-                                    Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[od_table_name];
-                                    using (Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), ent1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
-                                    {
-                                        if (Records1.Count > 0)
-                                        {
-                                            Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                            foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
-                                            {
-                                                if (delete1 == false)
-                                                {
-                                                    for (int i = 0; i < Record1.Count; ++i)
-                                                    {
-                                                        Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[i];
-                                                        string Nume_field = Field_def1.Name;
-                                                        string Valoare1 = Record1[i].StrValue;
-                                                        if (Nume_field == "SegmentName")
-                                                        {
-                                                            string segment1 = _AGEN_mainform.tpage_setup.Get_segment_name1();
-                                                            if (segment1 == "not defined") segment1 = "";
-                                                            if (Valoare1 == segment1)
-                                                            {
-                                                                delete1 = true;
-                                                                i = Record1.Count;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (delete1 == true)
-                                    {
-                                        ent1.UpgradeOpen();
-                                        ent1.Erase();
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    Trans1.Commit();
-                }
-            }
-        }
+
 
         public static MText creaza_mtext_sta_bottom_center(Point3d pt_ins, string continut, double texth, double rot1)
         {
@@ -6794,7 +7197,7 @@ namespace Alignment_mdi
                 {
                     try
                     {
-                        delete_entities_with_OD(_AGEN_mainform.layer_eq_blocks, "Agen_eq");
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_eq_blocks, "Agen_eq");
                         Functions.Creaza_layer(_AGEN_mainform.layer_eq_blocks, 2, true);
 
                         Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -6827,7 +7230,7 @@ namespace Alignment_mdi
                                     if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                     {
                                         Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                        Polyline Poly2d = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                        Polyline Poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
                                         for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
                                         {
                                             if (_AGEN_mainform.dt_station_equation.Rows[i]["Station Back"] != DBNull.Value &&
@@ -7037,7 +7440,7 @@ namespace Alignment_mdi
                 {
                     try
                     {
-                        delete_entities_with_OD(_AGEN_mainform.layer_pi_blocks, "Agen_pi");
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_pi_blocks, "Agen_pi");
                         Functions.Creaza_layer(_AGEN_mainform.layer_pi_blocks, 2, true);
 
                         Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
@@ -7296,7 +7699,7 @@ namespace Alignment_mdi
                     {
 
 
-                        delete_entities_with_OD(_AGEN_mainform.layer_mp_blocks, "Agen_mp_block");
+                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_mp_blocks, "Agen_mp_block");
 
                         Functions.Creaza_layer(_AGEN_mainform.layer_mp_blocks, 2, true);
 
@@ -7331,7 +7734,7 @@ namespace Alignment_mdi
                                 string suf_at_end = "";
 
                                 Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                Polyline Poly2D = Functions.Build_2d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 #region USA     
                                 if (_AGEN_mainform.COUNTRY == "USA")
@@ -8389,7 +8792,7 @@ namespace Alignment_mdi
         private void comboBox_segment_name_SelectedIndexChanged(object sender, EventArgs e)
         {
             _AGEN_mainform.tpage_sheetindex.add_segment_name(comboBox_segment_name.Text);
-            
+
             combo_SelectedIndexChanged(comboBox_segment_name);
 
             _AGEN_mainform.layer_stationing = _AGEN_mainform.layer_stationing_original;
@@ -8550,18 +8953,16 @@ namespace Alignment_mdi
 
             if (radioButton_usa.Checked == true)
             {
-                panel_canada.Visible = false;
+
                 _AGEN_mainform.COUNTRY = "USA";
                 panel_USA.Visible = true;
-                panel_canada.Location = new Point(-1, 64);
+
 
             }
             else
             {
                 _AGEN_mainform.COUNTRY = "CANADA";
-                panel_canada.Visible = true;
-                panel_canada.Location = new Point(-1, 3);
-                panel_USA.Visible = false;
+                panel_USA.Visible = true;
 
             }
 
@@ -8603,7 +9004,7 @@ namespace Alignment_mdi
             _AGEN_mainform.tpage_setup.Hide();
             _AGEN_mainform.tpage_viewport_settings.Hide();
             _AGEN_mainform.tpage_tblk_attrib.Hide();
-            _AGEN_mainform.tpage_band_analize.Hide();
+
             _AGEN_mainform.tpage_sheetindex.Hide();
             _AGEN_mainform.tpage_layer_alias.Hide();
             _AGEN_mainform.tpage_crossing_scan.Hide();

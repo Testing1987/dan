@@ -247,9 +247,9 @@ namespace Alignment_mdi
             this.label2.Location = new System.Drawing.Point(617, 76);
             this.label2.MaximumSize = new System.Drawing.Size(260, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(227, 14);
+            this.label2.Size = new System.Drawing.Size(230, 14);
             this.label2.TabIndex = 2093;
-            this.label2.Text = "**** for multilayout file have the file open";
+            this.label2.Text = "**** for multilayout file: have the file open";
             // 
             // Toolz_form
             // 
