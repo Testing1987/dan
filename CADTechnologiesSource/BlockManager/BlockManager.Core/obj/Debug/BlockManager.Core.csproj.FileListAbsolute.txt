@@ -8,3 +8,11 @@ C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSou
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.csproj.Fody.CopyLocal.cache
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.g.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.csproj.Fody.CopyLocal.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.Core\obj\Debug\BlockManager.Core.pdb

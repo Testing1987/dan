@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/ocumxStM+B3ijD0vtuFljTXbwN+M6+e5BUCRvr/iH+xL3r+vIb395oCsKndQyka/uBc1m79YPsNbmE8s8nEmQ==",
+  "dgSpecHash": "3EcIs+MhfFGNPAgMl1n4h+nTYYwc2FtANrtZl6jFW9OLNgneJYpLpybv0X5LCgWuUuXKTk4br33nEFxD97vZaA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\PAN71158\\source\\repos\\PipelineCADToolsFromDevOps\\CADTechnologiesSource\\FileHelper\\FileHelper\\FileHelper.csproj",
+  "projectFilePath": "C:\\Users\\PAN71158\\source\\repos\\PipelineCADTools\\CADTechnologiesSource\\FileHelper\\FileHelper\\FileHelper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\PAN71158\\.nuget\\packages\\communitytoolkit.mvvm\\8.0.0\\communitytoolkit.mvvm.8.0.0.nupkg.sha512"
   ],

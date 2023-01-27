@@ -6,3 +6,9 @@ C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSou
 C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSource.bundle\Contents\GFAR.2017.pdb
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR._2017.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.2017\obj\Debug\GFAR.2017.pdb

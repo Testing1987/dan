@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.UI\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\MLineBlockAttributeEditor\MLineBlockAttributeEditor.UI\obj\Debug\
 MLineBlockAttributeEditor.UI
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 11429461695
 
 4-355348286
-24912256133
+24759223326
 Views\MainWindow_MLineBlockAttributeEditor.xaml;
 
-True
+False
 

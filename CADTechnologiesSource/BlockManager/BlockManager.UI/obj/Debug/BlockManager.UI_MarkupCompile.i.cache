@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.UI\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.UI\obj\Debug\
 BlockManager.UI
 none
 false
@@ -12,8 +12,8 @@ DEBUG;TRACE
 
 5-2089451581
 
-52-410605408
-25605272595
+52-330303644
+25-452271703
 Views\AttributeItem.xaml;Views\AttributeItemList.xaml;Views\BlockItem.xaml;Views\BlockItemList.xaml;Views\MainWindow_BM.xaml;
 
 True

@@ -6,3 +6,9 @@ C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.csproj.CopyComplete
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.csproj.Fody.CopyLocal.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.Core\obj\Debug\LayerComparison.Core.pdb

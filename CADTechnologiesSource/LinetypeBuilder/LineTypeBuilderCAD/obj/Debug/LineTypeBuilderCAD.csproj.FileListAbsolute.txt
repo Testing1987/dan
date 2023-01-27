@@ -11,3 +11,14 @@ C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.csproj.CoreCompileInputs.cache
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\MainWindow.g.cs
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD_MarkupCompile.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD_MarkupCompile.lref
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\MainWindow.baml
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.g.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LinetypeBuilder\LineTypeBuilderCAD\obj\Debug\LineTypeBuilderCAD.pdb

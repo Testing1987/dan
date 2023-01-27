@@ -40,27 +40,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AcCoreMgd">
-      <HintPath>..\..\..\..\..\..\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcCoreMgd.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\OneDrive - Mott MacDonald\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcCoreMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AcCui">
-      <HintPath>..\..\..\..\..\..\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcCui.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\OneDrive - Mott MacDonald\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcCui.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AcDbMgd">
-      <HintPath>..\..\..\..\..\..\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcDbMgd.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\OneDrive - Mott MacDonald\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcDbMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AcMgd">
-      <HintPath>..\..\..\..\..\..\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcMgd.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\OneDrive - Mott MacDonald\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AcMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AdWindows">
-      <HintPath>..\..\..\..\..\..\Documents\~AutoCAD Development Documents\Autodesk_ObjectARX_2017_Win_64_and_32_Bit\inc\AdWindows.dll</HintPath>
+    <Reference Include="ManagedMapApi, Version=25.0.45.5, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\Map\ManagedMapApi.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="ManagedMapApi">
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\Map\ManagedMapApi.dll</HintPath>
     </Reference>
     <Reference Include="PropertyChanged, Version=3.4.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
       <HintPath>..\..\packages\PropertyChanged.Fody.3.4.0\lib\net40\PropertyChanged.dll</HintPath>

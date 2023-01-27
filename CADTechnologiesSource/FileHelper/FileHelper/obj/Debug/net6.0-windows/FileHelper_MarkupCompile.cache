@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\FileHelper\FileHelper\obj\Debug\net6.0-windows\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\FileHelper\FileHelper\obj\Debug\net6.0-windows\
 FileHelper
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\FileHelper\FileHelper\App.xaml
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\FileHelper\FileHelper\App.xaml
 11407045341
 
 410072148
 204-162837427
 MainWindow.xaml;
 
-True
+False
 

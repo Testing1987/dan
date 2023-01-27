@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerManager\LayerManager\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerManager\LayerManager\obj\Debug\
 LayerManager
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 6515044031
 
 18-84504075
-221036643756
+22-42152909
 Views\MainWindow.xaml;Views\Styles\BaseStyles.xaml;Views\Styles\Buttons.xaml;Views\Styles\Colors.xaml;Views\Styles\FontAwesomeStrings.xaml;Views\Styles\Fonts.xaml;
 
-True
+False
 

@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\TagDupeFix\TagDupeFix.UI\obj\Debug\
 TagDupeFix.UI
 none
 false
@@ -12,8 +12,8 @@ DEBUG;TRACE
 
 1-587587561
 
-44171167351
-24840073298
+44506172889
+23-1450749278
 Views\MainWindow.xaml;
 
 False

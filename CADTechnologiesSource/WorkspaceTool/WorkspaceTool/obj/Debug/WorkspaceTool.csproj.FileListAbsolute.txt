@@ -6,3 +6,11 @@ C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.csproj.CoreCompileInputs.cache
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\bin\Debug\WorkspaceTool.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\bin\Debug\WorkspaceTool.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\WorkspaceTool\WorkspaceTool\obj\Debug\WorkspaceTool.pdb

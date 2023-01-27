@@ -57,11 +57,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="AecBaseMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\AecBaseMgd.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\AecBaseMgd.dll</HintPath>
     </Reference>
     <Reference Include="AeccDbMgd">
-      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2020\C3D\AeccDbMgd.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Autodesk\AutoCAD 2022\C3D\AeccDbMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

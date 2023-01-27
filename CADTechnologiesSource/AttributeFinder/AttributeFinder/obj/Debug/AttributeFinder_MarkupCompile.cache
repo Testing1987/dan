@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\AttributeFinder\AttributeFinder\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\AttributeFinder\AttributeFinder\obj\Debug\
 AttributeFinder
 none
 false
@@ -12,9 +12,9 @@ DEBUG;TRACE
 
 6-535522686
 
-511946096033
-21364230041
+51-2013865725
+21-714566624
 Views\MainWindow_AttributeFinder.xaml;Views\Styles\BaseStyles.xaml;Views\Styles\Buttons.xaml;Views\Styles\Colors.xaml;Views\Styles\FontAwesomeStrings.xaml;Views\Styles\Fonts.xaml;
 
-True
+False
 

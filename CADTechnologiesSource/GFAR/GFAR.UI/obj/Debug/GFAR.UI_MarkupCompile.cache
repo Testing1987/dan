@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\GFAR\GFAR.UI\obj\Debug\
 GFAR.UI
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 11373651516
 
 4112774649
-23-531910519
+23120120683
 Views\MainWindow_GFAR.xaml;
 
-True
+False
 

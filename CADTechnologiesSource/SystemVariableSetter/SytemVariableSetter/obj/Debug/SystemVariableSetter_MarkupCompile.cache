@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\SystemVariableSetter\SytemVariableSetter\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\SystemVariableSetter\SytemVariableSetter\obj\Debug\
 SystemVariableSetter
 none
 false
@@ -12,9 +12,9 @@ DEBUG;TRACE
 
 6515044031
 
-121118458729
-21-1784269442
+13-1254730446
+20-1300406066
 Views\MainWindow.xaml;Views\Styles\BaseStyles.xaml;Views\Styles\Buttons.xaml;Views\Styles\Colors.xaml;Views\Styles\FontAwesomeStrings.xaml;Views\Styles\Fonts.xaml;
 
-False
+True
 

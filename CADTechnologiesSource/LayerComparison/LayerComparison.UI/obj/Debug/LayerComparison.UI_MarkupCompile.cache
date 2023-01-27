@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\LayerComparison\LayerComparison.UI\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\LayerComparison\LayerComparison.UI\obj\Debug\
 LayerComparison.UI
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 10-307352926
 
 17-242064291
-271516975166
+271722788736
 Views\AdvancedComparisonsPage.xaml;Views\LayerItem.xaml;Views\MainPage.xaml;Views\MainWindow_LayerComparison.xaml;Views\PageHost.xaml;Views\RecentItem.xaml;Views\RecentItemList.xaml;Views\StartPage.xaml;Views\StartPageGettingStartedMenu.xaml;Views\temp\LayerItemList.xaml;
 
-True
+False
 

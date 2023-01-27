@@ -11,3 +11,14 @@ C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreExcavationBuilder.csproj.CoreCompileInputs.cache
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreExcavationBuilder.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\MainWindow.g.cs
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder_MarkupCompile.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder_MarkupCompile.lref
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\MainWindow.baml
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder.g.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreExcavationBuilder.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreExcavationBuilder.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BoreHoleBuilder\obj\Debug\BoreHoleBuilder.pdb

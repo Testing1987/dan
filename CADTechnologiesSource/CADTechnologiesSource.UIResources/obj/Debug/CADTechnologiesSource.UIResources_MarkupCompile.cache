@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\CADTechnologiesSource.UIResources\obj\Debug\
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\CADTechnologiesSource.UIResources\obj\Debug\
 CADTechnologiesSource.UIResources
 none
 false
@@ -13,8 +13,8 @@ DEBUG;TRACE
 71552307732
 
 7120350582
-21596181439
+21-599714915
 Styles\BaseStyles.xaml;Styles\Buttons.xaml;Styles\Colors.xaml;Styles\DataGrids.xaml;Styles\FontAwesomeStrings.xaml;Styles\Fonts.xaml;Styles\TabControls.xaml;
 
-True
+False
 

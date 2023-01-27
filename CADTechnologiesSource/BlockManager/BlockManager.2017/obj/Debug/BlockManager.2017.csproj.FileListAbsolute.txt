@@ -7,3 +7,10 @@ C:\Users\PAN71158\AppData\Roaming\Autodesk\ApplicationPlugins\CADTechnologiesSou
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.csproj.CopyComplete
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.dll
 C:\Users\PAN71158\source\repos\PipelineCADToolsFromDevOps\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.pdb
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.csproj.AssemblyReference.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager._2017.Properties.Resources.resources
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.csproj.GenerateResource.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.csproj.CoreCompileInputs.cache
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.csproj.CopyComplete
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.dll
+C:\Users\PAN71158\source\repos\PipelineCADTools\CADTechnologiesSource\BlockManager\BlockManager.2017\obj\Debug\BlockManager.2017.pdb
