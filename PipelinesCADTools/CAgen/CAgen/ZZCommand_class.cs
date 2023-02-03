@@ -5964,18 +5964,18 @@ namespace Alignment_mdi
                                         dt1.Rows[dt1.Rows.Count - 1]["Distance"] = pt1.Y - y1;
                                     }
 
-                                    if (block1.AttributeCollection.Count>0)
+                                    if (block1.AttributeCollection.Count > 0)
                                     {
-                                        foreach(ObjectId id1 in block1.AttributeCollection)
+                                        foreach (ObjectId id1 in block1.AttributeCollection)
                                         {
                                             AttributeReference atr1 = Trans1.GetObject(id1, OpenMode.ForRead) as AttributeReference;
-                                            if(atr1!=null)
+                                            if (atr1 != null)
                                             {
-                                                if(dt1.Columns.Contains("BlockAttribute: " + atr1.Tag)==false)
+                                                if (dt1.Columns.Contains("BlockAttribute: " + atr1.Tag) == false)
                                                 {
                                                     dt1.Columns.Add("BlockAttribute: " + atr1.Tag, typeof(string));
                                                 }
-                                               dt1.Rows[dt1.Rows.Count - 1]["BlockAttribute: " + atr1.Tag] = atr1.TextString;
+                                                dt1.Rows[dt1.Rows.Count - 1]["BlockAttribute: " + atr1.Tag] = atr1.TextString;
                                             }
                                         }
                                     }
@@ -5984,7 +5984,7 @@ namespace Alignment_mdi
                                 }
                             }
                         }
-                        Functions.Transfer_datatable_to_new_excel_spreadsheet(dt1, Convert.ToString(DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "hr" + DateTime.Now.Minute + "min" + DateTime.Now.Second) + "sec");                       
+                        Functions.Transfer_datatable_to_new_excel_spreadsheet(dt1, Convert.ToString(DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "hr" + DateTime.Now.Minute + "min" + DateTime.Now.Second) + "sec");
                     }
                 }
             }
@@ -5997,5 +5997,141 @@ namespace Alignment_mdi
             Editor1.WriteMessage("\nCommand:");
         }
 
+
+        [CommandMethod("ASBUILT_STA")]
+        public void asbuilt_stationing_adjust_blocks_to_weldmap_values()
+        {
+
+            Editor editor1 = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
+
+            ObjectId[] Empty_array = null;
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+            Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            try
+            {
+
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_centerline;
+                    Autodesk.AutoCAD.EditorInput.PromptEntityOptions Prompt_centerline;
+                    Prompt_centerline = new Autodesk.AutoCAD.EditorInput.PromptEntityOptions("\nSelect the reference polyline:");
+                    Prompt_centerline.SetRejectMessage("\nSelect a polyline!");
+                    Prompt_centerline.AllowNone = true;
+                    Prompt_centerline.AddAllowedClass(typeof(Polyline), false);
+                    Rezultat_centerline = ThisDrawing.Editor.GetEntity(Prompt_centerline);
+
+                    if (Rezultat_centerline.Status != PromptStatus.OK)
+                    {
+                        ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                        return;
+                    }
+
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                        BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+
+                        Autodesk.AutoCAD.DatabaseServices.LayerTable layer_table = (Autodesk.AutoCAD.DatabaseServices.LayerTable)Trans1.GetObject(ThisDrawing.Database.LayerTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+                        Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+
+                        Matrix3d CurentUCSmatrix = Editor1.CurrentUserCoordinateSystem;
+                        Polyline poly2d = Trans1.GetObject(Rezultat_centerline.ObjectId, OpenMode.ForRead) as Polyline;
+
+                        bool run1 = true;
+                        do
+                        {
+                            Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_block;
+                            Autodesk.AutoCAD.EditorInput.PromptEntityOptions Prompt_block;
+                            Prompt_block = new Autodesk.AutoCAD.EditorInput.PromptEntityOptions("\nSelect the stationing block to be adjusted:");
+                            Prompt_block.SetRejectMessage("\nSelect a block!");
+                            Prompt_block.AllowNone = true;
+                            Prompt_block.AddAllowedClass(typeof(BlockReference), false);
+                            Rezultat_block = ThisDrawing.Editor.GetEntity(Prompt_block);
+
+                            if (Rezultat_block.Status != PromptStatus.OK)
+                            {
+                                ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                                Trans1.Commit();
+                                return;
+
+                            }
+
+                            Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1;
+                            Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Prompt_rez = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
+                            Prompt_rez.MessageForAdding = "\nSelect the text containing the station:";
+                            Prompt_rez.SingleOnly = false;
+                            Rezultat1 = ThisDrawing.Editor.GetSelection(Prompt_rez);
+
+                            if (Rezultat1.Status != PromptStatus.OK)
+                            {
+                                ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                                Trans1.Commit();
+                                return;
+                            }
+
+                            BlockReference block1 = Trans1.GetObject(Rezultat_block.ObjectId, OpenMode.ForWrite) as BlockReference;
+
+                            if (block1.AttributeCollection.Count > 0)
+                            {
+                                foreach (ObjectId id1 in block1.AttributeCollection)
+                                {
+                                    AttributeReference atr1 = Trans1.GetObject(id1, OpenMode.ForRead) as AttributeReference;
+                                    if (atr1 != null && atr1.Tag.ToUpper() == "STA")
+                                    {
+                                        string val_atr = atr1.TextString.Replace("+", "");
+
+                                        if (Functions.IsNumeric(val_atr) == true)
+                                        {
+                                            double sta_block = Convert.ToDouble(val_atr);
+
+                                            for (int i = 0; i < Rezultat1.Value.Count; i++)
+                                            {
+                                                DBText dtext1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForRead) as DBText;
+
+                                                if (dtext1 != null)
+                                                {
+                                                    double x1 = dtext1.Position.X;
+                                                    double y1 = dtext1.Position.Y;
+                                                    string textstring = dtext1.TextString;
+                                                    if (Functions.IsNumeric(textstring.Replace("+", "").Replace(" ", "")) == true)
+                                                    {
+
+                                                        double sta1 = Convert.ToDouble(textstring.Replace("+", "").Replace(" ", ""));
+                                                        Point3d point_on_poly = poly2d.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
+                                                        double dist_at_text = poly2d.GetDistAtPoint(point_on_poly);
+
+                                                        double dif = sta_block - sta1;
+                                                        Point3d new_position = poly2d.GetPointAtDist(dist_at_text + dif);
+                                                        block1.Position = new_position;
+
+
+                                                        i = Rezultat1.Value.Count;
+                                                        Trans1.TransactionManager.QueueForGraphicsFlush();
+                                                    }
+                                                }
+                                            }
+
+
+                                        }
+                                    }
+                                }
+                            }
+
+                        } while (run1 == true);
+
+                     
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Editor1.SetImpliedSelection(Empty_array);
+            Editor1.WriteMessage("\nCommand:");
+        }
     }
 }

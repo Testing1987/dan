@@ -2251,7 +2251,7 @@ namespace Alignment_mdi
         public void button_align_config_saveall_boolean(bool Close_dwt)
         {
             Ag = this.MdiParent as _AGEN_mainform;
-            Functions.Kill_excel();
+            
 
             string cfg1 = System.IO.Path.GetFileName(_AGEN_mainform.config_path);
             if (Functions.Get_if_workbook_is_open_in_Excel(cfg1) == true)
@@ -4127,7 +4127,7 @@ namespace Alignment_mdi
                 return;
             }
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("centerline.xlsx") == true)
             {
@@ -5262,7 +5262,7 @@ namespace Alignment_mdi
 
 
 
-            Functions.Kill_excel();
+            
 
 
 
@@ -7118,7 +7118,7 @@ namespace Alignment_mdi
         private void button_eq_insert_block_Click(object sender, EventArgs e)
         {
             Ag = this.MdiParent as _AGEN_mainform;
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("centerline.xlsx") == true)
             {
@@ -7377,7 +7377,7 @@ namespace Alignment_mdi
         private void button_insert_pi_blocks_Click(object sender, EventArgs e)
         {
             Ag = this.MdiParent as _AGEN_mainform;
-            Functions.Kill_excel();
+            
 
 
             if (Functions.Get_if_workbook_is_open_in_Excel("centerline.xlsx") == true)
@@ -7653,7 +7653,7 @@ namespace Alignment_mdi
             }
 
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("centerline.xlsx") == true)
             {

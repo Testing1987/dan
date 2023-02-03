@@ -312,7 +312,7 @@ namespace Alignment_mdi
 
         private void button_cut_sheets_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+           
 
             double h_nd = 0;
             double w_nd = 0;
@@ -688,12 +688,12 @@ namespace Alignment_mdi
                                                     double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
                                                     eq_meas = poly3d.GetDistanceAtParameter(param1);
                                                 }
-                                           
+
                                                 _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
                                             }
                                         }
 
-                                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased==false) poly3d.Erase();
+                                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased == false) poly3d.Erase();
                                     }
                                 }
                                 else
@@ -754,11 +754,35 @@ namespace Alignment_mdi
 
                                     if (System.IO.File.Exists(fname0) == true)
                                     {
-                                        MessageBox.Show(fname0 + " already exists.\r\noperation aborted");
-                                        Display_dt = Functions.Creaza_display_datatable_structure();
-                                        Freeze_operations = false;
-                                        _AGEN_mainform.tpage_processing.Hide();
-                                        return;
+                                        try
+                                        {
+                                            string existingFolder = System.IO.Path.GetDirectoryName(fname0);
+                                            existingFolder = existingFolder.EndsWith("\\") ? existingFolder : existingFolder + "\\";
+
+                                            string segmentName = _AGEN_mainform.current_segment;
+                                            string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                                            string folderName = $"{segmentName}-{date} by {Environment.UserName}";
+                                            string newFolder = existingFolder + folderName;
+                                            string destinationPath = System.IO.Path.Combine(newFolder, System.IO.Path.GetFileName(fname0));
+
+                                            if (!System.IO.Directory.Exists(newFolder))
+                                            {
+                                                System.IO.Directory.CreateDirectory(newFolder);
+                                            }
+                                            System.IO.File.Move(fname0, destinationPath);
+                                        }
+                                        catch (System.Exception)
+                                        {
+                                            MessageBox.Show(fname0 + " cannot be moved.\r\noperation aborted");
+                                            Display_dt = Functions.Creaza_display_datatable_structure();
+                                            Freeze_operations = false;
+                                            _AGEN_mainform.tpage_processing.Hide();
+                                            return;
+
+                                        }
+
+
+
                                     }
 
                                     using (DocumentLock lock2 = New_doc.LockDocument())

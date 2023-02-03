@@ -34,6 +34,7 @@
             this.panel23 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button_dan = new System.Windows.Forms.Button();
+            this.checkBox_ms = new System.Windows.Forms.CheckBox();
             this.checkBox_ac1024 = new System.Windows.Forms.CheckBox();
             this.panel_dan = new System.Windows.Forms.Panel();
             this.button_load_reference_library = new System.Windows.Forms.Button();
@@ -60,7 +61,6 @@
             this.label56 = new System.Windows.Forms.Label();
             this.dataGridView_drawings = new System.Windows.Forms.DataGridView();
             this.label65 = new System.Windows.Forms.Label();
-            this.checkBox_ms = new System.Windows.Forms.CheckBox();
             this.panel23.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel_dan.SuspendLayout();
@@ -121,6 +121,18 @@
             this.button_dan.UseVisualStyleBackColor = false;
             this.button_dan.Visible = false;
             this.button_dan.Click += new System.EventHandler(this.button_dan_Click);
+            // 
+            // checkBox_ms
+            // 
+            this.checkBox_ms.AutoSize = true;
+            this.checkBox_ms.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_ms.ForeColor = System.Drawing.Color.White;
+            this.checkBox_ms.Location = new System.Drawing.Point(121, 466);
+            this.checkBox_ms.Name = "checkBox_ms";
+            this.checkBox_ms.Size = new System.Drawing.Size(86, 18);
+            this.checkBox_ms.TabIndex = 2090;
+            this.checkBox_ms.Text = "Include MS";
+            this.checkBox_ms.UseVisualStyleBackColor = true;
             // 
             // checkBox_ac1024
             // 
@@ -575,18 +587,6 @@
             this.label65.Size = new System.Drawing.Size(75, 18);
             this.label65.TabIndex = 2039;
             this.label65.Text = "Drawings";
-            // 
-            // checkBox_ms
-            // 
-            this.checkBox_ms.AutoSize = true;
-            this.checkBox_ms.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_ms.ForeColor = System.Drawing.Color.White;
-            this.checkBox_ms.Location = new System.Drawing.Point(121, 466);
-            this.checkBox_ms.Name = "checkBox_ms";
-            this.checkBox_ms.Size = new System.Drawing.Size(86, 18);
-            this.checkBox_ms.TabIndex = 2090;
-            this.checkBox_ms.Text = "Include MS";
-            this.checkBox_ms.UseVisualStyleBackColor = true;
             // 
             // AGEN_TBLK_Attributes
             // 

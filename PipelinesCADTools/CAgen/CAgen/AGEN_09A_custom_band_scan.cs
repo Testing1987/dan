@@ -151,8 +151,7 @@ namespace Alignment_mdi
 
             string custom_excel_name = comboBox_band_excel_name.Text + ".xlsx";
 
-            Functions.Kill_excel();
-
+           
             if (Functions.Get_if_workbook_is_open_in_Excel(custom_excel_name) == true)
             {
                 MessageBox.Show("Please close the " + custom_excel_name + " file");

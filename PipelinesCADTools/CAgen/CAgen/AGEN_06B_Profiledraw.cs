@@ -379,7 +379,7 @@ namespace Alignment_mdi
 
         private void Button_graph_prof_draw_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
             if (System.IO.File.Exists(_AGEN_mainform.config_path) == false)
@@ -852,7 +852,7 @@ namespace Alignment_mdi
         #region profile label
         private void button_insert_labels_on_profile_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
             if (System.IO.File.Exists(_AGEN_mainform.config_path) == false)
@@ -1658,7 +1658,7 @@ namespace Alignment_mdi
         public void button_load_data_for_profile_band_Click(object sender, EventArgs e)
         {
             set_enable_false();
-            Functions.Kill_excel();
+            
 
 
             try
@@ -1775,7 +1775,7 @@ namespace Alignment_mdi
 
         private void generate_profile_band_file_from_sheet_index()
         {
-            Functions.Kill_excel();
+            
 
             try
             {
@@ -1872,7 +1872,7 @@ namespace Alignment_mdi
         private void button_draw_prof_bands_Click(object sender, EventArgs e)
         {
 
-            Functions.Kill_excel();
+            
 
             if (_AGEN_mainform.Vw_profband_height == 0)
             {

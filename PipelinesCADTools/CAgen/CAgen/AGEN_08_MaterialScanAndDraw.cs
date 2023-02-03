@@ -86,7 +86,7 @@ namespace Alignment_mdi
 
         private void button_load_materials_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("Material_Linear.xlsx") == true)
             {
@@ -571,7 +571,7 @@ namespace Alignment_mdi
             int lr = 1;
             if (_AGEN_mainform.Left_to_Right == false) lr = -1;
 
-            Functions.Kill_excel();
+            
 
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
@@ -3427,7 +3427,7 @@ namespace Alignment_mdi
             int lr = 1;
             if (_AGEN_mainform.Left_to_Right == false) lr = -1;
 
-            Functions.Kill_excel();
+            
 
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
@@ -5586,7 +5586,7 @@ namespace Alignment_mdi
 
         private void button_scan_heavy_wall_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+   
 
             this.MdiParent.WindowState = FormWindowState.Minimized;
             set_enable_false();
@@ -6041,6 +6041,7 @@ namespace Alignment_mdi
                                             if (x != -1.23456)
                                             {
                                                 col_val.Add(Functions.Get_chainage_from_double(sta, _AGEN_mainform.units_of_measurement, _AGEN_mainform.round1));
+
                                                 BlockReference Block2 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "",
                                                                     bn, new Point3d(x, y0, 0), 1, 0, ln, col_atr, col_val);
                                                 if (lista_processed.Contains(i) == false) lista_processed.Add(i);

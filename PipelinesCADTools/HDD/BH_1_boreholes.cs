@@ -785,7 +785,7 @@ namespace Alignment_mdi
 
 
                     List<string> lista_legend = new List<string>();
-
+                    int lr = 1;
 
                     using (DocumentLock lock1 = ThisDrawing.LockDocument())
                     {
@@ -1639,6 +1639,16 @@ namespace Alignment_mdi
                                 {
                                     hexag = Math.Abs(known_x1 - known_x2) / Math.Abs(known_sta1 - known_sta2);
                                     graph_vexag = Math.Abs(known_y1 - known_y2) / Math.Abs(known_el1 - known_el2);
+
+                                    if((known_x1>known_x2 && known_sta1>known_sta2)|| (known_x1 < known_x2 && known_sta1 < known_sta2))
+                                    {
+                                        lr = 1;
+                                    }
+                                    else
+                                    {
+                                        lr = -1;
+                                    }
+
                                 }
 
                                 #endregion
@@ -1720,7 +1730,7 @@ namespace Alignment_mdi
 
                                     Point3d point_on_poly = poly_cl.GetClosestPointTo(point_borhole, Vector3d.ZAxis, false);
                                     double sta = poly_cl.GetDistAtPoint(point_on_poly);
-                                    double x_ins = known_x1 - (hexag * (known_sta1 - sta));
+                                    double x_ins = known_x1 - lr*(hexag * (known_sta1 - sta));
 
                                     double elev = Convert.ToDouble(dt_point.Rows[i][col_elev]);
                                     double y_ins = known_y1 - (graph_vexag * (known_el1 - elev));

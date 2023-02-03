@@ -211,7 +211,7 @@ namespace Alignment_mdi
 
         private void Create_layer_controller_spreadsheet_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+           
 
             string file1 = System.IO.Path.GetFileName(stnd_xl_filename);
 

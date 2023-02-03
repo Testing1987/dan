@@ -218,6 +218,9 @@ namespace Alignment_mdi
         {
             Microsoft.Office.Interop.Excel.Application Excel1;
             Microsoft.Office.Interop.Excel.Workbook Workbook1;
+
+
+
             try
             {
                 Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
@@ -283,47 +286,27 @@ namespace Alignment_mdi
             return false;
         }
 
-        static public void Kill_excel()
+        static public void Kill_excel(int no_max_allowed )
         {
-            List<int> ProcessID = Functions.GetAllExcelProcessID();
-            if (ProcessID.Count > 0)
+            try
             {
-                foreach (int Id in ProcessID)
+                var processes = System.Diagnostics.Process.GetProcessesByName("EXCEL");
+              int no=0  ;
+                foreach (var process in processes)
                 {
-                    try
+                   
+                    if (no >no_max_allowed)
                     {
-                        System.Diagnostics.Process proc = System.Diagnostics.Process.GetProcessById(Id);
-                        // Microsoft.Office.Interop.Excel.Application Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-                        try
+                        if (MessageBox.Show("Is ok to kill excel?", "question for you", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                         {
-                            try
-                            {
-                                if (System.Diagnostics.Process.GetProcessById(Id).MainWindowTitle.ToString() == "")
-                                {
-                                    proc.Kill();
-
-                                }
-                            }
-                            catch (System.InvalidOperationException ex)
-                            {
-
-                            }
+                            process.Kill();
                         }
-                        catch (System.ComponentModel.Win32Exception ex)
-                        {
-
-                        }
-
-                        //MessageBox.Show(Process.GetProcessById(Id).MainWindowHandle.ToString());
-                        //  
-                    }
-                    catch (System.ArgumentException ex)
-                    {
-
                     }
                 }
-
-
+            }
+            catch (System.Exception ex)
+            {
+                // No instance of Excel is currently running
             }
         }
 
@@ -5684,7 +5667,7 @@ namespace Alignment_mdi
                 }
             }
         }
-        static public void add_all_OD_fieds_to_combobox(string table_name, ComboBox Combobox1)
+        static public void add_all_OD_fieds_to_combobox(string table_name, ComboBox Combobox1, bool unique_val)
         {
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
 
@@ -5700,7 +5683,21 @@ namespace Alignment_mdi
                         for (int i = 0; i < Field_defs1.Count; ++i)
                         {
                             Autodesk.Gis.Map.ObjectData.FieldDefinition fielddef1 = Field_defs1[i];
-                            Combobox1.Items.Add(fielddef1.Name);
+
+                            string val1 = fielddef1.Name;
+
+                            if (unique_val == true)
+                            {
+                                if (Combobox1.Items.Contains(val1) == false)
+                                {
+                                    Combobox1.Items.Add(val1);
+                                }
+                            }
+                            else
+                            {
+                                Combobox1.Items.Add(val1);
+                            }
+
                         }
                     }
                     Trans1.Commit();
@@ -15592,6 +15589,8 @@ namespace Alignment_mdi
                 Creaza_layer(Layer_pipe, 1, true);
             }
 
+            Create_profile_band_od_table();
+
             bool exista_eq = true;
             if (data_table_st_eq == null) exista_eq = false;
             if (data_table_st_eq != null)
@@ -16773,7 +16772,7 @@ namespace Alignment_mdi
                         #region poly graph object data
                         if (Poly_graph != null && Poly_graph.NumberOfVertices > 0)
                         {
-                            Create_profile_band_od_table();
+
                             List<object> Lista_val = new List<object>();
                             List<Autodesk.Gis.Map.Constants.DataType> Lista_type = new List<Autodesk.Gis.Map.Constants.DataType>();
 
@@ -19857,8 +19856,8 @@ namespace Alignment_mdi
             return Point2;
         }
 
-        public static System.Data.DataTable Scan_parcels(System.Data.DataTable dt_centerline, System.Data.DataTable dt_station_equation, 
-            System.Data.DataTable dt_out,string Layer_to_be_scanned, string proj_type,  string table_name, string field1, string field2,
+        public static System.Data.DataTable Scan_parcels(System.Data.DataTable dt_centerline, System.Data.DataTable dt_station_equation,
+            System.Data.DataTable dt_out, string Layer_to_be_scanned, string proj_type, string table_name, string field1, string field2,
              string dtfield1, string dtfield2)
         {
 
@@ -19876,7 +19875,7 @@ namespace Alignment_mdi
             Polyline3d poly3d = null;
 
 
-           
+
             System.Data.DataTable dt2 = null;
 
 
@@ -19893,7 +19892,7 @@ namespace Alignment_mdi
             string Col_Y2 = "Y_End";
             try
             {
-        
+
 
 
 
@@ -19911,7 +19910,7 @@ namespace Alignment_mdi
                             poly3d = Functions.Build_3d_poly_for_scanning(dt_centerline);
                             poly_length = poly3d.Length;
                         }
-                 
+
 
                         Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
                         LayerTable Layer_table = Trans1.GetObject(ThisDrawing.Database.LayerTableId, OpenMode.ForRead) as LayerTable;
@@ -19927,7 +19926,7 @@ namespace Alignment_mdi
                             return null;
                         }
 
-                     
+
 
                         if (dt_station_equation != null && dt_station_equation.Rows.Count > 0)
                         {
@@ -20416,7 +20415,7 @@ namespace Alignment_mdi
                         }
 
 
-                    
+
 
 
                         string col_sta = Col_2DSta2;
@@ -20485,7 +20484,7 @@ namespace Alignment_mdi
 
 
 
-                
+
             }
             catch (System.Exception ex)
             {

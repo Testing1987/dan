@@ -1733,6 +1733,7 @@ namespace Alignment_mdi
                             {
                                 Functions.create_backup(fisier_si);
                                 Populate_sheet_index_file(fisier_si);
+                                label_not_saved.Visible = false;
 
                                 dataGridView_sheet_index.DataSource = _SGEN_mainform.dt_sheet_index;
                                 dataGridView_sheet_index.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -1937,10 +1938,6 @@ namespace Alignment_mdi
 
 
 
-                            //Alignment_mdi.Jig_show_rectangle_top_left Jig_top_left = new Alignment_mdi.Jig_show_rectangle_top_left();
-                            //Result_point1 = Jig_top_left.StartJig(_SGEN_mainform.Vw_scale, _SGEN_mainform.Vw_width, _SGEN_mainform.Vw_height, anchor);
-
-
                             Jig_show_rectangle_with_JigPromptPointOptions jig1 = new Jig_show_rectangle_with_JigPromptPointOptions();
 
                             if (checkBox_plat_mode.Checked == true)
@@ -1997,11 +1994,6 @@ namespace Alignment_mdi
 
                                 }
 
-                                Trans1.Commit();
-
-
-
-
                                 if (add_row == true)
                                 {
 
@@ -2048,6 +2040,13 @@ namespace Alignment_mdi
                                                                         {
                                                                             Name_of_sheet = Convert.ToString(valoare1);
                                                                             j = Record1.Count;
+
+                                                                            Entity ent1 = Trans1.GetObject(Rezultat_entity.ObjectId, OpenMode.ForWrite) as Entity;
+
+                                                                            if (ent1 != null)
+                                                                            {
+                                                                                ent1.ColorIndex = 30;
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -2064,7 +2063,7 @@ namespace Alignment_mdi
                                         }
                                     }
 
-
+                                    
 
                                     _SGEN_mainform.dt_sheet_index.Rows[_SGEN_mainform.dt_sheet_index.Rows.Count - 1][Col_handle] = Rectangle2.ObjectId.Handle.Value.ToString();
                                     _SGEN_mainform.dt_sheet_index.Rows[_SGEN_mainform.dt_sheet_index.Rows.Count - 1][_SGEN_mainform.Col_x] = (Rectangle2.GetPoint3dAt(0).X + Rectangle2.GetPoint3dAt(2).X) / 2;
@@ -2084,6 +2083,8 @@ namespace Alignment_mdi
 
 
                             }
+
+                            Trans1.Commit();
                         }
                     } while (run1 == true);
 
@@ -2690,7 +2691,7 @@ namespace Alignment_mdi
 
         private void button_load_od_field_to_combobox_Click(object sender, EventArgs e)
         {
-            if (checkBox_pick_name_from_OD.Checked==false)
+            if (checkBox_pick_name_from_OD.Checked == false)
             {
                 comboBox_od_field.Items.Clear();
                 return;

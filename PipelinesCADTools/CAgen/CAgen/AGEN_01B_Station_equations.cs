@@ -61,7 +61,7 @@ namespace Alignment_mdi
         private void button_calc_station_equations_Click(object sender, EventArgs e)
         {
             Ag = this.MdiParent as _AGEN_mainform;
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.cl_excel_name) == true)
             {
@@ -738,7 +738,7 @@ namespace Alignment_mdi
         {
             Ag = this.MdiParent as _AGEN_mainform;
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.cl_excel_name) == true)
             {

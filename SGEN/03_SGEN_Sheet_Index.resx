@@ -148,7 +148,7 @@
         2McYAmf5nhS3WULOYQdf2K7+PXjJRjhe9A+ja76wHf3WWHQDfwFNbdI3Zlb4OwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button_open_sheet_index_xl.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="button_copy_sheet_index.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         EwAACxMBAJqcGAAAAAd0SU1FB+EIGREPJKrSAAoAAARPSURBVEhLpZZ5UJVVGMZp0pqcbKYVLUCk1T9s
@@ -173,7 +173,7 @@
         yO0digAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="button_copy_sheet_index.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="button_open_sheet_index_xl.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         EwAACxMBAJqcGAAAAAd0SU1FB+EIGREPJKrSAAoAAARPSURBVEhLpZZ5UJVVGMZp0pqcbKYVLUCk1T9s
