@@ -6278,8 +6278,6 @@ namespace Alignment_mdi
 
                         if (no_minor > 0)
                         {
-
-
                             for (int i = 0; i < no_minor; ++i)
                             {
                                 Point3d pt0 = new Point3d();
