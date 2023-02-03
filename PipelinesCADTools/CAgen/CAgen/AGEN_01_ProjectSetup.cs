@@ -6280,7 +6280,7 @@ namespace Alignment_mdi
                         {
 
 
-                            for (int i = 1; i < no_minor; ++i)
+                            for (int i = 0; i < no_minor; ++i)
                             {
                                 Point3d pt0 = new Point3d();
                                 if (lista_major.Contains(first_label_minor + i * spacing_minor) == false)
