@@ -279,7 +279,7 @@ namespace Alignment_mdi
         {
             int index_err = 0;
 
-            Functions.Kill_excel();
+            
 
 
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;

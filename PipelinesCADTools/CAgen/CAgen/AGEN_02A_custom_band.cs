@@ -277,7 +277,7 @@ namespace Alignment_mdi
             {
                 if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count > 0)
                 {
-                    Functions.Kill_excel();
+                    
 
                     string cfg1 = System.IO.Path.GetFileName(_AGEN_mainform.config_path);
                     if (Functions.Get_if_workbook_is_open_in_Excel(cfg1) == true)

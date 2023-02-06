@@ -198,7 +198,7 @@ namespace Alignment_mdi
                         {
                             string Tabla1 = Nume_tables[i];
 
-                            Functions.add_all_OD_fieds_to_combobox(Tabla1, comboBox_field);
+                            Functions.add_all_OD_fieds_to_combobox(Tabla1, comboBox_field,true);
                         }
                         this.Refresh();
                     }

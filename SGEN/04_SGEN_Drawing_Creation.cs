@@ -495,10 +495,10 @@ namespace Alignment_mdi
 
                                         Functions.creaza_anno_scales(New_doc.Database);
                                         var ocm = New_doc.Database.ObjectContextManager;
-                                        var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
+                                         var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
 
 
-                                        if (checkBox_generate_multiple_layouts.Checked == true)
+                                         if (checkBox_generate_multiple_layouts.Checked == true)
                                         {
 
 

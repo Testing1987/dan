@@ -213,7 +213,7 @@ namespace Alignment_mdi
         }
         private void button_transfer_to_excel_layer_alias_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.layer_alias_excel_name) == true)
             {

@@ -41,6 +41,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weld_Sheet_Generator", "Wel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bump", "Bump\Bump\Bump.csproj", "{C67756A0-9B51-47B7-AA38-857EC1A37C2D}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "HMM_PIPELINES", "..\HMM_Pipelines\HMM_PIPELINES\HMM_PIPELINES.vbproj", "{A0A22F86-74A5-416B-81F0-6976732BF547}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -261,74 +263,23 @@ Global
 		{C67756A0-9B51-47B7-AA38-857EC1A37C2D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C67756A0-9B51-47B7-AA38-857EC1A37C2D}.Release|x86.ActiveCfg = Release|Any CPU
 		{C67756A0-9B51-47B7-AA38-857EC1A37C2D}.Release|x86.Build.0 = Release|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Debug|x86.Build.0 = Debug|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0A22F86-74A5-416B-81F0-6976732BF547}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB7163B3-9407-47C8-B669-9C751DD8A6A2}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 20
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://aisueprd-flb002:8080/tfs/holyoke
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = PPLMapTools\\PPLMapTools.vbproj
-		SccProjectName1 = PPLMapTools
-		SccLocalPath1 = PPLMapTools
-		SccProjectUniqueName2 = Workspace_band_Csharp\\Workspace_band_Csharp.csproj
-		SccProjectName2 = Workspace_band_Csharp
-		SccLocalPath2 = Workspace_band_Csharp
-		SccProjectUniqueName3 = Object_Data_Csharp\\Object_Data_Csharp.csproj
-		SccProjectName3 = Object_Data_Csharp
-		SccLocalPath3 = Object_Data_Csharp
-		SccProjectUniqueName4 = Platt_generator\\Platt_generator.vbproj
-		SccProjectName4 = Platt_generator
-		SccLocalPath4 = Platt_generator
-		SccProjectUniqueName5 = Alignment_bands\\Alignment_bands.vbproj
-		SccProjectName5 = Alignment_bands
-		SccLocalPath5 = Alignment_bands
-		SccProjectUniqueName6 = SuperLayerManager\\SuperLayerManager.csproj
-		SccProjectName6 = SuperLayerManager
-		SccLocalPath6 = SuperLayerManager
-		SccProjectUniqueName7 = Dimensioning\\Dimensioning.csproj
-		SccProjectName7 = Dimensioning
-		SccLocalPath7 = Dimensioning
-		SccProjectUniqueName8 = GeoManager\\GeoManager\\MMGeoTools.csproj
-		SccProjectName8 = GeoManager/GeoManager
-		SccLocalPath8 = GeoManager\\GeoManager
-		SccProjectUniqueName9 = WGEN\\WGEN.csproj
-		SccProjectName9 = WGEN
-		SccLocalPath9 = WGEN
-		SccProjectUniqueName10 = LGEN\\LGEN.csproj
-		SccProjectName10 = LGEN
-		SccLocalPath10 = LGEN
-		SccProjectUniqueName11 = CAgen\\CAgen\\Agen.csproj
-		SccProjectName11 = CAgen/CAgen
-		SccLocalPath11 = CAgen\\CAgen
-		SccProjectUniqueName12 = HDD\\HDD.csproj
-		SccProjectName12 = HDD
-		SccLocalPath12 = HDD
-		SccProjectUniqueName13 = Scan_Tools\\Scan_Tools.csproj
-		SccProjectName13 = Scan_Tools
-		SccLocalPath13 = Scan_Tools
-		SccProjectUniqueName14 = Upstream_align\\PGen.csproj
-		SccProjectName14 = Upstream_align
-		SccLocalPath14 = Upstream_align
-		SccProjectUniqueName15 = Global_functions\\Global_functions.csproj
-		SccProjectName15 = Global_functions
-		SccLocalPath15 = Global_functions
-		SccProjectUniqueName16 = DivBerm\\DivBerm.csproj
-		SccProjectName16 = DivBerm
-		SccLocalPath16 = DivBerm
-		SccProjectUniqueName17 = Field_Notes\\Field_Notes\\Field_Notes.csproj
-		SccProjectName17 = Field_Notes/Field_Notes
-		SccLocalPath17 = Field_Notes\\Field_Notes
-		SccProjectUniqueName18 = Weld_Sheet_Generator\\Weld_Sheet_Generator.csproj
-		SccProjectName18 = Weld_Sheet_Generator
-		SccLocalPath18 = Weld_Sheet_Generator
-		SccProjectUniqueName19 = Bump\\Bump\\Bump.csproj
-		SccProjectName19 = Bump/Bump
-		SccLocalPath19 = Bump\\Bump
 	EndGlobalSection
 EndGlobal

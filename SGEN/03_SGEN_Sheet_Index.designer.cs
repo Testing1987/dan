@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SGEN_Sheet_Index));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label_not_saved = new System.Windows.Forms.Label();
             this.button_save_to_excel = new System.Windows.Forms.Button();
             this.button_load_segment_sheet_index = new System.Windows.Forms.Button();
@@ -44,11 +44,11 @@
             this.panel_dan = new System.Windows.Forms.Panel();
             this.checkBox_pick_name_from_OD = new System.Windows.Forms.CheckBox();
             this.comboBox_od_field = new System.Windows.Forms.ComboBox();
+            this.button_open_sheet_index_xl = new System.Windows.Forms.Button();
             this.checkBox_plat_mode = new System.Windows.Forms.CheckBox();
             this.button_place_rectangles = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.button_open_sheet_index_xl = new System.Windows.Forms.Button();
             this.button_copy_sheet_index = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_sheet_index)).BeginInit();
@@ -66,7 +66,7 @@
             this.label_not_saved.BackColor = System.Drawing.Color.Transparent;
             this.label_not_saved.Font = new System.Drawing.Font("Arial Black", 9.75F);
             this.label_not_saved.ForeColor = System.Drawing.Color.Red;
-            this.label_not_saved.Location = new System.Drawing.Point(424, 368);
+            this.label_not_saved.Location = new System.Drawing.Point(632, 465);
             this.label_not_saved.Name = "label_not_saved";
             this.label_not_saved.Size = new System.Drawing.Size(209, 18);
             this.label_not_saved.TabIndex = 125;
@@ -160,14 +160,14 @@
             this.dataGridView_sheet_index.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_sheet_index.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_sheet_index.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_sheet_index.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_sheet_index.Location = new System.Drawing.Point(2, 0);
             this.dataGridView_sheet_index.Name = "dataGridView_sheet_index";
@@ -224,6 +224,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label_not_saved);
             this.panel1.Controls.Add(this.panel4);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.button_copy_sheet_index);
@@ -286,6 +287,26 @@
             this.comboBox_od_field.TabIndex = 2091;
             this.comboBox_od_field.DropDown += new System.EventHandler(this.button_load_od_field_to_combobox_Click);
             // 
+            // button_open_sheet_index_xl
+            // 
+            this.button_open_sheet_index_xl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_open_sheet_index_xl.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_open_sheet_index_xl.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_open_sheet_index_xl.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_open_sheet_index_xl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_open_sheet_index_xl.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_open_sheet_index_xl.ForeColor = System.Drawing.Color.White;
+            this.button_open_sheet_index_xl.Image = ((System.Drawing.Image)(resources.GetObject("button_open_sheet_index_xl.Image")));
+            this.button_open_sheet_index_xl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_open_sheet_index_xl.Location = new System.Drawing.Point(813, 34);
+            this.button_open_sheet_index_xl.Name = "button_open_sheet_index_xl";
+            this.button_open_sheet_index_xl.Size = new System.Drawing.Size(143, 26);
+            this.button_open_sheet_index_xl.TabIndex = 2145;
+            this.button_open_sheet_index_xl.Text = "Open Sheet Index";
+            this.button_open_sheet_index_xl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_open_sheet_index_xl.UseVisualStyleBackColor = false;
+            this.button_open_sheet_index_xl.Click += new System.EventHandler(this.button_open_sheet_index_xl_Click);
+            // 
             // checkBox_plat_mode
             // 
             this.checkBox_plat_mode.AutoSize = true;
@@ -340,26 +361,6 @@
             this.label7.Text = "Model Space Viewport Location Setup";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button_open_sheet_index_xl
-            // 
-            this.button_open_sheet_index_xl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_open_sheet_index_xl.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.button_open_sheet_index_xl.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_open_sheet_index_xl.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_open_sheet_index_xl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_open_sheet_index_xl.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_open_sheet_index_xl.ForeColor = System.Drawing.Color.White;
-            this.button_open_sheet_index_xl.Image = ((System.Drawing.Image)(resources.GetObject("button_open_sheet_index_xl.Image")));
-            this.button_open_sheet_index_xl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_open_sheet_index_xl.Location = new System.Drawing.Point(813, 34);
-            this.button_open_sheet_index_xl.Name = "button_open_sheet_index_xl";
-            this.button_open_sheet_index_xl.Size = new System.Drawing.Size(143, 26);
-            this.button_open_sheet_index_xl.TabIndex = 2145;
-            this.button_open_sheet_index_xl.Text = "Open Sheet Index";
-            this.button_open_sheet_index_xl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button_open_sheet_index_xl.UseVisualStyleBackColor = false;
-            this.button_open_sheet_index_xl.Click += new System.EventHandler(this.button_open_sheet_index_xl_Click);
-            // 
             // button_copy_sheet_index
             // 
             this.button_copy_sheet_index.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
@@ -383,7 +384,6 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.dataGridView_sheet_index);
-            this.panel2.Controls.Add(this.label_not_saved);
             this.panel2.Location = new System.Drawing.Point(3, 147);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(962, 312);
@@ -406,6 +406,7 @@
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel_dan.ResumeLayout(false);
@@ -413,7 +414,6 @@
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }

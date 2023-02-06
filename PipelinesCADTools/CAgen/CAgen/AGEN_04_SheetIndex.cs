@@ -167,7 +167,7 @@ namespace Alignment_mdi
         {
             List<ObjectId> lista_del = new List<ObjectId>();
 
-            Functions.Kill_excel();
+            
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
             {
                 MessageBox.Show("Please close the sheet index file");
@@ -1894,7 +1894,7 @@ namespace Alignment_mdi
         {
             List<ObjectId> lista_del = new List<ObjectId>();
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
             {
@@ -3533,7 +3533,7 @@ namespace Alignment_mdi
         {
 
             List<ObjectId> lista_del = new List<ObjectId>();
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
             {
@@ -5033,7 +5033,7 @@ namespace Alignment_mdi
                 return;
             }
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
             {
@@ -6708,7 +6708,7 @@ namespace Alignment_mdi
 
         {
             List<ObjectId> lista_del = new List<ObjectId>();
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
             {
@@ -7169,7 +7169,7 @@ namespace Alignment_mdi
             }
             double rect_len = Math.Abs(Convert.ToDouble(textBox_length.Text));
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("sheet_index.xlsx") == true)
             {

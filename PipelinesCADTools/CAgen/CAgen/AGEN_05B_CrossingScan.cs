@@ -161,7 +161,7 @@ namespace Alignment_mdi
             first_message_box = false;
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
 
-            Functions.Kill_excel();
+            
 
 
 
@@ -1348,7 +1348,7 @@ namespace Alignment_mdi
 
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel("crossing.xlsx") == true)
             {

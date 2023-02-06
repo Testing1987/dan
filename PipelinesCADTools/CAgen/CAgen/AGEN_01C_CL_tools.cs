@@ -1031,7 +1031,7 @@ namespace Alignment_mdi
 
         private void button_pick_points_output_chainages_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
 
             set_enable_false();
@@ -1657,7 +1657,7 @@ namespace Alignment_mdi
 
         private void button_draft_heavy_wall_based_on_chainage_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             this.MdiParent.WindowState = FormWindowState.Minimized;
             set_enable_false();

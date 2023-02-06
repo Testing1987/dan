@@ -69,7 +69,7 @@ namespace Alignment_mdi
 
         private void button_scan_for_prof_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.prof_excel_name) == true)
             {
@@ -595,7 +595,7 @@ namespace Alignment_mdi
 
         private void read_profile_to_excel_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.prof_excel_name) == true)
             {
                 MessageBox.Show("Please close the " + _AGEN_mainform.prof_excel_name + " file");
@@ -1268,7 +1268,7 @@ namespace Alignment_mdi
 
         private void button_generate_profile3D_xls_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.prof_excel_name) == true)
             {
@@ -1399,7 +1399,7 @@ namespace Alignment_mdi
 
         private void button_scan_heavy_wall_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
 
             this.MdiParent.WindowState = FormWindowState.Minimized;
             set_enable_false();
@@ -1634,7 +1634,7 @@ namespace Alignment_mdi
                 }
             }
 
-            Functions.Kill_excel();
+            
 
 
             string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
@@ -2354,7 +2354,7 @@ namespace Alignment_mdi
 
         private void button_generate_profile2D_xls_Click(object sender, EventArgs e)
         {
-            Functions.Kill_excel();
+            
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.prof_excel_name) == true)
             {

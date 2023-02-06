@@ -2671,7 +2671,7 @@ namespace Alignment_mdi
             if (_AGEN_mainform.Left_to_Right == false) lr = -1;
 
 
-            Functions.Kill_excel();
+            
 
             string cfg1 = System.IO.Path.GetFileName(_AGEN_mainform.config_path);
             if (Functions.Get_if_workbook_is_open_in_Excel(cfg1) == true)

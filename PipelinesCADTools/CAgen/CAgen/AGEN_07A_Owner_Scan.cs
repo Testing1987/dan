@@ -175,7 +175,7 @@ namespace Alignment_mdi
         {
 
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.property_excel_name) == true)
             {
@@ -1022,7 +1022,7 @@ namespace Alignment_mdi
         {
 
 
-            Functions.Kill_excel();
+            
 
             if (Functions.Get_if_workbook_is_open_in_Excel(_AGEN_mainform.property_excel_name) == true)
             {
