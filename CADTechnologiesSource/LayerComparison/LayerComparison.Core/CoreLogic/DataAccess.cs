@@ -751,7 +751,7 @@ namespace LayerComparison.Core.CoreLogic
             Document thisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             Editor editor = thisDrawing.Editor;
             string shortLayerName = "";
-
+            //comment
             using (DocumentLock lock1 = thisDrawing.LockDocument())
             {
                 using (Transaction trans1 = thisDrawing.TransactionManager.StartTransaction())
