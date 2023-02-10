@@ -17296,25 +17296,25 @@ namespace Alignment_mdi
                 for (int n = 0; n < nr_rows; ++n)
                 {
 
-                    Polyline poly_silt_1 = new Polyline();
-                    poly_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1)), 0 + n * ((2 * h1))), 0, 0, 0);
-                    poly_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1)), h1 + n * ((2 * h1))), 0, 0, 0);
+                    Polyline polyline_silt_1 = new Polyline();
+                    polyline_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1)), 0 + n * ((2 * h1))), 0, 0, 0);
+                    polyline_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1)), h1 + n * ((2 * h1))), 0, 0, 0);
 
-                    poly_silt_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
-                    poly_silt_1.Layer = "0";
-                    poly_silt_1.Color = color1;
-                    poly_silt_1.LineWeight = LineWeight.LineWeight000;
-                    bltrec1.AppendEntity(poly_silt_1);
+                    polyline_silt_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
+                    polyline_silt_1.Layer = "0";
+                    polyline_silt_1.Color = color1;
+                    polyline_silt_1.LineWeight = LineWeight.LineWeight000;
+                    bltrec1.AppendEntity(polyline_silt_1);
 
-                    Polyline poly_silt_2 = new Polyline();
-                    poly_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1, h1 + 2 * n * h1), 0, 0, 0);
-                    poly_silt_2.AddVertexAt(1, new Point2d(w1 + 3 * m * w1, 0 + 2 * n * h1), 0, 0, 0);
-                    poly_silt_2.Closed = true;
-                    poly_silt_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
-                    poly_silt_2.Layer = "0";
-                    poly_silt_2.Color = color1;
-                    poly_silt_2.LineWeight = LineWeight.LineWeight000;
-                    bltrec1.AppendEntity(poly_silt_2);
+                    Polyline polyline_silt_2 = new Polyline();
+                    polyline_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1, h1 + 2 * n * h1), 0, 0, 0);
+                    polyline_silt_2.AddVertexAt(1, new Point2d(w1 + 3 * m * w1, 0 + 2 * n * h1), 0, 0, 0);
+                    polyline_silt_2.Closed = true;
+                    polyline_silt_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
+                    polyline_silt_2.Layer = "0";
+                    polyline_silt_2.Color = color1;
+                    polyline_silt_2.LineWeight = LineWeight.LineWeight000;
+                    bltrec1.AppendEntity(polyline_silt_2);
 
                 }
             }
