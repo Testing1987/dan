@@ -10,3 +10,13 @@ C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\HDD\ob
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\HDD\obj\Debug\HDD.csproj.CoreCompileInputs.cache
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\HDD\obj\Debug\HDD.dll
 C:\Users\POP70694\Documents\Visual Studio 2019\Projects\PipelinesCADTools\HDD\obj\Debug\HDD.pdb
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\HDD.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\Alignment_mdi.BH_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\Alignment_mdi.HDD_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\Alignment_mdi.HDD_calcs.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\Alignment_mdi.HDD_Boreholes.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\HDD.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\HDD.csproj.CoreCompileInputs.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\HDD.dll
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\PipelinesCADTools\HDD\obj\Debug\HDD.pdb
