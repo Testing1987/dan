@@ -1566,6 +1566,17 @@ namespace Alignment_mdi
 
                                     ObjectIdCollection viewportCollection = new ObjectIdCollection();
                                     DBDictionary dBLayoutDictionary = Trans2.GetObject(Database2.LayoutDictionaryId, OpenMode.ForRead) as DBDictionary;
+                                    LinetypeTable Linetypetable1 = Trans2.GetObject(Database2.LinetypeTableId, OpenMode.ForRead) as LinetypeTable;
+
+                                    List<string> lista_ltt = new List<string>();
+                                    foreach (ObjectId acObjId in Linetypetable1)
+                                    {
+                                        LinetypeTableRecord lttr;
+                                        lttr = Trans2.GetObject(acObjId, OpenMode.ForRead) as LinetypeTableRecord;
+                                        lista_ltt.Add(lttr.Name);
+                                      
+                                    }
+
                                     foreach (DBDictionaryEntry entry in dBLayoutDictionary)
                                     {
                                         Layout layout = Trans2.GetObject(entry.Value, OpenMode.ForRead) as Layout;
@@ -1656,6 +1667,16 @@ namespace Alignment_mdi
                                                                     ltr.Color = Autodesk.AutoCAD.Colors.Color.FromRgb(R, G, B);
                                                                 }
                                                             }
+                                                            //linetype
+                                                            if (dt1.Rows[j][4] != DBNull.Value)
+                                                            {
+                                                                string ltype_name = Convert.ToString(dt1.Rows[j][4]);
+                                                                if (lista_ltt.Contains(ltype_name)==true)
+                                                                {
+                                                                    ltr.LinetypeObjectId = Linetypetable1[ltype_name];
+                                                                }
+                                                            }
+
 
                                                             //lineweight
 
