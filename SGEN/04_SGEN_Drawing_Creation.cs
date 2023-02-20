@@ -564,51 +564,51 @@ namespace Alignment_mdi
                                                         string anno_name = "xxx";
                                                         if (Math.Round(scale2, 1) == 0.1)
                                                         {
-                                                            anno_name = "_1:10";
+                                                            anno_name ="1:10";
                                                         }
                                                         if (Math.Round(scale2, 2) == 0.05)
                                                         {
-                                                            anno_name = "_1:20";
+                                                            anno_name ="1:20";
                                                         }
                                                         if (Math.Round(scale2, 3) == 0.033)
                                                         {
-                                                            anno_name = "_1:30";
+                                                            anno_name ="1:30";
                                                         }
                                                         if (Math.Round(scale2, 3) == 0.025)
                                                         {
-                                                            anno_name = "_1:40";
+                                                            anno_name ="1:40";
                                                         }
                                                         if (Math.Round(scale2, 2) == 0.02)
                                                         {
-                                                            anno_name = "_1:50";
+                                                            anno_name ="1:50";
                                                         }
                                                         if (Math.Round(scale2, 3) == 0.017)
                                                         {
-                                                            anno_name = "_1:60";
+                                                            anno_name ="1:60";
                                                         }
                                                         if (Math.Round(scale2, 2) == 0.01)
                                                         {
-                                                            anno_name = "_1:100";
+                                                            anno_name ="1:100";
                                                         }
                                                         if (Math.Round(scale2, 3) == 0.005)
                                                         {
-                                                            anno_name = "_1:200";
+                                                            anno_name ="1:200";
                                                         }
                                                         if (Math.Round(scale2, 4) == 0.0033)
                                                         {
-                                                            anno_name = "_1:300";
+                                                            anno_name ="1:300";
                                                         }
                                                         if (Math.Round(scale2, 4) == 0.0025)
                                                         {
-                                                            anno_name = "_1:400";
+                                                            anno_name ="1:400";
                                                         }
                                                         if (Math.Round(scale2, 3) == 0.002)
                                                         {
-                                                            anno_name = "_1:500";
+                                                            anno_name ="1:500";
                                                         }
                                                         if (Math.Round(scale2, 4) == 0.0017)
                                                         {
-                                                            anno_name = "_1:600";
+                                                            anno_name ="1:600";
                                                         }
 
                                                         foreach (var context1 in occ)
@@ -963,51 +963,51 @@ namespace Alignment_mdi
                                                                                 string anno_name = "xxx";
                                                                                 if (Math.Round(scale2, 1) == 0.1)
                                                                                 {
-                                                                                    anno_name = "_1:10";
+                                                                                    anno_name ="1:10";
                                                                                 }
                                                                                 if (Math.Round(scale2, 2) == 0.05)
                                                                                 {
-                                                                                    anno_name = "_1:20";
+                                                                                    anno_name ="1:20";
                                                                                 }
                                                                                 if (Math.Round(scale2, 3) == 0.033)
                                                                                 {
-                                                                                    anno_name = "_1:30";
+                                                                                    anno_name ="1:30";
                                                                                 }
                                                                                 if (Math.Round(scale2, 3) == 0.025)
                                                                                 {
-                                                                                    anno_name = "_1:40";
+                                                                                    anno_name ="1:40";
                                                                                 }
                                                                                 if (Math.Round(scale2, 2) == 0.02)
                                                                                 {
-                                                                                    anno_name = "_1:50";
+                                                                                    anno_name ="1:50";
                                                                                 }
                                                                                 if (Math.Round(scale2, 3) == 0.017)
                                                                                 {
-                                                                                    anno_name = "_1:60";
+                                                                                    anno_name ="1:60";
                                                                                 }
                                                                                 if (Math.Round(scale2, 2) == 0.01)
                                                                                 {
-                                                                                    anno_name = "_1:100";
+                                                                                    anno_name ="1:100";
                                                                                 }
                                                                                 if (Math.Round(scale2, 3) == 0.005)
                                                                                 {
-                                                                                    anno_name = "_1:200";
+                                                                                    anno_name ="1:200";
                                                                                 }
                                                                                 if (Math.Round(scale2, 4) == 0.0033)
                                                                                 {
-                                                                                    anno_name = "_1:300";
+                                                                                    anno_name ="1:300";
                                                                                 }
                                                                                 if (Math.Round(scale2, 4) == 0.0025)
                                                                                 {
-                                                                                    anno_name = "_1:400";
+                                                                                    anno_name ="1:400";
                                                                                 }
                                                                                 if (Math.Round(scale2, 3) == 0.002)
                                                                                 {
-                                                                                    anno_name = "_1:500";
+                                                                                    anno_name ="1:500";
                                                                                 }
                                                                                 if (Math.Round(scale2, 4) == 0.0017)
                                                                                 {
-                                                                                    anno_name = "_1:600";
+                                                                                    anno_name ="1:600";
                                                                                 }
 
                                                                                 foreach (var context1 in occ)
@@ -1201,51 +1201,51 @@ namespace Alignment_mdi
                     string anno_name = "xxx";
                     if (Math.Round(scale1, 1) == 0.1)
                     {
-                        anno_name = "_1:10";
+                        anno_name ="1:10";
                     }
                     if (Math.Round(scale1, 2) == 0.05)
                     {
-                        anno_name = "_1:20";
+                        anno_name ="1:20";
                     }
                     if (Math.Round(scale1, 3) == 0.033)
                     {
-                        anno_name = "_1:30";
+                        anno_name ="1:30";
                     }
                     if (Math.Round(scale1, 3) == 0.025)
                     {
-                        anno_name = "_1:40";
+                        anno_name ="1:40";
                     }
                     if (Math.Round(scale1, 2) == 0.02)
                     {
-                        anno_name = "_1:50";
+                        anno_name ="1:50";
                     }
                     if (Math.Round(scale1, 3) == 0.017)
                     {
-                        anno_name = "_1:60";
+                        anno_name ="1:60";
                     }
                     if (Math.Round(scale1, 2) == 0.01)
                     {
-                        anno_name = "_1:100";
+                        anno_name ="1:100";
                     }
                     if (Math.Round(scale1, 3) == 0.005)
                     {
-                        anno_name = "_1:200";
+                        anno_name ="1:200";
                     }
                     if (Math.Round(scale1, 4) == 0.0033)
                     {
-                        anno_name = "_1:300";
+                        anno_name ="1:300";
                     }
                     if (Math.Round(scale1, 4) == 0.0025)
                     {
-                        anno_name = "_1:400";
+                        anno_name ="1:400";
                     }
                     if (Math.Round(scale1, 3) == 0.002)
                     {
-                        anno_name = "_1:500";
+                        anno_name ="1:500";
                     }
                     if (Math.Round(scale1, 4) == 0.0017)
                     {
-                        anno_name = "_1:600";
+                        anno_name ="1:600";
                     }
 
                     foreach (var context1 in occ)
@@ -1296,51 +1296,51 @@ namespace Alignment_mdi
                     string anno_name = "xxx";
                     if (Math.Round(scale1, 1) == 0.1)
                     {
-                        anno_name = "_1:10";
+                        anno_name ="1:10";
                     }
                     if (Math.Round(scale1, 2) == 0.05)
                     {
-                        anno_name = "_1:20";
+                        anno_name ="1:20";
                     }
                     if (Math.Round(scale1, 3) == 0.033)
                     {
-                        anno_name = "_1:30";
+                        anno_name ="1:30";
                     }
                     if (Math.Round(scale1, 3) == 0.025)
                     {
-                        anno_name = "_1:40";
+                        anno_name ="1:40";
                     }
                     if (Math.Round(scale1, 2) == 0.02)
                     {
-                        anno_name = "_1:50";
+                        anno_name ="1:50";
                     }
                     if (Math.Round(scale1, 3) == 0.017)
                     {
-                        anno_name = "_1:60";
+                        anno_name ="1:60";
                     }
                     if (Math.Round(scale1, 2) == 0.01)
                     {
-                        anno_name = "_1:100";
+                        anno_name ="1:100";
                     }
                     if (Math.Round(scale1, 3) == 0.005)
                     {
-                        anno_name = "_1:200";
+                        anno_name ="1:200";
                     }
                     if (Math.Round(scale1, 4) == 0.0033)
                     {
-                        anno_name = "_1:300";
+                        anno_name ="1:300";
                     }
                     if (Math.Round(scale1, 4) == 0.0025)
                     {
-                        anno_name = "_1:400";
+                        anno_name ="1:400";
                     }
                     if (Math.Round(scale1, 3) == 0.002)
                     {
-                        anno_name = "_1:500";
+                        anno_name ="1:500";
                     }
                     if (Math.Round(scale1, 4) == 0.0017)
                     {
-                        anno_name = "_1:600";
+                        anno_name ="1:600";
                     }
 
                     foreach (var context1 in occ)

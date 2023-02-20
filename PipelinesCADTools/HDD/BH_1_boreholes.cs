@@ -785,7 +785,7 @@ namespace Alignment_mdi
 
 
                     List<string> lista_legend = new List<string>();
-
+                    int lr = 1;
 
                     using (DocumentLock lock1 = ThisDrawing.LockDocument())
                     {
@@ -1639,6 +1639,16 @@ namespace Alignment_mdi
                                 {
                                     hexag = Math.Abs(known_x1 - known_x2) / Math.Abs(known_sta1 - known_sta2);
                                     graph_vexag = Math.Abs(known_y1 - known_y2) / Math.Abs(known_el1 - known_el2);
+
+                                    if ((known_x1 > known_x2 && known_sta1 > known_sta2) || (known_x1 < known_x2 && known_sta1 < known_sta2))
+                                    {
+                                        lr = 1;
+                                    }
+                                    else
+                                    {
+                                        lr = -1;
+                                    }
+
                                 }
 
                                 #endregion
@@ -1720,10 +1730,11 @@ namespace Alignment_mdi
 
                                     Point3d point_on_poly = poly_cl.GetClosestPointTo(point_borhole, Vector3d.ZAxis, false);
                                     double sta = poly_cl.GetDistAtPoint(point_on_poly);
-                                    double x_ins = known_x1 - (hexag * (known_sta1 - sta));
+                                    double x_ins = known_x1 - lr * (hexag * (known_sta1 - sta));
 
                                     double elev = Convert.ToDouble(dt_point.Rows[i][col_elev]);
                                     double y_ins = known_y1 - (graph_vexag * (known_el1 - elev));
+
 
                                     #region Plan view
 
@@ -2232,10 +2243,12 @@ namespace Alignment_mdi
                                                         {
                                                             add_pattern_GP(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
                                                         }
+
                                                         if (desc.ToUpper() == "GC")
                                                         {
                                                             add_pattern_GC(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
                                                         }
+
                                                         if (desc.ToUpper() == "MUDSTONE")
                                                         {
                                                             add_pattern_MUDSTONE(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
@@ -2296,6 +2309,23 @@ namespace Alignment_mdi
                                                         if (desc.ToUpper() == "CONGLOMERATE")
                                                         {
                                                             add_pattern_CONGLOMERATE(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
+
+                                                        }
+
+                                                        if (desc.ToUpper() == "ASPHALT")
+                                                        {
+                                                            add_pattern_ASPHALT(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
+                                                        }
+
+                                                        if (desc.ToUpper() == "PAVEMENT OR BASE")
+                                                        {
+                                                            add_pattern_PAVEMENT(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
+                                                        }
+
+
+                                                        if (desc.ToUpper() == "SC-SM")
+                                                        {
+                                                            add_pattern_SCSM(bltrec1, scale1, graph_vexag, stick_vexag, poly1, BTrecord, Trans1);
 
                                                         }
 
@@ -2404,9 +2434,7 @@ namespace Alignment_mdi
                                         {
                                             pt_legend = new Point3d(boe.Location.X, (boe.Location.Y - boe.TextHeight * 3.2), 0);
                                         }
-
                                     }
-
                                     #region block_labels
                                     idx = 3;
                                     string suff = "A";
@@ -2645,7 +2673,6 @@ namespace Alignment_mdi
                                     } while (exista == true);
                                     #endregion
                                 }
-
                                 #region LEGEND
                                 int idx1 = 1;
                                 string Legend = "Legend_Boreholes";
@@ -3211,7 +3238,6 @@ namespace Alignment_mdi
                                                     if (lista_legend[i] == "SANDSTONE")
                                                     {
                                                         add_pattern_sandstone(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
-
                                                     }
 
                                                     if (lista_legend[i] == "SM")
@@ -3272,7 +3298,7 @@ namespace Alignment_mdi
                                                     }
                                                     if (lista_legend[i] == "BOULDERS")
                                                     {
-                                                        add_pattern_BOULDERS(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                        add_pattern_BOULDERS_legend(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
                                                     }
                                                     if (lista_legend[i] == "SILTSTONE")
                                                     {
@@ -3282,6 +3308,20 @@ namespace Alignment_mdi
                                                     {
                                                         add_pattern_CONGLOMERATE(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
                                                     }
+                                                    if (lista_legend[i] == "ASPHALT")
+                                                    {
+                                                        add_pattern_ASPHALT(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+                                                    if (lista_legend[i] == "PAVEMENT OR BASE")
+                                                    {
+                                                        add_pattern_PAVEMENT(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+
+                                                    if (lista_legend[i] == "SC-SM")
+                                                    {
+                                                        add_pattern_SCSM(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+
                                                 }
 
                                                 BlockTable1.Add(bltrec1);
@@ -3297,6 +3337,7 @@ namespace Alignment_mdi
                                         }
                                     } while (exista1 == true);
                                     #endregion
+
                                 }
                             }
 
@@ -3444,7 +3485,7 @@ namespace Alignment_mdi
 
 
             double pattern_width = 0.33 * scale1;
-            double pattern_height = 0.4 * scale1;
+            double pattern_height = 0.2 * scale1;
 
             double spc_h_edge = 0;
             double spc_v_edge = 0;
@@ -10756,8 +10797,6 @@ namespace Alignment_mdi
 
         }
 
-
-
         private void add_pattern_sandstone(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
 
         {
@@ -11004,8 +11043,6 @@ namespace Alignment_mdi
 
         }
 
-
-
         private void add_pattern_GPGC(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
 
@@ -11183,7 +11220,6 @@ namespace Alignment_mdi
             poly2.Erase();
 
         }
-
 
         private void add_pattern_GPGC_legend(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -14394,7 +14430,6 @@ namespace Alignment_mdi
 
         }
 
-
         private void add_pattern_CL(BlockTableRecord bltrec1, double scale1, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
             string nume_hatch = "ANSI31";
@@ -15881,8 +15916,6 @@ namespace Alignment_mdi
 
         }
 
-
-
         private void add_pattern_GPGM(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
 
@@ -16060,8 +16093,6 @@ namespace Alignment_mdi
             poly2.Erase();
 
         }
-
-
 
         private void add_pattern_GPGM_legend(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -16244,8 +16275,6 @@ namespace Alignment_mdi
 
         }
 
-
-
         private void add_pattern_DECOMPOSED_ROCK(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
             Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(127, 63, 63);
@@ -16355,7 +16384,6 @@ namespace Alignment_mdi
 
 
         }
-
 
         private void add_pattern_SPSM(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -16475,8 +16503,6 @@ namespace Alignment_mdi
                 }
             }
         }
-
-
 
         private void add_pattern_SPSC(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -16963,7 +16989,6 @@ namespace Alignment_mdi
             poly2.Erase();
         }
 
-
         private void add_pattern_BOULDERS(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
             Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(132, 132, 132);
@@ -17038,19 +17063,19 @@ namespace Alignment_mdi
                 {
 
                     Polyline poly_boulder_1 = new Polyline();
-                    poly_boulder_1.AddVertexAt(0, new Point2d(scale1 * 0.0309474656008424 + m * w1 * scale1, scale1 * 0.153556586288185 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(1, new Point2d(scale1 * 0.0840970719000624 + m * w1 * scale1, scale1 * 0.132414854004685 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(2, new Point2d(scale1 * 0.133585260876442 + m * w1 * scale1, scale1 * 0.151903042981082 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(3, new Point2d(scale1 * 0.151026205758332 + m * w1 * scale1, scale1 * 0.171942413059781 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(4, new Point2d(scale1 * 0.178585260876442 + m * w1 * scale1, scale1 * 0.224973909122784 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(5, new Point2d(scale1 * 0.170278174262262 + m * w1 * scale1, scale1 * 0.304225877626783 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(6, new Point2d(scale1 * 0.132601008907932 + m * w1 * scale1, scale1 * 0.338595956366883 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(7, new Point2d(scale1 * 0.0671285679630522 + m * w1 * scale1, scale1 * 0.340092019358983 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(8, new Point2d(scale1 * 0.0270104577268322 + m * w1 * scale1, scale1 * 0.306548712272384 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(9, new Point2d(scale1 * 0.00937266245124224 + m * w1 * scale1, scale1 * 0.273674696524384 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(10, new Point2d(scale1 * 0.00665612701817242 + m * w1 * scale1, scale1 * 0.219895168965283 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(11, new Point2d(scale1 * 0.0141758120575424 + m * w1 * scale1, scale1 * 0.174147137469283 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_1.AddVertexAt(12, new Point2d(scale1 * 0.0309474656008424 + m * w1 * scale1, scale1 * 0.153556586288185 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(0, new Point2d(scale1 * 0.0309474656008424 + m * w1 * scale1, scale1 * 0.153556586288185 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(1, new Point2d(scale1 * 0.0840970719000624 + m * w1 * scale1, scale1 * 0.132414854004685 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(2, new Point2d(scale1 * 0.133585260876442 + m * w1 * scale1, scale1 * 0.151903042981082 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(3, new Point2d(scale1 * 0.151026205758332 + m * w1 * scale1, scale1 * 0.171942413059781 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(4, new Point2d(scale1 * 0.178585260876442 + m * w1 * scale1, scale1 * 0.224973909122784 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(5, new Point2d(scale1 * 0.170278174262262 + m * w1 * scale1, scale1 * 0.304225877626783 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(6, new Point2d(scale1 * 0.132601008907932 + m * w1 * scale1, scale1 * 0.338595956366883 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(7, new Point2d(scale1 * 0.0671285679630522 + m * w1 * scale1, scale1 * 0.340092019358983 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(8, new Point2d(scale1 * 0.0270104577268322 + m * w1 * scale1, scale1 * 0.306548712272384 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(9, new Point2d(scale1 * 0.00937266245124224 + m * w1 * scale1, scale1 * 0.273674696524384 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(10, new Point2d(scale1 * 0.00665612701817242 + m * w1 * scale1, scale1 * 0.219895168965283 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(11, new Point2d(scale1 * 0.0141758120575424 + m * w1 * scale1, scale1 * 0.174147137469283 + n * h1), 0, 0, 0);
+                    poly_boulder_1.AddVertexAt(12, new Point2d(scale1 * 0.0309474656008424 + m * w1 * scale1, scale1 * 0.153556586288185 + n * h1), 0, 0, 0);
                     poly_boulder_1.Closed = true;
                     poly_boulder_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_1.Layer = "0";
@@ -17058,21 +17083,21 @@ namespace Alignment_mdi
                     poly_boulder_1.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_1);
                     Polyline poly_boulder_2 = new Polyline();
-                    poly_boulder_2.AddVertexAt(0, new Point2d(scale1 * 0.323240795511029 + m * w1 * scale1, scale1 * 0.203306932694075 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(1, new Point2d(scale1 * 0.357020323070079 + m * w1 * scale1, scale1 * 0.242322680725574 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(2, new Point2d(scale1 * 0.360681740392919 + m * w1 * scale1, scale1 * 0.272204570489278 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(3, new Point2d(scale1 * 0.345524260077949 + m * w1 * scale1, scale1 * 0.325905357890874 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(4, new Point2d(scale1 * 0.331902212833859 + m * w1 * scale1, scale1 * 0.343228192536574 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(5, new Point2d(scale1 * 0.301075441180319 + m * w1 * scale1, scale1 * 0.357519531119276 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(6, new Point2d(scale1 * 0.253083315196059 + m * w1 * scale1, scale1 * 0.360551027182278 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(7, new Point2d(scale1 * 0.226980952991339 + m * w1 * scale1, scale1 * 0.356062838205875 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(8, new Point2d(scale1 * 0.199264417558269 + m * w1 * scale1, scale1 * 0.338976224032677 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(9, new Point2d(scale1 * 0.181272291574019 + m * w1 * scale1, scale1 * 0.285787247654677 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(10, new Point2d(scale1 * 0.183870716770869 + m * w1 * scale1, scale1 * 0.248306932694073 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(11, new Point2d(scale1 * 0.201784102597639 + m * w1 * scale1, scale1 * 0.215078586237374 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(12, new Point2d(scale1 * 0.230012449054329 + m * w1 * scale1, scale1 * 0.191968350016874 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(13, new Point2d(scale1 * 0.266193551416539 + m * w1 * scale1, scale1 * 0.180708507497175 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_2.AddVertexAt(14, new Point2d(scale1 * 0.323240795511029 + m * w1 * scale1, scale1 * 0.203306932694075 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(0, new Point2d(scale1 * 0.323240795511029 + m * w1 * scale1, scale1 * 0.203306932694075 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(1, new Point2d(scale1 * 0.357020323070079 + m * w1 * scale1, scale1 * 0.242322680725574 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(2, new Point2d(scale1 * 0.360681740392919 + m * w1 * scale1, scale1 * 0.272204570489278 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(3, new Point2d(scale1 * 0.345524260077949 + m * w1 * scale1, scale1 * 0.325905357890874 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(4, new Point2d(scale1 * 0.331902212833859 + m * w1 * scale1, scale1 * 0.343228192536574 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(5, new Point2d(scale1 * 0.301075441180319 + m * w1 * scale1, scale1 * 0.357519531119276 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(6, new Point2d(scale1 * 0.253083315196059 + m * w1 * scale1, scale1 * 0.360551027182278 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(7, new Point2d(scale1 * 0.226980952991339 + m * w1 * scale1, scale1 * 0.356062838205875 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(8, new Point2d(scale1 * 0.199264417558269 + m * w1 * scale1, scale1 * 0.338976224032677 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(9, new Point2d(scale1 * 0.181272291574019 + m * w1 * scale1, scale1 * 0.285787247654677 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(10, new Point2d(scale1 * 0.183870716770869 + m * w1 * scale1, scale1 * 0.248306932694073 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(11, new Point2d(scale1 * 0.201784102597639 + m * w1 * scale1, scale1 * 0.215078586237374 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(12, new Point2d(scale1 * 0.230012449054329 + m * w1 * scale1, scale1 * 0.191968350016874 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(13, new Point2d(scale1 * 0.266193551416539 + m * w1 * scale1, scale1 * 0.180708507497175 + n * h1), 0, 0, 0);
+                    poly_boulder_2.AddVertexAt(14, new Point2d(scale1 * 0.323240795511029 + m * w1 * scale1, scale1 * 0.203306932694075 + n * h1), 0, 0, 0);
                     poly_boulder_2.Closed = true;
                     poly_boulder_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_2.Layer = "0";
@@ -17080,22 +17105,22 @@ namespace Alignment_mdi
                     poly_boulder_2.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_2);
                     Polyline poly_boulder_3 = new Polyline();
-                    poly_boulder_3.AddVertexAt(0, new Point2d(scale1 * 0.436705362440159 + m * w1 * scale1, scale1 * 0.211102208284575 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(1, new Point2d(scale1 * 0.466626622282678 + m * w1 * scale1, scale1 * 0.210590397260979 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(2, new Point2d(scale1 * 0.499658118345669 + m * w1 * scale1, scale1 * 0.222519531119278 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(3, new Point2d(scale1 * 0.523752606534649 + m * w1 * scale1, scale1 * 0.239606145292476 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(4, new Point2d(scale1 * 0.536705362440159 + m * w1 * scale1, scale1 * 0.271456538993276 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(5, new Point2d(scale1 * 0.542020323070079 + m * w1 * scale1, scale1 * 0.309881735843677 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(6, new Point2d(scale1 * 0.526311661652759 + m * w1 * scale1, scale1 * 0.335275436631075 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(7, new Point2d(scale1 * 0.498910086849609 + m * w1 * scale1, scale1 * 0.356574649229475 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(8, new Point2d(scale1 * 0.442453393936219 + m * w1 * scale1, scale1 * 0.368149452379074 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(9, new Point2d(scale1 * 0.416665992361419 + m * w1 * scale1, scale1 * 0.361968350016876 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(10, new Point2d(scale1 * 0.391823472676379 + m * w1 * scale1, scale1 * 0.345472287024776 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(11, new Point2d(scale1 * 0.379618748266929 + m * w1 * scale1, scale1 * 0.311535279150777 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(12, new Point2d(scale1 * 0.377847094723619 + m * w1 * scale1, scale1 * 0.275117956316076 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(13, new Point2d(scale1 * 0.380760480550399 + m * w1 * scale1, scale1 * 0.255826617733375 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(14, new Point2d(scale1 * 0.400681740392919 + m * w1 * scale1, scale1 * 0.231968350016873 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_3.AddVertexAt(15, new Point2d(scale1 * 0.436705362440159 + m * w1 * scale1, scale1 * 0.211102208284575 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(0, new Point2d(scale1 * 0.436705362440159 + m * w1 * scale1, scale1 * 0.211102208284575 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(1, new Point2d(scale1 * 0.466626622282678 + m * w1 * scale1, scale1 * 0.210590397260979 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(2, new Point2d(scale1 * 0.499658118345669 + m * w1 * scale1, scale1 * 0.222519531119278 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(3, new Point2d(scale1 * 0.523752606534649 + m * w1 * scale1, scale1 * 0.239606145292476 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(4, new Point2d(scale1 * 0.536705362440159 + m * w1 * scale1, scale1 * 0.271456538993276 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(5, new Point2d(scale1 * 0.542020323070079 + m * w1 * scale1, scale1 * 0.309881735843677 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(6, new Point2d(scale1 * 0.526311661652759 + m * w1 * scale1, scale1 * 0.335275436631075 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(7, new Point2d(scale1 * 0.498910086849609 + m * w1 * scale1, scale1 * 0.356574649229475 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(8, new Point2d(scale1 * 0.442453393936219 + m * w1 * scale1, scale1 * 0.368149452379074 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(9, new Point2d(scale1 * 0.416665992361419 + m * w1 * scale1, scale1 * 0.361968350016876 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(10, new Point2d(scale1 * 0.391823472676379 + m * w1 * scale1, scale1 * 0.345472287024776 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(11, new Point2d(scale1 * 0.379618748266929 + m * w1 * scale1, scale1 * 0.311535279150777 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(12, new Point2d(scale1 * 0.377847094723619 + m * w1 * scale1, scale1 * 0.275117956316076 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(13, new Point2d(scale1 * 0.380760480550399 + m * w1 * scale1, scale1 * 0.255826617733375 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(14, new Point2d(scale1 * 0.400681740392919 + m * w1 * scale1, scale1 * 0.231968350016873 + n * h1), 0, 0, 0);
+                    poly_boulder_3.AddVertexAt(15, new Point2d(scale1 * 0.436705362440159 + m * w1 * scale1, scale1 * 0.211102208284575 + n * h1), 0, 0, 0);
                     poly_boulder_3.Closed = true;
                     poly_boulder_3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_3.Layer = "0";
@@ -17103,18 +17128,18 @@ namespace Alignment_mdi
                     poly_boulder_3.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_3);
                     Polyline poly_boulder_4 = new Polyline();
-                    poly_boulder_4.AddVertexAt(0, new Point2d(scale1 * 0.619815598660629 + m * w1 * scale1, scale1 * 0.228425042930279 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(1, new Point2d(scale1 * 0.677492764014959 + m * w1 * scale1, scale1 * 0.231417168914478 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(2, new Point2d(scale1 * 0.695248669526769 + m * w1 * scale1, scale1 * 0.244763625607475 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(3, new Point2d(scale1 * 0.707414023857479 + m * w1 * scale1, scale1 * 0.290117956316073 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(4, new Point2d(scale1 * 0.678358905747249 + m * w1 * scale1, scale1 * 0.344015594111375 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(5, new Point2d(scale1 * 0.648555756140949 + m * w1 * scale1, scale1 * 0.354133704347574 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(6, new Point2d(scale1 * 0.615445519920469 + m * w1 * scale1, scale1 * 0.354684885449976 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(7, new Point2d(scale1 * 0.582138433306299 + m * w1 * scale1, scale1 * 0.345590397260977 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(8, new Point2d(scale1 * 0.561311661652759 + m * w1 * scale1, scale1 * 0.312795121670375 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(9, new Point2d(scale1 * 0.564028197085829 + m * w1 * scale1, scale1 * 0.282795121670374 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(10, new Point2d(scale1 * 0.587059693148819 + m * w1 * scale1, scale1 * 0.250708507497175 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_4.AddVertexAt(11, new Point2d(scale1 * 0.619815598660629 + m * w1 * scale1, scale1 * 0.228425042930279 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(0, new Point2d(scale1 * 0.619815598660629 + m * w1 * scale1, scale1 * 0.228425042930279 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(1, new Point2d(scale1 * 0.677492764014959 + m * w1 * scale1, scale1 * 0.231417168914478 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(2, new Point2d(scale1 * 0.695248669526769 + m * w1 * scale1, scale1 * 0.244763625607475 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(3, new Point2d(scale1 * 0.707414023857479 + m * w1 * scale1, scale1 * 0.290117956316073 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(4, new Point2d(scale1 * 0.678358905747249 + m * w1 * scale1, scale1 * 0.344015594111375 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(5, new Point2d(scale1 * 0.648555756140949 + m * w1 * scale1, scale1 * 0.354133704347574 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(6, new Point2d(scale1 * 0.615445519920469 + m * w1 * scale1, scale1 * 0.354684885449976 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(7, new Point2d(scale1 * 0.582138433306299 + m * w1 * scale1, scale1 * 0.345590397260977 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(8, new Point2d(scale1 * 0.561311661652759 + m * w1 * scale1, scale1 * 0.312795121670375 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(9, new Point2d(scale1 * 0.564028197085829 + m * w1 * scale1, scale1 * 0.282795121670374 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(10, new Point2d(scale1 * 0.587059693148819 + m * w1 * scale1, scale1 * 0.250708507497175 + n * h1), 0, 0, 0);
+                    poly_boulder_4.AddVertexAt(11, new Point2d(scale1 * 0.619815598660629 + m * w1 * scale1, scale1 * 0.228425042930279 + n * h1), 0, 0, 0);
                     poly_boulder_4.Closed = true;
                     poly_boulder_4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_4.Layer = "0";
@@ -17122,20 +17147,20 @@ namespace Alignment_mdi
                     poly_boulder_4.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_4);
                     Polyline poly_boulder_5 = new Polyline();
-                    poly_boulder_5.AddVertexAt(0, new Point2d(scale1 * 0.0741463073220487 + m * w1 * scale1, scale1 * 0.00740142088297358 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(1, new Point2d(scale1 * 0.167335283699999 + m * w1 * scale1, scale1 * 0.0197636256074771 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(2, new Point2d(scale1 * 0.198831346692129 + m * w1 * scale1, scale1 * 0.0355903972609779 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(3, new Point2d(scale1 * 0.210603000235429 + m * w1 * scale1, scale1 * 0.0490155941113768 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(4, new Point2d(scale1 * 0.215130559290549 + m * w1 * scale1, scale1 * 0.0726770114341759 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(5, new Point2d(scale1 * 0.211429771888979 + m * w1 * scale1, scale1 * 0.101377798835776 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(6, new Point2d(scale1 * 0.189933708896849 + m * w1 * scale1, scale1 * 0.124606145292478 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(7, new Point2d(scale1 * 0.152886464802359 + m * w1 * scale1, scale1 * 0.140905357890875 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(8, new Point2d(scale1 * 0.114343157715749 + m * w1 * scale1, scale1 * 0.130511657103475 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(9, new Point2d(scale1 * 0.0617841025976387 + m * w1 * scale1, scale1 * 0.103818743717677 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(10, new Point2d(scale1 * 0.0281226852748087 + m * w1 * scale1, scale1 * 0.0712203185207754 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(11, new Point2d(scale1 * 0.0244218978732287 + m * w1 * scale1, scale1 * 0.0413384287570748 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(12, new Point2d(scale1 * 0.0474533939362187 + m * w1 * scale1, scale1 * 0.0110234681270738 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_5.AddVertexAt(13, new Point2d(scale1 * 0.0741463073220487 + m * w1 * scale1, scale1 * 0.00740142088297358 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(0, new Point2d(scale1 * 0.0741463073220487 + m * w1 * scale1, scale1 * 0.00740142088297358 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(1, new Point2d(scale1 * 0.167335283699999 + m * w1 * scale1, scale1 * 0.0197636256074771 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(2, new Point2d(scale1 * 0.198831346692129 + m * w1 * scale1, scale1 * 0.0355903972609779 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(3, new Point2d(scale1 * 0.210603000235429 + m * w1 * scale1, scale1 * 0.0490155941113768 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(4, new Point2d(scale1 * 0.215130559290549 + m * w1 * scale1, scale1 * 0.0726770114341759 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(5, new Point2d(scale1 * 0.211429771888979 + m * w1 * scale1, scale1 * 0.101377798835776 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(6, new Point2d(scale1 * 0.189933708896849 + m * w1 * scale1, scale1 * 0.124606145292478 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(7, new Point2d(scale1 * 0.152886464802359 + m * w1 * scale1, scale1 * 0.140905357890875 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(8, new Point2d(scale1 * 0.114343157715749 + m * w1 * scale1, scale1 * 0.130511657103475 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(9, new Point2d(scale1 * 0.0617841025976387 + m * w1 * scale1, scale1 * 0.103818743717677 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(10, new Point2d(scale1 * 0.0281226852748087 + m * w1 * scale1, scale1 * 0.0712203185207754 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(11, new Point2d(scale1 * 0.0244218978732287 + m * w1 * scale1, scale1 * 0.0413384287570748 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(12, new Point2d(scale1 * 0.0474533939362187 + m * w1 * scale1, scale1 * 0.0110234681270738 + n * h1), 0, 0, 0);
+                    poly_boulder_5.AddVertexAt(13, new Point2d(scale1 * 0.0741463073220487 + m * w1 * scale1, scale1 * 0.00740142088297358 + n * h1), 0, 0, 0);
                     poly_boulder_5.Closed = true;
                     poly_boulder_5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_5.Layer = "0";
@@ -17143,21 +17168,21 @@ namespace Alignment_mdi
                     poly_boulder_5.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_5);
                     Polyline poly_boulder_6 = new Polyline();
-                    poly_boulder_6.AddVertexAt(0, new Point2d(scale1 * 0.340366779762989 + m * w1 * scale1, scale1 * 0.0062990586782794 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(1, new Point2d(scale1 * 0.363870716770869 + m * w1 * scale1, scale1 * 0.00590535789087365 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(2, new Point2d(scale1 * 0.406272291574019 + m * w1 * scale1, scale1 * 0.0162990586782774 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(3, new Point2d(scale1 * 0.440248669526769 + m * w1 * scale1, scale1 * 0.0346061452924777 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(4, new Point2d(scale1 * 0.457886464802359 + m * w1 * scale1, scale1 * 0.0674801610404776 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(5, new Point2d(scale1 * 0.458910086849609 + m * w1 * scale1, scale1 * 0.131614019308176 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(6, new Point2d(scale1 * 0.439264417558269 + m * w1 * scale1, scale1 * 0.171495909071978 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(7, new Point2d(scale1 * 0.360327409684249 + m * w1 * scale1, scale1 * 0.182440790961777 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(8, new Point2d(scale1 * 0.309894338818109 + m * w1 * scale1, scale1 * 0.173582523245275 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(9, new Point2d(scale1 * 0.281784102597639 + m * w1 * scale1, scale1 * 0.148346302772775 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(10, new Point2d(scale1 * 0.255130559290549 + m * w1 * scale1, scale1 * 0.111259688599573 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(11, new Point2d(scale1 * 0.240878590786619 + m * w1 * scale1, scale1 * 0.0709840980483731 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(12, new Point2d(scale1 * 0.254264417558269 + m * w1 * scale1, scale1 * 0.0376376413554764 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(13, new Point2d(scale1 * 0.298083315196059 + m * w1 * scale1, scale1 * 0.0103541767885735 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_6.AddVertexAt(14, new Point2d(scale1 * 0.340366779762989 + m * w1 * scale1, scale1 * 0.0062990586782794 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(0, new Point2d(scale1 * 0.340366779762989 + m * w1 * scale1, scale1 * 0.0062990586782794 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(1, new Point2d(scale1 * 0.363870716770869 + m * w1 * scale1, scale1 * 0.00590535789087365 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(2, new Point2d(scale1 * 0.406272291574019 + m * w1 * scale1, scale1 * 0.0162990586782774 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(3, new Point2d(scale1 * 0.440248669526769 + m * w1 * scale1, scale1 * 0.0346061452924777 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(4, new Point2d(scale1 * 0.457886464802359 + m * w1 * scale1, scale1 * 0.0674801610404776 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(5, new Point2d(scale1 * 0.458910086849609 + m * w1 * scale1, scale1 * 0.131614019308176 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(6, new Point2d(scale1 * 0.439264417558269 + m * w1 * scale1, scale1 * 0.171495909071978 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(7, new Point2d(scale1 * 0.360327409684249 + m * w1 * scale1, scale1 * 0.182440790961777 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(8, new Point2d(scale1 * 0.309894338818109 + m * w1 * scale1, scale1 * 0.173582523245275 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(9, new Point2d(scale1 * 0.281784102597639 + m * w1 * scale1, scale1 * 0.148346302772775 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(10, new Point2d(scale1 * 0.255130559290549 + m * w1 * scale1, scale1 * 0.111259688599573 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(11, new Point2d(scale1 * 0.240878590786619 + m * w1 * scale1, scale1 * 0.0709840980483731 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(12, new Point2d(scale1 * 0.254264417558269 + m * w1 * scale1, scale1 * 0.0376376413554764 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(13, new Point2d(scale1 * 0.298083315196059 + m * w1 * scale1, scale1 * 0.0103541767885735 + n * h1), 0, 0, 0);
+                    poly_boulder_6.AddVertexAt(14, new Point2d(scale1 * 0.340366779762989 + m * w1 * scale1, scale1 * 0.0062990586782794 + n * h1), 0, 0, 0);
                     poly_boulder_6.Closed = true;
                     poly_boulder_6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_6.Layer = "0";
@@ -17165,25 +17190,25 @@ namespace Alignment_mdi
                     poly_boulder_6.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_6);
                     Polyline poly_boulder_7 = new Polyline();
-                    poly_boulder_7.AddVertexAt(0, new Point2d(scale1 * 0.666744732518899 + m * w1 * scale1, scale1 * 0.024527405134978 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(1, new Point2d(scale1 * 0.684343157715749 + m * w1 * scale1, scale1 * 0.0541730744263758 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(2, new Point2d(scale1 * 0.689343157715749 + m * w1 * scale1, scale1 * 0.0919683500168729 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(3, new Point2d(scale1 * 0.685681740392919 + m * w1 * scale1, scale1 * 0.137558901197976 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(4, new Point2d(scale1 * 0.659854968739369 + m * w1 * scale1, scale1 * 0.191417168914476 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(5, new Point2d(scale1 * 0.616429771888979 + m * w1 * scale1, scale1 * 0.218858113796375 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(6, new Point2d(scale1 * 0.592925834881099 + m * w1 * scale1, scale1 * 0.219251814583777 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(7, new Point2d(scale1 * 0.557453393936219 + m * w1 * scale1, scale1 * 0.215078586237374 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(8, new Point2d(scale1 * 0.519894338818109 + m * w1 * scale1, scale1 * 0.200117956316073 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(9, new Point2d(scale1 * 0.495917960865359 + m * w1 * scale1, scale1 * 0.170551027182277 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(10, new Point2d(scale1 * 0.487768354566139 + m * w1 * scale1, scale1 * 0.124606145292478 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(11, new Point2d(scale1 * 0.488004575038579 + m * w1 * scale1, scale1 * 0.0776770114341749 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(12, new Point2d(scale1 * 0.507059693148819 + m * w1 * scale1, scale1 * 0.0518896098593755 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(13, new Point2d(scale1 * 0.537414023857479 + m * w1 * scale1, scale1 * 0.0266140193081759 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(14, new Point2d(scale1 * 0.553280165589769 + m * w1 * scale1, scale1 * 0.0167321295444784 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(15, new Point2d(scale1 * 0.586193551416539 + m * w1 * scale1, scale1 * 0.00232268072557229 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(16, new Point2d(scale1 * 0.619382527794489 + m * w1 * scale1, scale1 * 0.00496047600117588 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(17, new Point2d(scale1 * 0.653791976613389 + m * w1 * scale1, scale1 * 0.0151179563160744 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_7.AddVertexAt(18, new Point2d(scale1 * 0.666744732518899 + m * w1 * scale1, scale1 * 0.024527405134978 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(0, new Point2d(scale1 * 0.666744732518899 + m * w1 * scale1, scale1 * 0.024527405134978 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(1, new Point2d(scale1 * 0.684343157715749 + m * w1 * scale1, scale1 * 0.0541730744263758 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(2, new Point2d(scale1 * 0.689343157715749 + m * w1 * scale1, scale1 * 0.0919683500168729 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(3, new Point2d(scale1 * 0.685681740392919 + m * w1 * scale1, scale1 * 0.137558901197976 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(4, new Point2d(scale1 * 0.659854968739369 + m * w1 * scale1, scale1 * 0.191417168914476 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(5, new Point2d(scale1 * 0.616429771888979 + m * w1 * scale1, scale1 * 0.218858113796375 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(6, new Point2d(scale1 * 0.592925834881099 + m * w1 * scale1, scale1 * 0.219251814583777 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(7, new Point2d(scale1 * 0.557453393936219 + m * w1 * scale1, scale1 * 0.215078586237374 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(8, new Point2d(scale1 * 0.519894338818109 + m * w1 * scale1, scale1 * 0.200117956316073 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(9, new Point2d(scale1 * 0.495917960865359 + m * w1 * scale1, scale1 * 0.170551027182277 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(10, new Point2d(scale1 * 0.487768354566139 + m * w1 * scale1, scale1 * 0.124606145292478 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(11, new Point2d(scale1 * 0.488004575038579 + m * w1 * scale1, scale1 * 0.0776770114341749 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(12, new Point2d(scale1 * 0.507059693148819 + m * w1 * scale1, scale1 * 0.0518896098593755 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(13, new Point2d(scale1 * 0.537414023857479 + m * w1 * scale1, scale1 * 0.0266140193081759 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(14, new Point2d(scale1 * 0.553280165589769 + m * w1 * scale1, scale1 * 0.0167321295444784 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(15, new Point2d(scale1 * 0.586193551416539 + m * w1 * scale1, scale1 * 0.00232268072557229 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(16, new Point2d(scale1 * 0.619382527794489 + m * w1 * scale1, scale1 * 0.00496047600117588 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(17, new Point2d(scale1 * 0.653791976613389 + m * w1 * scale1, scale1 * 0.0151179563160744 + n * h1), 0, 0, 0);
+                    poly_boulder_7.AddVertexAt(18, new Point2d(scale1 * 0.666744732518899 + m * w1 * scale1, scale1 * 0.024527405134978 + n * h1), 0, 0, 0);
                     poly_boulder_7.Closed = true;
                     poly_boulder_7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_7.Layer = "0";
@@ -17191,16 +17216,16 @@ namespace Alignment_mdi
                     poly_boulder_7.LineWeight = LineWeight.LineWeight000;
                     bltrec1.AppendEntity(poly_boulder_7);
                     Polyline poly_boulder_8 = new Polyline();
-                    poly_boulder_8.AddVertexAt(0, new Point2d(scale1 * 0.746784102597639 + m * w1 * scale1, scale1 * 0.186417168914477 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(1, new Point2d(scale1 * 0.722689614408659 + m * w1 * scale1, scale1 * 0.185314806709779 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(2, new Point2d(scale1 * 0.701036071101579 + m * w1 * scale1, scale1 * 0.155511657103477 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(3, new Point2d(scale1 * 0.713201425432289 + m * w1 * scale1, scale1 * 0.120354176788577 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(4, new Point2d(scale1 * 0.746784102597639 + m * w1 * scale1, scale1 * 0.104448664977475 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(5, new Point2d(scale1 * 0.776193551416539 + m * w1 * scale1, scale1 * 0.0924014208829744 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(6, new Point2d(scale1 * 0.794933708896849 + m * w1 * scale1, scale1 * 0.106850239780676 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(7, new Point2d(scale1 * 0.782453393936219 + m * w1 * scale1, scale1 * 0.155275436631075 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(8, new Point2d(scale1 * 0.765209299448029 + m * w1 * scale1, scale1 * 0.181259688599574 + n * h1 * scale1), 0, 0, 0);
-                    poly_boulder_8.AddVertexAt(9, new Point2d(scale1 * 0.746784102597639 + m * w1 * scale1, scale1 * 0.186417168914477 + n * h1 * scale1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(0, new Point2d(scale1 * 0.746784102597639 + m * w1 * scale1, scale1 * 0.186417168914477 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(1, new Point2d(scale1 * 0.722689614408659 + m * w1 * scale1, scale1 * 0.185314806709779 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(2, new Point2d(scale1 * 0.701036071101579 + m * w1 * scale1, scale1 * 0.155511657103477 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(3, new Point2d(scale1 * 0.713201425432289 + m * w1 * scale1, scale1 * 0.120354176788577 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(4, new Point2d(scale1 * 0.746784102597639 + m * w1 * scale1, scale1 * 0.104448664977475 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(5, new Point2d(scale1 * 0.776193551416539 + m * w1 * scale1, scale1 * 0.0924014208829744 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(6, new Point2d(scale1 * 0.794933708896849 + m * w1 * scale1, scale1 * 0.106850239780676 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(7, new Point2d(scale1 * 0.782453393936219 + m * w1 * scale1, scale1 * 0.155275436631075 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(8, new Point2d(scale1 * 0.765209299448029 + m * w1 * scale1, scale1 * 0.181259688599574 + n * h1), 0, 0, 0);
+                    poly_boulder_8.AddVertexAt(9, new Point2d(scale1 * 0.746784102597639 + m * w1 * scale1, scale1 * 0.186417168914477 + n * h1), 0, 0, 0);
                     poly_boulder_8.Closed = true;
                     poly_boulder_8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
                     poly_boulder_8.Layer = "0";
@@ -17232,6 +17257,302 @@ namespace Alignment_mdi
 
         }
 
+
+        private void add_pattern_BOULDERS_legend(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(132, 132, 132);
+            Polyline poly_boulder1 = new Polyline();
+            poly_boulder1.AddVertexAt(0, new Point2d(scale1 * 1.5, scale1 * 0.161105101060033), 0, 0, 0);
+            poly_boulder1.AddVertexAt(1, new Point2d(scale1 * 1.49593607110158, scale1 * 0.155511657103477), 0, 0, 0);
+            poly_boulder1.AddVertexAt(2, new Point2d(scale1 * 1.5, scale1 * 0.143767034105797), 0, 0, 0);
+            poly_boulder1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder1.Layer = "0";
+            poly_boulder1.Color = color1;
+            poly_boulder1.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder1);
+            Polyline poly_b2 = new Polyline();
+            poly_b2.AddVertexAt(0, new Point2d(scale1 * 1.4616447325189, scale1 * 0.024527405134978), 0, 0, 0);
+            poly_b2.AddVertexAt(1, new Point2d(scale1 * 1.47924315771575, scale1 * 0.0541730744263758), 0, 0, 0);
+            poly_b2.AddVertexAt(2, new Point2d(scale1 * 1.48424315771575, scale1 * 0.0919683500168729), 0, 0, 0);
+            poly_b2.AddVertexAt(3, new Point2d(scale1 * 1.48058174039292, scale1 * 0.137558901197976), 0, 0, 0);
+            poly_b2.AddVertexAt(4, new Point2d(scale1 * 1.45475496873937, scale1 * 0.191417168914476), 0, 0, 0);
+            poly_b2.AddVertexAt(5, new Point2d(scale1 * 1.41132977188898, scale1 * 0.218858113796375), 0, 0, 0);
+            poly_b2.AddVertexAt(6, new Point2d(scale1 * 1.3878258348811, scale1 * 0.219251814583777), 0, 0, 0);
+            poly_b2.AddVertexAt(7, new Point2d(scale1 * 1.35235339393622, scale1 * 0.215078586237374), 0, 0, 0);
+            poly_b2.AddVertexAt(8, new Point2d(scale1 * 1.31479433881811, scale1 * 0.200117956316073), 0, 0, 0);
+            poly_b2.AddVertexAt(9, new Point2d(scale1 * 1.29081796086536, scale1 * 0.170551027182277), 0, 0, 0);
+            poly_b2.AddVertexAt(10, new Point2d(scale1 * 1.28266835456614, scale1 * 0.124606145292478), 0, 0, 0);
+            poly_b2.AddVertexAt(11, new Point2d(scale1 * 1.28290457503858, scale1 * 0.0776770114341749), 0, 0, 0);
+            poly_b2.AddVertexAt(12, new Point2d(scale1 * 1.30195969314882, scale1 * 0.0518896098593755), 0, 0, 0);
+            poly_b2.AddVertexAt(13, new Point2d(scale1 * 1.33231402385748, scale1 * 0.0266140193081759), 0, 0, 0);
+            poly_b2.AddVertexAt(14, new Point2d(scale1 * 1.34818016558977, scale1 * 0.0167321295444784), 0, 0, 0);
+            poly_b2.AddVertexAt(15, new Point2d(scale1 * 1.38109355141654, scale1 * 0.00232268072557229), 0, 0, 0);
+            poly_b2.AddVertexAt(16, new Point2d(scale1 * 1.41428252779449, scale1 * 0.00496047600117588), 0, 0, 0);
+            poly_b2.AddVertexAt(17, new Point2d(scale1 * 1.44869197661339, scale1 * 0.0151179563160744), 0, 0, 0);
+            poly_b2.AddVertexAt(18, new Point2d(scale1 * 1.4616447325189, scale1 * 0.024527405134978), 0, 0, 0);
+            poly_b2.Closed = true;
+            poly_b2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_b2.Layer = "0";
+            poly_b2.Color = color1;
+            poly_b2.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_b2);
+            Polyline poly_boulder3 = new Polyline();
+            poly_boulder3.AddVertexAt(0, new Point2d(scale1 * 1.13526677976299, scale1 * 0.0062990586782794), 0, 0, 0);
+            poly_boulder3.AddVertexAt(1, new Point2d(scale1 * 1.15877071677087, scale1 * 0.00590535789087365), 0, 0, 0);
+            poly_boulder3.AddVertexAt(2, new Point2d(scale1 * 1.20117229157402, scale1 * 0.0162990586782774), 0, 0, 0);
+            poly_boulder3.AddVertexAt(3, new Point2d(scale1 * 1.23514866952677, scale1 * 0.0346061452924777), 0, 0, 0);
+            poly_boulder3.AddVertexAt(4, new Point2d(scale1 * 1.25278646480236, scale1 * 0.0674801610404776), 0, 0, 0);
+            poly_boulder3.AddVertexAt(5, new Point2d(scale1 * 1.25381008684961, scale1 * 0.131614019308176), 0, 0, 0);
+            poly_boulder3.AddVertexAt(6, new Point2d(scale1 * 1.23416441755827, scale1 * 0.171495909071978), 0, 0, 0);
+            poly_boulder3.AddVertexAt(7, new Point2d(scale1 * 1.15522740968425, scale1 * 0.182440790961777), 0, 0, 0);
+            poly_boulder3.AddVertexAt(8, new Point2d(scale1 * 1.10479433881811, scale1 * 0.173582523245275), 0, 0, 0);
+            poly_boulder3.AddVertexAt(9, new Point2d(scale1 * 1.07668410259764, scale1 * 0.148346302772775), 0, 0, 0);
+            poly_boulder3.AddVertexAt(10, new Point2d(scale1 * 1.05003055929055, scale1 * 0.111259688599573), 0, 0, 0);
+            poly_boulder3.AddVertexAt(11, new Point2d(scale1 * 1.03577859078662, scale1 * 0.0709840980483731), 0, 0, 0);
+            poly_boulder3.AddVertexAt(12, new Point2d(scale1 * 1.04916441755827, scale1 * 0.0376376413554764), 0, 0, 0);
+            poly_boulder3.AddVertexAt(13, new Point2d(scale1 * 1.09298331519606, scale1 * 0.0103541767885735), 0, 0, 0);
+            poly_boulder3.AddVertexAt(14, new Point2d(scale1 * 1.13526677976299, scale1 * 0.0062990586782794), 0, 0, 0);
+            poly_boulder3.Closed = true;
+            poly_boulder3.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder3.Layer = "0";
+            poly_boulder3.Color = color1;
+            poly_boulder3.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder3);
+            Polyline poly_boulder4 = new Polyline();
+            poly_boulder4.AddVertexAt(0, new Point2d(scale1 * 0.869046307322049, scale1 * 0.00740142088297358), 0, 0, 0);
+            poly_boulder4.AddVertexAt(1, new Point2d(scale1 * 0.962235283699999, scale1 * 0.0197636256074771), 0, 0, 0);
+            poly_boulder4.AddVertexAt(2, new Point2d(scale1 * 0.993731346692129, scale1 * 0.0355903972609779), 0, 0, 0);
+            poly_boulder4.AddVertexAt(3, new Point2d(scale1 * 1.00550300023543, scale1 * 0.0490155941113768), 0, 0, 0);
+            poly_boulder4.AddVertexAt(4, new Point2d(scale1 * 1.01003055929055, scale1 * 0.0726770114341759), 0, 0, 0);
+            poly_boulder4.AddVertexAt(5, new Point2d(scale1 * 1.00632977188898, scale1 * 0.101377798835776), 0, 0, 0);
+            poly_boulder4.AddVertexAt(6, new Point2d(scale1 * 0.984833708896849, scale1 * 0.124606145292478), 0, 0, 0);
+            poly_boulder4.AddVertexAt(7, new Point2d(scale1 * 0.947786464802359, scale1 * 0.140905357890875), 0, 0, 0);
+            poly_boulder4.AddVertexAt(8, new Point2d(scale1 * 0.909243157715749, scale1 * 0.130511657103475), 0, 0, 0);
+            poly_boulder4.AddVertexAt(9, new Point2d(scale1 * 0.856684102597639, scale1 * 0.103818743717677), 0, 0, 0);
+            poly_boulder4.AddVertexAt(10, new Point2d(scale1 * 0.823022685274809, scale1 * 0.0712203185207754), 0, 0, 0);
+            poly_boulder4.AddVertexAt(11, new Point2d(scale1 * 0.819321897873229, scale1 * 0.0413384287570748), 0, 0, 0);
+            poly_boulder4.AddVertexAt(12, new Point2d(scale1 * 0.842353393936219, scale1 * 0.0110234681270738), 0, 0, 0);
+            poly_boulder4.AddVertexAt(13, new Point2d(scale1 * 0.869046307322049, scale1 * 0.00740142088297358), 0, 0, 0);
+            poly_boulder4.Closed = true;
+            poly_boulder4.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder4.Layer = "0";
+            poly_boulder4.Color = color1;
+            poly_boulder4.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder4);
+            Polyline poly_boulder5 = new Polyline();
+            poly_boulder5.AddVertexAt(0, new Point2d(scale1 * 1.35737027503236, scale1 * 0.3), 0, 0, 0);
+            poly_boulder5.AddVertexAt(1, new Point2d(scale1 * 1.35892819708583, scale1 * 0.282795121670374), 0, 0, 0);
+            poly_boulder5.AddVertexAt(2, new Point2d(scale1 * 1.38195969314882, scale1 * 0.250708507497175), 0, 0, 0);
+            poly_boulder5.AddVertexAt(3, new Point2d(scale1 * 1.41471559866063, scale1 * 0.228425042930279), 0, 0, 0);
+            poly_boulder5.AddVertexAt(4, new Point2d(scale1 * 1.47239276401496, scale1 * 0.231417168914478), 0, 0, 0);
+            poly_boulder5.AddVertexAt(5, new Point2d(scale1 * 1.49014866952677, scale1 * 0.244763625607475), 0, 0, 0);
+            poly_boulder5.AddVertexAt(6, new Point2d(scale1 * 1.50231402385748, scale1 * 0.290117956316073), 0, 0, 0);
+            poly_boulder5.AddVertexAt(7, new Point2d(scale1 * 1.49698681550194, scale1 * 0.3), 0, 0, 0);
+            poly_boulder5.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder5.Layer = "0";
+            poly_boulder5.Color = color1;
+            poly_boulder5.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder5);
+            Polyline poly_boulder6 = new Polyline();
+            poly_boulder6.AddVertexAt(0, new Point2d(scale1 * 1.17395757252446, scale1 * 0.3), 0, 0, 0);
+            poly_boulder6.AddVertexAt(1, new Point2d(scale1 * 1.17274709472362, scale1 * 0.275117956316076), 0, 0, 0);
+            poly_boulder6.AddVertexAt(2, new Point2d(scale1 * 1.1756604805504, scale1 * 0.255826617733375), 0, 0, 0);
+            poly_boulder6.AddVertexAt(3, new Point2d(scale1 * 1.19558174039292, scale1 * 0.231968350016873), 0, 0, 0);
+            poly_boulder6.AddVertexAt(4, new Point2d(scale1 * 1.23160536244016, scale1 * 0.211102208284575), 0, 0, 0);
+            poly_boulder6.AddVertexAt(5, new Point2d(scale1 * 1.26152662228268, scale1 * 0.210590397260979), 0, 0, 0);
+            poly_boulder6.AddVertexAt(6, new Point2d(scale1 * 1.29455811834567, scale1 * 0.222519531119278), 0, 0, 0);
+            poly_boulder6.AddVertexAt(7, new Point2d(scale1 * 1.31865260653465, scale1 * 0.239606145292476), 0, 0, 0);
+            poly_boulder6.AddVertexAt(8, new Point2d(scale1 * 1.33160536244016, scale1 * 0.271456538993276), 0, 0, 0);
+            poly_boulder6.AddVertexAt(9, new Point2d(scale1 * 1.3355534846081, scale1 * 0.3), 0, 0, 0);
+            poly_boulder6.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder6.Layer = "0";
+            poly_boulder6.Color = color1;
+            poly_boulder6.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder6);
+            Polyline poly_boulder7 = new Polyline();
+            poly_boulder7.AddVertexAt(0, new Point2d(scale1 * 0.98098001016899, scale1 * 0.3), 0, 0, 0);
+            poly_boulder7.AddVertexAt(1, new Point2d(scale1 * 0.976172291574019, scale1 * 0.285787247654677), 0, 0, 0);
+            poly_boulder7.AddVertexAt(2, new Point2d(scale1 * 0.978770716770869, scale1 * 0.248306932694073), 0, 0, 0);
+            poly_boulder7.AddVertexAt(3, new Point2d(scale1 * 0.996684102597639, scale1 * 0.215078586237374), 0, 0, 0);
+            poly_boulder7.AddVertexAt(4, new Point2d(scale1 * 1.02491244905433, scale1 * 0.191968350016874), 0, 0, 0);
+            poly_boulder7.AddVertexAt(5, new Point2d(scale1 * 1.06109355141654, scale1 * 0.180708507497175), 0, 0, 0);
+            poly_boulder7.AddVertexAt(6, new Point2d(scale1 * 1.11814079551103, scale1 * 0.203306932694075), 0, 0, 0);
+            poly_boulder7.AddVertexAt(7, new Point2d(scale1 * 1.15192032307008, scale1 * 0.242322680725574), 0, 0, 0);
+            poly_boulder7.AddVertexAt(8, new Point2d(scale1 * 1.15558174039292, scale1 * 0.272204570489278), 0, 0, 0);
+            poly_boulder7.AddVertexAt(9, new Point2d(scale1 * 1.14773625625683, scale1 * 0.3), 0, 0, 0);
+            poly_boulder7.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder7.Layer = "0";
+            poly_boulder7.Color = color1;
+            poly_boulder7.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder7);
+            Polyline poly_boulder8 = new Polyline();
+            poly_boulder8.AddVertexAt(0, new Point2d(scale1 * 0.818396897130388, scale1 * 0.3), 0, 0, 0);
+            poly_boulder8.AddVertexAt(1, new Point2d(scale1 * 0.804272662451242, scale1 * 0.273674696524384), 0, 0, 0);
+            poly_boulder8.AddVertexAt(2, new Point2d(scale1 * 0.801556127018172, scale1 * 0.219895168965283), 0, 0, 0);
+            poly_boulder8.AddVertexAt(3, new Point2d(scale1 * 0.809075812057542, scale1 * 0.174147137469283), 0, 0, 0);
+            poly_boulder8.AddVertexAt(4, new Point2d(scale1 * 0.825847465600842, scale1 * 0.153556586288185), 0, 0, 0);
+            poly_boulder8.AddVertexAt(5, new Point2d(scale1 * 0.878997071900062, scale1 * 0.132414854004685), 0, 0, 0);
+            poly_boulder8.AddVertexAt(6, new Point2d(scale1 * 0.928485260876442, scale1 * 0.151903042981082), 0, 0, 0);
+            poly_boulder8.AddVertexAt(7, new Point2d(scale1 * 0.945926205758332, scale1 * 0.171942413059781), 0, 0, 0);
+            poly_boulder8.AddVertexAt(8, new Point2d(scale1 * 0.973485260876442, scale1 * 0.224973909122784), 0, 0, 0);
+            poly_boulder8.AddVertexAt(9, new Point2d(scale1 * 0.965621125170981, scale1 * 0.3), 0, 0, 0);
+            poly_boulder8.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder8.Layer = "0";
+            poly_boulder8.Color = color1;
+            poly_boulder8.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder8);
+            Polyline poly_boulder9 = new Polyline();
+            poly_boulder9.AddVertexAt(0, new Point2d(scale1 * 0.746784102597639, scale1 * 0.186417168914477), 0, 0, 0);
+            poly_boulder9.AddVertexAt(1, new Point2d(scale1 * 0.722689614408659, scale1 * 0.185314806709779), 0, 0, 0);
+            poly_boulder9.AddVertexAt(2, new Point2d(scale1 * 0.701036071101579, scale1 * 0.155511657103477), 0, 0, 0);
+            poly_boulder9.AddVertexAt(3, new Point2d(scale1 * 0.713201425432289, scale1 * 0.120354176788577), 0, 0, 0);
+            poly_boulder9.AddVertexAt(4, new Point2d(scale1 * 0.746784102597639, scale1 * 0.104448664977475), 0, 0, 0);
+            poly_boulder9.AddVertexAt(5, new Point2d(scale1 * 0.776193551416539, scale1 * 0.0924014208829744), 0, 0, 0);
+            poly_boulder9.AddVertexAt(6, new Point2d(scale1 * 0.794933708896849, scale1 * 0.106850239780676), 0, 0, 0);
+            poly_boulder9.AddVertexAt(7, new Point2d(scale1 * 0.782453393936219, scale1 * 0.155275436631075), 0, 0, 0);
+            poly_boulder9.AddVertexAt(8, new Point2d(scale1 * 0.765209299448029, scale1 * 0.181259688599574), 0, 0, 0);
+            poly_boulder9.AddVertexAt(9, new Point2d(scale1 * 0.746784102597639, scale1 * 0.186417168914477), 0, 0, 0);
+            poly_boulder9.Closed = true;
+            poly_boulder9.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder9.Layer = "0";
+            poly_boulder9.Color = color1;
+            poly_boulder9.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder9);
+            Polyline poly_boulder10 = new Polyline();
+            poly_boulder10.AddVertexAt(0, new Point2d(scale1 * 0.666744732518899, scale1 * 0.024527405134978), 0, 0, 0);
+            poly_boulder10.AddVertexAt(1, new Point2d(scale1 * 0.684343157715749, scale1 * 0.0541730744263758), 0, 0, 0);
+            poly_boulder10.AddVertexAt(2, new Point2d(scale1 * 0.689343157715749, scale1 * 0.0919683500168729), 0, 0, 0);
+            poly_boulder10.AddVertexAt(3, new Point2d(scale1 * 0.685681740392919, scale1 * 0.137558901197976), 0, 0, 0);
+            poly_boulder10.AddVertexAt(4, new Point2d(scale1 * 0.659854968739369, scale1 * 0.191417168914476), 0, 0, 0);
+            poly_boulder10.AddVertexAt(5, new Point2d(scale1 * 0.616429771888979, scale1 * 0.218858113796375), 0, 0, 0);
+            poly_boulder10.AddVertexAt(6, new Point2d(scale1 * 0.592925834881099, scale1 * 0.219251814583777), 0, 0, 0);
+            poly_boulder10.AddVertexAt(7, new Point2d(scale1 * 0.557453393936219, scale1 * 0.215078586237374), 0, 0, 0);
+            poly_boulder10.AddVertexAt(8, new Point2d(scale1 * 0.519894338818109, scale1 * 0.200117956316073), 0, 0, 0);
+            poly_boulder10.AddVertexAt(9, new Point2d(scale1 * 0.495917960865359, scale1 * 0.170551027182277), 0, 0, 0);
+            poly_boulder10.AddVertexAt(10, new Point2d(scale1 * 0.487768354566139, scale1 * 0.124606145292478), 0, 0, 0);
+            poly_boulder10.AddVertexAt(11, new Point2d(scale1 * 0.488004575038579, scale1 * 0.0776770114341749), 0, 0, 0);
+            poly_boulder10.AddVertexAt(12, new Point2d(scale1 * 0.507059693148819, scale1 * 0.0518896098593755), 0, 0, 0);
+            poly_boulder10.AddVertexAt(13, new Point2d(scale1 * 0.537414023857479, scale1 * 0.0266140193081759), 0, 0, 0);
+            poly_boulder10.AddVertexAt(14, new Point2d(scale1 * 0.553280165589769, scale1 * 0.0167321295444784), 0, 0, 0);
+            poly_boulder10.AddVertexAt(15, new Point2d(scale1 * 0.586193551416539, scale1 * 0.00232268072557229), 0, 0, 0);
+            poly_boulder10.AddVertexAt(16, new Point2d(scale1 * 0.619382527794489, scale1 * 0.00496047600117588), 0, 0, 0);
+            poly_boulder10.AddVertexAt(17, new Point2d(scale1 * 0.653791976613389, scale1 * 0.0151179563160744), 0, 0, 0);
+            poly_boulder10.AddVertexAt(18, new Point2d(scale1 * 0.666744732518899, scale1 * 0.024527405134978), 0, 0, 0);
+            poly_boulder10.Closed = true;
+            poly_boulder10.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder10.Layer = "0";
+            poly_boulder10.Color = color1;
+            poly_boulder10.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder10);
+            Polyline poly_boulder11 = new Polyline();
+            poly_boulder11.AddVertexAt(0, new Point2d(scale1 * 0.340366779762989, scale1 * 0.0062990586782794), 0, 0, 0);
+            poly_boulder11.AddVertexAt(1, new Point2d(scale1 * 0.363870716770869, scale1 * 0.00590535789087365), 0, 0, 0);
+            poly_boulder11.AddVertexAt(2, new Point2d(scale1 * 0.406272291574019, scale1 * 0.0162990586782774), 0, 0, 0);
+            poly_boulder11.AddVertexAt(3, new Point2d(scale1 * 0.440248669526769, scale1 * 0.0346061452924777), 0, 0, 0);
+            poly_boulder11.AddVertexAt(4, new Point2d(scale1 * 0.457886464802359, scale1 * 0.0674801610404776), 0, 0, 0);
+            poly_boulder11.AddVertexAt(5, new Point2d(scale1 * 0.458910086849609, scale1 * 0.131614019308176), 0, 0, 0);
+            poly_boulder11.AddVertexAt(6, new Point2d(scale1 * 0.439264417558269, scale1 * 0.171495909071978), 0, 0, 0);
+            poly_boulder11.AddVertexAt(7, new Point2d(scale1 * 0.360327409684249, scale1 * 0.182440790961777), 0, 0, 0);
+            poly_boulder11.AddVertexAt(8, new Point2d(scale1 * 0.309894338818109, scale1 * 0.173582523245275), 0, 0, 0);
+            poly_boulder11.AddVertexAt(9, new Point2d(scale1 * 0.281784102597639, scale1 * 0.148346302772775), 0, 0, 0);
+            poly_boulder11.AddVertexAt(10, new Point2d(scale1 * 0.255130559290549, scale1 * 0.111259688599573), 0, 0, 0);
+            poly_boulder11.AddVertexAt(11, new Point2d(scale1 * 0.240878590786619, scale1 * 0.0709840980483731), 0, 0, 0);
+            poly_boulder11.AddVertexAt(12, new Point2d(scale1 * 0.254264417558269, scale1 * 0.0376376413554764), 0, 0, 0);
+            poly_boulder11.AddVertexAt(13, new Point2d(scale1 * 0.298083315196059, scale1 * 0.0103541767885735), 0, 0, 0);
+            poly_boulder11.AddVertexAt(14, new Point2d(scale1 * 0.340366779762989, scale1 * 0.0062990586782794), 0, 0, 0);
+            poly_boulder11.Closed = true;
+            poly_boulder11.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder11.Layer = "0";
+            poly_boulder11.Color = color1;
+            poly_boulder11.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder11);
+            Polyline poly_boulder12 = new Polyline();
+            poly_boulder12.AddVertexAt(0, new Point2d(scale1 * 0.0741463073220487, scale1 * 0.00740142088297358), 0, 0, 0);
+            poly_boulder12.AddVertexAt(1, new Point2d(scale1 * 0.167335283699999, scale1 * 0.0197636256074771), 0, 0, 0);
+            poly_boulder12.AddVertexAt(2, new Point2d(scale1 * 0.198831346692129, scale1 * 0.0355903972609779), 0, 0, 0);
+            poly_boulder12.AddVertexAt(3, new Point2d(scale1 * 0.210603000235429, scale1 * 0.0490155941113768), 0, 0, 0);
+            poly_boulder12.AddVertexAt(4, new Point2d(scale1 * 0.215130559290549, scale1 * 0.0726770114341759), 0, 0, 0);
+            poly_boulder12.AddVertexAt(5, new Point2d(scale1 * 0.211429771888979, scale1 * 0.101377798835776), 0, 0, 0);
+            poly_boulder12.AddVertexAt(6, new Point2d(scale1 * 0.189933708896849, scale1 * 0.124606145292478), 0, 0, 0);
+            poly_boulder12.AddVertexAt(7, new Point2d(scale1 * 0.152886464802359, scale1 * 0.140905357890875), 0, 0, 0);
+            poly_boulder12.AddVertexAt(8, new Point2d(scale1 * 0.114343157715749, scale1 * 0.130511657103475), 0, 0, 0);
+            poly_boulder12.AddVertexAt(9, new Point2d(scale1 * 0.0617841025976387, scale1 * 0.103818743717677), 0, 0, 0);
+            poly_boulder12.AddVertexAt(10, new Point2d(scale1 * 0.0281226852748087, scale1 * 0.0712203185207754), 0, 0, 0);
+            poly_boulder12.AddVertexAt(11, new Point2d(scale1 * 0.0244218978732287, scale1 * 0.0413384287570748), 0, 0, 0);
+            poly_boulder12.AddVertexAt(12, new Point2d(scale1 * 0.0474533939362187, scale1 * 0.0110234681270738), 0, 0, 0);
+            poly_boulder12.AddVertexAt(13, new Point2d(scale1 * 0.0741463073220487, scale1 * 0.00740142088297358), 0, 0, 0);
+            poly_boulder12.Closed = true;
+            poly_boulder12.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder12.Layer = "0";
+            poly_boulder12.Color = color1;
+            poly_boulder12.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder12);
+            Polyline poly_b13 = new Polyline();
+            poly_b13.AddVertexAt(0, new Point2d(scale1 * 0.562470275032359, scale1 * 0.3), 0, 0, 0);
+            poly_b13.AddVertexAt(1, new Point2d(scale1 * 0.564028197085829, scale1 * 0.282795121670374), 0, 0, 0);
+            poly_b13.AddVertexAt(2, new Point2d(scale1 * 0.587059693148819, scale1 * 0.250708507497175), 0, 0, 0);
+            poly_b13.AddVertexAt(3, new Point2d(scale1 * 0.619815598660629, scale1 * 0.228425042930279), 0, 0, 0);
+            poly_b13.AddVertexAt(4, new Point2d(scale1 * 0.677492764014959, scale1 * 0.231417168914478), 0, 0, 0);
+            poly_b13.AddVertexAt(5, new Point2d(scale1 * 0.695248669526769, scale1 * 0.244763625607475), 0, 0, 0);
+            poly_b13.AddVertexAt(6, new Point2d(scale1 * 0.707414023857479, scale1 * 0.290117956316073), 0, 0, 0);
+            poly_b13.AddVertexAt(7, new Point2d(scale1 * 0.70208681550194, scale1 * 0.3), 0, 0, 0);
+            poly_b13.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_b13.Layer = "0";
+            poly_b13.Color = color1;
+            poly_b13.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_b13);
+            Polyline poly_boulder14 = new Polyline();
+            poly_boulder14.AddVertexAt(0, new Point2d(scale1 * 0.379057572524459, scale1 * 0.3), 0, 0, 0);
+            poly_boulder14.AddVertexAt(1, new Point2d(scale1 * 0.377847094723619, scale1 * 0.275117956316076), 0, 0, 0);
+            poly_boulder14.AddVertexAt(2, new Point2d(scale1 * 0.380760480550399, scale1 * 0.255826617733375), 0, 0, 0);
+            poly_boulder14.AddVertexAt(3, new Point2d(scale1 * 0.400681740392919, scale1 * 0.231968350016873), 0, 0, 0);
+            poly_boulder14.AddVertexAt(4, new Point2d(scale1 * 0.436705362440159, scale1 * 0.211102208284575), 0, 0, 0);
+            poly_boulder14.AddVertexAt(5, new Point2d(scale1 * 0.466626622282678, scale1 * 0.210590397260979), 0, 0, 0);
+            poly_boulder14.AddVertexAt(6, new Point2d(scale1 * 0.499658118345669, scale1 * 0.222519531119278), 0, 0, 0);
+            poly_boulder14.AddVertexAt(7, new Point2d(scale1 * 0.523752606534649, scale1 * 0.239606145292476), 0, 0, 0);
+            poly_boulder14.AddVertexAt(8, new Point2d(scale1 * 0.536705362440159, scale1 * 0.271456538993276), 0, 0, 0);
+            poly_boulder14.AddVertexAt(9, new Point2d(scale1 * 0.540653484608095, scale1 * 0.3), 0, 0, 0);
+            poly_boulder14.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_boulder14.Layer = "0";
+            poly_boulder14.Color = color1;
+            poly_boulder14.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_boulder14);
+            Polyline poly_b15 = new Polyline();
+            poly_b15.AddVertexAt(0, new Point2d(scale1 * 0.18608001016899, scale1 * 0.3), 0, 0, 0);
+            poly_b15.AddVertexAt(1, new Point2d(scale1 * 0.181272291574019, scale1 * 0.285787247654677), 0, 0, 0);
+            poly_b15.AddVertexAt(2, new Point2d(scale1 * 0.183870716770869, scale1 * 0.248306932694073), 0, 0, 0);
+            poly_b15.AddVertexAt(3, new Point2d(scale1 * 0.201784102597639, scale1 * 0.215078586237374), 0, 0, 0);
+            poly_b15.AddVertexAt(4, new Point2d(scale1 * 0.230012449054329, scale1 * 0.191968350016874), 0, 0, 0);
+            poly_b15.AddVertexAt(5, new Point2d(scale1 * 0.266193551416539, scale1 * 0.180708507497175), 0, 0, 0);
+            poly_b15.AddVertexAt(6, new Point2d(scale1 * 0.323240795511029, scale1 * 0.203306932694075), 0, 0, 0);
+            poly_b15.AddVertexAt(7, new Point2d(scale1 * 0.357020323070079, scale1 * 0.242322680725574), 0, 0, 0);
+            poly_b15.AddVertexAt(8, new Point2d(scale1 * 0.360681740392919, scale1 * 0.272204570489278), 0, 0, 0);
+            poly_b15.AddVertexAt(9, new Point2d(scale1 * 0.352836256256826, scale1 * 0.3), 0, 0, 0);
+            poly_b15.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_b15.Layer = "0";
+            poly_b15.Color = color1;
+            poly_b15.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_b15);
+            Polyline poly_b16 = new Polyline();
+            poly_b16.AddVertexAt(0, new Point2d(scale1 * 0.0234968971303881, scale1 * 0.3), 0, 0, 0);
+            poly_b16.AddVertexAt(1, new Point2d(scale1 * 0.00937266245124224, scale1 * 0.273674696524384), 0, 0, 0);
+            poly_b16.AddVertexAt(2, new Point2d(scale1 * 0.00665612701817242, scale1 * 0.219895168965283), 0, 0, 0);
+            poly_b16.AddVertexAt(3, new Point2d(scale1 * 0.0141758120575424, scale1 * 0.174147137469283), 0, 0, 0);
+            poly_b16.AddVertexAt(4, new Point2d(scale1 * 0.0309474656008424, scale1 * 0.153556586288185), 0, 0, 0);
+            poly_b16.AddVertexAt(5, new Point2d(scale1 * 0.0840970719000624, scale1 * 0.132414854004685), 0, 0, 0);
+            poly_b16.AddVertexAt(6, new Point2d(scale1 * 0.133585260876442, scale1 * 0.151903042981082), 0, 0, 0);
+            poly_b16.AddVertexAt(7, new Point2d(scale1 * 0.151026205758332, scale1 * 0.171942413059781), 0, 0, 0);
+            poly_b16.AddVertexAt(8, new Point2d(scale1 * 0.178585260876442, scale1 * 0.224973909122784), 0, 0, 0);
+            poly_b16.AddVertexAt(9, new Point2d(scale1 * 0.170721125170981, scale1 * 0.3), 0, 0, 0);
+            poly_b16.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(poly1.GetPoint3dAt(3))));
+            poly_b16.Layer = "0";
+            poly_b16.Color = color1;
+            poly_b16.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(poly_b16);
+
+
+
+        }
 
 
         private void add_pattern_SILTSTONE(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
@@ -17296,31 +17617,30 @@ namespace Alignment_mdi
                 for (int n = 0; n < nr_rows; ++n)
                 {
 
-                    Polyline polyline_silt_1 = new Polyline();
-                    polyline_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1)), 0 + n * ((2 * h1))), 0, 0, 0);
-                    polyline_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1)), h1 + n * ((2 * h1))), 0, 0, 0);
+                    Polyline poly_silt_1 = new Polyline();
+                    poly_silt_1.AddVertexAt(0, new Point2d(0 + m * ((3 * w1)), 0 + n * ((2 * h1))), 0, 0, 0);
+                    poly_silt_1.AddVertexAt(1, new Point2d(w1 + m * ((3 * w1)), h1 + n * ((2 * h1))), 0, 0, 0);
 
-                    polyline_silt_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
-                    polyline_silt_1.Layer = "0";
-                    polyline_silt_1.Color = color1;
-                    polyline_silt_1.LineWeight = LineWeight.LineWeight000;
-                    bltrec1.AppendEntity(polyline_silt_1);
+                    poly_silt_1.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
+                    poly_silt_1.Layer = "0";
+                    poly_silt_1.Color = color1;
+                    poly_silt_1.LineWeight = LineWeight.LineWeight000;
+                    bltrec1.AppendEntity(poly_silt_1);
 
-                    Polyline polyline_silt_2 = new Polyline();
-                    polyline_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1, h1 + 2 * n * h1), 0, 0, 0);
-                    polyline_silt_2.AddVertexAt(1, new Point2d(w1 + 3 * m * w1, 0 + 2 * n * h1), 0, 0, 0);
-                    polyline_silt_2.Closed = true;
-                    polyline_silt_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
-                    polyline_silt_2.Layer = "0";
-                    polyline_silt_2.Color = color1;
-                    polyline_silt_2.LineWeight = LineWeight.LineWeight000;
-                    bltrec1.AppendEntity(polyline_silt_2);
+                    Polyline poly_silt_2 = new Polyline();
+                    poly_silt_2.AddVertexAt(0, new Point2d(0 + 3 * m * w1, h1 + 2 * n * h1), 0, 0, 0);
+                    poly_silt_2.AddVertexAt(1, new Point2d(w1 + 3 * m * w1, 0 + 2 * n * h1), 0, 0, 0);
+                    poly_silt_2.Closed = true;
+                    poly_silt_2.TransformBy(Matrix3d.Displacement(new Point3d(0, 0, 0).GetVectorTo(new Point3d(poly1.GetPoint3dAt(3).X + edge_x, poly1.GetPoint3dAt(3).Y + edge_y, 0))));
+                    poly_silt_2.Layer = "0";
+                    poly_silt_2.Color = color1;
+                    poly_silt_2.LineWeight = LineWeight.LineWeight000;
+                    bltrec1.AppendEntity(poly_silt_2);
 
                 }
             }
 
         }
-
 
         private void add_pattern_CONGLOMERATE(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
         {
@@ -17427,6 +17747,180 @@ namespace Alignment_mdi
             else
             {
             }
+
+        }
+
+        private void add_pattern_ASPHALT(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Polyline poly2 = new Polyline();
+            poly2 = poly1.Clone() as Polyline;
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch1 = CreateHatch(poly2, "SOLID", 1, 0);
+            hatch1.Layer = "0";
+            hatch1.ColorIndex = 7;
+            hatch1.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(hatch1);
+            poly2.Erase();
+        }
+
+
+        private void add_pattern_PAVEMENT(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(51, 51, 51);
+            Polyline poly2 = new Polyline();
+            poly2 = poly1.Clone() as Polyline;
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch1 = CreateHatch(poly2, "ANSI37", 0.2 * scale1, 0);
+            hatch1.Layer = "0";
+            hatch1.Color = color1;
+            hatch1.LineWeight = LineWeight.LineWeight000;
+            bltrec1.AppendEntity(hatch1);
+            poly2.Erase();
+        }
+
+
+        private void add_pattern_SCSM(BlockTableRecord bltrec1, double scale1, double graph_vexag, double stick_vexag, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+
+
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
+
+            double spc_linie = scale1 / 14.2;
+            int nr_col = 0;
+            int nr_rows = 1;
+            double spc_h_edge = 0;
+            double spc_v_edge = 0;
+
+            double x1 = (poly1.GetPoint2dAt(2).X + poly1.GetPoint2dAt(3).X) / 2 + spc_h_edge;
+            double y1 = poly1.GetPoint2dAt(3).Y + spc_v_edge;
+            double stick_width = (poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X) / 2;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (stick_width < spc_linie)
+            {
+                nr_col = 1;
+            }
+            else
+            {
+                double nr2 = Math.Ceiling(stick_width / spc_linie);
+
+                nr_col = Convert.ToInt32(nr2);
+            }
+
+
+
+            double dif_len = stick_width - ((nr_col - 1) * spc_linie);
+
+
+            if (nr_rows > 0 && nr_col > 0)
+            {
+                for (int m = 0; m < nr_col; ++m)
+                {
+                    for (int n = 0; n < nr_rows; ++n)
+                    {
+                        double x2 = x1 + m * spc_linie + dif_len / 2;
+                        double y2 = y1;
+
+                        double x3 = x2;
+                        double y3 = y2 + stick_height;
+
+                        Polyline poly_up_down = new Polyline();
+                        poly_up_down.AddVertexAt(0, new Point2d(x2, y2), 0, 0, 0);
+                        poly_up_down.AddVertexAt(1, new Point2d(x3, y3), 0, 0, 0);
+                        poly_up_down.Layer = "0";
+                        poly_up_down.Color = color1;
+                        poly_up_down.LineWeight = LineWeight.LineWeight000;
+                        bltrec1.AppendEntity(poly_up_down);
+                    }
+                }
+            }
+
+            double spc_ver = scale1 * 0.04;
+            double spc_hor = scale1 * 0.04;
+            double r1 = 0.002 * scale1;
+
+            nr_col = 0;
+            nr_rows = 0;
+
+
+            x1 = poly1.GetPoint2dAt(3).X;
+            y1 = poly1.GetPoint2dAt(3).Y;
+            stick_width = (poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X);
+
+            if (stick_width < spc_hor)
+            {
+                nr_col = 1;
+            }
+            else
+            {
+                double nr2 = Math.Ceiling(stick_width / spc_hor);
+
+                nr_col = Convert.ToInt32(nr2);
+            }
+
+
+            if (stick_height < spc_ver)
+            {
+                nr_rows = 1;
+            }
+            else
+            {
+                double nr2 = Math.Ceiling(stick_height / spc_ver);
+                nr_rows = Convert.ToInt32(nr2);
+            }
+
+            double dif_len_h = stick_width - ((nr_col - 1) * spc_hor);
+            double dif_len_v = stick_height - ((nr_rows - 1) * spc_ver);
+
+            if (nr_rows > 0 && nr_col > 0)
+            {
+                for (int m = 0; m < nr_col; ++m)
+                {
+                    for (int n = 0; n < nr_rows; ++n)
+                    {
+                        double x2 = x1 + r1 + m * spc_hor;
+                        double y2 = y1 + r1 + n * spc_ver;
+
+                        Circle cerc1 = new Circle(new Point3d(x2, y2, 0), Vector3d.ZAxis, r1);
+                        cerc1.TransformBy(Matrix3d.Displacement(new Point3d(x2, y2, 0).GetVectorTo(new Point3d(x2 + dif_len_h / 2, y2 + dif_len_v / 2, 0))));
+
+                        BTrecord.AppendEntity(cerc1);
+                        Trans1.AddNewlyCreatedDBObject(cerc1, true);
+                        Hatch hatch1 = CreateHatch(cerc1, "SOLID", 1, 0);
+                        hatch1.Layer = "0";
+                        hatch1.LineWeight = LineWeight.LineWeight000;
+                        hatch1.Color = color1;
+                        bltrec1.AppendEntity(hatch1);
+                        cerc1.Erase();
+                    }
+                }
+            }
+
+            string nume_hatch = "ANSI31";
+            double hatch_scale = scale1 / 2;
+            double hatch_angle = 0;
+
+
+            Polyline poly2 = new Polyline();
+            poly2.AddVertexAt(0, poly1.GetPoint2dAt(0), 0, 0, 0);
+            poly2.AddVertexAt(1, new Point2d((poly1.GetPoint2dAt(0).X + poly1.GetPoint2dAt(1).X) / 2, poly1.GetPoint2dAt(0).Y), 0, 0, 0);
+            poly2.AddVertexAt(2, new Point2d((poly1.GetPoint2dAt(0).X + poly1.GetPoint2dAt(1).X) / 2, poly1.GetPoint2dAt(2).Y), 0, 0, 0);
+            poly2.AddVertexAt(3, poly1.GetPoint2dAt(3), 0, 0, 0);
+            poly2.Closed = true;
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch2e = CreateHatch(poly2, nume_hatch, hatch_scale, hatch_angle * Math.PI / 180);
+            hatch2e.Layer = "0";
+            hatch2e.LineWeight = LineWeight.LineWeight000;
+            hatch2e.Color = color1;
+            bltrec1.AppendEntity(hatch2e);
+            poly2.Erase();
+
 
         }
 

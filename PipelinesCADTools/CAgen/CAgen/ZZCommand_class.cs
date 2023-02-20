@@ -1859,8 +1859,8 @@ namespace Alignment_mdi
 
                         Point3d pt11 = pt1.TransformBy(CurentUCSmatrix);
                         Point3d pt22 = pt2.TransformBy(CurentUCSmatrix);
-                        double rot22 = Functions.GET_Bearing_rad(pt11.X, pt11.Y, pt22.X, pt22.Y);
-                        double rot2_deg = rot22 * 180 / Math.PI;
+                        double rot0 = Functions.GET_Bearing_rad(pt11.X, pt11.Y, pt22.X, pt22.Y);
+                        double rot2_deg = rot0 * 180 / Math.PI;
 
                         double textrot = Functions.GET_Bearing_rad(curent_ucs_matrix.CoordinateSystem3d.Xaxis);
 
@@ -1884,7 +1884,7 @@ namespace Alignment_mdi
                                 double rot1_deg = rot1 * 180 / Math.PI;
                                 double rowcs_deg = rot_WCS * 180 / Math.PI;
 
-                                mleader1.TransformBy(Matrix3d.Rotation(rot22 - rot_WCS, Vector3d.ZAxis, pt0));
+                                mleader1.TransformBy(Matrix3d.Rotation(rot0 - rot_WCS, Vector3d.ZAxis, pt0));
                             }
 
                             BlockReference block1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForWrite) as BlockReference;
@@ -1893,7 +1893,7 @@ namespace Alignment_mdi
                                 double r1 = block1.Rotation;
                                 double rot1_deg = r1 * 180 / Math.PI;
 
-                                block1.Rotation = rot22;
+                                block1.Rotation = rot0;
                             }
 
                             MText mt1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForWrite) as MText;
@@ -1912,7 +1912,7 @@ namespace Alignment_mdi
                                 double r1 = txt1.Rotation;
                                 double rot1_deg = r1 * 180 / Math.PI;
 
-                                txt1.Rotation = rot22;
+                                txt1.Rotation = rot0;
                             }
 
                         }
@@ -3778,7 +3778,7 @@ namespace Alignment_mdi
                 string col_Blockname = "Block Name";
                 string col_rotationblock = "Block Rotation";
                 string col_blockscale = "Block Scale";
-
+                string col_area = "Area";
 
 
                 dt1.Columns.Add(col_type, typeof(string));
@@ -3797,6 +3797,7 @@ namespace Alignment_mdi
                 dt1.Columns.Add(col_midX, typeof(double));
                 dt1.Columns.Add(col_midY, typeof(double));
                 dt1.Columns.Add(col_length, typeof(double));
+                dt1.Columns.Add(col_area, typeof(double));
                 dt1.Columns.Add(col_textstring, typeof(string));
                 dt1.Columns.Add(col_textheight, typeof(double));
                 dt1.Columns.Add(col_rotationtxt, typeof(double));
@@ -4015,6 +4016,7 @@ namespace Alignment_mdi
                                             if (j == 0)
                                             {
                                                 dt1.Rows[dt1.Rows.Count - 1][col_length] = poly1.Length;
+                                                dt1.Rows[dt1.Rows.Count - 1][col_area] = poly1.Area;
 
                                             }
 
@@ -5470,6 +5472,7 @@ namespace Alignment_mdi
                         System.Data.DataTable dt1 = new System.Data.DataTable();
                         dt1.Columns.Add("Type of object", typeof(string));
                         dt1.Columns.Add("DWG Layer", typeof(string));
+                        dt1.Columns.Add("Block Name", typeof(string));
                         dt1.Columns.Add("Sta", typeof(double));
                         dt1.Columns.Add("X", typeof(double));
                         dt1.Columns.Add("Y", typeof(double));
@@ -5733,6 +5736,7 @@ namespace Alignment_mdi
                                     {
                                         dt1.Rows.Add();
                                         dt1.Rows[dt1.Rows.Count - 1]["Type of object"] = "Block Reference";
+                                        dt1.Rows[dt1.Rows.Count - 1]["Block Name"] = Functions.get_block_name(block1);
                                         dt1.Rows[dt1.Rows.Count - 1]["DWG Layer"] = block1.Layer;
                                         dt1.Rows[dt1.Rows.Count - 1]["X"] = block1.Position.X;
                                         dt1.Rows[dt1.Rows.Count - 1]["Y"] = block1.Position.Y;

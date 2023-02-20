@@ -162,21 +162,19 @@ namespace Alignment_mdi
         public static string Layer_name_extra5_Viewport = "AGEN_VP5";
 
 
-        public static string NA_name = "";
-        public static string NorthArrowMS = "NorthArrow";
-        public static string Layer_even = "BLKS_Even";
-        public static string Layer_odd = "BLKS_Odd";
-        public static string matchline_block = "AGEN_Matchline";
-        public static string insertNAtoMS = "Insert into Sheet Index basefile";
+        
+       
+        public static string Layer_beta = "Beta_Blks";
+        public static string Layer_alpha = "Alpha_Blks";
+       
+       
 
 
-        public static double NA_x = 0;
-        public static double NA_y = 0;
-        public static double NA_scale = 0;
-        public static string Matchline_BlockName_in_PaperSpace = "";
+
+     
 
         public static bool Freeze_operations = false;
-        public static bool Template_is_open = false;
+  
 
         public static string template1 = "";
         public static string template2 = "";
@@ -186,7 +184,7 @@ namespace Alignment_mdi
         public static System.Data.DataTable Data_table_Main_VP;
         public static System.Data.DataTable dt_centerline;
 
-        public static System.Data.DataTable Data_table_blocks;
+        public static System.Data.DataTable dt_blocks;
 
         public static System.Data.DataTable dt_station_equation;
         public static System.Data.DataTable dt_prof;

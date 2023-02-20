@@ -951,55 +951,7 @@ namespace Alignment_mdi
 
 
 
-                                if (b18 != null && b19 != null && b20 != null && b21 != null)
-                                {
-                                    if (b18 != null)
-                                    {
-                                        _AGEN_mainform.NA_name = b18.ToString();
-                                    }
-
-                                    if (b19 != null)
-                                    {
-                                        string Xna = b19.ToString();
-                                        if (Functions.IsNumeric(Xna) == true)
-                                        {
-                                            _AGEN_mainform.NA_x = Convert.ToDouble(Xna);
-                                        }
-                                    }
-                                    if (b20 != null)
-                                    {
-                                        string yna = b20.ToString();
-                                        if (Functions.IsNumeric(yna) == true)
-                                        {
-                                            _AGEN_mainform.NA_y = Convert.ToDouble(yna);
-                                        }
-                                    }
-
-                                    if (b21 != null)
-                                    {
-                                        string sc = b21.ToString();
-                                        if (Functions.IsNumeric(sc) == true)
-                                        {
-                                            _AGEN_mainform.NA_scale = Convert.ToDouble(sc);
-                                        }
-                                    }
-
-                                    _AGEN_mainform.Data_table_blocks = new System.Data.DataTable();
-                                    _AGEN_mainform.Data_table_blocks.Columns.Add("TYPE", typeof(String));
-                                    _AGEN_mainform.Data_table_blocks.Columns.Add("BLOCK_NAME", typeof(String));
-                                    _AGEN_mainform.Data_table_blocks.Columns.Add("SCALE", typeof(double));
-                                    _AGEN_mainform.Data_table_blocks.Columns.Add("X", typeof(double));
-                                    _AGEN_mainform.Data_table_blocks.Columns.Add("Y", typeof(double));
-                                    _AGEN_mainform.Data_table_blocks.Rows.Add();
-                                    _AGEN_mainform.Data_table_blocks.Rows[0][0] = "North Arrow";
-                                    _AGEN_mainform.Data_table_blocks.Rows[0][1] = _AGEN_mainform.NA_name;
-                                    _AGEN_mainform.Data_table_blocks.Rows[0][2] = _AGEN_mainform.NA_scale;
-                                    _AGEN_mainform.Data_table_blocks.Rows[0][3] = _AGEN_mainform.NA_x;
-                                    _AGEN_mainform.Data_table_blocks.Rows[0][4] = _AGEN_mainform.NA_y;
-                                    //old_code_commented >>> tabControl_work.SelectedTab = tabPage2;
-                                    _AGEN_mainform.tpage_viewport_settings.set_dataGridView_north_arrow_blocks();
-                                    //old_code_commented >>>    tabControl_work.SelectedTab = tabPage1;
-                                }
+                               
 
 
                                 if (b22 != null)
@@ -1027,13 +979,6 @@ namespace Alignment_mdi
                                     }
                                 }
 
-                                if (b23 != null)
-                                {
-                                    if (Convert.ToString(b23).Replace(" ", "") != "")
-                                    {
-                                        _AGEN_mainform.Matchline_BlockName_in_PaperSpace = Convert.ToString(b23);
-                                    }
-                                }
 
                                 if (b36 != null)
                                 {
@@ -1072,12 +1017,12 @@ namespace Alignment_mdi
                                 {
                                     if (b40.ToLower() == "3d")
                                     {
-                                        _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(true);
+                                        _AGEN_mainform.tpage_setup.set_radioButton_use3D_stations(true);
                                         _AGEN_mainform.Project_type = "3D";
                                     }
                                     else
                                     {
-                                        _AGEN_mainform.tpage_sheetindex.set_radioButton_use2D_stations(true);
+                                        _AGEN_mainform.tpage_setup.set_radioButton_use2D_stations(true);
                                         _AGEN_mainform.Project_type = "2D";
                                     }
                                 }
@@ -1333,6 +1278,48 @@ namespace Alignment_mdi
                             {
                                 _AGEN_mainform.Data_Table_extra_mainVP = Functions.build_extra_data_table_from_excel(W1, 2);
                                 exista_extraVP = true;
+                            }
+                            #endregion
+                            #region dt blocks
+                            else if (W1.Name == "UserBlocks")
+                            {
+
+                                string col_bn = "Block Name";
+                                string col_rot = "Rotation";
+                                string col_loc = "Location";
+                                string col_x = "X Paper Space";
+                                string col_y = "Y Paper Space";
+                                string col_pos = "Block Position";
+                                _AGEN_mainform.dt_blocks = new System.Data.DataTable();
+
+                                _AGEN_mainform.dt_blocks.Columns.Add(col_bn, typeof(string));
+                                _AGEN_mainform.dt_blocks.Columns.Add(col_rot, typeof(string));
+                                _AGEN_mainform.dt_blocks.Columns.Add(col_pos, typeof(string));
+                                _AGEN_mainform.dt_blocks.Columns.Add(col_x, typeof(double));
+                                _AGEN_mainform.dt_blocks.Columns.Add(col_y, typeof(double));
+                                _AGEN_mainform.dt_blocks.Columns.Add(col_loc, typeof(string));
+
+
+
+                                List<string> lista_col = new List<string>();
+                                List<string> lista_colxl = new List<string>();
+
+                                lista_col.Add(col_bn);
+                                lista_col.Add(col_rot);
+                                lista_col.Add(col_pos);
+                                lista_col.Add(col_x);
+                                lista_col.Add(col_y);
+                                lista_col.Add(col_loc);
+
+                                lista_colxl.Add("A");
+                                lista_colxl.Add("B");
+                                lista_colxl.Add("C");
+                                lista_colxl.Add("D");
+                                lista_colxl.Add("E");
+                                lista_colxl.Add("F");
+
+                                _AGEN_mainform.dt_blocks = Functions.build_data_table_from_excel(_AGEN_mainform.dt_blocks,W1,2,1000,lista_col,lista_colxl);
+                                _AGEN_mainform.tpage_viewport_settings.display_dt_blocks();
                             }
                             #endregion
 
@@ -2251,7 +2238,7 @@ namespace Alignment_mdi
         public void button_align_config_saveall_boolean(bool Close_dwt)
         {
             Ag = this.MdiParent as _AGEN_mainform;
-            Functions.Kill_excel();
+            
 
             string cfg1 = System.IO.Path.GetFileName(_AGEN_mainform.config_path);
             if (Functions.Get_if_workbook_is_open_in_Excel(cfg1) == true)
@@ -2329,7 +2316,7 @@ namespace Alignment_mdi
                 if (radioButton_canada.Checked == true)
                 {
                     _AGEN_mainform.COUNTRY = "CANADA";
-                    _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(true);
+                    _AGEN_mainform.tpage_setup.set_radioButton_use3D_stations(true);
                     _AGEN_mainform.Project_type = "3D";
                 }
                 Data_table_config.Rows[9][1] = _AGEN_mainform.COUNTRY;
@@ -2394,33 +2381,13 @@ namespace Alignment_mdi
                 Data_table_config.Rows[20][0] = "North Arrow scale";
                 Data_table_config.Rows[20][1] = "1";
 
-                if (_AGEN_mainform.Data_table_blocks != null)
-                {
-                    if (_AGEN_mainform.Data_table_blocks.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < _AGEN_mainform.Data_table_blocks.Rows.Count; ++i)
-                        {
-                            if (_AGEN_mainform.Data_table_blocks.Rows[i][0] != DBNull.Value)
-                            {
-                                if (_AGEN_mainform.Data_table_blocks.Rows[i]["TYPE"].ToString() == "North Arrow")
-                                {
 
-                                    _AGEN_mainform.NA_scale = Convert.ToDouble(_AGEN_mainform.Data_table_blocks.Rows[i]["SCALE"]);
-                                    Data_table_config.Rows[17][1] = _AGEN_mainform.Data_table_blocks.Rows[i]["BLOCK_NAME"].ToString();
-                                    Data_table_config.Rows[20][1] = _AGEN_mainform.Data_table_blocks.Rows[i]["SCALE"].ToString();
-                                    Data_table_config.Rows[18][1] = _AGEN_mainform.Data_table_blocks.Rows[i][_AGEN_mainform.Col_x].ToString();
-                                    Data_table_config.Rows[19][1] = _AGEN_mainform.Data_table_blocks.Rows[i][_AGEN_mainform.Col_y].ToString();
-                                }
-                            }
-                        }
-                    }
-                }
                 Data_table_config.Rows[21][0] = "Units precision";
                 Data_table_config.Rows[21][1] = _AGEN_mainform.tpage_viewport_settings.get_combobox_units_precision();
 
 
-                Data_table_config.Rows[22][0] = "Matchline Block Name (in PaperSpace)";
-                Data_table_config.Rows[22][1] = _AGEN_mainform.Matchline_BlockName_in_PaperSpace;
+                Data_table_config.Rows[22][0] = "Empty";
+                Data_table_config.Rows[22][1] = "";
 
                 Data_table_config.Rows[23][0] = "Empty";
                 Data_table_config.Rows[23][1] = "";
@@ -2713,7 +2680,7 @@ namespace Alignment_mdi
                 MessageBox.Show(ex.Message);
             }
 
-            _AGEN_mainform.Template_is_open = false;
+       
             _AGEN_mainform.tpage_processing.Hide();
             Ag.WindowState = FormWindowState.Normal;
 
@@ -2790,6 +2757,7 @@ namespace Alignment_mdi
                             range1.Columns.AutoFit();
 
                             transfera_regular_band_to_excel(Workbook1);
+                            transfera_dt_blocks_to_EXCEL(Workbook1);
 
                             Ag.Set_textBox_config_file_location(path1);
 
@@ -2885,7 +2853,7 @@ namespace Alignment_mdi
                         }
                         range1.Value2 = values;
                         transfera_regular_band_to_excel(Workbook1);
-
+                        transfera_dt_blocks_to_EXCEL(Workbook1);
 
                         Workbook1.Save();
                         Workbook1.Close();
@@ -3047,7 +3015,11 @@ namespace Alignment_mdi
 
                 try
                 {
-                    dt2 = Functions.Build_Data_table_property_from_excel(W1, _AGEN_mainform.Start_row_property + 1, _AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations());
+
+                    bool is3d = false;
+                    if (_AGEN_mainform.Project_type == "3D") is3d = true;
+
+                    dt2 = Functions.Build_Data_table_property_from_excel(W1, _AGEN_mainform.Start_row_property + 1,is3d);
 
                     Workbook1.Save();
                     Workbook1.Close();
@@ -3598,6 +3570,66 @@ namespace Alignment_mdi
             }
 
         }
+
+        public void transfera_dt_blocks_to_EXCEL(Microsoft.Office.Interop.Excel.Workbook Workbook1)
+        {
+            if (_AGEN_mainform.dt_blocks != null)
+            {
+                if (_AGEN_mainform.dt_blocks.Rows.Count > 0)
+                {
+
+                    Microsoft.Office.Interop.Excel.Worksheet W1 = null;
+
+                    foreach (Microsoft.Office.Interop.Excel.Worksheet wsh1 in Workbook1.Worksheets)
+                    {
+                        if (wsh1.Name == "UserBlocks")
+                        {
+                            W1 = wsh1;
+                        }
+                    }
+
+                    if (W1 == null)
+                    {
+                        W1 = Workbook1.Worksheets.Add(System.Reflection.Missing.Value, Workbook1.Worksheets[Workbook1.Worksheets.Count], System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+                        W1.Name = "UserBlocks";
+
+                    }
+
+                    W1.Columns["A:XX"].Delete();
+                    W1.Range["A:S"].ColumnWidth = 20;
+                 
+                    int maxRows = _AGEN_mainform.dt_blocks.Rows.Count;
+                    int maxCols = _AGEN_mainform.dt_blocks.Columns.Count;
+
+                    Microsoft.Office.Interop.Excel.Range range1 = W1.Range[W1.Cells[2, 1], W1.Cells[maxRows + 1, maxCols]];
+                    object[,] values1 = new object[maxRows, maxCols];
+
+                    for (int i = 0; i < maxRows; ++i)
+                    {
+                        for (int j = 0; j < maxCols; ++j)
+                        {
+                            if (_AGEN_mainform.dt_blocks.Rows[i][j] != DBNull.Value)
+                            {
+                                values1[i, j] = _AGEN_mainform.dt_blocks.Rows[i][j];
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < _AGEN_mainform.dt_blocks.Columns.Count; ++i)
+                    {
+                        W1.Cells[1, i + 1].value2 = _AGEN_mainform.dt_blocks.Columns[i].ColumnName;
+                    }
+
+                    range1.Cells.NumberFormat = "@";
+                    range1.Value2 = values1;
+
+                    Functions.Color_border_range_inside(range1, 0);
+
+                }
+            }
+
+        }
+
 
         public void transfera_band_settings_to_config_excel(System.Data.DataTable dt_dwg_data_ownership, System.Data.DataTable dt_dwg_data_crossing)
         {
@@ -4195,7 +4227,7 @@ namespace Alignment_mdi
                         {
                             poly2d = (Polyline)Curba1;
 
-                            _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(false);
+                            _AGEN_mainform.tpage_setup.set_radioButton_use3D_stations(false);
                             _AGEN_mainform.Project_type = "2D";
                             poly_length = poly2d.Length;
                             pt0 = poly2d.StartPoint;
@@ -4205,7 +4237,7 @@ namespace Alignment_mdi
                         {
                             poly3d = (Polyline3d)Curba1;
 
-                            _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(true);
+                            _AGEN_mainform.tpage_setup.set_radioButton_use3D_stations(true);
                             _AGEN_mainform.Project_type = "3D";
                             poly_length = poly3d.Length;
                             pt0 = poly3d.StartPoint;
@@ -6280,7 +6312,7 @@ namespace Alignment_mdi
                         {
 
 
-                            for (int i = 1; i < no_minor; ++i)
+                            for (int i = 0; i < no_minor; ++i)
                             {
                                 Point3d pt0 = new Point3d();
                                 if (lista_major.Contains(first_label_minor + i * spacing_minor) == false)
@@ -8977,7 +9009,7 @@ namespace Alignment_mdi
                 label_kpmp_block.Text = "KP Block";
                 label_kpmp_Block_attrib.Text = "KP Block Attribute";
                 checkBox_mpkp_eq_suffix.Text = "Create KP Suffix";
-                _AGEN_mainform.tpage_sheetindex.set_radioButton_use3D_stations(true);
+                _AGEN_mainform.tpage_setup.set_radioButton_use3D_stations(true);
                 _AGEN_mainform.Project_type = "3D";
                 _AGEN_mainform.tpage_crossing_draw.set_checkBox_include_property_lines(false);
                 _AGEN_mainform.tpage_crossing_draw.set_checkBox_split_station_value(true);
@@ -9061,6 +9093,32 @@ namespace Alignment_mdi
             _AGEN_mainform.tpage_cust_draw.set_combobox_segment_name();
             _AGEN_mainform.tpage_sheet_gen.set_combobox_segment_name();
             _AGEN_mainform.tpage_cl_xl.set_combobox_segment_name();
+        }
+
+        //public bool get_radioButton_use3D_stations()
+        //{
+        //    return radioButton_3D_station.Checked;
+        //}
+        public void set_radioButton_use3D_stations(bool value)
+        {
+            radioButton_3D_station.Checked = value;
+        }
+
+        public void set_radioButton_use2D_stations(bool value)
+        {
+            radioButton_2D_station.Checked = value;
+        }
+
+        private void radioButton_2D_station_CheckedChanged(object sender, EventArgs e)
+        {
+            if(radioButton_2D_station.Checked==true)
+            {
+                _AGEN_mainform.Project_type = "2D";
+            }
+            else
+            {
+                _AGEN_mainform.Project_type = "3D";
+            }
         }
     }
 }

@@ -131,6 +131,11 @@
             this.textBox_pi_min_angle = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox_pi_block = new System.Windows.Forms.ComboBox();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.radioButton_3D_station = new System.Windows.Forms.RadioButton();
+            this.radioButton_2D_station = new System.Windows.Forms.RadioButton();
+            this.panel18 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel15.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel17.SuspendLayout();
@@ -148,6 +153,8 @@
             this.panel6.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel10.SuspendLayout();
+            this.panel18.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel15
@@ -470,9 +477,9 @@
             this.panel1.Controls.Add(this.panel_USA);
             this.panel1.Controls.Add(this.button_show_tools);
             this.panel1.ForeColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(3, 378);
+            this.panel1.Location = new System.Drawing.Point(3, 457);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(366, 229);
+            this.panel1.Size = new System.Drawing.Size(366, 150);
             this.panel1.TabIndex = 2;
             // 
             // panel_USA
@@ -482,7 +489,7 @@
             this.panel_USA.Controls.Add(this.label9);
             this.panel_USA.Location = new System.Drawing.Point(-1, 3);
             this.panel_USA.Name = "panel_USA";
-            this.panel_USA.Size = new System.Drawing.Size(310, 60);
+            this.panel_USA.Size = new System.Drawing.Size(333, 57);
             this.panel_USA.TabIndex = 131;
             // 
             // textBox_start_station_CL
@@ -563,10 +570,12 @@
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.panel10);
             this.panel3.Controls.Add(this.panel16);
             this.panel3.Controls.Add(this.panel13);
             this.panel3.Controls.Add(this.panel12);
             this.panel3.Controls.Add(this.panel11);
+            this.panel3.Controls.Add(this.panel18);
             this.panel3.Controls.Add(this.panel9);
             this.panel3.Controls.Add(this.panel8);
             this.panel3.Controls.Add(this.panel7);
@@ -672,7 +681,7 @@
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.label13);
             this.panel9.Controls.Add(this.label_cl_loaded);
-            this.panel9.Location = new System.Drawing.Point(3, 354);
+            this.panel9.Location = new System.Drawing.Point(3, 432);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(366, 25);
             this.panel9.TabIndex = 2137;
@@ -1512,6 +1521,66 @@
             this.comboBox_pi_block.DropDown += new System.EventHandler(this.button_refresh_pi_blocks_Click);
             this.comboBox_pi_block.SelectedIndexChanged += new System.EventHandler(this.comboBox_pi_block_SelectedIndexChanged);
             // 
+            // panel10
+            // 
+            this.panel10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel10.Controls.Add(this.radioButton_3D_station);
+            this.panel10.Controls.Add(this.radioButton_2D_station);
+            this.panel10.Location = new System.Drawing.Point(3, 382);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(366, 49);
+            this.panel10.TabIndex = 2103;
+            // 
+            // radioButton_3D_station
+            // 
+            this.radioButton_3D_station.AutoSize = true;
+            this.radioButton_3D_station.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_3D_station.ForeColor = System.Drawing.Color.White;
+            this.radioButton_3D_station.Location = new System.Drawing.Point(3, 25);
+            this.radioButton_3D_station.Name = "radioButton_3D_station";
+            this.radioButton_3D_station.Size = new System.Drawing.Size(38, 18);
+            this.radioButton_3D_station.TabIndex = 19;
+            this.radioButton_3D_station.Text = "3D";
+            this.radioButton_3D_station.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_2D_station
+            // 
+            this.radioButton_2D_station.AutoSize = true;
+            this.radioButton_2D_station.Checked = true;
+            this.radioButton_2D_station.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_2D_station.ForeColor = System.Drawing.Color.White;
+            this.radioButton_2D_station.Location = new System.Drawing.Point(3, 2);
+            this.radioButton_2D_station.Name = "radioButton_2D_station";
+            this.radioButton_2D_station.Size = new System.Drawing.Size(38, 18);
+            this.radioButton_2D_station.TabIndex = 19;
+            this.radioButton_2D_station.TabStop = true;
+            this.radioButton_2D_station.Text = "2D";
+            this.radioButton_2D_station.UseVisualStyleBackColor = true;
+            this.radioButton_2D_station.CheckedChanged += new System.EventHandler(this.radioButton_2D_station_CheckedChanged);
+            // 
+            // panel18
+            // 
+            this.panel18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel18.Controls.Add(this.label1);
+            this.panel18.Location = new System.Drawing.Point(3, 356);
+            this.panel18.Name = "panel18";
+            this.panel18.Size = new System.Drawing.Size(366, 25);
+            this.panel18.TabIndex = 2137;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Arial Black", 9.75F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(99, 18);
+            this.label1.TabIndex = 84;
+            this.label1.Text = "Project Type";
+            // 
             // AGEN_Project_Setup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1555,6 +1624,10 @@
             this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel18.ResumeLayout(false);
+            this.panel18.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1663,5 +1736,10 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBox_text_bottom;
         private System.Windows.Forms.CheckBox checkBox_blocks;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.RadioButton radioButton_3D_station;
+        private System.Windows.Forms.RadioButton radioButton_2D_station;
+        private System.Windows.Forms.Panel panel18;
+        private System.Windows.Forms.Label label1;
     }
 }

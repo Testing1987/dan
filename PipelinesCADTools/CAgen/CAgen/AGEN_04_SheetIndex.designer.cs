@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AGEN_SheetIndex));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.button_recover_matchlines = new System.Windows.Forms.Button();
@@ -46,9 +46,6 @@
             this.label56 = new System.Windows.Forms.Label();
             this.TextBox_matchline_length = new System.Windows.Forms.TextBox();
             this.button_place_rectangles = new System.Windows.Forms.Button();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.radioButton_3D_station = new System.Windows.Forms.RadioButton();
-            this.radioButton_2D_station = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label_mlb = new System.Windows.Forms.Label();
             this.label_na = new System.Windows.Forms.Label();
@@ -72,8 +69,14 @@
             this.label7 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
+            this.panel17 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel16 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.checkBox_alpha_beta = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button_atp = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.comboBox_segment_name = new System.Windows.Forms.ComboBox();
             this.panel15 = new System.Windows.Forms.Panel();
@@ -90,7 +93,6 @@
             this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -98,7 +100,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_sheet_index)).BeginInit();
             this.panel14.SuspendLayout();
             this.panel11.SuspendLayout();
+            this.panel17.SuspendLayout();
             this.panel16.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.panel7.SuspendLayout();
             this.panel15.SuspendLayout();
             this.panel13.SuspendLayout();
@@ -236,7 +240,7 @@
             this.button_draw_Viewport_templates.ForeColor = System.Drawing.Color.White;
             this.button_draw_Viewport_templates.Location = new System.Drawing.Point(6, 49);
             this.button_draw_Viewport_templates.Name = "button_draw_Viewport_templates";
-            this.button_draw_Viewport_templates.Size = new System.Drawing.Size(183, 28);
+            this.button_draw_Viewport_templates.Size = new System.Drawing.Size(197, 28);
             this.button_draw_Viewport_templates.TabIndex = 0;
             this.button_draw_Viewport_templates.Text = "Draw Viewport Templates";
             this.button_draw_Viewport_templates.UseVisualStyleBackColor = false;
@@ -338,43 +342,6 @@
             this.button_place_rectangles.UseVisualStyleBackColor = false;
             this.button_place_rectangles.Click += new System.EventHandler(this.button_place_rectangles_Click);
             // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Controls.Add(this.radioButton_3D_station);
-            this.panel4.Controls.Add(this.radioButton_2D_station);
-            this.panel4.Location = new System.Drawing.Point(6, 164);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(158, 69);
-            this.panel4.TabIndex = 117;
-            // 
-            // radioButton_3D_station
-            // 
-            this.radioButton_3D_station.AutoSize = true;
-            this.radioButton_3D_station.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton_3D_station.ForeColor = System.Drawing.Color.White;
-            this.radioButton_3D_station.Location = new System.Drawing.Point(3, 25);
-            this.radioButton_3D_station.Name = "radioButton_3D_station";
-            this.radioButton_3D_station.Size = new System.Drawing.Size(38, 18);
-            this.radioButton_3D_station.TabIndex = 19;
-            this.radioButton_3D_station.Text = "3D";
-            this.radioButton_3D_station.UseVisualStyleBackColor = true;
-            // 
-            // radioButton_2D_station
-            // 
-            this.radioButton_2D_station.AutoSize = true;
-            this.radioButton_2D_station.Checked = true;
-            this.radioButton_2D_station.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton_2D_station.ForeColor = System.Drawing.Color.White;
-            this.radioButton_2D_station.Location = new System.Drawing.Point(3, 2);
-            this.radioButton_2D_station.Name = "radioButton_2D_station";
-            this.radioButton_2D_station.Size = new System.Drawing.Size(38, 18);
-            this.radioButton_2D_station.TabIndex = 19;
-            this.radioButton_2D_station.TabStop = true;
-            this.radioButton_2D_station.Text = "2D";
-            this.radioButton_2D_station.UseVisualStyleBackColor = true;
-            // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
@@ -451,9 +418,9 @@
             this.button_insert_matchline_block_ms.ForeColor = System.Drawing.Color.White;
             this.button_insert_matchline_block_ms.Location = new System.Drawing.Point(6, 117);
             this.button_insert_matchline_block_ms.Name = "button_insert_matchline_block_ms";
-            this.button_insert_matchline_block_ms.Size = new System.Drawing.Size(183, 28);
+            this.button_insert_matchline_block_ms.Size = new System.Drawing.Size(197, 28);
             this.button_insert_matchline_block_ms.TabIndex = 2;
-            this.button_insert_matchline_block_ms.Text = "Insert Matchline block MS";
+            this.button_insert_matchline_block_ms.Text = "Insert Block MS (Match)";
             this.button_insert_matchline_block_ms.UseVisualStyleBackColor = false;
             this.button_insert_matchline_block_ms.Click += new System.EventHandler(this.button_insert_matchline_block_ms_Click);
             // 
@@ -468,9 +435,9 @@
             this.button_insert_na_ms.ForeColor = System.Drawing.Color.White;
             this.button_insert_na_ms.Location = new System.Drawing.Point(6, 83);
             this.button_insert_na_ms.Name = "button_insert_na_ms";
-            this.button_insert_na_ms.Size = new System.Drawing.Size(183, 28);
+            this.button_insert_na_ms.Size = new System.Drawing.Size(197, 28);
             this.button_insert_na_ms.TabIndex = 1;
-            this.button_insert_na_ms.Text = "Insert North Arrow MS";
+            this.button_insert_na_ms.Text = "Insert Blocks MS (North Arrow)";
             this.button_insert_na_ms.UseVisualStyleBackColor = false;
             this.button_insert_na_ms.Click += new System.EventHandler(this.button_insert_na_ms_Click);
             // 
@@ -507,7 +474,9 @@
             this.panel5.Controls.Add(this.button_open_sheet_index_xl);
             this.panel5.Controls.Add(this.panel14);
             this.panel5.Controls.Add(this.panel11);
+            this.panel5.Controls.Add(this.panel17);
             this.panel5.Controls.Add(this.panel16);
+            this.panel5.Controls.Add(this.panel4);
             this.panel5.Controls.Add(this.panel7);
             this.panel5.Controls.Add(this.panel15);
             this.panel5.Controls.Add(this.panel13);
@@ -534,10 +503,9 @@
             this.panel_dan.Controls.Add(this.button_calc_from_start_end);
             this.panel_dan.Controls.Add(this.button_pick_middle);
             this.panel_dan.Controls.Add(this.button_draw_manual);
-            this.panel_dan.Controls.Add(this.panel4);
-            this.panel_dan.Location = new System.Drawing.Point(568, 32);
+            this.panel_dan.Location = new System.Drawing.Point(568, 153);
             this.panel_dan.Name = "panel_dan";
-            this.panel_dan.Size = new System.Drawing.Size(280, 248);
+            this.panel_dan.Size = new System.Drawing.Size(280, 142);
             this.panel_dan.TabIndex = 2141;
             this.panel_dan.Visible = false;
             // 
@@ -572,9 +540,9 @@
             this.button_calc_from_start_end.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_calc_from_start_end.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.button_calc_from_start_end.ForeColor = System.Drawing.Color.White;
-            this.button_calc_from_start_end.Location = new System.Drawing.Point(6, 71);
+            this.button_calc_from_start_end.Location = new System.Drawing.Point(-1, 71);
             this.button_calc_from_start_end.Name = "button_calc_from_start_end";
-            this.button_calc_from_start_end.Size = new System.Drawing.Size(158, 62);
+            this.button_calc_from_start_end.Size = new System.Drawing.Size(280, 62);
             this.button_calc_from_start_end.TabIndex = 3;
             this.button_calc_from_start_end.Text = "Recalculate Sheet Index\r\nRectangles based on \r\nStart and End stations";
             this.button_calc_from_start_end.UseVisualStyleBackColor = false;
@@ -589,7 +557,7 @@
             this.button_pick_middle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_pick_middle.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.button_pick_middle.ForeColor = System.Drawing.Color.White;
-            this.button_pick_middle.Location = new System.Drawing.Point(6, 37);
+            this.button_pick_middle.Location = new System.Drawing.Point(3, 37);
             this.button_pick_middle.Name = "button_pick_middle";
             this.button_pick_middle.Size = new System.Drawing.Size(94, 28);
             this.button_pick_middle.TabIndex = 1;
@@ -624,14 +592,14 @@
             this.dataGridView_sheet_index.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_sheet_index.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_sheet_index.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_sheet_index.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_sheet_index.Location = new System.Drawing.Point(3, 355);
             this.dataGridView_sheet_index.Name = "dataGridView_sheet_index";
@@ -727,6 +695,28 @@
             this.label12.Text = "Segment Name";
             this.label12.Click += new System.EventHandler(this.label_matchline_setup_Click);
             // 
+            // panel17
+            // 
+            this.panel17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.panel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel17.Controls.Add(this.label13);
+            this.panel17.Location = new System.Drawing.Point(568, 36);
+            this.panel17.Name = "panel17";
+            this.panel17.Size = new System.Drawing.Size(280, 25);
+            this.panel17.TabIndex = 2140;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Arial Black", 9.75F);
+            this.label13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label13.Location = new System.Drawing.Point(3, 3);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(56, 18);
+            this.label13.TabIndex = 2054;
+            this.label13.Text = "Labels";
+            // 
             // panel16
             // 
             this.panel16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
@@ -748,6 +738,59 @@
             this.label2.Size = new System.Drawing.Size(120, 18);
             this.label2.TabIndex = 2054;
             this.label2.Text = "Scan Geometry";
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.checkBox_alpha_beta);
+            this.panel4.Controls.Add(this.label5);
+            this.panel4.Controls.Add(this.button_atp);
+            this.panel4.Location = new System.Drawing.Point(568, 60);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(280, 91);
+            this.panel4.TabIndex = 4;
+            // 
+            // checkBox_alpha_beta
+            // 
+            this.checkBox_alpha_beta.AutoSize = true;
+            this.checkBox_alpha_beta.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_alpha_beta.ForeColor = System.Drawing.Color.White;
+            this.checkBox_alpha_beta.Location = new System.Drawing.Point(6, 23);
+            this.checkBox_alpha_beta.Name = "checkBox_alpha_beta";
+            this.checkBox_alpha_beta.Size = new System.Drawing.Size(166, 18);
+            this.checkBox_alpha_beta.TabIndex = 2138;
+            this.checkBox_alpha_beta.Text = "Create Alpha-Beta Layers";
+            this.checkBox_alpha_beta.UseVisualStyleBackColor = true;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Yellow;
+            this.label5.Location = new System.Drawing.Point(3, 2);
+            this.label5.MaximumSize = new System.Drawing.Size(260, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(215, 14);
+            this.label5.TabIndex = 2142;
+            this.label5.Text = "Aligns existing objects to Sheet Index";
+            // 
+            // button_atp
+            // 
+            this.button_atp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_atp.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_atp.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_atp.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_atp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_atp.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_atp.ForeColor = System.Drawing.Color.White;
+            this.button_atp.Location = new System.Drawing.Point(199, 57);
+            this.button_atp.Name = "button_atp";
+            this.button_atp.Size = new System.Drawing.Size(76, 28);
+            this.button_atp.TabIndex = 0;
+            this.button_atp.Text = "Align!";
+            this.button_atp.UseVisualStyleBackColor = false;
+            this.button_atp.Click += new System.EventHandler(this.button_atp_Click);
             // 
             // panel7
             // 
@@ -919,8 +962,6 @@
             this.panel8.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -933,8 +974,12 @@
             this.panel14.PerformLayout();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
+            this.panel17.ResumeLayout(false);
+            this.panel17.PerformLayout();
             this.panel16.ResumeLayout(false);
             this.panel16.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel15.ResumeLayout(false);
             this.panel15.PerformLayout();
@@ -959,9 +1004,6 @@
         private System.Windows.Forms.Button button_adjust_rectangle;
         private System.Windows.Forms.Label label_sheet_index_data;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.RadioButton radioButton_3D_station;
-        private System.Windows.Forms.RadioButton radioButton_2D_station;
         private System.Windows.Forms.TextBox TextBox_matchline_length;
         private System.Windows.Forms.Button button_draw_Viewport_templates;
         private System.Windows.Forms.Button button_place_rectangles;
@@ -1009,5 +1051,11 @@
         private System.Windows.Forms.TextBox textBox_length;
         private System.Windows.Forms.Label label_kpmp_block;
         private System.Windows.Forms.Label label_not_saved;
+        private System.Windows.Forms.Panel panel17;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button_atp;
+        private System.Windows.Forms.CheckBox checkBox_alpha_beta;
     }
 }

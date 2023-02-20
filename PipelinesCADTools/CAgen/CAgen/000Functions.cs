@@ -5700,7 +5700,11 @@ namespace Alignment_mdi
                         for (int i = 0; i < Field_defs1.Count; ++i)
                         {
                             Autodesk.Gis.Map.ObjectData.FieldDefinition fielddef1 = Field_defs1[i];
-                            Combobox1.Items.Add(fielddef1.Name);
+                            string name1 = fielddef1.Name;
+                            if(Combobox1.Items.Contains(name1)==false)
+                            {
+                                Combobox1.Items.Add(fielddef1.Name);
+                            }
                         }
                     }
                     Trans1.Commit();
@@ -19574,54 +19578,6 @@ namespace Alignment_mdi
             return Viewport;
         }
 
-        public static void creaza_anno_scales(Database Database2)
-        {
-            List<string> lista_anno_names = new List<string>();
-            List<double> lista_anno_ps = new List<double>();
-            lista_anno_names.Add("_1:10");
-            lista_anno_ps.Add(10);
-            lista_anno_names.Add("_1:20");
-            lista_anno_ps.Add(20);
-            lista_anno_names.Add("_1:30");
-            lista_anno_ps.Add(30);
-            lista_anno_names.Add("_1:40");
-            lista_anno_ps.Add(40);
-            lista_anno_names.Add("_1:50");
-            lista_anno_ps.Add(50);
-            lista_anno_names.Add("_1:60");
-            lista_anno_ps.Add(60);
-            lista_anno_names.Add("_1:100");
-            lista_anno_ps.Add(100);
-            lista_anno_names.Add("_1:200");
-            lista_anno_ps.Add(200);
-            lista_anno_names.Add("_1:300");
-            lista_anno_ps.Add(300);
-            lista_anno_names.Add("_1:400");
-            lista_anno_ps.Add(400);
-            lista_anno_names.Add("_1:500");
-            lista_anno_ps.Add(500);
-            lista_anno_names.Add("_1:600");
-            lista_anno_ps.Add(600);
-
-
-            var ocm = Database2.ObjectContextManager;
-            var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
-
-            for (int i = 0; i < lista_anno_names.Count; i++)
-            {
-                AnnotationScale ano1 = new AnnotationScale();
-                ano1.Name = lista_anno_names[i];
-                ano1.PaperUnits = 1;
-                ano1.DrawingUnits = lista_anno_ps[i];
-
-                if (occ.HasContext(ano1.Name) == false)
-                {
-                    occ.AddContext(ano1);
-
-                }
-            }
-        }
-
 
         public static Polyline get_offset_polyline(Polyline poly0, double width1)
         {
@@ -20494,6 +20450,54 @@ namespace Alignment_mdi
 
             return dt2;
 
+        }
+
+        public static void creaza_anno_scales(Database Database2)
+        {
+            List<string> lista_anno_names = new List<string>();
+            List<double> lista_anno_ps = new List<double>();
+            lista_anno_names.Add("1:10");
+            lista_anno_ps.Add(10);
+            lista_anno_names.Add("1:20");
+            lista_anno_ps.Add(20);
+            lista_anno_names.Add("1:30");
+            lista_anno_ps.Add(30);
+            lista_anno_names.Add("1:40");
+            lista_anno_ps.Add(40);
+            lista_anno_names.Add("1:50");
+            lista_anno_ps.Add(50);
+            lista_anno_names.Add("1:60");
+            lista_anno_ps.Add(60);
+            lista_anno_names.Add("1:100");
+            lista_anno_ps.Add(100);
+            lista_anno_names.Add("1:200");
+            lista_anno_ps.Add(200);
+            lista_anno_names.Add("1:300");
+            lista_anno_ps.Add(300);
+            lista_anno_names.Add("1:400");
+            lista_anno_ps.Add(400);
+            lista_anno_names.Add("1:500");
+            lista_anno_ps.Add(500);
+            lista_anno_names.Add("1:600");
+            lista_anno_ps.Add(600);
+
+
+            var ocm = Database2.ObjectContextManager;
+            var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
+
+            for (int i = 0; i < lista_anno_names.Count; i++)
+            {
+                AnnotationScale ano1 = new AnnotationScale();
+                ano1.Name = lista_anno_names[i];
+                ano1.PaperUnits = 1;
+                ano1.DrawingUnits = lista_anno_ps[i];
+
+                if (occ.HasContext(ano1.Name) == false)
+                {
+                    occ.AddContext(ano1);
+
+                }
+            }
         }
 
     }

@@ -1588,7 +1588,7 @@ namespace Alignment_mdi
 
                                             _AGEN_mainform.Data_Table_crossings.Rows.Add();
 
-                                            if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                            if (_AGEN_mainform.Project_type == "2D")
                                             {
                                                 double sta2d = Math.Round(poly2d.GetDistAtPoint(pt1), 3);
                                                 if (sta2d >= poly2d.Length)

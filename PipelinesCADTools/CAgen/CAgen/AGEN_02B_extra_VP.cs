@@ -19,7 +19,7 @@ namespace Alignment_mdi
     {
         bool clickdragdown;
         Point lastLocation;
-
+        bool Template_is_open = false;
 
         private void set_enable_false()
         {
@@ -446,16 +446,16 @@ namespace Alignment_mdi
                 {
                     if (Doc.Name == strTemplatePath)
                     {
-                        _AGEN_mainform.Template_is_open = true;
+                        Template_is_open = true;
                         ThisDrawing = Doc;
                         DocumentManager1.CurrentDocument = ThisDrawing;
                     }
                 }
 
-                if (_AGEN_mainform.Template_is_open == false)
+                if (Template_is_open == false)
                 {
                     ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                    _AGEN_mainform.Template_is_open = true;
+                    Template_is_open = true;
                 }
 
                 Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
@@ -587,16 +587,16 @@ namespace Alignment_mdi
                 {
                     if (Doc.Name == strTemplatePath)
                     {
-                        _AGEN_mainform.Template_is_open = true;
+                        Template_is_open = true;
                         ThisDrawing = Doc;
                         DocumentManager1.CurrentDocument = ThisDrawing;
                     }
                 }
 
-                if (_AGEN_mainform.Template_is_open == false)
+                if (Template_is_open == false)
                 {
                     ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                    _AGEN_mainform.Template_is_open = true;
+                    Template_is_open = true;
                 }
 
                 Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
@@ -756,16 +756,16 @@ namespace Alignment_mdi
                 {
                     if (Doc.Name == strTemplatePath)
                     {
-                        _AGEN_mainform.Template_is_open = true;
+                       Template_is_open = true;
                         ThisDrawing = Doc;
                         DocumentManager1.CurrentDocument = ThisDrawing;
                     }
                 }
 
-                if (_AGEN_mainform.Template_is_open == false)
+                if (Template_is_open == false)
                 {
                     ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                    _AGEN_mainform.Template_is_open = true;
+                    Template_is_open = true;
                 }
 
                 Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
@@ -936,16 +936,16 @@ namespace Alignment_mdi
                 {
                     if (Doc.Name == strTemplatePath)
                     {
-                        _AGEN_mainform.Template_is_open = true;
+                       Template_is_open = true;
                         ThisDrawing = Doc;
                         DocumentManager1.CurrentDocument = ThisDrawing;
                     }
                 }
 
-                if (_AGEN_mainform.Template_is_open == false)
+                if (Template_is_open == false)
                 {
                     ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                    _AGEN_mainform.Template_is_open = true;
+                   Template_is_open = true;
                 }
 
                 Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
@@ -1127,16 +1127,16 @@ namespace Alignment_mdi
                 {
                     if (Doc.Name == strTemplatePath)
                     {
-                        _AGEN_mainform.Template_is_open = true;
+                       Template_is_open = true;
                         ThisDrawing = Doc;
                         DocumentManager1.CurrentDocument = ThisDrawing;
                     }
                 }
 
-                if (_AGEN_mainform.Template_is_open == false)
+                if (Template_is_open == false)
                 {
                     ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                    _AGEN_mainform.Template_is_open = true;
+                    Template_is_open = true;
                 }
 
                 Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;

@@ -123,7 +123,7 @@ namespace Alignment_mdi
         }
 
 
-        public static void make_layout_active(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no=1)
+        public static void make_layout_active(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no = 1)
         {
             HostApplicationServices.WorkingDatabase = Database1;
 
@@ -142,10 +142,10 @@ namespace Alignment_mdi
                 }
 
             }
-           
+
         }
 
-        public static string  get_layout_name(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no = 1)
+        public static string get_layout_name(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no = 1)
         {
             HostApplicationServices.WorkingDatabase = Database1;
 
@@ -182,7 +182,7 @@ namespace Alignment_mdi
             foreach (DBDictionaryEntry entry in Layoutdict)
             {
                 Layout0 = (Layout)Trans1.GetObject(LayoutManager1.GetLayoutId(entry.Key), OpenMode.ForRead);
-                if (Layout0.TabOrder >1)
+                if (Layout0.TabOrder > 1)
                 {
                     ++no_of_layouts;
                 }
@@ -714,7 +714,7 @@ namespace Alignment_mdi
 
         }
 
-        public static Autodesk.AutoCAD.DatabaseServices.BlockTableRecord get_layout_as_paperspace(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no=1)
+        public static Autodesk.AutoCAD.DatabaseServices.BlockTableRecord get_layout_as_paperspace(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1, int no = 1)
         {
 
             HostApplicationServices.WorkingDatabase = Database1;
@@ -735,7 +735,7 @@ namespace Alignment_mdi
             }
             return BTrecordPS;
 
-           
+
         }
 
         public static Layout get_first_layout(Autodesk.AutoCAD.DatabaseServices.Transaction Trans1, Database Database1)
@@ -781,7 +781,7 @@ namespace Alignment_mdi
 
             ObjectId id1 = LayoutManager1.CreateLayout(layoutname);
             Layout Layout0 = (Layout)Trans1.GetObject(id1, OpenMode.ForRead);
-            LayoutManager1.CurrentLayout= layoutname;
+            LayoutManager1.CurrentLayout = layoutname;
 
             return Layout0;
         }
@@ -811,7 +811,7 @@ namespace Alignment_mdi
             Viewport1.TwistAngle = Twist_rad;
             Viewport1.CustomScale = Scale;
             Viewport1.Locked = true;
-          
+
 
             return Viewport1;
         }
@@ -1765,7 +1765,7 @@ namespace Alignment_mdi
 
         }
 
-        static public void add_OD_fieds_to_combobox( string table_name, ComboBox Combobox1)
+        static public void add_OD_fieds_to_combobox(string table_name, ComboBox Combobox1)
         {
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
 
@@ -1781,7 +1781,11 @@ namespace Alignment_mdi
                         for (int i = 0; i < Field_defs1.Count; ++i)
                         {
                             Autodesk.Gis.Map.ObjectData.FieldDefinition fielddef1 = Field_defs1[i];
-                            Combobox1.Items.Add(fielddef1.Name);
+
+                            if (Combobox1.Items.Contains(fielddef1.Name) == false)
+                            {
+                                Combobox1.Items.Add(fielddef1.Name);
+                            }
                         }
                     }
                     else
@@ -1797,29 +1801,29 @@ namespace Alignment_mdi
         {
             List<string> lista_anno_names = new List<string>();
             List<double> lista_anno_ps = new List<double>();
-            lista_anno_names.Add("_1:10");
+            lista_anno_names.Add("1:10");
             lista_anno_ps.Add(10);
-            lista_anno_names.Add("_1:20");
+            lista_anno_names.Add("1:20");
             lista_anno_ps.Add(20);
-            lista_anno_names.Add("_1:30");
+            lista_anno_names.Add("1:30");
             lista_anno_ps.Add(30);
-            lista_anno_names.Add("_1:40");
+            lista_anno_names.Add("1:40");
             lista_anno_ps.Add(40);
-            lista_anno_names.Add("_1:50");
+            lista_anno_names.Add("1:50");
             lista_anno_ps.Add(50);
-            lista_anno_names.Add("_1:60");
+            lista_anno_names.Add("1:60");
             lista_anno_ps.Add(60);
-            lista_anno_names.Add("_1:100");
+            lista_anno_names.Add("1:100");
             lista_anno_ps.Add(100);
-            lista_anno_names.Add("_1:200");
+            lista_anno_names.Add("1:200");
             lista_anno_ps.Add(200);
-            lista_anno_names.Add("_1:300");
+            lista_anno_names.Add("1:300");
             lista_anno_ps.Add(300);
-            lista_anno_names.Add("_1:400");
+            lista_anno_names.Add("1:400");
             lista_anno_ps.Add(400);
-            lista_anno_names.Add("_1:500");
+            lista_anno_names.Add("1:500");
             lista_anno_ps.Add(500);
-            lista_anno_names.Add("_1:600");
+            lista_anno_names.Add("1:600");
             lista_anno_ps.Add(600);
 
 
@@ -1840,6 +1844,41 @@ namespace Alignment_mdi
                 }
             }
         }
+        static public void set_block_visibility(BlockReference BR, String visibility_name)
+        {
+            using (DynamicBlockReferencePropertyCollection pc = BR.DynamicBlockReferencePropertyCollection)
+            {
+                foreach (DynamicBlockReferenceProperty prop in pc)
+                {
 
+
+                    if (prop.PropertyName == "Visibility1" && !prop.ReadOnly)
+                    {
+                        object[] existing = prop.GetAllowedValues();
+                        bool found = false;
+
+                        foreach (object ob in existing)
+                        {
+                            if (ob.ToString() == visibility_name)
+                            {
+                                found = true;
+                            }
+                        }
+
+                        if (found == true)
+                        {
+                            if (prop.Value.ToString() != visibility_name)
+                            {
+                                prop.Value = visibility_name;
+                            }
+                        }
+                    }
+
+
+
+                }
+                return;
+            }
+        }
     }
 }

@@ -1015,22 +1015,21 @@ namespace Alignment_mdi
                         BlockReference block1 = Trans2.GetObject(id1, OpenMode.ForRead) as BlockReference;
                         if (block1 != null)
                         {
-                            if (block1.AttributeCollection.Count > 0)
+                            string block_name = Functions.get_block_name_another_database(block1, Database2);
+
+                            for (int j = 2; j < dt1.Columns.Count; ++j)
                             {
-                                string block_name = Functions.get_block_name_another_database(block1, Database2);
 
-                                for (int j = 2; j < dt1.Columns.Count; ++j)
+                                string block_name_excel = Convert.ToString(dt1.Rows[0][j]);
+                                string atributte_name_excel = Convert.ToString(dt1.Rows[1][j]);
+
+                                if (block_name_excel != null && atributte_name_excel != null)
                                 {
-
-                                    string block_name_excel = Convert.ToString(dt1.Rows[0][j]);
-                                    string atributte_name_excel = Convert.ToString(dt1.Rows[1][j]);
-
-                                    if (block_name_excel != null && atributte_name_excel != null)
+                                    if (block_name.ToLower() == block_name_excel.ToLower())
                                     {
-                                        if (block_name.ToLower() == block_name_excel.ToLower())
+                                        block1.UpgradeOpen();
+                                        if (block1.AttributeCollection.Count > 0)
                                         {
-                                            block1.UpgradeOpen();
-
                                             foreach (ObjectId atid in block1.AttributeCollection)
                                             {
                                                 AttributeReference Atr1 = (AttributeReference)Trans2.GetObject(atid, OpenMode.ForWrite);
@@ -1053,6 +1052,16 @@ namespace Alignment_mdi
                                                 }
                                             }
                                         }
+
+                                        if (atributte_name_excel.ToLower() == "visibility")
+                                        {
+                                            if (dt1.Rows[i][j] != DBNull.Value)
+                                            {
+                                                Functions.set_block_visibility(block1, Convert.ToString(dt1.Rows[i][j]));
+                                            }
+
+                                        }
+
                                     }
                                 }
                             }
@@ -1088,22 +1097,22 @@ namespace Alignment_mdi
                     BlockReference block1 = Trans2.GetObject(id1, OpenMode.ForRead) as BlockReference;
                     if (block1 != null)
                     {
-                        if (block1.AttributeCollection.Count > 0)
+
+                        string block_name = Functions.get_block_name_another_database(block1, Database2);
+
+                        for (int j = 2; j < dt1.Columns.Count; ++j)
                         {
-                            string block_name = Functions.get_block_name_another_database(block1, Database2);
 
-                            for (int j = 2; j < dt1.Columns.Count; ++j)
+                            string block_name_excel = Convert.ToString(dt1.Rows[0][j]);
+                            string atributte_name_excel = Convert.ToString(dt1.Rows[1][j]);
+
+                            if (block_name_excel != null && atributte_name_excel != null)
                             {
-
-                                string block_name_excel = Convert.ToString(dt1.Rows[0][j]);
-                                string atributte_name_excel = Convert.ToString(dt1.Rows[1][j]);
-
-                                if (block_name_excel != null && atributte_name_excel != null)
+                                if (block_name.ToLower() == block_name_excel.ToLower())
                                 {
-                                    if (block_name.ToLower() == block_name_excel.ToLower())
+                                    block1.UpgradeOpen();
+                                    if (block1.AttributeCollection.Count > 0)
                                     {
-                                        block1.UpgradeOpen();
-
                                         foreach (ObjectId atid in block1.AttributeCollection)
                                         {
                                             AttributeReference Atr1 = (AttributeReference)Trans2.GetObject(atid, OpenMode.ForWrite);
@@ -1125,6 +1134,18 @@ namespace Alignment_mdi
                                                 }
                                             }
                                         }
+
+                                    }
+
+
+
+                                    if (atributte_name_excel.ToLower() == "visibility")
+                                    {
+                                        if (dt1.Rows[i][j] != DBNull.Value)
+                                        {
+                                            Functions.set_block_visibility(block1, Convert.ToString(dt1.Rows[i][j]));
+                                        }
+
                                     }
                                 }
                             }

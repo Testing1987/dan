@@ -22,7 +22,13 @@ namespace Alignment_mdi
 
         private ContextMenuStrip ContextMenuStrip_bands;
         bool is_main_view_picked = false;
-
+        string col_bn = "Block Name";
+        string col_rot = "Rotation";
+        string col_space = "Location";
+        string col_x = "X Paper Space";
+        string col_y = "Y Paper Space";
+        string col_pos = "Block Position";
+        bool Template_is_open = false;
 
 
         private void set_enable_false(object sender)
@@ -245,17 +251,7 @@ namespace Alignment_mdi
             }
         }
 
-        public void set_dataGridView_north_arrow_blocks()
-        {
-            dataGridView_north_arrow_blocks.DataSource = _AGEN_mainform.Data_table_blocks;
-            dataGridView_north_arrow_blocks.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            dataGridView_north_arrow_blocks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-            dataGridView_north_arrow_blocks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-            dataGridView_north_arrow_blocks.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-            dataGridView_north_arrow_blocks.DefaultCellStyle.ForeColor = Color.White;
-            dataGridView_north_arrow_blocks.EnableHeadersVisualStyles = false;
 
-        }
 
 
 
@@ -312,7 +308,7 @@ namespace Alignment_mdi
                     MessageBox.Show(ex.Message);
                 }
                 set_enable_true();
-                _AGEN_mainform.Template_is_open = false;
+
 
                 _AGEN_mainform.tpage_processing.Hide();
                 _AGEN_mainform.tpage_blank.Hide();
@@ -346,10 +342,11 @@ namespace Alignment_mdi
             }
         }
 
-        private void button_browse_north_arrow_Click(object sender, EventArgs e)
+        private void button_pick_block_location_PS_Click(object sender, EventArgs e)
         {
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
-            if (Ag != null)
+
+            if (Ag != null && _AGEN_mainform.dt_blocks != null && _AGEN_mainform.dt_blocks.Rows.Count > 0)
             {
 
 
@@ -360,9 +357,9 @@ namespace Alignment_mdi
                     return;
                 }
 
-                if (comboBox_type_of_block.Text == "")
+                if (comboBox_block_space.Text == "")
                 {
-                    MessageBox.Show("no type of block specified");
+                    MessageBox.Show("no modelspace or paper space specified");
                     set_enable_true();
                     return;
                 }
@@ -386,16 +383,6 @@ namespace Alignment_mdi
                 try
                 {
 
-                    if (dataGridView_north_arrow_blocks.Rows.Count == 0)
-                    {
-                        _AGEN_mainform.Data_table_blocks = new System.Data.DataTable();
-                        _AGEN_mainform.Data_table_blocks.Columns.Add("TYPE", typeof(String));
-                        _AGEN_mainform.Data_table_blocks.Columns.Add("BLOCK_NAME", typeof(String));
-                        _AGEN_mainform.Data_table_blocks.Columns.Add("SCALE", typeof(double));
-                        _AGEN_mainform.Data_table_blocks.Columns.Add("X", typeof(double));
-                        _AGEN_mainform.Data_table_blocks.Columns.Add("Y", typeof(double));
-
-                    }
 
 
 
@@ -404,7 +391,7 @@ namespace Alignment_mdi
                     {
                         if (Doc.Name == strTemplatePath)
                         {
-                            _AGEN_mainform.Template_is_open = true;
+
                             ThisDrawing = Doc;
                             DocumentManager1.CurrentDocument = ThisDrawing;
                             Found1 = true;
@@ -413,22 +400,10 @@ namespace Alignment_mdi
 
                     if (Found1 == false)
                     {
-                        _AGEN_mainform.Template_is_open = false;
+
 
                         ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
                         DocumentManager1.CurrentDocument = ThisDrawing;
-                        Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
-                        if (comboBox_blocks_PaperSpace.Items.Count > 1) comboBox_blocks_PaperSpace.Items.Insert(1, _AGEN_mainform.insertNAtoMS);
-                        if (comboBox_blocks_PaperSpace.Items.Count == 0)
-                        {
-                            comboBox_blocks_PaperSpace.Items.Add("");
-                            comboBox_blocks_PaperSpace.Items.Add(_AGEN_mainform.insertNAtoMS);
-                        }
-                        MessageBox.Show("the template file has been open, please select your north arrow block first");
-                        set_enable_true();
-                        _AGEN_mainform.Template_is_open = true;
-
-                        return;
                     }
 
 
@@ -441,97 +416,38 @@ namespace Alignment_mdi
                         using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                         {
 
-                            if (comboBox_type_of_block.Text == "North Arrow")
+
+                            Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                            Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+                            for (int i = 0; i < _AGEN_mainform.dt_blocks.Rows.Count; i++)
                             {
-
-                                Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
-                                Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
-
-
-
-                                Autodesk.AutoCAD.EditorInput.PromptPointResult Point_res1;
-                                Autodesk.AutoCAD.EditorInput.PromptPointOptions PP1;
-                                PP1 = new Autodesk.AutoCAD.EditorInput.PromptPointOptions("\nPlease specify the north arrow insertion point");
-                                PP1.AllowNone = false;
-                                Point_res1 = Editor1.GetPoint(PP1);
-
-
-                                if (Point_res1.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK)
+                                if (_AGEN_mainform.dt_blocks.Rows[i][col_bn] != DBNull.Value &&  
+                                    _AGEN_mainform.dt_blocks.Rows[i][col_pos] != DBNull.Value &&
+                                    Convert.ToString( _AGEN_mainform.dt_blocks.Rows[i][col_pos]) == "User Defined")
                                 {
-                                    set_enable_true();
-                                    ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                                    Ag.WindowState = FormWindowState.Normal;
-                                    return;
-                                }
+                                    string block_name = Convert.ToString(_AGEN_mainform.dt_blocks.Rows[i][col_bn]);
+                                    Autodesk.AutoCAD.EditorInput.PromptPointResult Point_res1;
+                                    Autodesk.AutoCAD.EditorInput.PromptPointOptions PP1;
+                                    PP1 = new Autodesk.AutoCAD.EditorInput.PromptPointOptions("\nPlease specify the " + block_name + " insertion point");
+                                    PP1.AllowNone = false;
+                                    Point_res1 = Editor1.GetPoint(PP1);
 
 
-
-                                _AGEN_mainform.NA_x = Point_res1.Value.X;
-                                _AGEN_mainform.NA_y = Point_res1.Value.Y;
-                                _AGEN_mainform.NA_name = comboBox_blocks_PaperSpace.Text;
-
-
-                                string Block_type = comboBox_type_of_block.Text;
-                                bool Exista = false;
-
-                                if (Block_type != "")
-                                {
-
-                                    if (_AGEN_mainform.Data_table_blocks.Rows.Count > 0)
+                                    if (Point_res1.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK)
                                     {
-
-                                        for (int i = 0; i < _AGEN_mainform.Data_table_blocks.Rows.Count; ++i)
-                                        {
-                                            string BT = _AGEN_mainform.Data_table_blocks.Rows[i][0].ToString();
-                                            if (Block_type == BT)
-                                            {
-
-                                                _AGEN_mainform.Data_table_blocks.Rows[i]["TYPE"] = BT;
-                                                _AGEN_mainform.Data_table_blocks.Rows[i][_AGEN_mainform.Col_x] = _AGEN_mainform.NA_x;
-                                                _AGEN_mainform.Data_table_blocks.Rows[i][_AGEN_mainform.Col_y] = _AGEN_mainform.NA_y;
-                                                _AGEN_mainform.Data_table_blocks.Rows[i]["SCALE"] = 1;
-                                                _AGEN_mainform.Data_table_blocks.Rows[i]["BLOCK_NAME"] = _AGEN_mainform.NA_name;
-                                                dataGridView_north_arrow_blocks.DataSource = _AGEN_mainform.Data_table_blocks;
-                                                dataGridView_north_arrow_blocks.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                                                dataGridView_north_arrow_blocks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                                dataGridView_north_arrow_blocks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                                                dataGridView_north_arrow_blocks.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                                dataGridView_north_arrow_blocks.DefaultCellStyle.ForeColor = Color.White;
-                                                dataGridView_north_arrow_blocks.EnableHeadersVisualStyles = false;
-
-
-                                                Exista = true;
-
-                                            }
-                                        }
-
+                                        set_enable_true();
+                                        ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                                        Ag.WindowState = FormWindowState.Normal;
+                                        return;
                                     }
-
-                                    if (Exista == false)
-                                    {
-
-                                        _AGEN_mainform.Data_table_blocks.Rows.Add();
-                                        _AGEN_mainform.Data_table_blocks.Rows[_AGEN_mainform.Data_table_blocks.Rows.Count - 1]["TYPE"] = comboBox_type_of_block.Text;
-                                        _AGEN_mainform.Data_table_blocks.Rows[_AGEN_mainform.Data_table_blocks.Rows.Count - 1][_AGEN_mainform.Col_x] = _AGEN_mainform.NA_x;
-                                        _AGEN_mainform.Data_table_blocks.Rows[_AGEN_mainform.Data_table_blocks.Rows.Count - 1][_AGEN_mainform.Col_y] = _AGEN_mainform.NA_y;
-                                        _AGEN_mainform.Data_table_blocks.Rows[_AGEN_mainform.Data_table_blocks.Rows.Count - 1]["SCALE"] = 1;
-                                        _AGEN_mainform.Data_table_blocks.Rows[_AGEN_mainform.Data_table_blocks.Rows.Count - 1]["BLOCK_NAME"] = _AGEN_mainform.NA_name;
-                                        dataGridView_north_arrow_blocks.DataSource = _AGEN_mainform.Data_table_blocks;
-                                        dataGridView_north_arrow_blocks.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                                        dataGridView_north_arrow_blocks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                        dataGridView_north_arrow_blocks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                                        dataGridView_north_arrow_blocks.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                        dataGridView_north_arrow_blocks.DefaultCellStyle.ForeColor = Color.White;
-                                        dataGridView_north_arrow_blocks.EnableHeadersVisualStyles = false;
-
-                                    }
+                                    _AGEN_mainform.dt_blocks.Rows[i][col_x] = Point_res1.Value.X;
+                                    _AGEN_mainform.dt_blocks.Rows[i][col_y] = Point_res1.Value.Y;
 
                                 }
                             }
 
-
                             Trans1.Commit();
-
                         }
                     }
                 }
@@ -541,65 +457,14 @@ namespace Alignment_mdi
                 }
                 set_enable_true();
 
-                _AGEN_mainform.tpage_setup.button_align_config_saveall_boolean(false);
+                //_AGEN_mainform.tpage_setup.button_align_config_saveall_boolean(false);
 
 
                 Ag.WindowState = FormWindowState.Normal;
             }
         }
 
-        private void comboBox_type_of_block_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
-            set_enable_false(sender);
-            try
-            {
-                string strTemplatePath = get_template_name_from_text_box();
-
-                DocumentCollection DocumentManager1 = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager;
-                Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = null;
-
-                if (System.IO.File.Exists(strTemplatePath) == false)
-                {
-                    MessageBox.Show("template file not found");
-                    set_enable_true();
-                    return;
-                }
-
-                foreach (Document Doc in DocumentManager1)
-                {
-                    if (Doc.Name == strTemplatePath)
-                    {
-                        _AGEN_mainform.Template_is_open = true;
-                        ThisDrawing = Doc;
-                        DocumentManager1.CurrentDocument = ThisDrawing;
-                        Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
-                    }
-                }
-
-                if (_AGEN_mainform.Template_is_open == false)
-                {
-                    ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                    Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
-                    _AGEN_mainform.Template_is_open = true;
-                }
-
-                if (comboBox_blocks_PaperSpace.Items.Count > 1) comboBox_blocks_PaperSpace.Items.Insert(1, _AGEN_mainform.insertNAtoMS);
-                if (comboBox_blocks_PaperSpace.Items.Count == 0)
-                {
-                    comboBox_blocks_PaperSpace.Items.Add("");
-                    comboBox_blocks_PaperSpace.Items.Add(_AGEN_mainform.insertNAtoMS);
-                }
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            set_enable_true();
-
-
-
-        }
 
         private void button_browser_dwt_Click(object sender, EventArgs e)
         {
@@ -611,7 +476,7 @@ namespace Alignment_mdi
                 if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     textBox_template_name.Text = fbd.FileName;
-                    _AGEN_mainform.template1= fbd.FileName;
+                    _AGEN_mainform.template1 = fbd.FileName;
                 }
             }
         }
@@ -1313,38 +1178,26 @@ namespace Alignment_mdi
                             return;
                         }
 
-                        _AGEN_mainform.Template_is_open = false;
+                        Template_is_open = false;
                         foreach (Document Doc in DocumentManager1)
                         {
                             if (Doc.Name == strTemplatePath)
                             {
-                                _AGEN_mainform.Template_is_open = true;
+                                Template_is_open = true;
                                 ThisDrawing = Doc;
                                 DocumentManager1.CurrentDocument = ThisDrawing;
-                                Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
+                                Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
 
-                                if (comboBox_blocks_PaperSpace.Items.Count > 1) comboBox_blocks_PaperSpace.Items.Insert(1, _AGEN_mainform.insertNAtoMS);
-                                if (comboBox_blocks_PaperSpace.Items.Count == 0)
-                                {
-                                    comboBox_blocks_PaperSpace.Items.Add("");
-                                    comboBox_blocks_PaperSpace.Items.Add(_AGEN_mainform.insertNAtoMS);
-                                }
 
                             }
 
                         }
 
-                        if (_AGEN_mainform.Template_is_open == false)
+                        if (Template_is_open == false)
                         {
                             ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                            Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
-                            if (comboBox_blocks_PaperSpace.Items.Count > 1) comboBox_blocks_PaperSpace.Items.Insert(1, _AGEN_mainform.insertNAtoMS);
-                            if (comboBox_blocks_PaperSpace.Items.Count == 0)
-                            {
-                                comboBox_blocks_PaperSpace.Items.Add("");
-                                comboBox_blocks_PaperSpace.Items.Add(_AGEN_mainform.insertNAtoMS);
-                            }
-                            _AGEN_mainform.Template_is_open = true;
+                            Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
+                            Template_is_open = true;
                         }
 
                         string Scale1 = _AGEN_mainform.tpage_viewport_settings.Get_combobox_viewport_scale_text();
@@ -2317,40 +2170,29 @@ namespace Alignment_mdi
                         return;
                     }
 
-                    _AGEN_mainform.Template_is_open = false;
+                    Template_is_open = false;
                     foreach (Document Doc in DocumentManager1)
                     {
                         if (Doc.Name == strTemplatePath)
                         {
-                            _AGEN_mainform.Template_is_open = true;
+                            Template_is_open = true;
                             ThisDrawing = Doc;
                             DocumentManager1.CurrentDocument = ThisDrawing;
-                            Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
+                            Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
 
-                            if (comboBox_blocks_PaperSpace.Items.Count > 1) comboBox_blocks_PaperSpace.Items.Insert(1, _AGEN_mainform.insertNAtoMS);
-                            if (comboBox_blocks_PaperSpace.Items.Count == 0)
-                            {
-                                comboBox_blocks_PaperSpace.Items.Add("");
-                                comboBox_blocks_PaperSpace.Items.Add(_AGEN_mainform.insertNAtoMS);
-                            }
+
 
                         }
 
                     }
 
-                    if (_AGEN_mainform.Template_is_open == false)
+                    if (Template_is_open == false)
                     {
                         ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                        Functions.Incarca_existing_Blocks_to_combobox(comboBox_blocks_PaperSpace);
-                        if (comboBox_blocks_PaperSpace.Items.Count > 1) comboBox_blocks_PaperSpace.Items.Insert(1, _AGEN_mainform.insertNAtoMS);
-                        if (comboBox_blocks_PaperSpace.Items.Count == 0)
-                        {
-                            comboBox_blocks_PaperSpace.Items.Add("");
-                            comboBox_blocks_PaperSpace.Items.Add(_AGEN_mainform.insertNAtoMS);
-                        }
-                        _AGEN_mainform.Template_is_open = true;
+                        Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
+
                     }
-                 
+
                     string Scale1 = _AGEN_mainform.tpage_viewport_settings.Get_combobox_viewport_scale_text();
 
                     if (Functions.IsNumeric(Scale1) == true)
@@ -2430,7 +2272,7 @@ namespace Alignment_mdi
                                 ThisDrawing.Editor.WriteMessage("\n" + "Command:");
                                 return;
                             }
-                           
+
                             Autodesk.AutoCAD.EditorInput.PromptPointResult Point_res2;
 
                             Alignment_mdi.Jig_rectangle_viewport_pick_points Jig2 = new Alignment_mdi.Jig_rectangle_viewport_pick_points();
@@ -3068,7 +2910,7 @@ namespace Alignment_mdi
                                     }
                                 }
                             }
-                            else if(is_no_data_band==false)
+                            else if (is_no_data_band == false)
                             {
                                 MessageBox.Show("please add the plan view first!");
                                 Ag.WindowState = FormWindowState.Normal;
@@ -3256,19 +3098,69 @@ namespace Alignment_mdi
             return Convert.ToString(comboBox_bands.Items[10]);
         }
 
-        private void ComboBox_blocks_PaperSpace_SelectedIndexChanged(object sender, EventArgs e)
+
+
+        private void button_add_block_Click(object sender, EventArgs e)
         {
-            if (comboBox_type_of_block.Text == "Matchline PaperSpace" && comboBox_blocks_PaperSpace.Text != "")
+            if (comboBox_existing_blocks.Text != "" && comboBox_block_space.Text != "")
             {
-                _AGEN_mainform.Matchline_BlockName_in_PaperSpace = comboBox_blocks_PaperSpace.Text;
+
+
+                if (_AGEN_mainform.dt_blocks == null)
+                {
+                    _AGEN_mainform.dt_blocks = new System.Data.DataTable();
+
+                    _AGEN_mainform.dt_blocks.Columns.Add(col_bn, typeof(string));
+                    _AGEN_mainform.dt_blocks.Columns.Add(col_rot, typeof(string));
+                    _AGEN_mainform.dt_blocks.Columns.Add(col_pos, typeof(string));
+                    _AGEN_mainform.dt_blocks.Columns.Add(col_x, typeof(double));
+                    _AGEN_mainform.dt_blocks.Columns.Add(col_y, typeof(double));
+                    _AGEN_mainform.dt_blocks.Columns.Add(col_space, typeof(string));
+                }
+
+                _AGEN_mainform.dt_blocks.Rows.Add();
+                _AGEN_mainform.dt_blocks.Rows[_AGEN_mainform.dt_blocks.Rows.Count - 1][col_bn] = comboBox_existing_blocks.Text;
+
+                if (radioButton_rot_0.Checked == true)
+                {
+                    _AGEN_mainform.dt_blocks.Rows[_AGEN_mainform.dt_blocks.Rows.Count - 1][col_rot] = "0";
+                }
+                else
+                {
+                    _AGEN_mainform.dt_blocks.Rows[_AGEN_mainform.dt_blocks.Rows.Count - 1][col_rot] = "Sheet Index";
+                }
+
+                if (radioButton_block_user_defined.Checked == true)
+                {
+                    _AGEN_mainform.dt_blocks.Rows[_AGEN_mainform.dt_blocks.Rows.Count - 1][col_pos] = "User Defined";
+                }
+                else
+                {
+                    _AGEN_mainform.dt_blocks.Rows[_AGEN_mainform.dt_blocks.Rows.Count - 1][col_pos] = "At Matchlines";
+                }
+
+                _AGEN_mainform.dt_blocks.Rows[_AGEN_mainform.dt_blocks.Rows.Count - 1][col_space] = comboBox_block_space.Text;
+
 
             }
 
-            if (comboBox_type_of_block.Text == "Matchline PaperSpace" && comboBox_blocks_PaperSpace.Text == "")
-            {
-                _AGEN_mainform.Matchline_BlockName_in_PaperSpace = "";
+            display_dt_blocks();
+        }
 
-            }
+        public void display_dt_blocks()
+        {
+            dataGridView_blocks.DataSource = _AGEN_mainform.dt_blocks;
+            dataGridView_blocks.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dataGridView_blocks.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+            dataGridView_blocks.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView_blocks.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+            dataGridView_blocks.DefaultCellStyle.ForeColor = Color.White;
+            dataGridView_blocks.EnableHeadersVisualStyles = false;
+        }
+
+        private void comboBox_existing_blocks_DropDown(object sender, EventArgs e)
+        {
+            Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
         }
     }
 }

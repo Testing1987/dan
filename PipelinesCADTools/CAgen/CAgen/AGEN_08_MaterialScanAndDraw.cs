@@ -1180,7 +1180,7 @@ namespace Alignment_mdi
                                 string Material1 = "";
                                 double Station1_labeled = -1.123;
                                 double Station2_labeled = -1.123;
-                                if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                if (_AGEN_mainform.Project_type == "2D")
                                 {
                                     if (_AGEN_mainform.dt_mat_lin_extra.Rows[i][_AGEN_mainform.Col_2DSta1] != DBNull.Value && _AGEN_mainform.dt_mat_lin_extra.Rows[i][_AGEN_mainform.Col_2DSta2] != DBNull.Value)
                                     {
@@ -2008,7 +2008,7 @@ namespace Alignment_mdi
                             {
                                 if (_AGEN_mainform.dt_mat_pt.Rows.Count > 0)
                                 {
-                                    if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                    if (_AGEN_mainform.Project_type=="2D")
                                     {
                                         _AGEN_mainform.dt_mat_pt = Functions.Sort_data_table(_AGEN_mainform.dt_mat_pt, _AGEN_mainform.Col_2DSta);
                                     }
@@ -2023,7 +2023,7 @@ namespace Alignment_mdi
                             {
                                 if (_AGEN_mainform.dt_mat_lin_extra.Rows.Count > 0)
                                 {
-                                    if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                    if (_AGEN_mainform.Project_type=="2D")
                                     {
                                         _AGEN_mainform.dt_mat_lin_extra = Functions.Sort_data_table(_AGEN_mainform.dt_mat_lin_extra, "2DSTABEG");
                                     }
@@ -2138,7 +2138,7 @@ namespace Alignment_mdi
                                     {
                                         double Station_pt1 = -1.123;
                                         double Station_pt2 = -1.123;
-                                        if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                        if (_AGEN_mainform.Project_type == "2D")
                                         {
                                             Station_pt1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["2DSTABEG"]);
                                         }
@@ -2147,7 +2147,7 @@ namespace Alignment_mdi
                                             Station_pt1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["3DSTABEG"]);
                                         }
 
-                                        if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                        if (_AGEN_mainform.Project_type == "2D")
                                         {
                                             Station_pt2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["2DSTAEND"]);
                                         }
@@ -2459,7 +2459,7 @@ namespace Alignment_mdi
                                         {
                                             double Station_pt = -1.123;
 
-                                            if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                            if (_AGEN_mainform.Project_type == "2D")
                                             {
                                                 Station_pt = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k][_AGEN_mainform.Col_2DSta]);
                                             }
@@ -4788,7 +4788,7 @@ namespace Alignment_mdi
                                     {
                                         double Station_pt1 = -1.123;
                                         double Station_pt2 = -1.123;
-                                        if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                        if (_AGEN_mainform.Project_type=="2D")
                                         {
                                             Station_pt1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["2DSTABEG"]);
                                         }
@@ -4797,7 +4797,7 @@ namespace Alignment_mdi
                                             Station_pt1 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["3DSTABEG"]);
                                         }
 
-                                        if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                        if (_AGEN_mainform.Project_type == "2D")
                                         {
                                             Station_pt2 = Convert.ToDouble(_AGEN_mainform.dt_mat_lin_extra.Rows[k]["2DSTAEND"]);
                                         }
@@ -5072,7 +5072,7 @@ namespace Alignment_mdi
                                         {
                                             double Station_pt = -1.123;
 
-                                            if (_AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations() == false)
+                                            if (_AGEN_mainform.Project_type == "2D")
                                             {
                                                 Station_pt = Convert.ToDouble(_AGEN_mainform.dt_mat_pt.Rows[k][_AGEN_mainform.Col_2DSta]);
                                             }

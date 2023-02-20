@@ -2042,7 +2042,13 @@ namespace Alignment_mdi
 
                 try
                 {
-                    dt2 = Functions.Build_Data_table_custom_from_excel(W1, _AGEN_mainform.Start_row_custom + 1, _AGEN_mainform.tpage_sheetindex.get_radioButton_use3D_stations());
+                    bool is3d = false;
+                    if (_AGEN_mainform.Project_type == "3D")
+                    {
+                        is3d = true;
+                    }
+
+                    dt2 = Functions.Build_Data_table_custom_from_excel(W1, _AGEN_mainform.Start_row_custom + 1, is3d);
                     Workbook1.Close();
                     if (Excel1.Workbooks.Count == 0)
                     {

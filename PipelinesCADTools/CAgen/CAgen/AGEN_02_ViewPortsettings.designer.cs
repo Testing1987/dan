@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AGEN_Viewport_Settings));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,12 +51,21 @@
             this.button_remove_band = new System.Windows.Forms.Button();
             this.dataGridView_bands = new System.Windows.Forms.DataGridView();
             this.panel11 = new System.Windows.Forms.Panel();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.radioButton_block_at_matchline = new System.Windows.Forms.RadioButton();
+            this.radioButton_block_user_defined = new System.Windows.Forms.RadioButton();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.radioButton_rot_sheet_index = new System.Windows.Forms.RadioButton();
+            this.radioButton_rot_0 = new System.Windows.Forms.RadioButton();
             this.button_close_template2 = new System.Windows.Forms.Button();
-            this.dataGridView_north_arrow_blocks = new System.Windows.Forms.DataGridView();
-            this.comboBox_type_of_block = new System.Windows.Forms.ComboBox();
+            this.button_add_block = new System.Windows.Forms.Button();
+            this.dataGridView_blocks = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBox_block_space = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label108 = new System.Windows.Forms.Label();
             this.label107 = new System.Windows.Forms.Label();
-            this.comboBox_blocks_PaperSpace = new System.Windows.Forms.ComboBox();
+            this.comboBox_existing_blocks = new System.Windows.Forms.ComboBox();
             this.button_browse_north_arrow = new System.Windows.Forms.Button();
             this.button_align_config_saveall = new System.Windows.Forms.Button();
             this.panel_sheet_naming = new System.Windows.Forms.Panel();
@@ -92,7 +101,9 @@
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_bands)).BeginInit();
             this.panel11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_north_arrow_blocks)).BeginInit();
+            this.panel10.SuspendLayout();
+            this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_blocks)).BeginInit();
             this.panel_sheet_naming.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel17.SuspendLayout();
@@ -107,6 +118,7 @@
             this.panel5.Controls.Add(this.panel3);
             this.panel5.Controls.Add(this.panel2);
             this.panel5.Controls.Add(this.panel8);
+            this.panel5.Controls.Add(this.dataGridView_blocks);
             this.panel5.Controls.Add(this.panel7);
             this.panel5.Controls.Add(this.panel13);
             this.panel5.Controls.Add(this.panel11);
@@ -124,9 +136,9 @@
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label2);
-            this.panel4.Location = new System.Drawing.Point(375, 311);
+            this.panel4.Location = new System.Drawing.Point(3, 347);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(471, 25);
+            this.panel4.Size = new System.Drawing.Size(367, 25);
             this.panel4.TabIndex = 2139;
             // 
             // label2
@@ -166,7 +178,7 @@
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label_sheet_naming);
-            this.panel2.Location = new System.Drawing.Point(3, 233);
+            this.panel2.Location = new System.Drawing.Point(3, 210);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(366, 25);
             this.panel2.TabIndex = 2137;
@@ -241,7 +253,7 @@
             this.panel13.Controls.Add(this.dataGridView_bands);
             this.panel13.Location = new System.Drawing.Point(375, 27);
             this.panel13.Name = "panel13";
-            this.panel13.Size = new System.Drawing.Size(471, 278);
+            this.panel13.Size = new System.Drawing.Size(471, 259);
             this.panel13.TabIndex = 2;
             // 
             // button_draw_bands
@@ -256,7 +268,7 @@
             this.button_draw_bands.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.button_draw_bands.ForeColor = System.Drawing.Color.White;
             this.button_draw_bands.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_draw_bands.Location = new System.Drawing.Point(331, 241);
+            this.button_draw_bands.Location = new System.Drawing.Point(331, 213);
             this.button_draw_bands.Name = "button_draw_bands";
             this.button_draw_bands.Size = new System.Drawing.Size(135, 33);
             this.button_draw_bands.TabIndex = 2135;
@@ -364,19 +376,19 @@
             this.dataGridView_bands.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_bands.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_bands.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_bands.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_bands.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_bands.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_bands.Location = new System.Drawing.Point(3, 47);
             this.dataGridView_bands.Name = "dataGridView_bands";
             this.dataGridView_bands.RowHeadersVisible = false;
-            this.dataGridView_bands.Size = new System.Drawing.Size(463, 192);
+            this.dataGridView_bands.Size = new System.Drawing.Size(463, 160);
             this.dataGridView_bands.TabIndex = 100;
             this.dataGridView_bands.TabStop = false;
             this.dataGridView_bands.VirtualMode = true;
@@ -387,17 +399,95 @@
             // 
             this.panel11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel11.Controls.Add(this.panel10);
+            this.panel11.Controls.Add(this.panel9);
             this.panel11.Controls.Add(this.button_close_template2);
-            this.panel11.Controls.Add(this.dataGridView_north_arrow_blocks);
-            this.panel11.Controls.Add(this.comboBox_type_of_block);
+            this.panel11.Controls.Add(this.button_add_block);
+            this.panel11.Controls.Add(this.label1);
+            this.panel11.Controls.Add(this.comboBox_block_space);
+            this.panel11.Controls.Add(this.label7);
             this.panel11.Controls.Add(this.label108);
             this.panel11.Controls.Add(this.label107);
-            this.panel11.Controls.Add(this.comboBox_blocks_PaperSpace);
+            this.panel11.Controls.Add(this.comboBox_existing_blocks);
             this.panel11.Controls.Add(this.button_browse_north_arrow);
-            this.panel11.Location = new System.Drawing.Point(375, 335);
+            this.panel11.Location = new System.Drawing.Point(3, 371);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(471, 273);
+            this.panel11.Size = new System.Drawing.Size(367, 173);
             this.panel11.TabIndex = 3;
+            // 
+            // panel10
+            // 
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel10.Controls.Add(this.radioButton_block_at_matchline);
+            this.panel10.Controls.Add(this.radioButton_block_user_defined);
+            this.panel10.Location = new System.Drawing.Point(94, 88);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(173, 51);
+            this.panel10.TabIndex = 2092;
+            // 
+            // radioButton_block_at_matchline
+            // 
+            this.radioButton_block_at_matchline.AutoSize = true;
+            this.radioButton_block_at_matchline.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_block_at_matchline.ForeColor = System.Drawing.Color.White;
+            this.radioButton_block_at_matchline.Location = new System.Drawing.Point(3, 27);
+            this.radioButton_block_at_matchline.Name = "radioButton_block_at_matchline";
+            this.radioButton_block_at_matchline.Size = new System.Drawing.Size(114, 18);
+            this.radioButton_block_at_matchline.TabIndex = 115;
+            this.radioButton_block_at_matchline.Text = "At the Matchline";
+            this.radioButton_block_at_matchline.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_block_user_defined
+            // 
+            this.radioButton_block_user_defined.AutoSize = true;
+            this.radioButton_block_user_defined.Checked = true;
+            this.radioButton_block_user_defined.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_block_user_defined.ForeColor = System.Drawing.Color.White;
+            this.radioButton_block_user_defined.Location = new System.Drawing.Point(3, 3);
+            this.radioButton_block_user_defined.Name = "radioButton_block_user_defined";
+            this.radioButton_block_user_defined.Size = new System.Drawing.Size(96, 18);
+            this.radioButton_block_user_defined.TabIndex = 114;
+            this.radioButton_block_user_defined.TabStop = true;
+            this.radioButton_block_user_defined.Text = "User Defined";
+            this.radioButton_block_user_defined.UseVisualStyleBackColor = true;
+            this.radioButton_block_user_defined.CheckedChanged += new System.EventHandler(this.radioButton_lr_CheckedChanged);
+            // 
+            // panel9
+            // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel9.Controls.Add(this.radioButton_rot_sheet_index);
+            this.panel9.Controls.Add(this.radioButton_rot_0);
+            this.panel9.Location = new System.Drawing.Point(94, 31);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(246, 51);
+            this.panel9.TabIndex = 2092;
+            // 
+            // radioButton_rot_sheet_index
+            // 
+            this.radioButton_rot_sheet_index.AutoSize = true;
+            this.radioButton_rot_sheet_index.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_rot_sheet_index.ForeColor = System.Drawing.Color.White;
+            this.radioButton_rot_sheet_index.Location = new System.Drawing.Point(3, 27);
+            this.radioButton_rot_sheet_index.Name = "radioButton_rot_sheet_index";
+            this.radioButton_rot_sheet_index.Size = new System.Drawing.Size(157, 18);
+            this.radioButton_rot_sheet_index.TabIndex = 115;
+            this.radioButton_rot_sheet_index.Text = "Follows the sheet index";
+            this.radioButton_rot_sheet_index.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_rot_0
+            // 
+            this.radioButton_rot_0.AutoSize = true;
+            this.radioButton_rot_0.Checked = true;
+            this.radioButton_rot_0.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_rot_0.ForeColor = System.Drawing.Color.White;
+            this.radioButton_rot_0.Location = new System.Drawing.Point(3, 3);
+            this.radioButton_rot_0.Name = "radioButton_rot_0";
+            this.radioButton_rot_0.Size = new System.Drawing.Size(88, 18);
+            this.radioButton_rot_0.TabIndex = 114;
+            this.radioButton_rot_0.TabStop = true;
+            this.radioButton_rot_0.Text = "Rotation = 0";
+            this.radioButton_rot_0.UseVisualStyleBackColor = true;
+            this.radioButton_rot_0.CheckedChanged += new System.EventHandler(this.radioButton_lr_CheckedChanged);
             // 
             // button_close_template2
             // 
@@ -409,7 +499,7 @@
             this.button_close_template2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_close_template2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_close_template2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
-            this.button_close_template2.Location = new System.Drawing.Point(279, 35);
+            this.button_close_template2.Location = new System.Drawing.Point(339, 6);
             this.button_close_template2.Name = "button_close_template2";
             this.button_close_template2.Size = new System.Drawing.Size(21, 21);
             this.button_close_template2.TabIndex = 102;
@@ -419,49 +509,91 @@
             this.button_close_template2.UseVisualStyleBackColor = false;
             this.button_close_template2.Click += new System.EventHandler(this.button_close_template_Click);
             // 
-            // dataGridView_north_arrow_blocks
+            // button_add_block
             // 
-            this.dataGridView_north_arrow_blocks.AllowUserToAddRows = false;
-            this.dataGridView_north_arrow_blocks.AllowUserToDeleteRows = false;
-            this.dataGridView_north_arrow_blocks.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridView_north_arrow_blocks.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.dataGridView_north_arrow_blocks.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dataGridView_north_arrow_blocks.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.dataGridView_north_arrow_blocks.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            this.dataGridView_north_arrow_blocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_north_arrow_blocks.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataGridView_north_arrow_blocks.GridColor = System.Drawing.Color.LightGray;
-            this.dataGridView_north_arrow_blocks.Location = new System.Drawing.Point(3, 62);
-            this.dataGridView_north_arrow_blocks.Name = "dataGridView_north_arrow_blocks";
-            this.dataGridView_north_arrow_blocks.RowHeadersVisible = false;
-            this.dataGridView_north_arrow_blocks.Size = new System.Drawing.Size(463, 206);
-            this.dataGridView_north_arrow_blocks.TabIndex = 100;
-            this.dataGridView_north_arrow_blocks.TabStop = false;
-            this.dataGridView_north_arrow_blocks.VirtualMode = true;
+            this.button_add_block.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_add_block.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_add_block.BackgroundImage")));
+            this.button_add_block.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button_add_block.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_add_block.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_add_block.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button_add_block.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_add_block.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_add_block.ForeColor = System.Drawing.Color.White;
+            this.button_add_block.Location = new System.Drawing.Point(309, 145);
+            this.button_add_block.Name = "button_add_block";
+            this.button_add_block.Size = new System.Drawing.Size(21, 21);
+            this.button_add_block.TabIndex = 2064;
+            this.button_add_block.TabStop = false;
+            this.button_add_block.UseVisualStyleBackColor = false;
+            this.button_add_block.Click += new System.EventHandler(this.button_add_block_Click);
             // 
-            // comboBox_type_of_block
+            // dataGridView_blocks
             // 
-            this.comboBox_type_of_block.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.comboBox_type_of_block.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_type_of_block.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_type_of_block.ForeColor = System.Drawing.Color.White;
-            this.comboBox_type_of_block.FormattingEnabled = true;
-            this.comboBox_type_of_block.Items.AddRange(new object[] {
+            this.dataGridView_blocks.AllowUserToAddRows = false;
+            this.dataGridView_blocks.AllowUserToDeleteRows = false;
+            this.dataGridView_blocks.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridView_blocks.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.dataGridView_blocks.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridView_blocks.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dataGridView_blocks.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            this.dataGridView_blocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_blocks.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView_blocks.GridColor = System.Drawing.Color.LightGray;
+            this.dataGridView_blocks.Location = new System.Drawing.Point(376, 289);
+            this.dataGridView_blocks.Name = "dataGridView_blocks";
+            this.dataGridView_blocks.RowHeadersVisible = false;
+            this.dataGridView_blocks.Size = new System.Drawing.Size(471, 292);
+            this.dataGridView_blocks.TabIndex = 100;
+            this.dataGridView_blocks.TabStop = false;
+            this.dataGridView_blocks.VirtualMode = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(3, 108);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 14);
+            this.label1.TabIndex = 104;
+            this.label1.Text = "Block position";
+            // 
+            // comboBox_block_space
+            // 
+            this.comboBox_block_space.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.comboBox_block_space.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_block_space.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox_block_space.ForeColor = System.Drawing.Color.White;
+            this.comboBox_block_space.FormattingEnabled = true;
+            this.comboBox_block_space.Items.AddRange(new object[] {
             "",
-            "North Arrow",
-            "Matchline PaperSpace"});
-            this.comboBox_type_of_block.Location = new System.Drawing.Point(80, 8);
-            this.comboBox_type_of_block.Name = "comboBox_type_of_block";
-            this.comboBox_type_of_block.Size = new System.Drawing.Size(166, 21);
-            this.comboBox_type_of_block.TabIndex = 0;
-            this.comboBox_type_of_block.SelectedIndexChanged += new System.EventHandler(this.comboBox_type_of_block_SelectedIndexChanged);
+            "ModelSpace",
+            "PaperSpace"});
+            this.comboBox_block_space.Location = new System.Drawing.Point(94, 145);
+            this.comboBox_block_space.Name = "comboBox_block_space";
+            this.comboBox_block_space.Size = new System.Drawing.Size(209, 21);
+            this.comboBox_block_space.TabIndex = 0;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.BackColor = System.Drawing.Color.Transparent;
+            this.label7.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label7.ForeColor = System.Drawing.Color.White;
+            this.label7.Location = new System.Drawing.Point(3, 51);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(85, 14);
+            this.label7.TabIndex = 104;
+            this.label7.Text = "Block Rotation";
             // 
             // label108
             // 
@@ -469,7 +601,7 @@
             this.label108.BackColor = System.Drawing.Color.Transparent;
             this.label108.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label108.ForeColor = System.Drawing.Color.White;
-            this.label108.Location = new System.Drawing.Point(3, 38);
+            this.label108.Location = new System.Drawing.Point(3, 9);
             this.label108.Name = "label108";
             this.label108.Size = new System.Drawing.Size(71, 14);
             this.label108.TabIndex = 104;
@@ -481,24 +613,24 @@
             this.label107.BackColor = System.Drawing.Color.Transparent;
             this.label107.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label107.ForeColor = System.Drawing.Color.White;
-            this.label107.Location = new System.Drawing.Point(3, 11);
+            this.label107.Location = new System.Drawing.Point(3, 148);
             this.label107.Name = "label107";
-            this.label107.Size = new System.Drawing.Size(66, 14);
+            this.label107.Size = new System.Drawing.Size(54, 14);
             this.label107.TabIndex = 103;
-            this.label107.Text = "Block Type";
+            this.label107.Text = "Location";
             // 
-            // comboBox_blocks_PaperSpace
+            // comboBox_existing_blocks
             // 
-            this.comboBox_blocks_PaperSpace.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.comboBox_blocks_PaperSpace.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_blocks_PaperSpace.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_blocks_PaperSpace.ForeColor = System.Drawing.Color.White;
-            this.comboBox_blocks_PaperSpace.FormattingEnabled = true;
-            this.comboBox_blocks_PaperSpace.Location = new System.Drawing.Point(80, 35);
-            this.comboBox_blocks_PaperSpace.Name = "comboBox_blocks_PaperSpace";
-            this.comboBox_blocks_PaperSpace.Size = new System.Drawing.Size(166, 21);
-            this.comboBox_blocks_PaperSpace.TabIndex = 1;
-            this.comboBox_blocks_PaperSpace.SelectedIndexChanged += new System.EventHandler(this.ComboBox_blocks_PaperSpace_SelectedIndexChanged);
+            this.comboBox_existing_blocks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.comboBox_existing_blocks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_existing_blocks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox_existing_blocks.ForeColor = System.Drawing.Color.White;
+            this.comboBox_existing_blocks.FormattingEnabled = true;
+            this.comboBox_existing_blocks.Location = new System.Drawing.Point(94, 6);
+            this.comboBox_existing_blocks.Name = "comboBox_existing_blocks";
+            this.comboBox_existing_blocks.Size = new System.Drawing.Size(222, 21);
+            this.comboBox_existing_blocks.TabIndex = 1;
+            this.comboBox_existing_blocks.DropDown += new System.EventHandler(this.comboBox_existing_blocks_DropDown);
             // 
             // button_browse_north_arrow
             // 
@@ -510,14 +642,14 @@
             this.button_browse_north_arrow.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_browse_north_arrow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.button_browse_north_arrow.Image = ((System.Drawing.Image)(resources.GetObject("button_browse_north_arrow.Image")));
-            this.button_browse_north_arrow.Location = new System.Drawing.Point(252, 35);
+            this.button_browse_north_arrow.Location = new System.Drawing.Point(339, 145);
             this.button_browse_north_arrow.Name = "button_browse_north_arrow";
             this.button_browse_north_arrow.Size = new System.Drawing.Size(21, 21);
             this.button_browse_north_arrow.TabIndex = 2;
             this.button_browse_north_arrow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button_browse_north_arrow.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button_browse_north_arrow.UseVisualStyleBackColor = false;
-            this.button_browse_north_arrow.Click += new System.EventHandler(this.button_browse_north_arrow_Click);
+            this.button_browse_north_arrow.Click += new System.EventHandler(this.button_pick_block_location_PS_Click);
             // 
             // button_align_config_saveall
             // 
@@ -530,7 +662,7 @@
             this.button_align_config_saveall.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_align_config_saveall.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_align_config_saveall.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
-            this.button_align_config_saveall.Location = new System.Drawing.Point(335, 577);
+            this.button_align_config_saveall.Location = new System.Drawing.Point(336, 550);
             this.button_align_config_saveall.Name = "button_align_config_saveall";
             this.button_align_config_saveall.Size = new System.Drawing.Size(34, 31);
             this.button_align_config_saveall.TabIndex = 4;
@@ -552,7 +684,7 @@
             this.panel_sheet_naming.Controls.Add(this.label112);
             this.panel_sheet_naming.Controls.Add(this.textBox_name_start_number);
             this.panel_sheet_naming.Controls.Add(this.textBox_name_increment);
-            this.panel_sheet_naming.Location = new System.Drawing.Point(3, 257);
+            this.panel_sheet_naming.Location = new System.Drawing.Point(3, 234);
             this.panel_sheet_naming.Name = "panel_sheet_naming";
             this.panel_sheet_naming.Size = new System.Drawing.Size(366, 111);
             this.panel_sheet_naming.TabIndex = 1;
@@ -678,7 +810,7 @@
             this.panel6.Controls.Add(this.panel17);
             this.panel6.Location = new System.Drawing.Point(3, 170);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(366, 64);
+            this.panel6.Size = new System.Drawing.Size(366, 42);
             this.panel6.TabIndex = 0;
             // 
             // panel17
@@ -687,7 +819,7 @@
             this.panel17.Controls.Add(this.radioButton_lr);
             this.panel17.Location = new System.Drawing.Point(6, 6);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(284, 51);
+            this.panel17.Size = new System.Drawing.Size(354, 30);
             this.panel17.TabIndex = 2092;
             // 
             // radioButton_rl
@@ -695,7 +827,7 @@
             this.radioButton_rl.AutoSize = true;
             this.radioButton_rl.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.radioButton_rl.ForeColor = System.Drawing.Color.White;
-            this.radioButton_rl.Location = new System.Drawing.Point(3, 27);
+            this.radioButton_rl.Location = new System.Drawing.Point(116, 3);
             this.radioButton_rl.Name = "radioButton_rl";
             this.radioButton_rl.Size = new System.Drawing.Size(92, 18);
             this.radioButton_rl.TabIndex = 115;
@@ -893,7 +1025,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_bands)).EndInit();
             this.panel11.ResumeLayout(false);
             this.panel11.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_north_arrow_blocks)).EndInit();
+            this.panel10.ResumeLayout(false);
+            this.panel10.PerformLayout();
+            this.panel9.ResumeLayout(false);
+            this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_blocks)).EndInit();
             this.panel_sheet_naming.ResumeLayout(false);
             this.panel_sheet_naming.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -930,11 +1066,11 @@
         private System.Windows.Forms.DataGridView dataGridView_bands;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Button button_close_template2;
-        private System.Windows.Forms.DataGridView dataGridView_north_arrow_blocks;
-        private System.Windows.Forms.ComboBox comboBox_type_of_block;
+        private System.Windows.Forms.DataGridView dataGridView_blocks;
+        private System.Windows.Forms.ComboBox comboBox_block_space;
         private System.Windows.Forms.Label label108;
         private System.Windows.Forms.Label label107;
-        private System.Windows.Forms.ComboBox comboBox_blocks_PaperSpace;
+        private System.Windows.Forms.ComboBox comboBox_existing_blocks;
         private System.Windows.Forms.Button button_browse_north_arrow;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button_add_to_list;
@@ -958,5 +1094,14 @@
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.RadioButton radioButton_rl;
         private System.Windows.Forms.RadioButton radioButton_lr;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.RadioButton radioButton_rot_sheet_index;
+        private System.Windows.Forms.RadioButton radioButton_rot_0;
+        private System.Windows.Forms.Button button_add_block;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.RadioButton radioButton_block_at_matchline;
+        private System.Windows.Forms.RadioButton radioButton_block_user_defined;
+        private System.Windows.Forms.Label label1;
     }
 }

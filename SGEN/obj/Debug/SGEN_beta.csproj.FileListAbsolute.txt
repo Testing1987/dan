@@ -1,0 +1,19 @@
+C:\Users\POP70694\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\SGEN.dll
+C:\Users\POP70694\AppData\Roaming\Autodesk\ApplicationPlugins\Agen.bundle\Contents\SGEN.pdb
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\SGEN_beta.csproj.AssemblyReference.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi._SGEN_mainform.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.scales_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.AGEN_segments_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.Blank_Form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.Lgen_label_page.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.Geo_tools_form.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.SGEN_Shape_Export.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.AGEN_TBLK_Attributes.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.Properties.Resources.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.SGEN_Sheet_Index.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.SGEN_Drawing_Creation.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\Alignment_mdi.SGEN_Settings.resources
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\SGEN_beta.csproj.GenerateResource.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\SGEN_beta.csproj.CoreCompileInputs.cache
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\SGEN.dll
+C:\Users\POP70694\Documents\Visual Studio 2019\Dan_Projects\SGEN\obj\Debug\SGEN.pdb

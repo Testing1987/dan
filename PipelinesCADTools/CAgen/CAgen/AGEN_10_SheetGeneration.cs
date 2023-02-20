@@ -19,7 +19,7 @@ namespace Alignment_mdi
 {
     public partial class AGEN_Sheet_Generation : Form
     {
-        bool Freeze_operations = false;
+
         private ContextMenuStrip ContextMenuStrip_open_alignment;
         System.Data.DataTable dt_image = null;
 
@@ -58,7 +58,6 @@ namespace Alignment_mdi
             var toolStripMenuItem2 = new ToolStripMenuItem { Text = "Add drawings" };
             toolStripMenuItem2.Click += add_dwgs_Click;
 
-
             var toolStripMenuItem3 = new ToolStripMenuItem { Text = "Remove drawing" };
             toolStripMenuItem3.Click += remove_selected_dwg_Click;
 
@@ -67,8 +66,6 @@ namespace Alignment_mdi
 
             ContextMenuStrip_open_alignment = new ContextMenuStrip();
             ContextMenuStrip_open_alignment.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
-
-
         }
 
         private void add_dwgs_Click(object sender, EventArgs e)
@@ -84,7 +81,6 @@ namespace Alignment_mdi
             string Col_dwg_name = "DwgNo";
             string Col_M1 = "StaBeg";
             string Col_M2 = "StaEnd";
-
 
             using (OpenFileDialog fbd = new OpenFileDialog())
             {
@@ -114,7 +110,6 @@ namespace Alignment_mdi
                             Display_dt.Rows.Add();
                             Display_dt.Rows[Display_dt.Rows.Count - 1][Col_dwg_name] = File1;
                             string nume1 = System.IO.Path.GetFileNameWithoutExtension(File1);
-
                             if (_AGEN_mainform.dt_sheet_index != null)
                             {
                                 if (_AGEN_mainform.dt_sheet_index.Rows.Count > 0)
@@ -479,660 +474,490 @@ namespace Alignment_mdi
             {
                 try
                 {
-                    if (Freeze_operations == false)
+
+
+                    set_enable_false();
+                    _AGEN_mainform.tpage_processing.Show();
+                    //Ag.WindowState = FormWindowState.Minimized;
+
+                    _AGEN_mainform.dt_station_equation = null;
+                    System.Data.DataTable Dtp = null;
+                    if (_AGEN_mainform.Data_Table_regular_bands.Rows.Count > 0)
                     {
-                        _AGEN_mainform.tpage_processing.Show();
-                        //Ag.WindowState = FormWindowState.Minimized;
-                        Freeze_operations = true;
-                        _AGEN_mainform.dt_station_equation = null;
-                        System.Data.DataTable Dtp = null;
-                        if (_AGEN_mainform.Data_Table_regular_bands.Rows.Count > 0)
+                        for (int i = 0; i < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++i)
                         {
-                            for (int i = 0; i < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++i)
+                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_prof)
                             {
-                                if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_prof)
+                                _AGEN_mainform.Vw_prof_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                            }
+                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_prop)
+                            {
+                                _AGEN_mainform.Vw_prop_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                            }
+                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_cross)
+                            {
+                                _AGEN_mainform.Vw_cross_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                            }
+                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_mat)
+                            {
+                                _AGEN_mainform.Vw_mat_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                            }
+                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_profband)
+                            {
+                                _AGEN_mainform.Vw_profband_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                            }
+                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_no_data)
+                            {
+                                if (_AGEN_mainform.Data_Table_regular_bands.Rows[i][1] != DBNull.Value &&
+                                    _AGEN_mainform.Data_Table_regular_bands.Rows[i][11] != DBNull.Value &&
+                                    _AGEN_mainform.Data_Table_regular_bands.Rows[i][12] != DBNull.Value &&
+                                    _AGEN_mainform.Data_Table_regular_bands.Rows[i][13] != DBNull.Value &&
+                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][14] != DBNull.Value &&
+                                    _AGEN_mainform.Data_Table_regular_bands.Rows[i][15] != DBNull.Value &&
+                                    _AGEN_mainform.Data_Table_regular_bands.Rows[i][16] != DBNull.Value &&
+                                    _AGEN_mainform.Data_Table_regular_bands.Rows[i][17] != DBNull.Value)
                                 {
-                                    _AGEN_mainform.Vw_prof_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                                    h_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
+                                    w_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_width"]);
+                                    x_nd_ms = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ms_x"]);
+                                    y_nd_ms = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ms_y"]);
+                                    x_nd_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ps_x"]);
+                                    y_nd_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ps_y"]);
+                                    sep_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_separation"]);
+                                    scale_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["Custom_scale"]);
                                 }
-                                if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_prop)
-                                {
-                                    _AGEN_mainform.Vw_prop_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
-                                }
-                                if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_cross)
-                                {
-                                    _AGEN_mainform.Vw_cross_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
-                                }
-                                if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_mat)
-                                {
-                                    _AGEN_mainform.Vw_mat_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
-                                }
-                                if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_profband)
-                                {
-                                    _AGEN_mainform.Vw_profband_height = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
-                                }
-                                if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_name"]) == _AGEN_mainform.nume_banda_no_data)
-                                {
-                                    if (_AGEN_mainform.Data_Table_regular_bands.Rows[i][1] != DBNull.Value &&
-                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][11] != DBNull.Value &&
-                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][12] != DBNull.Value &&
-                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][13] != DBNull.Value &&
-                                            _AGEN_mainform.Data_Table_regular_bands.Rows[i][14] != DBNull.Value &&
-                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][15] != DBNull.Value &&
-                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][16] != DBNull.Value &&
-                                        _AGEN_mainform.Data_Table_regular_bands.Rows[i][17] != DBNull.Value)
-                                    {
-                                        h_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_height"]);
-                                        w_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_width"]);
-                                        x_nd_ms = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ms_x"]);
-                                        y_nd_ms = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ms_y"]);
-                                        x_nd_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ps_x"]);
-                                        y_nd_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["viewport_ps_y"]);
-                                        sep_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["band_separation"]);
-                                        scale_nd = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[i]["Custom_scale"]);
-                                    }
 
 
-                                }
                             }
                         }
+                    }
 
-                        string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
-                        if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
-                        {
-                            ProjFolder = ProjFolder + "\\";
-                        }
+                    string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+                    if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                    {
+                        ProjFolder = ProjFolder + "\\";
+                    }
 
-                        if (System.IO.Directory.Exists(ProjFolder) == true)
+                    if (System.IO.Directory.Exists(ProjFolder) == true)
+                    {
+                        if (checkBox_profile.Checked == true)
                         {
-                            if (checkBox_profile.Checked == true)
+                            string fisier_prof = ProjFolder + _AGEN_mainform.prof_excel_name;
+
+                            if (System.IO.File.Exists(fisier_prof) == true)
                             {
-                                string fisier_prof = ProjFolder + _AGEN_mainform.prof_excel_name;
+                                Microsoft.Office.Interop.Excel.Application Excel1 = null;
 
-                                if (System.IO.File.Exists(fisier_prof) == true)
+                                try
                                 {
-                                    Microsoft.Office.Interop.Excel.Application Excel1 = null;
+                                    Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    Excel1 = new Microsoft.Office.Interop.Excel.Application();
 
-                                    try
+                                }
+
+                                if (Excel1.Workbooks.Count == 0) Excel1.Visible = _AGEN_mainform.ExcelVisible;
+                                try
+                                {
+                                    Dtp = Load_existing_profile_graph(fisier_prof);
+                                    if (Excel1.Workbooks.Count == 0)
                                     {
-                                        Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
+                                        Excel1.Quit();
                                     }
-                                    catch (System.Exception ex)
+                                    else
                                     {
-                                        Excel1 = new Microsoft.Office.Interop.Excel.Application();
-
-                                    }
-
-                                    if (Excel1.Workbooks.Count == 0) Excel1.Visible = _AGEN_mainform.ExcelVisible;
-                                    try
-                                    {
-                                        Dtp = Load_existing_profile_graph(fisier_prof);
-                                        if (Excel1.Workbooks.Count == 0)
-                                        {
-                                            Excel1.Quit();
-                                        }
-                                        else
-                                        {
-                                            Excel1.Visible = true;
-                                        }
-                                    }
-
-                                    catch (System.Exception ex)
-                                    {
-                                        System.Windows.Forms.MessageBox.Show(ex.Message);
-
-                                    }
-                                    finally
-                                    {
-                                        if (Excel1 != null && Excel1.Workbooks.Count == 0) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
+                                        Excel1.Visible = true;
                                     }
                                 }
-                                else
+
+                                catch (System.Exception ex)
                                 {
-                                    MessageBox.Show("the profile data file does not exist");
-                                    _AGEN_mainform.tpage_processing.Hide();
-                                    Freeze_operations = false;
-                                    return;
+                                    System.Windows.Forms.MessageBox.Show(ex.Message);
+
                                 }
-                            }
-                        }
-                        else
-                        {
-                            _AGEN_mainform.tpage_processing.Hide();
-                            MessageBox.Show("there is no such a project folder");
-                            Freeze_operations = false;
-                            return;
-                        }
-
-                        if (_AGEN_mainform.dt_sheet_index.Rows.Count == 0)
-                        {
-                            _AGEN_mainform.tpage_processing.Hide();
-                            MessageBox.Show("sheet index table is empty\r\nOperation aborted");
-                            Freeze_operations = false;
-                            return;
-                        }
-
-
-                        string Output_folder = _AGEN_mainform.tpage_setup.get_output_folder_from_text_box();
-
-                        if (Output_folder.Substring(Output_folder.Length - 1, 1) != "\\")
-                        {
-                            Output_folder = Output_folder + "\\";
-                        }
-
-                        Point3d ms_point = new Point3d();
-                        Point3d ps_point_plan_view = new Point3d(_AGEN_mainform.Vw_ps_x, _AGEN_mainform.Vw_ps_y, 0);
-
-                        bool Creaza_new_file = true;
-
-                        if (Display_dt == null)
-                        {
-                            Creaza_new_file = true;
-                        }
-
-                        if (Display_dt != null)
-                        {
-                            if (Display_dt.Rows.Count == 0)
-                            {
-                                Creaza_new_file = true;
+                                finally
+                                {
+                                    if (Excel1 != null && Excel1.Workbooks.Count == 0) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
+                                }
                             }
                             else
                             {
-                                Creaza_new_file = false;
+                                MessageBox.Show("the profile data file does not exist");
+                                _AGEN_mainform.tpage_processing.Hide();
+                                set_enable_true();
+                                return;
                             }
                         }
+                    }
+                    else
+                    {
+                        _AGEN_mainform.tpage_processing.Hide();
+                        MessageBox.Show("there is no such a project folder");
+                        set_enable_true();
+                        return;
+                    }
 
-                        int lr = 1;
-                        if (_AGEN_mainform.Left_to_Right == false) lr = -1;
-                        double scale_cust = 1;
-                        if (checkBox_custom_vp_scale.Checked == true) scale_cust = _AGEN_mainform.Vw_scale;
+                    if (_AGEN_mainform.dt_sheet_index.Rows.Count == 0)
+                    {
+                        _AGEN_mainform.tpage_processing.Hide();
+                        MessageBox.Show("sheet index table is empty\r\nOperation aborted");
+                        set_enable_true();
+                        return;
+                    }
 
-                        Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-                        using (DocumentLock lock1 = ThisDrawing.LockDocument())
+
+                    string Output_folder = _AGEN_mainform.tpage_setup.get_output_folder_from_text_box();
+
+                    if (Output_folder.Substring(Output_folder.Length - 1, 1) != "\\")
+                    {
+                        Output_folder = Output_folder + "\\";
+                    }
+
+                    Point3d ms_point = new Point3d();
+                    Point3d ps_point_plan_view = new Point3d(_AGEN_mainform.Vw_ps_x, _AGEN_mainform.Vw_ps_y, 0);
+
+                    bool Creaza_new_file = true;
+
+                    if (Display_dt == null)
+                    {
+                        Creaza_new_file = true;
+                    }
+
+                    if (Display_dt != null)
+                    {
+                        if (Display_dt.Rows.Count == 0)
                         {
-                            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                            Creaza_new_file = true;
+                        }
+                        else
+                        {
+                            Creaza_new_file = false;
+                        }
+                    }
+
+                    int lr = 1;
+                    if (_AGEN_mainform.Left_to_Right == false) lr = -1;
+                    double scale_cust = 1;
+                    if (checkBox_custom_vp_scale.Checked == true) scale_cust = _AGEN_mainform.Vw_scale;
+
+                    Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                    using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                    {
+                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                        {
+                            BlockTableRecord Btrecord = Functions.get_modelspace(Trans1, ThisDrawing.Database);
+                            if ((checkBox_profile_band.Checked == true || checkBox_draw_rectangle_custom.Checked == true || checkBox_mult_vp_prof.Checked == true || checkBox_no_data_band.Checked == true) && checkBox_delete_vp.Checked == false)
                             {
-                                BlockTableRecord Btrecord = Functions.get_modelspace(Trans1, ThisDrawing.Database);
-                                if ((checkBox_profile_band.Checked == true || checkBox_draw_rectangle_custom.Checked == true || checkBox_mult_vp_prof.Checked == true || checkBox_no_data_band.Checked == true) && checkBox_delete_vp.Checked == false)
+                                Btrecord.UpgradeOpen();
+                            }
+
+                            if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.COUNTRY == "USA")
+                            {
+                                if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                 {
-                                    Btrecord.UpgradeOpen();
+
+                                    Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                    Polyline3d poly3d = null;
+                                    if (_AGEN_mainform.Project_type == "3D")
+                                    {
+                                        poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    }
+
+
+                                    if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false)
+                                    {
+                                        _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
+                                    }
+
+                                    for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
+                                    {
+                                        if (_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"] != DBNull.Value)
+                                        {
+                                            double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
+                                            double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
+                                            Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                                            double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
+                                            if (_AGEN_mainform.Project_type == "3D")
+                                            {
+                                                double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+                                                eq_meas = poly3d.GetDistanceAtParameter(param1);
+                                            }
+
+                                            _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
+                                        }
+                                    }
+
+                                    if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased == false) poly3d.Erase();
+                                }
+                            }
+                            else
+                            {
+                                _AGEN_mainform.dt_station_equation = null;
+                            }
+
+                            #region creaza new file
+
+                            if (Creaza_new_file == true)
+                            {
+
+                                List<int> lista_generation = new List<int>();
+
+                                if (comboBox_start.Text != "" & comboBox_end.Text != "")
+                                {
+                                    lista_generation = _AGEN_mainform.tpage_setup.create_band_list_of_dwg(comboBox_start.Text, comboBox_end.Text);
                                 }
 
-                                if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.COUNTRY == "USA")
+
+
+                                if (lista_generation.Count == 0)
                                 {
-                                    if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                    for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; ++i)
                                     {
-
-                                        Polyline poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
-                                        Polyline3d poly3d = null;
-                                        if (_AGEN_mainform.Project_type == "3D")
-                                        {
-                                            poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                        }
-
-
-                                        if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false)
-                                        {
-                                            _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
-                                        }
-
-                                        for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
-                                        {
-                                            if (_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"] != DBNull.Value)
-                                            {
-                                                double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
-                                                double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
-                                                Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                                                double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
-                                                if (_AGEN_mainform.Project_type == "3D")
-                                                {
-                                                    double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
-                                                    eq_meas = poly3d.GetDistanceAtParameter(param1);
-                                                }
-                                           
-                                                _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
-                                            }
-                                        }
-
-                                        if (_AGEN_mainform.Project_type == "3D" && poly3d.IsErased==false) poly3d.Erase();
+                                        lista_generation.Add(i);
                                     }
                                 }
-                                else
+
+                                bool odd_even = false;
+                                string Template_file_name = "";
+
+                                if (System.IO.File.Exists(_AGEN_mainform.template2))
                                 {
-                                    _AGEN_mainform.dt_station_equation = null;
+                                    Template_file_name = _AGEN_mainform.template2;
+
                                 }
 
-                                #region creaza new file
-
-                                if (Creaza_new_file == true)
+                                if (System.IO.File.Exists(_AGEN_mainform.template1))
                                 {
-
-                                    List<int> lista_generation = new List<int>();
-
-                                    if (comboBox_start.Text != "" & comboBox_end.Text != "")
-                                    {
-                                        lista_generation = _AGEN_mainform.tpage_setup.create_band_list_of_dwg(comboBox_start.Text, comboBox_end.Text);
-                                    }
+                                    Template_file_name = _AGEN_mainform.template1;
+                                }
 
 
 
-                                    if (lista_generation.Count == 0)
-                                    {
-                                        for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; ++i)
-                                        {
-                                            lista_generation.Add(i);
-                                        }
-                                    }
-
-                                    bool odd_even = false;
-                                    string Template_file_name = "";
-
-                                    if (System.IO.File.Exists(_AGEN_mainform.template2))
-                                    {
-                                        Template_file_name = _AGEN_mainform.template2;
-
-                                    }
-
-                                    if (System.IO.File.Exists(_AGEN_mainform.template1))
-                                    {
-                                        Template_file_name = _AGEN_mainform.template1;
-                                    }
-
-
-
-                                    if (System.IO.File.Exists(_AGEN_mainform.template1) == true && System.IO.File.Exists(_AGEN_mainform.template2) == true && _AGEN_mainform.template1 != _AGEN_mainform.template2)
-                                    {
-                                        odd_even = true;
-                                    }
+                                if (System.IO.File.Exists(_AGEN_mainform.template1) == true && System.IO.File.Exists(_AGEN_mainform.template2) == true && _AGEN_mainform.template1 != _AGEN_mainform.template2)
+                                {
+                                    odd_even = true;
+                                }
 
 
 
 
-                                    Document New_doc = DocumentCollectionExtension.Add(DocumentManager1, Template_file_name);
-                                    DocumentManager1.MdiActiveDocument = New_doc;
+                                Document New_doc = DocumentCollectionExtension.Add(DocumentManager1, Template_file_name);
+                                DocumentManager1.MdiActiveDocument = New_doc;
 
-                                    string fname0 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-
-                                    if (System.IO.File.Exists(fname0) == true)
-                                    {
-                                        MessageBox.Show(fname0 + " already exists.\r\noperation aborted");
-                                        Display_dt = Functions.Creaza_display_datatable_structure();
-                                        Freeze_operations = false;
-                                        _AGEN_mainform.tpage_processing.Hide();
-                                        return;
-                                    }
-
-                                    using (DocumentLock lock2 = New_doc.LockDocument())
-                                    {
-
-                                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = New_doc.Database.TransactionManager.StartTransaction())
-                                        {
-                                            BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, New_doc.Database);
-                                            BtrecordPS.UpgradeOpen();
-                                            Layout Layout1 = Functions.get_first_layout(Trans2, New_doc.Database);
-                                            Layout1.UpgradeOpen();
-                                            Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_AGEN_mainform.Col_dwg_name].ToString();
-                                            Trans2.Commit();
-                                            New_doc.Database.SaveAs(fname0, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
-                                        }
-                                    }
+                                string fname0 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
 
 
+                                try
+                                {
+                                    string existingFolder = System.IO.Path.GetDirectoryName(fname0);
+                                    existingFolder = existingFolder.EndsWith("\\") ? existingFolder : existingFolder + "\\";
 
-                                    New_doc.CloseAndDiscard();
-
-                                    if (odd_even == true)
-                                    {
-                                        if (lista_generation.Count > 1)
-                                        {
-                                            Document New_doc2 = DocumentCollectionExtension.Add(DocumentManager1, _AGEN_mainform.template2);
-                                            DocumentManager1.MdiActiveDocument = New_doc2;
-
-                                            string fname2 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-
-                                            if (System.IO.File.Exists(fname2) == true)
-                                            {
-                                                MessageBox.Show(fname2 + " already exists.\r\noperation aborted");
-                                                Display_dt = Functions.Creaza_display_datatable_structure();
-                                                Freeze_operations = false;
-                                                _AGEN_mainform.tpage_processing.Hide();
-                                                return;
-                                            }
-
-                                            using (DocumentLock lock2 = New_doc2.LockDocument())
-                                            {
-
-                                                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = New_doc2.Database.TransactionManager.StartTransaction())
-                                                {
-                                                    BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, New_doc2.Database);
-                                                    BtrecordPS.UpgradeOpen();
-                                                    Layout Layout1 = Functions.get_first_layout(Trans2, New_doc2.Database);
-                                                    Layout1.UpgradeOpen();
-                                                    Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString();
-                                                    Trans2.Commit();
-                                                    New_doc2.Database.SaveAs(fname2, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
-                                                }
-                                            }
-
-
-
-                                            New_doc2.CloseAndDiscard();
-                                        }
-                                    }
-
-
-                                    Display_dt = Functions.Creaza_display_datatable_structure();
-
-                                    bool is1 = true;
-                                    if (_AGEN_mainform.dt_sheet_index.Rows.Count > 0)
-                                    {
-                                        for (int i = 0; i < lista_generation.Count; ++i)
-                                        {
-                                            string Fisier2 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-
-                                            if (odd_even == false)
-                                            {
-                                                if (i > 0)
-                                                {
-                                                    string Fisier1 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i - 1]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-                                                    System.IO.File.Copy(Fisier1, Fisier2, false);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                if (i > 1)
-                                                {
-                                                    if (is1 == true)
-                                                    {
-                                                        string Fisier1 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-                                                        System.IO.File.Copy(Fisier1, Fisier2, false);
-                                                        is1 = false;
-                                                    }
-                                                    else
-                                                    {
-                                                        string Fisier3 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
-                                                        System.IO.File.Copy(Fisier3, Fisier2, false);
-                                                        is1 = true;
-                                                    }
-                                                }
-                                            }
-
-                                            Display_dt.Rows.Add();
-                                            Display_dt.Rows[Display_dt.Rows.Count - 1][_AGEN_mainform.Col_dwg_name] = Fisier2;
-                                            Display_dt.Rows[Display_dt.Rows.Count - 1][_AGEN_mainform.Col_M1] = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M1];
-                                            Display_dt.Rows[Display_dt.Rows.Count - 1][_AGEN_mainform.Col_M2] = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M2];
-                                        }
-                                    }
-
-
-
-
-                                    Point3d PSpoint_prof = new Point3d(_AGEN_mainform.Vw_ps_prof_x, _AGEN_mainform.Vw_ps_prof_y, 0);
-
-                                    System.Data.DataTable Data_table_poly = null;
-
-                                    if (checkBox_profile.Checked == true)
-                                    {
-                                        Data_table_poly = create_profile_poly_definition(_AGEN_mainform.config_path);
-                                    }
-
-                                    if (checkBox_profile_band.Checked == true || checkBox_mult_vp_prof.Checked == true)
-                                    {
-                                        string fisier_prof_band = ProjFolder + _AGEN_mainform.band_prof_excel_name;
-                                        if (System.IO.File.Exists(fisier_prof_band) == true)
-                                        {
-                                            _AGEN_mainform.Data_Table_profile_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
-                                        }
-                                    }
-
-
+                                    string segmentName = _AGEN_mainform.current_segment;
+                                    string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                                    string folderName = $"{segmentName}-{date} by {Environment.UserName}";
+                                    string newFolder = existingFolder + folderName;
 
                                     for (int i = 0; i < lista_generation.Count; ++i)
                                     {
-                                        List<Polyline> lista_poly = new List<Polyline>();
+                                        string Fisier2 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
 
-                                        string dwg_name = Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name]);
-                                        string Fisier = Output_folder + dwg_name + ".dwg";
-                                        using (Database Database2 = new Database(false, true))
+                                        if (System.IO.File.Exists(Fisier2))
                                         {
 
-                                            Database2.ReadDwgFile(Fisier, FileOpenMode.OpenForReadAndWriteNoShare, true, "");
-                                            //System.IO.FileShare.ReadWrite, false, null);
-                                            Database2.CloseInput(true);
-
-                                            HostApplicationServices.WorkingDatabase = Database2;
-                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_Main_Viewport, 4, false);
-
-
-                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_North_Arrow, 7, true);
-
-                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.layer_no_plot, 30, false);
-
-                                            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = Database2.TransactionManager.StartTransaction())
+                                            if (!System.IO.Directory.Exists(newFolder))
                                             {
+                                                System.IO.Directory.CreateDirectory(newFolder);
+                                            }
 
-                                                Functions.make_first_layout_active(Trans2, Database2);
+                                            string destinationPath = System.IO.Path.Combine(newFolder, System.IO.Path.GetFileName(Fisier2));
+                                            System.IO.File.Move(Fisier2, destinationPath);
+                                        }
 
-                                                BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
+                                    }
+                                }
+                                catch (System.Exception)
+                                {
+                                    MessageBox.Show(fname0 + " cannot be moved.\r\noperation aborted");
+                                    Display_dt = Functions.Creaza_display_datatable_structure();
+                                    set_enable_true();
+                                    _AGEN_mainform.tpage_processing.Hide();
+                                    return;
+
+                                }
+
+
+                                using (DocumentLock lock2 = New_doc.LockDocument())
+                                {
+
+                                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = New_doc.Database.TransactionManager.StartTransaction())
+                                    {
+                                        BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, New_doc.Database);
+                                        BtrecordPS.UpgradeOpen();
+                                        Layout Layout1 = Functions.get_first_layout(Trans2, New_doc.Database);
+                                        Layout1.UpgradeOpen();
+                                        Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_AGEN_mainform.Col_dwg_name].ToString();
+                                        Functions.creaza_anno_scales(New_doc.Database);
+                                        Trans2.Commit();
+                                        New_doc.Database.SaveAs(fname0, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
+                                    }
+                                }
+
+
+
+                                New_doc.CloseAndDiscard();
+
+                                if (odd_even == true)
+                                {
+                                    if (lista_generation.Count > 1)
+                                    {
+                                        Document New_doc2 = DocumentCollectionExtension.Add(DocumentManager1, _AGEN_mainform.template2);
+                                        DocumentManager1.MdiActiveDocument = New_doc2;
+
+                                        string fname2 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
+
+                                        if (System.IO.File.Exists(fname2) == true)
+                                        {
+                                            MessageBox.Show(fname2 + " is blocked.\r\noperation aborted");
+                                            Display_dt = null;
+                                            set_enable_true();
+                                            _AGEN_mainform.tpage_processing.Hide();
+                                            return;
+                                        }
+
+                                        using (DocumentLock lock2 = New_doc2.LockDocument())
+                                        {
+
+                                            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = New_doc2.Database.TransactionManager.StartTransaction())
+                                            {
+                                                BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, New_doc2.Database);
                                                 BtrecordPS.UpgradeOpen();
-                                                Layout Layout1 = Functions.get_first_layout(Trans2, Database2);
+                                                Layout Layout1 = Functions.get_first_layout(Trans2, New_doc2.Database);
                                                 Layout1.UpgradeOpen();
-                                                Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name].ToString();
-
-
-
-                                                #region VP multi profiles the same page
-                                                if (checkBox_mult_vp_prof.Checked == true)
+                                                Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString();
+                                                Functions.creaza_anno_scales(New_doc.Database);
+                                                Trans2.Commit();
+                                                New_doc2.Database.SaveAs(fname2, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
+                                            }
+                                        }
+                                        New_doc2.CloseAndDiscard();
+                                    }
+                                }
+                                Display_dt = Functions.Creaza_display_datatable_structure();
+                                bool is1 = true;
+                                if (_AGEN_mainform.dt_sheet_index.Rows.Count > 0)
+                                {
+                                    for (int i = 0; i < lista_generation.Count; ++i)
+                                    {
+                                        string Fisier2 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
+                                        if (odd_even == false)
+                                        {
+                                            if (i > 0)
+                                            {
+                                                string Fisier1 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i - 1]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
+                                                if (!System.IO.File.Exists(Fisier2)) System.IO.File.Copy(Fisier1, Fisier2, false);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (i > 1)
+                                            {
+                                                if (is1 == true)
                                                 {
-                                                    if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                    string Fisier1 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[0]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
+                                                    if (!System.IO.File.Exists(Fisier2)) System.IO.File.Copy(Fisier1, Fisier2, false);
+                                                    is1 = false;
+                                                }
+                                                else
+                                                {
+                                                    string Fisier3 = Output_folder + _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString() + ".dwg";
+                                                    if (!System.IO.File.Exists(Fisier2)) System.IO.File.Copy(Fisier3, Fisier2, false);
+                                                    is1 = true;
+                                                }
+                                            }
+                                        }
+                                        Display_dt.Rows.Add();
+                                        Display_dt.Rows[Display_dt.Rows.Count - 1][_AGEN_mainform.Col_dwg_name] = Fisier2;
+                                        Display_dt.Rows[Display_dt.Rows.Count - 1][_AGEN_mainform.Col_M1] = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M1];
+                                        Display_dt.Rows[Display_dt.Rows.Count - 1][_AGEN_mainform.Col_M2] = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M2];
+                                    }
+                                }
+
+
+
+
+                                Point3d PSpoint_prof = new Point3d(_AGEN_mainform.Vw_ps_prof_x, _AGEN_mainform.Vw_ps_prof_y, 0);
+
+                                System.Data.DataTable Data_table_poly = null;
+
+                                if (checkBox_profile.Checked == true)
+                                {
+                                    Data_table_poly = create_profile_poly_definition(_AGEN_mainform.config_path);
+                                }
+
+                                if (checkBox_profile_band.Checked == true || checkBox_mult_vp_prof.Checked == true)
+                                {
+                                    string fisier_prof_band = ProjFolder + _AGEN_mainform.band_prof_excel_name;
+                                    if (System.IO.File.Exists(fisier_prof_band) == true)
+                                    {
+                                        _AGEN_mainform.Data_Table_profile_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
+                                    }
+                                }
+
+
+
+                                for (int i = 0; i < lista_generation.Count; ++i)
+                                {
+                                    List<Polyline> lista_poly = new List<Polyline>();
+
+                                    string dwg_name = Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name]);
+                                    string Fisier = Output_folder + dwg_name + ".dwg";
+                                    using (Database Database2 = new Database(false, true))
+                                    {
+
+                                        Database2.ReadDwgFile(Fisier, FileOpenMode.OpenForReadAndWriteNoShare, true, "");
+                                        //System.IO.FileShare.ReadWrite, false, null);
+                                        Database2.CloseInput(true);
+
+                                        HostApplicationServices.WorkingDatabase = Database2;
+                                        Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_Main_Viewport, 4, false);
+
+
+                                        Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_North_Arrow, 7, true);
+
+                                        Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.layer_no_plot, 30, false);
+
+                                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = Database2.TransactionManager.StartTransaction())
+                                        {
+
+                                            Functions.make_first_layout_active(Trans2, Database2);
+
+                                            BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
+                                            BtrecordPS.UpgradeOpen();
+                                            Layout Layout1 = Functions.get_first_layout(Trans2, Database2);
+                                            Layout1.UpgradeOpen();
+                                            Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_dwg_name].ToString();
+
+
+
+                                            #region VP multi profiles the same page
+                                            if (checkBox_mult_vp_prof.Checked == true)
+                                            {
+                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                {
+                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                     {
-                                                        if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+
+                                                        if (_AGEN_mainform.Data_Table_regular_bands.Rows.Count > 0)
                                                         {
 
-                                                            if (_AGEN_mainform.Data_Table_regular_bands.Rows.Count > 0)
+                                                            _AGEN_mainform.Data_Table_regular_bands.Columns.Add("drafted", typeof(bool));
+                                                            for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
                                                             {
-
-                                                                _AGEN_mainform.Data_Table_regular_bands.Columns.Add("drafted", typeof(bool));
-                                                                for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
-                                                                {
-                                                                    _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = false;
-                                                                }
-
-                                                                for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
-                                                                {
-                                                                    string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
-                                                                    if (dwg_name.ToLower() == dwg_prof.ToLower())
-                                                                    {
-
-                                                                        double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
-                                                                        double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
-                                                                        double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
-                                                                        double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
-
-                                                                        ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
-
-                                                                        for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
-                                                                        {
-                                                                            if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["band_name"]) == _AGEN_mainform.tpage_viewport_settings.get_comboBox_bands_multiple_vp())
-                                                                            {
-                                                                                if ((bool)_AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] == false)
-                                                                                {
-                                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_x"]);
-                                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_y"]);
-                                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_width"]);
-                                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_height"]);
-
-                                                                                    if (_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"] != DBNull.Value)
-                                                                                    {
-                                                                                        string str_scale = Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"]);
-                                                                                        if (Functions.IsNumeric(str_scale) == true)
-                                                                                        {
-                                                                                            _AGEN_mainform.Vw_scale = Convert.ToDouble(str_scale);
-                                                                                        }
-                                                                                    }
-
-                                                                                    Polyline rect1 = new Polyline();
-                                                                                    rect1.AddVertexAt(0, new Point2d(ms_point.X - lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                    rect1.AddVertexAt(1, new Point2d(ms_point.X - lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                    rect1.AddVertexAt(2, new Point2d(ms_point.X + lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                    rect1.AddVertexAt(3, new Point2d(ms_point.X + lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                    rect1.Closed = true;
-
-                                                                                    lista_poly.Add(rect1);
-
-                                                                                    Point3d ps_point = new Point3d(xps, yps, 0);
-                                                                                    Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, width1, height1, _AGEN_mainform.Layer_name_profband_Viewport);
-                                                                                    _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = true;
-                                                                                    k = _AGEN_mainform.Data_Table_regular_bands.Rows.Count;
-
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                _AGEN_mainform.Data_Table_regular_bands.Columns.Remove("drafted");
+                                                                _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = false;
                                                             }
 
-
-                                                        }
-                                                    }
-                                                }
-                                                #endregion
-
-
-
-                                                ms_point = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_y], 0);
-                                                double Twist = 2 * Math.PI - (double)_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_rot] * Math.PI / 180;
-
-                                                if (_AGEN_mainform.Left_to_Right == false) Twist = Twist + Math.PI;
-
-                                                double M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M1]);
-                                                double M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M2]);
-
-
-                                                #region plan view
-                                                if (checkBox_plan_view.Checked == true)
-                                                {
-                                                    Viewport Viewport_main = Functions.Create_viewport(ms_point, ps_point_plan_view, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_height, _AGEN_mainform.Vw_scale, Twist);
-                                                    Viewport_main.Layer = _AGEN_mainform.Layer_name_Main_Viewport;
-                                                    BtrecordPS.AppendEntity(Viewport_main);
-                                                    Trans2.AddNewlyCreatedDBObject(Viewport_main, true);
-
-                                                    ObjectIdCollection oBJiD_COL = new ObjectIdCollection();
-                                                    oBJiD_COL.Add(Viewport_main.ObjectId);
-                                                    DrawOrderTable DrawOrderTable2 = Trans2.GetObject(BtrecordPS.DrawOrderTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as DrawOrderTable;
-                                                    DrawOrderTable2.MoveToBottom(oBJiD_COL);
-                                                }
-                                                #endregion
-
-
-                                                #region extra viewports
-                                                if (_AGEN_mainform.Data_Table_extra_mainVP != null && _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count > 0)
-                                                {
-                                                    for (int j = 0; j < _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count; ++j)
-                                                    {
-                                                        if (_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"] != DBNull.Value &&
-                                                            Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"])) == true &&
-                                                            _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"] != DBNull.Value &&
-                                                            Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"])) == true &&
-                                                            _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"] != DBNull.Value &&
-                                                            Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"])) == true &&
-                                                            _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"] != DBNull.Value &&
-                                                            Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"])) == true &&
-                                                            _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"] != DBNull.Value &&
-                                                            Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"])) == true)
-                                                        {
-
-                                                            double scale1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"]);
-                                                            double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"]);
-                                                            double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"]);
-                                                            double X_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"]);
-                                                            double Y_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"]);
-
-                                                            if (j == 0 && checkBoxx1.Checked == true)
-                                                            {
-                                                                Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra1_Viewport, 4, false);
-                                                                Viewport Viewport_main1 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
-                                                                Viewport_main1.Layer = _AGEN_mainform.Layer_name_extra1_Viewport;
-                                                                BtrecordPS.AppendEntity(Viewport_main1);
-                                                                Trans2.AddNewlyCreatedDBObject(Viewport_main1, true);
-                                                            }
-
-                                                            if (j == 1 && checkBoxx2.Checked == true)
-                                                            {
-                                                                Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra2_Viewport, 4, false);
-                                                                Viewport Viewport_main2 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
-                                                                Viewport_main2.Layer = _AGEN_mainform.Layer_name_extra2_Viewport;
-                                                                BtrecordPS.AppendEntity(Viewport_main2);
-                                                                Trans2.AddNewlyCreatedDBObject(Viewport_main2, true);
-                                                            }
-
-                                                            if (j == 2 && checkBoxx3.Checked == true)
-                                                            {
-                                                                Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra3_Viewport, 4, false);
-                                                                Viewport Viewport_main3 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
-                                                                Viewport_main3.Layer = _AGEN_mainform.Layer_name_extra3_Viewport;
-                                                                BtrecordPS.AppendEntity(Viewport_main3);
-                                                                Trans2.AddNewlyCreatedDBObject(Viewport_main3, true);
-                                                            }
-
-
-                                                            if (j == 3 && checkBoxx4.Checked == true)
-                                                            {
-                                                                Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra4_Viewport, 4, false);
-                                                                Viewport Viewport_main4 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
-                                                                Viewport_main4.Layer = _AGEN_mainform.Layer_name_extra4_Viewport;
-                                                                BtrecordPS.AppendEntity(Viewport_main4);
-                                                                Trans2.AddNewlyCreatedDBObject(Viewport_main4, true);
-                                                            }
-
-
-                                                            if (j == 4 && checkBoxx5.Checked == true)
-                                                            {
-                                                                Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra5_Viewport, 4, false);
-                                                                Viewport Viewport_main5 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
-                                                                Viewport_main5.Layer = _AGEN_mainform.Layer_name_extra5_Viewport;
-                                                                BtrecordPS.AppendEntity(Viewport_main5);
-                                                                Trans2.AddNewlyCreatedDBObject(Viewport_main5, true);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                                #endregion
-
-
-                                                #region profile VP
-                                                if (checkBox_profile.Checked == true)
-                                                {
-                                                    if (_AGEN_mainform.prof_width_lr > 0 && _AGEN_mainform.prof_texth > 0 && _AGEN_mainform.prof_x_left != _AGEN_mainform.prof_x_right &&
-                                                        _AGEN_mainform.prof_x_right != -1.123 && _AGEN_mainform.prof_x_left != -1.123 && _AGEN_mainform.prof_y_down != -1.123 && _AGEN_mainform.prof_hexag != 0)
-                                                    {
-                                                        if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                        {
-
-                                                            Creaza_viewports_profile(Fisier, Trans2, Database2, BtrecordPS, Data_table_poly, M1, M2, PSpoint_prof, lista_generation[i]);
-                                                        }
-                                                    }
-                                                }
-                                                #endregion
-
-
-                                                double h_main = 2;
-
-                                                #region VP profile_band
-                                                if (checkBox_profile_band.Checked == true)
-                                                {
-                                                    if (_AGEN_mainform.Vw_profband_height == 0)
-                                                    {
-                                                        MessageBox.Show("Profile band height = 0, verify your viewport settings!");
-                                                        set_enable_true();
-                                                        return;
-                                                    }
-
-                                                    if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
-                                                    {
-                                                        if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                        {
                                                             for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
                                                             {
                                                                 string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
@@ -1143,534 +968,506 @@ namespace Alignment_mdi
                                                                     double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
                                                                     double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
                                                                     double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
-                                                                    double staY = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["Sta_Y"]);
-                                                                    double th = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["textH"]);
-
-
-                                                                    h_main = _AGEN_mainform.Vw_profband_height;
-
 
                                                                     ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
 
-                                                                    Point3d ps_point = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y, 0);
+                                                                    for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
+                                                                    {
+                                                                        if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["band_name"]) == _AGEN_mainform.tpage_viewport_settings.get_comboBox_bands_multiple_vp())
+                                                                        {
+                                                                            if ((bool)_AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] == false)
+                                                                            {
+                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_x"]);
+                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_y"]);
+                                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_width"]);
+                                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_height"]);
 
+                                                                                if (_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"] != DBNull.Value)
+                                                                                {
+                                                                                    string str_scale = Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"]);
+                                                                                    if (Functions.IsNumeric(str_scale) == true)
+                                                                                    {
+                                                                                        _AGEN_mainform.Vw_scale = Convert.ToDouble(str_scale);
+                                                                                    }
+                                                                                }
 
-                                                                    Point3d ps_point_sta = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y - h_main / 2, 0);
+                                                                                Polyline rect1 = new Polyline();
+                                                                                rect1.AddVertexAt(0, new Point2d(ms_point.X - lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                rect1.AddVertexAt(1, new Point2d(ms_point.X - lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                rect1.AddVertexAt(2, new Point2d(ms_point.X + lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                rect1.AddVertexAt(3, new Point2d(ms_point.X + lr * (width1 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height1 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                rect1.Closed = true;
 
+                                                                                lista_poly.Add(rect1);
 
-                                                                    Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, _AGEN_mainform.Vw_width, h_main, _AGEN_mainform.Layer_name_profband_Viewport);
+                                                                                Point3d ps_point = new Point3d(xps, yps, 0);
+                                                                                Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, width1, height1, _AGEN_mainform.Layer_name_profband_Viewport);
+                                                                                _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = true;
+                                                                                k = _AGEN_mainform.Data_Table_regular_bands.Rows.Count;
+
+                                                                            }
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
+
+                                                            _AGEN_mainform.Data_Table_regular_bands.Columns.Remove("drafted");
                                                         }
+
+
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+
+
+                                            ms_point = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_y], 0);
+                                            double Twist = 2 * Math.PI - (double)_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_rot] * Math.PI / 180;
+
+                                            if (_AGEN_mainform.Left_to_Right == false) Twist = Twist + Math.PI;
+
+                                            double M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M1]);
+                                            double M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]][_AGEN_mainform.Col_M2]);
+
+
+                                            #region plan view
+                                            if (checkBox_plan_view.Checked == true)
+                                            {
+
+                                                var ocm = Database2.ObjectContextManager;
+                                                var occ = ocm.GetContextCollection("ACDB_ANNOTATIONSCALES");
+                                                Viewport Viewport_main = Functions.Create_viewport(ms_point, ps_point_plan_view, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_height, _AGEN_mainform.Vw_scale, Twist);
+                                                Viewport_main.Layer = _AGEN_mainform.Layer_name_Main_Viewport;
+                                                BtrecordPS.AppendEntity(Viewport_main);
+
+                                                #region annotation implementation
+                                                string anno_name = "xxx";
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 1) == 0.1)
+                                                {
+                                                    anno_name = "1:10";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 2) == 0.05)
+                                                {
+                                                    anno_name = "1:20";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 3) == 0.033)
+                                                {
+                                                    anno_name = "1:30";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 3) == 0.025)
+                                                {
+                                                    anno_name = "1:40";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 2) == 0.02)
+                                                {
+                                                    anno_name = "1:50";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 3) == 0.017)
+                                                {
+                                                    anno_name = "1:60";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 2) == 0.01)
+                                                {
+                                                    anno_name = "1:100";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 3) == 0.005)
+                                                {
+                                                    anno_name = "1:200";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 4) == 0.0033)
+                                                {
+                                                    anno_name = "1:300";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 4) == 0.0025)
+                                                {
+                                                    anno_name = "1:400";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 3) == 0.002)
+                                                {
+                                                    anno_name = "1:500";
+                                                }
+                                                if (Math.Round(_AGEN_mainform.Vw_scale, 4) == 0.0017)
+                                                {
+                                                    anno_name = "1:600";
+                                                }
+
+                                                foreach (var context1 in occ)
+                                                {
+                                                    if (context1.Name == anno_name)
+                                                    {
+                                                        Viewport_main.AnnotationScale = (AnnotationScale)context1;
                                                     }
                                                 }
                                                 #endregion
 
-                                                double y_no_data_c = 0;
+                                                Trans2.AddNewlyCreatedDBObject(Viewport_main, true);
 
-                                                #region no data viewport
+                                                ObjectIdCollection oBJiD_COL = new ObjectIdCollection();
+                                                oBJiD_COL.Add(Viewport_main.ObjectId);
+                                                DrawOrderTable DrawOrderTable2 = Trans2.GetObject(BtrecordPS.DrawOrderTableId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite) as DrawOrderTable;
+                                                DrawOrderTable2.MoveToBottom(oBJiD_COL);
+                                            }
+                                            #endregion
 
-                                                if (checkBox_no_data_band.Checked == true)
+
+                                            #region extra viewports
+                                            if (_AGEN_mainform.Data_Table_extra_mainVP != null && _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count > 0)
+                                            {
+                                                for (int j = 0; j < _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count; ++j)
                                                 {
-
-                                                    if (h_nd == 0 || w_nd == 0)
+                                                    if (_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"] != DBNull.Value &&
+                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"])) == true &&
+                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"] != DBNull.Value &&
+                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"])) == true &&
+                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"] != DBNull.Value &&
+                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"])) == true &&
+                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"] != DBNull.Value &&
+                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"])) == true &&
+                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"] != DBNull.Value &&
+                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"])) == true)
                                                     {
-                                                        MessageBox.Show("No data band height = 0, verify your viewport settings!");
-                                                        set_enable_true();
-                                                        return;
-                                                    }
 
+                                                        double scale1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"]);
+                                                        double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"]);
+                                                        double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"]);
+                                                        double X_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"]);
+                                                        double Y_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"]);
+
+                                                        if (j == 0 && checkBoxx1.Checked == true)
+                                                        {
+                                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra1_Viewport, 4, false);
+                                                            Viewport Viewport_main1 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
+                                                            Viewport_main1.Layer = _AGEN_mainform.Layer_name_extra1_Viewport;
+                                                            BtrecordPS.AppendEntity(Viewport_main1);
+                                                            Trans2.AddNewlyCreatedDBObject(Viewport_main1, true);
+                                                        }
+
+                                                        if (j == 1 && checkBoxx2.Checked == true)
+                                                        {
+                                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra2_Viewport, 4, false);
+                                                            Viewport Viewport_main2 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
+                                                            Viewport_main2.Layer = _AGEN_mainform.Layer_name_extra2_Viewport;
+                                                            BtrecordPS.AppendEntity(Viewport_main2);
+                                                            Trans2.AddNewlyCreatedDBObject(Viewport_main2, true);
+                                                        }
+
+                                                        if (j == 2 && checkBoxx3.Checked == true)
+                                                        {
+                                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra3_Viewport, 4, false);
+                                                            Viewport Viewport_main3 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
+                                                            Viewport_main3.Layer = _AGEN_mainform.Layer_name_extra3_Viewport;
+                                                            BtrecordPS.AppendEntity(Viewport_main3);
+                                                            Trans2.AddNewlyCreatedDBObject(Viewport_main3, true);
+                                                        }
+
+
+                                                        if (j == 3 && checkBoxx4.Checked == true)
+                                                        {
+                                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra4_Viewport, 4, false);
+                                                            Viewport Viewport_main4 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
+                                                            Viewport_main4.Layer = _AGEN_mainform.Layer_name_extra4_Viewport;
+                                                            BtrecordPS.AppendEntity(Viewport_main4);
+                                                            Trans2.AddNewlyCreatedDBObject(Viewport_main4, true);
+                                                        }
+
+
+                                                        if (j == 4 && checkBoxx5.Checked == true)
+                                                        {
+                                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_name_extra5_Viewport, 4, false);
+                                                            Viewport Viewport_main5 = Functions.Create_viewport(ms_point, new Point3d(X_ps, Y_ps, 0), width1, height1, scale1, Twist);
+                                                            Viewport_main5.Layer = _AGEN_mainform.Layer_name_extra5_Viewport;
+                                                            BtrecordPS.AppendEntity(Viewport_main5);
+                                                            Trans2.AddNewlyCreatedDBObject(Viewport_main5, true);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+
+                                            #region profile VP
+                                            if (checkBox_profile.Checked == true)
+                                            {
+                                                if (_AGEN_mainform.prof_width_lr > 0 && _AGEN_mainform.prof_texth > 0 && _AGEN_mainform.prof_x_left != _AGEN_mainform.prof_x_right &&
+                                                    _AGEN_mainform.prof_x_right != -1.123 && _AGEN_mainform.prof_x_left != -1.123 && _AGEN_mainform.prof_y_down != -1.123 && _AGEN_mainform.prof_hexag != 0)
+                                                {
                                                     if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                     {
-                                                        for (int j = 0; j < _AGEN_mainform.dt_sheet_index.Rows.Count; ++j)
+
+                                                        Creaza_viewports_profile(Fisier, Trans2, Database2, BtrecordPS, Data_table_poly, M1, M2, PSpoint_prof, lista_generation[i]);
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+
+                                            double h_main = 2;
+
+                                            #region VP profile_band
+                                            if (checkBox_profile_band.Checked == true)
+                                            {
+                                                if (_AGEN_mainform.Vw_profband_height == 0)
+                                                {
+                                                    MessageBox.Show("Profile band height = 0, verify your viewport settings!");
+                                                    set_enable_true();
+                                                    return;
+                                                }
+
+                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                {
+                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                    {
+                                                        for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
                                                         {
-                                                            string dwg_si = Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[j]["DwgNo"]);
-                                                            if (dwg_name.ToLower() == dwg_si.ToLower())
+                                                            string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
+                                                            if (dwg_name.ToLower() == dwg_prof.ToLower())
                                                             {
 
-                                                                y_no_data_c = y_nd_ms - (j * sep_nd) / scale_nd - 0.5 * h_nd / scale_nd;
+                                                                double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
+                                                                double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
+                                                                double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
+                                                                double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
+                                                                double staY = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["Sta_Y"]);
+                                                                double th = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["textH"]);
 
 
-                                                                ms_point = new Point3d(x_nd_ms, y_no_data_c, 0);
-                                                                Point3d ps_point = new Point3d(x_nd_ps, y_nd_ps, 0);
-                                                                Creaza_viewports_no_data_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, w_nd, h_nd, scale_nd, _AGEN_mainform.Layer_name_no_data_band_Viewport);
+                                                                h_main = _AGEN_mainform.Vw_profband_height;
 
 
+                                                                ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
 
+                                                                Point3d ps_point = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y, 0);
+
+
+                                                                Point3d ps_point_sta = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y - h_main / 2, 0);
+
+
+                                                                Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, _AGEN_mainform.Vw_width, h_main, _AGEN_mainform.Layer_name_profband_Viewport);
                                                             }
-                                                        }
-                                                    }
-
-
-
-
-
-                                                }
-
-
-                                                #endregion
-
-
-                                                #region vp ownership
-                                                if (checkBox_ownership.Checked == true)
-                                                {
-                                                    if (_AGEN_mainform.Vw_width > 0 && _AGEN_mainform.Vw_prop_height > 0)
-                                                    {
-                                                        if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                        {
-
-                                                            Creaza_viewports_property_at_alignments_generation(Trans2, Database2, BtrecordPS,
-                                                                 new Point3d(_AGEN_mainform.Point0_prop.X, (_AGEN_mainform.Point0_prop.Y - _AGEN_mainform.Vw_prop_height / 2) - lista_generation[i] * _AGEN_mainform.Band_Separation, 0), lista_generation[i]);
-                                                        }
-                                                    }
-                                                }
-                                                #endregion
-
-                                                #region crossing VP
-                                                if (checkBox_crossing.Checked == true)
-                                                {
-                                                    if (_AGEN_mainform.Vw_width > 0 && _AGEN_mainform.Vw_cross_height > 0)
-                                                    {
-                                                        if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                        {
-
-                                                            Creaza_viewports_crossing_at_alignments_generation(Trans2, Database2, BtrecordPS,
-                                                                 new Point3d(_AGEN_mainform.Point0_cross.X, (_AGEN_mainform.Point0_cross.Y - _AGEN_mainform.Vw_cross_height / 2) - lista_generation[i] * _AGEN_mainform.Band_Separation, 0), lista_generation[i]);
                                                         }
                                                     }
                                                 }
-                                                #endregion
+                                            }
+                                            #endregion
 
-                                                #region materials vp
-                                                if (checkBox_materials.Checked == true)
+                                            double y_no_data_c = 0;
+
+                                            #region no data viewport
+
+                                            if (checkBox_no_data_band.Checked == true)
+                                            {
+
+                                                if (h_nd == 0 || w_nd == 0)
                                                 {
-                                                    if (_AGEN_mainform.Vw_width > 0 && _AGEN_mainform.Vw_mat_height > 0)
+                                                    MessageBox.Show("No data band height = 0, verify your viewport settings!");
+                                                    set_enable_true();
+                                                    return;
+                                                }
+
+                                                if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                {
+                                                    for (int j = 0; j < _AGEN_mainform.dt_sheet_index.Rows.Count; ++j)
                                                     {
-                                                        if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                        string dwg_si = Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[j]["DwgNo"]);
+                                                        if (dwg_name.ToLower() == dwg_si.ToLower())
                                                         {
 
-                                                            Creaza_viewports_material_at_alignments_generation(Trans2, Database2, BtrecordPS,
-                                                                  new Point3d(_AGEN_mainform.Point0_mat.X, (_AGEN_mainform.Point0_mat.Y - _AGEN_mainform.Vw_mat_height / 2) - lista_generation[i] * _AGEN_mainform.Band_Separation, 0), lista_generation[i]);
+                                                            y_no_data_c = y_nd_ms - (j * sep_nd) / scale_nd - 0.5 * h_nd / scale_nd;
+
+
+                                                            ms_point = new Point3d(x_nd_ms, y_no_data_c, 0);
+                                                            Point3d ps_point = new Point3d(x_nd_ps, y_nd_ps, 0);
+                                                            Creaza_viewports_no_data_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, w_nd, h_nd, scale_nd, _AGEN_mainform.Layer_name_no_data_band_Viewport);
+
 
 
                                                         }
                                                     }
                                                 }
-                                                #endregion
 
-                                                #region north arrow
-                                                if (_AGEN_mainform.NA_name != _AGEN_mainform.insertNAtoMS && _AGEN_mainform.NA_name != "")
+
+
+
+
+                                            }
+
+
+                                            #endregion
+
+
+                                            #region vp ownership
+                                            if (checkBox_ownership.Checked == true)
+                                            {
+                                                if (_AGEN_mainform.Vw_width > 0 && _AGEN_mainform.Vw_prop_height > 0)
                                                 {
-                                                    BlockTable BlockTable2 = Trans2.GetObject(Database2.BlockTableId, OpenMode.ForRead) as BlockTable;
-                                                    if (BlockTable2 != null)
+                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                     {
-                                                        if (BlockTable2.Has(_AGEN_mainform.NA_name) == true)
+
+                                                        Creaza_viewports_property_at_alignments_generation(Trans2, Database2, BtrecordPS,
+                                                             new Point3d(_AGEN_mainform.Point0_prop.X, (_AGEN_mainform.Point0_prop.Y - _AGEN_mainform.Vw_prop_height / 2) - lista_generation[i] * _AGEN_mainform.Band_Separation, 0), lista_generation[i]);
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+                                            #region crossing VP
+                                            if (checkBox_crossing.Checked == true)
+                                            {
+                                                if (_AGEN_mainform.Vw_width > 0 && _AGEN_mainform.Vw_cross_height > 0)
+                                                {
+                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                    {
+
+                                                        Creaza_viewports_crossing_at_alignments_generation(Trans2, Database2, BtrecordPS,
+                                                             new Point3d(_AGEN_mainform.Point0_cross.X, (_AGEN_mainform.Point0_cross.Y - _AGEN_mainform.Vw_cross_height / 2) - lista_generation[i] * _AGEN_mainform.Band_Separation, 0), lista_generation[i]);
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+                                            #region materials vp
+                                            if (checkBox_materials.Checked == true)
+                                            {
+                                                if (_AGEN_mainform.Vw_width > 0 && _AGEN_mainform.Vw_mat_height > 0)
+                                                {
+                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                    {
+
+                                                        Creaza_viewports_material_at_alignments_generation(Trans2, Database2, BtrecordPS,
+                                                              new Point3d(_AGEN_mainform.Point0_mat.X, (_AGEN_mainform.Point0_mat.Y - _AGEN_mainform.Vw_mat_height / 2) - lista_generation[i] * _AGEN_mainform.Band_Separation, 0), lista_generation[i]);
+
+
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+                                            string col_bn = "Block Name";
+                                            string col_rot = "Rotation";
+                                            string col_loc = "Location";
+                                            string col_x = "X Paper Space";
+                                            string col_y = "Y Paper Space";
+                                            string col_pos = "Block Position";
+
+                                            #region blocks paperspace
+
+
+                                            if (_AGEN_mainform.dt_blocks != null && _AGEN_mainform.dt_blocks.Rows.Count > 0)
+                                            {
+                                                for (int k = 0; k < _AGEN_mainform.dt_blocks.Rows.Count; k++)
+                                                {
+                                                    if (_AGEN_mainform.dt_blocks.Rows[k][col_bn] != DBNull.Value &&
+                                                        _AGEN_mainform.dt_blocks.Rows[k][col_loc] != DBNull.Value &&
+                                                        Convert.ToString(_AGEN_mainform.dt_blocks.Rows[k][col_loc]) == "PaperSpace" &&
+                                                         _AGEN_mainform.dt_blocks.Rows[k][col_x] != DBNull.Value &&
+                                                         _AGEN_mainform.dt_blocks.Rows[k][col_y] != DBNull.Value)
+                                                    {
+                                                        string block_name = Convert.ToString(_AGEN_mainform.dt_blocks.Rows[k][col_bn]);
+
+
+
+                                                        BlockTable BlockTable2 = Trans2.GetObject(Database2.BlockTableId, OpenMode.ForRead) as BlockTable;
+                                                        if (BlockTable2 != null)
                                                         {
-                                                            BlockReference North_arrow = Functions.InsertBlock_with_multiple_atributes_with_database(Database2, BtrecordPS,
-                                                                "", _AGEN_mainform.NA_name, new Point3d(_AGEN_mainform.NA_x, _AGEN_mainform.NA_y, 0),
-                                                                _AGEN_mainform.NA_scale, Twist, _AGEN_mainform.Layer_North_Arrow, new System.Collections.Specialized.StringCollection(), new System.Collections.Specialized.StringCollection());
+                                                            if (BlockTable2.Has(block_name) == true)
+                                                            {
+                                                                double blockRot = 0;
+                                                                if (_AGEN_mainform.dt_blocks.Rows[k][col_rot] != DBNull.Value && Convert.ToString(_AGEN_mainform.dt_blocks.Rows[k][col_rot]) != "0")
+                                                                {
+                                                                    blockRot = Twist;
+                                                                }
+                                                                double scale1 = 1;
+
+                                                                double x = Convert.ToDouble(_AGEN_mainform.dt_blocks.Rows[k][col_x]);
+                                                                double y = Convert.ToDouble(_AGEN_mainform.dt_blocks.Rows[k][col_y]);
+
+                                                                BlockReference North_arrow = Functions.InsertBlock_with_multiple_atributes_with_database(Database2, BtrecordPS,
+                                                                    "", block_name, new Point3d(x, y, 0),
+                                                                    scale1, blockRot, _AGEN_mainform.Layer_North_Arrow, new System.Collections.Specialized.StringCollection(), new System.Collections.Specialized.StringCollection());
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                            #endregion
+
+                                            #region custom bands
+                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count > 0)
+                                            {
+                                                Point3d ms_pt = new Point3d();
+                                                Point3d ps_pt = new Point3d();
+
+                                                double twist1 = 0;
+
+                                                if (checkBox1.Visible == true)
+                                                {
+                                                    if (checkBox1.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 1)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"]);
+
+
+
+                                                                double y1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"]) - 0.5 * height1 / scale_cust - lista_generation[i] * _AGEN_mainform.Band_Separation / scale_cust;
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"]), y1, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, scale_cust, twist1);
+
+
+
+                                                            }
+
+
                                                         }
                                                     }
                                                 }
-                                                #endregion
 
-                                                #region custom bands
-                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count > 0)
+                                                if (checkBox2.Visible == true)
                                                 {
-                                                    Point3d ms_pt = new Point3d();
-                                                    Point3d ps_pt = new Point3d();
-
-                                                    double twist1 = 0;
-
-                                                    if (checkBox1.Visible == true)
-                                                    {
-                                                        if (checkBox1.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 1)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"]);
-
-
-
-                                                                    double y1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"]) - 0.5 * height1 / scale_cust - lista_generation[i] * _AGEN_mainform.Band_Separation / scale_cust;
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"]), y1, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, scale_cust, twist1);
-
-
-
-                                                                }
-
-
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (checkBox2.Visible == true)
-                                                    {
-                                                        if (checkBox2.Checked == true)
-                                                        {
-
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 2)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (checkBox3.Visible == true)
-                                                    {
-                                                        if (checkBox3.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 3)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (checkBox4.Visible == true)
-                                                    {
-                                                        if (checkBox4.Checked == true)
-                                                        {
-
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 4)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-
-                                                        }
-                                                    }
-
-                                                    if (checkBox5.Visible == true)
+                                                    if (checkBox2.Checked == true)
                                                     {
 
-                                                        if (checkBox5.Checked == true)
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 2)
                                                         {
-
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 5)
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"] != DBNull.Value)
                                                             {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"]) + "VP";
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"]) + "VP";
 
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"]);
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"]);
 
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"]);
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"]);
 
 
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                    if (checkBox6.Visible == true)
-                                                    {
-                                                        if (checkBox6.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 6)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox7.Visible == true)
-                                                    {
-                                                        if (checkBox7.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 7)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox8.Visible == true)
-                                                    {
-                                                        if (checkBox8.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 8)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox9.Visible == true)
-                                                    {
-                                                        if (checkBox9.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 9)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox10.Visible == true)
-                                                    {
-                                                        if (checkBox10.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 10)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox11.Visible == true)
-                                                    {
-                                                        if (checkBox11.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"] != DBNull.Value &&
-                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"] != DBNull.Value &&
-                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"] != DBNull.Value &&
-                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"] != DBNull.Value &&
-                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"] != DBNull.Value &&
-                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"] != DBNull.Value &&
-                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"] != DBNull.Value)
-                                                            {
-                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"]) + "VP";
-
-                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"]);
-                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"]);
-
-                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"]);
-                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"]);
-
-
-                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"]),
-                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"]) - 0.5 * height1 -
                                                                                     lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
                                                                 ps_pt = new Point3d(xps, yps, 0);
 
@@ -1679,927 +1476,890 @@ namespace Alignment_mdi
                                                             }
                                                         }
                                                     }
+                                                }
 
-
-                                                    if (checkBox12.Visible == true)
+                                                if (checkBox3.Visible == true)
+                                                {
+                                                    if (checkBox3.Checked == true)
                                                     {
-                                                        if (checkBox12.Checked == true)
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 3)
                                                         {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 12)
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"] != DBNull.Value)
                                                             {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"]) + "VP";
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"]) + "VP";
 
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"]);
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"]);
 
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"]);
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"]);
 
 
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
 
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
 
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox13.Visible == true)
-                                                    {
-                                                        if (checkBox13.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 13)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox14.Visible == true)
-                                                    {
-                                                        if (checkBox14.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 14)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox15.Visible == true)
-                                                    {
-                                                        if (checkBox15.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 15)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-
-                                                    if (checkBox16.Visible == true)
-                                                    {
-                                                        if (checkBox16.Checked == true)
-                                                        {
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 16)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"] != DBNull.Value &&
-                                                                    _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"] != DBNull.Value)
-                                                                {
-                                                                    string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"]) + "VP";
-
-                                                                    double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"]);
-                                                                    double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"]);
-
-                                                                    double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"]);
-                                                                    double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"]);
-
-
-                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"]),
-                                                                                        Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"]) - 0.5 * height1 -
-                                                                                        lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
-                                                                    ps_pt = new Point3d(xps, yps, 0);
-
-                                                                    Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
-
-                                                                }
                                                             }
                                                         }
                                                     }
                                                 }
-                                                #endregion
 
-
-                                                #region matchline paperspace
-                                                if (_AGEN_mainform.Matchline_BlockName_in_PaperSpace != "")
+                                                if (checkBox4.Visible == true)
                                                 {
-                                                    BlockTable BlockTable2 = Trans2.GetObject(Database2.BlockTableId, OpenMode.ForRead) as BlockTable;
-                                                    if (BlockTable2 != null)
+                                                    if (checkBox4.Checked == true)
                                                     {
-                                                        if (BlockTable2.Has(_AGEN_mainform.Matchline_BlockName_in_PaperSpace) == true)
+
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 4)
                                                         {
-                                                            Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_Matchline_PaperSpace, 1, true);
-
-                                                            double dispm1 = Functions.Station_equation_ofV2(M1, _AGEN_mainform.dt_station_equation);
-                                                            double dispm2 = Functions.Station_equation_ofV2(M2, _AGEN_mainform.dt_station_equation);
-
-                                                            string StM1 = Functions.Get_chainage_from_double(dispm1, _AGEN_mainform.units_of_measurement, _AGEN_mainform.round1);
-                                                            string StM2 = Functions.Get_chainage_from_double(dispm2, _AGEN_mainform.units_of_measurement, _AGEN_mainform.round1);
-
-                                                            string mile1 = Functions.Get_String_Rounded(dispm1 / 5280, 1);
-                                                            string mile2 = Functions.Get_String_Rounded(dispm2 / 5280, 1);
-
-                                                            string Prev_file = "BEGIN STA.";
-                                                            string Next_file = "END STA.";
-
-                                                            double ml_width = 0;
-
-                                                            if (_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]]["Width"] != DBNull.Value &&
-                                                                Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]]["Width"])) == true)
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"] != DBNull.Value)
                                                             {
-                                                                ml_width = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]]["Width"]) * _AGEN_mainform.Vw_scale;
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
                                                             }
+                                                        }
 
-                                                            if (_AGEN_mainform.dt_sheet_index.Rows.Count > 1)
+                                                    }
+                                                }
+
+                                                if (checkBox5.Visible == true)
+                                                {
+
+                                                    if (checkBox5.Checked == true)
+                                                    {
+
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 5)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"] != DBNull.Value)
                                                             {
-                                                                if (lista_generation[i] < _AGEN_mainform.dt_sheet_index.Rows.Count - 1)
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                                if (checkBox6.Visible == true)
+                                                {
+                                                    if (checkBox6.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 6)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+
+
+                                                if (checkBox7.Visible == true)
+                                                {
+                                                    if (checkBox7.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 7)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox8.Visible == true)
+                                                {
+                                                    if (checkBox8.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 8)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox9.Visible == true)
+                                                {
+                                                    if (checkBox9.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 9)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox10.Visible == true)
+                                                {
+                                                    if (checkBox10.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 10)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox11.Visible == true)
+                                                {
+                                                    if (checkBox11.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"] != DBNull.Value &&
+                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"] != DBNull.Value &&
+                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"] != DBNull.Value &&
+                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"] != DBNull.Value &&
+                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"] != DBNull.Value &&
+                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"] != DBNull.Value &&
+                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"] != DBNull.Value)
+                                                        {
+                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"]) + "VP";
+
+                                                            double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"]);
+                                                            double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"]);
+
+                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"]);
+                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"]);
+
+
+                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"]),
+                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox12.Visible == true)
+                                                {
+                                                    if (checkBox12.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 12)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox13.Visible == true)
+                                                {
+                                                    if (checkBox13.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 13)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox14.Visible == true)
+                                                {
+                                                    if (checkBox14.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 14)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox15.Visible == true)
+                                                {
+                                                    if (checkBox15.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 15)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                                if (checkBox16.Visible == true)
+                                                {
+                                                    if (checkBox16.Checked == true)
+                                                    {
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 16)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"] != DBNull.Value &&
+                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"] != DBNull.Value)
+                                                            {
+                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"]) + "VP";
+
+                                                                double height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"]);
+                                                                double width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"]);
+
+                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"]);
+                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"]);
+
+
+                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"]),
+                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"]) - 0.5 * height1 -
+                                                                                    lista_generation[i] * _AGEN_mainform.Band_Separation, 0);
+                                                                ps_pt = new Point3d(xps, yps, 0);
+
+                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, twist1);
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+
+                                            #region matchline paperspace
+                                            if (_AGEN_mainform.dt_blocks != null && _AGEN_mainform.dt_blocks.Rows.Count > 0)
+                                            {
+
+                                                for (int k = 0; k < _AGEN_mainform.dt_blocks.Rows.Count; k++)
+                                                {
+                                                    if (_AGEN_mainform.dt_blocks.Rows[k][col_bn] != DBNull.Value &&
+                                                            _AGEN_mainform.dt_blocks.Rows[k][col_loc] != DBNull.Value &&
+                                                            Convert.ToString(_AGEN_mainform.dt_blocks.Rows[k][col_loc]) == "PaperSpace" &&
+                                                             _AGEN_mainform.dt_blocks.Rows[k][col_pos] != DBNull.Value &&
+                                                            Convert.ToString(_AGEN_mainform.dt_blocks.Rows[k][col_pos]) != "User Defined")
+                                                    {
+                                                        string block_name = Convert.ToString(_AGEN_mainform.dt_blocks.Rows[k][col_bn]);
+
+                                                        BlockTable BlockTable2 = Trans2.GetObject(Database2.BlockTableId, OpenMode.ForRead) as BlockTable;
+                                                        if (BlockTable2 != null)
+                                                        {
+
+                                                            if (BlockTable2.Has(block_name) == true)
+                                                            {
+                                                                Functions.Creaza_layer_on_database(Database2, _AGEN_mainform.Layer_Matchline_PaperSpace, 1, true);
+
+                                                                double dispm1 = Functions.Station_equation_ofV2(M1, _AGEN_mainform.dt_station_equation);
+                                                                double dispm2 = Functions.Station_equation_ofV2(M2, _AGEN_mainform.dt_station_equation);
+
+                                                                string StM1 = Functions.Get_chainage_from_double(dispm1, _AGEN_mainform.units_of_measurement, _AGEN_mainform.round1);
+                                                                string StM2 = Functions.Get_chainage_from_double(dispm2, _AGEN_mainform.units_of_measurement, _AGEN_mainform.round1);
+
+                                                                string mile1 = Functions.Get_String_Rounded(dispm1 / 5280, 1);
+                                                                string mile2 = Functions.Get_String_Rounded(dispm2 / 5280, 1);
+
+                                                                string Prev_file = "BEGIN STA.";
+                                                                string Next_file = "END STA.";
+
+                                                                double ml_width = 0;
+
+                                                                if (_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]]["Width"] != DBNull.Value &&
+                                                                    Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]]["Width"])) == true)
                                                                 {
-                                                                    if (_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] + 1][_AGEN_mainform.Col_dwg_name] != DBNull.Value)
+                                                                    ml_width = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i]]["Width"]) * _AGEN_mainform.Vw_scale;
+                                                                }
+
+                                                                if (_AGEN_mainform.dt_sheet_index.Rows.Count > 1)
+                                                                {
+                                                                    if (lista_generation[i] < _AGEN_mainform.dt_sheet_index.Rows.Count - 1)
                                                                     {
-                                                                        Next_file = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] + 1][_AGEN_mainform.Col_dwg_name].ToString();
+                                                                        if (_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] + 1][_AGEN_mainform.Col_dwg_name] != DBNull.Value)
+                                                                        {
+                                                                            Next_file = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] + 1][_AGEN_mainform.Col_dwg_name].ToString();
+                                                                        }
+                                                                    }
+
+                                                                    if (lista_generation[i] > 0)
+                                                                    {
+                                                                        if (_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] - 1][_AGEN_mainform.Col_dwg_name] != DBNull.Value)
+                                                                        {
+                                                                            Prev_file = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] - 1][_AGEN_mainform.Col_dwg_name].ToString();
+                                                                        }
                                                                     }
                                                                 }
 
-                                                                if (lista_generation[i] > 0)
+                                                                double y = _AGEN_mainform.Vw_ps_y - _AGEN_mainform.Vw_height / 2;
+                                                                double x1 = _AGEN_mainform.Vw_ps_x - ml_width / 2;
+                                                                double x2 = _AGEN_mainform.Vw_ps_x + ml_width / 2;
+                                                                if (_AGEN_mainform.Left_to_Right == false)
                                                                 {
-                                                                    if (_AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] - 1][_AGEN_mainform.Col_dwg_name] != DBNull.Value)
-                                                                    {
-                                                                        Prev_file = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[i] - 1][_AGEN_mainform.Col_dwg_name].ToString();
-                                                                    }
+                                                                    double t = x1;
+                                                                    x1 = x2;
+                                                                    x2 = t;
                                                                 }
+
+
+                                                                System.Collections.Specialized.StringCollection col_atr_left = new System.Collections.Specialized.StringCollection();
+                                                                System.Collections.Specialized.StringCollection col_val_left = new System.Collections.Specialized.StringCollection();
+
+                                                                col_atr_left.Add("ATR_1");
+                                                                col_val_left.Add(mile1);
+                                                                col_atr_left.Add("ATR_2");
+                                                                col_val_left.Add(Prev_file);
+                                                                col_atr_left.Add("ATR_3");
+                                                                col_val_left.Add(StM1);
+
+                                                                col_atr_left.Add("ATR_4");
+                                                                col_val_left.Add("");
+                                                                col_atr_left.Add("ATR_5");
+                                                                col_val_left.Add("");
+
+                                                                BlockReference ML_PS_left = Functions.InsertBlock_with_multiple_atributes_with_database(Database2, BtrecordPS,
+                                                                    "", block_name, new Point3d(x1, y, 0),
+                                                                    1, 0, _AGEN_mainform.Layer_Matchline_PaperSpace, col_atr_left, col_val_left);
+                                                                Functions.Stretch_block(ML_PS_left, "Distance1", _AGEN_mainform.Vw_height);
+
+                                                                System.Collections.Specialized.StringCollection col_atr_right = new System.Collections.Specialized.StringCollection();
+                                                                System.Collections.Specialized.StringCollection col_val_right = new System.Collections.Specialized.StringCollection();
+
+                                                                col_atr_right.Add("ATR_1");
+                                                                col_val_right.Add(mile2);
+                                                                col_atr_right.Add("ATR_5");
+                                                                col_val_right.Add(Next_file);
+                                                                col_atr_right.Add("ATR_4");
+                                                                col_val_right.Add(StM2);
+
+                                                                col_atr_right.Add("ATR_2");
+                                                                col_val_right.Add("");
+                                                                col_atr_right.Add("ATR_3");
+                                                                col_val_right.Add("");
+
+                                                                BlockReference ML_PS_right = Functions.InsertBlock_with_multiple_atributes_with_database(Database2, BtrecordPS,
+                                                                    "", block_name, new Point3d(x2, y, 0),
+                                                                    1, 0, _AGEN_mainform.Layer_Matchline_PaperSpace, col_atr_right, col_val_right);
+                                                                Functions.Stretch_block(ML_PS_right, "Distance1", _AGEN_mainform.Vw_height);
                                                             }
-
-                                                            double y = _AGEN_mainform.Vw_ps_y - _AGEN_mainform.Vw_height / 2;
-                                                            double x1 = _AGEN_mainform.Vw_ps_x - ml_width / 2;
-                                                            double x2 = _AGEN_mainform.Vw_ps_x + ml_width / 2;
-                                                            if (_AGEN_mainform.Left_to_Right == false)
-                                                            {
-                                                                double t = x1;
-                                                                x1 = x2;
-                                                                x2 = t;
-                                                            }
-
-
-                                                            System.Collections.Specialized.StringCollection col_atr_left = new System.Collections.Specialized.StringCollection();
-                                                            System.Collections.Specialized.StringCollection col_val_left = new System.Collections.Specialized.StringCollection();
-
-                                                            col_atr_left.Add("ATR_1");
-                                                            col_val_left.Add(mile1);
-                                                            col_atr_left.Add("ATR_2");
-                                                            col_val_left.Add(Prev_file);
-                                                            col_atr_left.Add("ATR_3");
-                                                            col_val_left.Add(StM1);
-
-                                                            col_atr_left.Add("ATR_4");
-                                                            col_val_left.Add("");
-                                                            col_atr_left.Add("ATR_5");
-                                                            col_val_left.Add("");
-
-                                                            BlockReference ML_PS_left = Functions.InsertBlock_with_multiple_atributes_with_database(Database2, BtrecordPS,
-                                                                "", _AGEN_mainform.Matchline_BlockName_in_PaperSpace, new Point3d(x1, y, 0),
-                                                                1, 0, _AGEN_mainform.Layer_Matchline_PaperSpace, col_atr_left, col_val_left);
-                                                            Functions.Stretch_block(ML_PS_left, "Distance1", _AGEN_mainform.Vw_height);
-
-                                                            System.Collections.Specialized.StringCollection col_atr_right = new System.Collections.Specialized.StringCollection();
-                                                            System.Collections.Specialized.StringCollection col_val_right = new System.Collections.Specialized.StringCollection();
-
-                                                            col_atr_right.Add("ATR_1");
-                                                            col_val_right.Add(mile2);
-                                                            col_atr_right.Add("ATR_5");
-                                                            col_val_right.Add(Next_file);
-                                                            col_atr_right.Add("ATR_4");
-                                                            col_val_right.Add(StM2);
-
-                                                            col_atr_right.Add("ATR_2");
-                                                            col_val_right.Add("");
-                                                            col_atr_right.Add("ATR_3");
-                                                            col_val_right.Add("");
-
-                                                            BlockReference ML_PS_right = Functions.InsertBlock_with_multiple_atributes_with_database(Database2, BtrecordPS,
-                                                                "", _AGEN_mainform.Matchline_BlockName_in_PaperSpace, new Point3d(x2, y, 0),
-                                                                1, 0, _AGEN_mainform.Layer_Matchline_PaperSpace, col_atr_right, col_val_right);
-                                                            Functions.Stretch_block(ML_PS_right, "Distance1", _AGEN_mainform.Vw_height);
-
                                                         }
                                                     }
                                                 }
-                                                #endregion
+                                            }
+                                            #endregion
 
 
-                                                Trans2.Commit();
+                                            Trans2.Commit();
 
-                                                HostApplicationServices.WorkingDatabase = ThisDrawing.Database;
-                                                Database2.SaveAs(Fisier, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
+                                            HostApplicationServices.WorkingDatabase = ThisDrawing.Database;
+                                            Database2.SaveAs(Fisier, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
 
-                                                #region profile band vp rectangles
-                                                if (checkBox_profile_band.Checked == true)
-                                                {
-                                                    Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
-                                                    Polyline polyVP1 = new Polyline();
+                                            #region profile band vp rectangles
+                                            if (checkBox_profile_band.Checked == true)
+                                            {
+                                                Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
+                                                Polyline polyVP1 = new Polyline();
 
-                                                    polyVP1.Layer = _AGEN_mainform.layer_no_plot;
-                                                    polyVP1.ColorIndex = 1;
+                                                polyVP1.Layer = _AGEN_mainform.layer_no_plot;
+                                                polyVP1.ColorIndex = 1;
 
-                                                    polyVP1.AddVertexAt(0, new Point2d(ms_point.X - lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                    polyVP1.AddVertexAt(1, new Point2d(ms_point.X - lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                    polyVP1.AddVertexAt(2, new Point2d(ms_point.X + lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                    polyVP1.AddVertexAt(3, new Point2d(ms_point.X + lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                    polyVP1.Closed = true;
+                                                polyVP1.AddVertexAt(0, new Point2d(ms_point.X - lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                polyVP1.AddVertexAt(1, new Point2d(ms_point.X - lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                polyVP1.AddVertexAt(2, new Point2d(ms_point.X + lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                polyVP1.AddVertexAt(3, new Point2d(ms_point.X + lr * (_AGEN_mainform.Vw_width / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                polyVP1.Closed = true;
 
-                                                    Btrecord.AppendEntity(polyVP1);
-                                                    Trans1.AddNewlyCreatedDBObject(polyVP1, true);
-
-                                                }
-                                                #endregion
-
-                                                #region MULTIPLE profile vp rectangles
-                                                if (checkBox_mult_vp_prof.Checked == true)
-                                                {
-                                                    if (lista_poly.Count > 0)
-                                                    {
-                                                        Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
-
-                                                        for (int m = 0; m < lista_poly.Count; ++m)
-                                                        {
-
-                                                            Polyline polyVP1 = new Polyline();
-                                                            polyVP1 = lista_poly[m];
-                                                            polyVP1.Layer = _AGEN_mainform.layer_no_plot;
-                                                            polyVP1.ColorIndex = 1;
-                                                            Btrecord.AppendEntity(polyVP1);
-                                                            Trans1.AddNewlyCreatedDBObject(polyVP1, true);
-                                                        }
-                                                    }
-                                                }
-                                                #endregion
-
-
-
-                                                #region nodata band vp rectangles
-                                                if (checkBox_no_data_band.Checked == true)
-                                                {
-                                                    Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
-                                                    Polyline polyVP1 = new Polyline();
-
-                                                    polyVP1.Layer = _AGEN_mainform.layer_no_plot;
-                                                    polyVP1.ColorIndex = 1;
-
-                                                    polyVP1.AddVertexAt(0, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                    polyVP1.AddVertexAt(1, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                    polyVP1.AddVertexAt(2, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                    polyVP1.AddVertexAt(3, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                    polyVP1.Closed = true;
-
-                                                    Btrecord.AppendEntity(polyVP1);
-                                                    Trans1.AddNewlyCreatedDBObject(polyVP1, true);
-
-                                                }
-                                                #endregion
+                                                Btrecord.AppendEntity(polyVP1);
+                                                Trans1.AddNewlyCreatedDBObject(polyVP1, true);
 
                                             }
+                                            #endregion
+
+                                            #region MULTIPLE profile vp rectangles
+                                            if (checkBox_mult_vp_prof.Checked == true)
+                                            {
+                                                if (lista_poly.Count > 0)
+                                                {
+                                                    Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
+
+                                                    for (int m = 0; m < lista_poly.Count; ++m)
+                                                    {
+
+                                                        Polyline polyVP1 = new Polyline();
+                                                        polyVP1 = lista_poly[m];
+                                                        polyVP1.Layer = _AGEN_mainform.layer_no_plot;
+                                                        polyVP1.ColorIndex = 1;
+                                                        Btrecord.AppendEntity(polyVP1);
+                                                        Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+                                                    }
+                                                }
+                                            }
+                                            #endregion
+
+
+
+                                            #region nodata band vp rectangles
+                                            if (checkBox_no_data_band.Checked == true)
+                                            {
+                                                Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
+                                                Polyline polyVP1 = new Polyline();
+
+                                                polyVP1.Layer = _AGEN_mainform.layer_no_plot;
+                                                polyVP1.ColorIndex = 1;
+
+                                                polyVP1.AddVertexAt(0, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                polyVP1.AddVertexAt(1, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                polyVP1.AddVertexAt(2, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                polyVP1.AddVertexAt(3, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                polyVP1.Closed = true;
+
+                                                Btrecord.AppendEntity(polyVP1);
+                                                Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+
+                                            }
+                                            #endregion
+
                                         }
                                     }
-
-
-
-                                    dataGridView_align_created.DataSource = Display_dt;
-                                    dataGridView_align_created.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                                    dataGridView_align_created.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                    dataGridView_align_created.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                                    dataGridView_align_created.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                    dataGridView_align_created.DefaultCellStyle.ForeColor = Color.White;
-                                    dataGridView_align_created.EnableHeadersVisualStyles = false;
                                 }
-                                #endregion
 
 
-                                #region update file with new vp
 
-                                if (Creaza_new_file == false && (
-                                        checkBox_ownership.Checked == true
-                                        || checkBox_plan_view.Checked == true
-                                        || checkBox_materials.Checked == true
-                                        || checkBox_crossing.Checked == true
-                                        || checkBox_profile.Checked == true
-                                        || checkBox1.Checked == true
-                                        || checkBox2.Checked == true
-                                        || checkBox3.Checked == true
-                                        || checkBox4.Checked == true
-                                        || checkBox5.Checked == true
-                                        || checkBox6.Checked == true
-                                        || checkBox7.Checked == true
-                                        || checkBox8.Checked == true
-                                        || checkBox9.Checked == true
-                                        || checkBox10.Checked == true
-                                        || checkBox11.Checked == true
-                                        || checkBox12.Checked == true
-                                        || checkBox13.Checked == true
-                                        || checkBox14.Checked == true
-                                        || checkBox15.Checked == true
-                                        || checkBox16.Checked == true
-                                        || checkBox_slope_band.Checked == true
-                                        || checkBox_profile_band.Checked == true
-                                        || checkBox_xref_clip.Checked == true
-                                        || checkBox_tblk.Checked == true
-                                        || checkBox_no_data_band.Checked == true
-                                        || checkBoxx1.Checked == true
-                                        || checkBoxx2.Checked == true
-                                        || checkBoxx3.Checked == true
-                                        || checkBoxx4.Checked == true
-                                        || checkBoxx5.Checked == true
-                                        || checkBox_mult_vp_prof.Checked == true))
+                                dataGridView_align_created.DataSource = Display_dt;
+                                dataGridView_align_created.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                                dataGridView_align_created.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+                                dataGridView_align_created.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                                dataGridView_align_created.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+                                dataGridView_align_created.DefaultCellStyle.ForeColor = Color.White;
+                                dataGridView_align_created.EnableHeadersVisualStyles = false;
+                            }
+                            #endregion
 
+
+                            #region update file with new vp
+
+                            if (Creaza_new_file == false && (
+                                    checkBox_ownership.Checked == true
+                                    || checkBox_plan_view.Checked == true
+                                    || checkBox_materials.Checked == true
+                                    || checkBox_crossing.Checked == true
+                                    || checkBox_profile.Checked == true
+                                    || checkBox1.Checked == true
+                                    || checkBox2.Checked == true
+                                    || checkBox3.Checked == true
+                                    || checkBox4.Checked == true
+                                    || checkBox5.Checked == true
+                                    || checkBox6.Checked == true
+                                    || checkBox7.Checked == true
+                                    || checkBox8.Checked == true
+                                    || checkBox9.Checked == true
+                                    || checkBox10.Checked == true
+                                    || checkBox11.Checked == true
+                                    || checkBox12.Checked == true
+                                    || checkBox13.Checked == true
+                                    || checkBox14.Checked == true
+                                    || checkBox15.Checked == true
+                                    || checkBox16.Checked == true
+                                    || checkBox_slope_band.Checked == true
+                                    || checkBox_profile_band.Checked == true
+                                    || checkBox_xref_clip.Checked == true
+                                    || checkBox_tblk.Checked == true
+                                    || checkBox_no_data_band.Checked == true
+                                    || checkBoxx1.Checked == true
+                                    || checkBoxx2.Checked == true
+                                    || checkBoxx3.Checked == true
+                                    || checkBoxx4.Checked == true
+                                    || checkBoxx5.Checked == true
+                                    || checkBox_mult_vp_prof.Checked == true))
+
+                            {
+                                System.Data.DataTable Data_table_poly = null;
+
+
+                                if (checkBox_profile.Checked == true)
                                 {
-                                    System.Data.DataTable Data_table_poly = null;
+                                    Data_table_poly = create_profile_poly_definition(_AGEN_mainform.config_path);
+                                }
 
+                                List<string> Lista_bl = new List<string>();
+                                Lista_bl.Add("spire_matchline_left");
+                                Lista_bl.Add("spire_matchline_left1");
+                                Lista_bl.Add("spire_matchline_right");
+                                Lista_bl.Add("spire_matchline_right1");
+                                Lista_bl.Add("north_arrow");
 
-                                    if (checkBox_profile.Checked == true)
+                                if (checkBox_profile_band.Checked == true)
+                                {
+                                    _AGEN_mainform.tpage_profdraw.button_load_data_for_profile_band_Click(sender, e);
+                                }
+
+                                for (int i = 0; i < Display_dt.Rows.Count; ++i)
+                                {
+                                    List<Polyline> lista_poly = new List<Polyline>();
+                                    if (Display_dt.Rows[i][_AGEN_mainform.Col_dwg_name] != DBNull.Value)
                                     {
-                                        Data_table_poly = create_profile_poly_definition(_AGEN_mainform.config_path);
-                                    }
+                                        string file1 = Display_dt.Rows[i][_AGEN_mainform.Col_dwg_name].ToString();
+                                        string nume_fara_ext = System.IO.Path.GetFileNameWithoutExtension(file1);
 
-                                    List<string> Lista_bl = new List<string>();
-                                    Lista_bl.Add("spire_matchline_left");
-                                    Lista_bl.Add("spire_matchline_left1");
-                                    Lista_bl.Add("spire_matchline_right");
-                                    Lista_bl.Add("spire_matchline_right1");
-                                    Lista_bl.Add("north_arrow");
-
-                                    if (checkBox_profile_band.Checked == true)
-                                    {
-                                        _AGEN_mainform.tpage_profdraw.button_load_data_for_profile_band_Click(sender, e);
-                                    }
-
-                                    for (int i = 0; i < Display_dt.Rows.Count; ++i)
-                                    {
-                                        List<Polyline> lista_poly = new List<Polyline>();
-                                        if (Display_dt.Rows[i][_AGEN_mainform.Col_dwg_name] != DBNull.Value)
+                                        if (System.IO.File.Exists(file1) == true)
                                         {
-                                            string file1 = Display_dt.Rows[i][_AGEN_mainform.Col_dwg_name].ToString();
-                                            string nume_fara_ext = System.IO.Path.GetFileNameWithoutExtension(file1);
+                                            Point3d ms_pt = new Point3d();
+                                            Point3d ps_pt = new Point3d();
+                                            double width1 = 0;
+                                            double height1 = 0;
+                                            int si_index = -1;
+                                            int prof_band_index = -1;
 
-                                            if (System.IO.File.Exists(file1) == true)
+
+                                            if (checkBox_profile_band.Checked == true)
                                             {
-                                                Point3d ms_pt = new Point3d();
-                                                Point3d ps_pt = new Point3d();
-                                                double width1 = 0;
-                                                double height1 = 0;
-                                                int si_index = -1;
-                                                int prof_band_index = -1;
-
-
-                                                if (checkBox_profile_band.Checked == true)
+                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
                                                 {
-                                                    if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                    for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
                                                     {
-                                                        for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
+                                                        string si_name = _AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"].ToString();
+                                                        if (si_name.ToLower() == nume_fara_ext.ToLower())
                                                         {
-                                                            string si_name = _AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"].ToString();
-                                                            if (si_name.ToLower() == nume_fara_ext.ToLower())
-                                                            {
-                                                                prof_band_index = j;
-                                                                j = _AGEN_mainform.Data_Table_profile_band.Rows.Count;
+                                                            prof_band_index = j;
+                                                            j = _AGEN_mainform.Data_Table_profile_band.Rows.Count;
 
-                                                            }
+
                                                         }
                                                     }
-                                                    if (prof_band_index == -1)
-                                                    {
-                                                        MessageBox.Show("Sheet index data does not match profile band data.\r\nOperation aborted.", "agen", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                                        _AGEN_mainform.tpage_processing.Hide();
-                                                        Freeze_operations = false;
-                                                        return;
-                                                    }
                                                 }
-
-
-                                                double y_no_data_c = 0;
-
-                                                for (int j = 0; j < _AGEN_mainform.dt_sheet_index.Rows.Count; ++j)
+                                                if (prof_band_index == -1)
                                                 {
-                                                    string si_name = _AGEN_mainform.dt_sheet_index.Rows[j][_AGEN_mainform.Col_dwg_name].ToString();
-                                                    if (si_name.ToLower() == nume_fara_ext.ToLower())
-                                                    {
-                                                        si_index = j;
-                                                        y_no_data_c = y_nd_ms - (j * sep_nd) / scale_nd - 0.5 * h_nd / scale_nd;
-                                                        j = _AGEN_mainform.dt_sheet_index.Rows.Count;
-                                                    }
+                                                    MessageBox.Show("Sheet index data does not match profile band data.\r\nOperation aborted.", "agen", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                                    _AGEN_mainform.tpage_processing.Hide();
+                                                    set_enable_true();
+                                                    return;
                                                 }
+                                            }
 
-                                                if (checkBox_mult_vp_prof.Checked == true)
+
+                                            double y_no_data_c = 0;
+
+                                            for (int j = 0; j < _AGEN_mainform.dt_sheet_index.Rows.Count; ++j)
+                                            {
+                                                string si_name = _AGEN_mainform.dt_sheet_index.Rows[j][_AGEN_mainform.Col_dwg_name].ToString();
+                                                if (si_name.ToLower() == nume_fara_ext.ToLower())
                                                 {
-                                                    string fisier_prof_band = ProjFolder + _AGEN_mainform.band_prof_excel_name;
-                                                    if (System.IO.File.Exists(fisier_prof_band) == true)
-                                                    {
-                                                        _AGEN_mainform.Data_Table_profile_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
-                                                    }
+                                                    si_index = j;
+                                                    y_no_data_c = y_nd_ms - (j * sep_nd) / scale_nd - 0.5 * h_nd / scale_nd;
+                                                    j = _AGEN_mainform.dt_sheet_index.Rows.Count;
                                                 }
+                                            }
 
-                                                double h_main = 10;
-
-                                                double l_main = _AGEN_mainform.Vw_width;
-
-
-                                                if (si_index >= 0 || prof_band_index >= 0 || checkBox_mult_vp_prof.Checked == true)
+                                            if (checkBox_mult_vp_prof.Checked == true)
+                                            {
+                                                string fisier_prof_band = ProjFolder + _AGEN_mainform.band_prof_excel_name;
+                                                if (System.IO.File.Exists(fisier_prof_band) == true)
                                                 {
-                                                    using (Database Database2 = new Database(false, true))
-                                                    {
-                                                        Database2.ReadDwgFile(file1, FileOpenMode.OpenForReadAndWriteNoShare, true, "");
-                                                        //System.IO.FileShare.ReadWrite, false, null);
-                                                        Database2.CloseInput(true);
+                                                    _AGEN_mainform.Data_Table_profile_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
+                                                }
+                                            }
 
-                                                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = Database2.TransactionManager.StartTransaction())
+                                            double h_main = 10;
+
+                                            double l_main = _AGEN_mainform.Vw_width;
+
+
+                                            if (si_index >= 0 || prof_band_index >= 0 || checkBox_mult_vp_prof.Checked == true)
+                                            {
+                                                using (Database Database2 = new Database(false, true))
+                                                {
+                                                    Database2.ReadDwgFile(file1, FileOpenMode.OpenForReadAndWriteNoShare, true, "");
+                                                    //System.IO.FileShare.ReadWrite, false, null);
+                                                    Database2.CloseInput(true);
+
+                                                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans2 = Database2.TransactionManager.StartTransaction())
+                                                    {
+                                                        Functions.make_first_layout_active(Trans2, Database2);
+                                                        BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
+                                                        BtrecordPS.UpgradeOpen();
+                                                        Layout Layout1 = Functions.get_first_layout(Trans2, Database2);
+                                                        Layout1.UpgradeOpen();
+                                                        //Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_dwg_name].ToString();
+
+                                                        #region delete viewport
+                                                        if (checkBox_delete_vp.Checked == true)
                                                         {
-                                                            Functions.make_first_layout_active(Trans2, Database2);
-                                                            BlockTableRecord BtrecordPS = Functions.get_first_layout_as_paperspace(Trans2, Database2);
-                                                            BtrecordPS.UpgradeOpen();
-                                                            Layout Layout1 = Functions.get_first_layout(Trans2, Database2);
-                                                            Layout1.UpgradeOpen();
-                                                            //Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_dwg_name].ToString();
 
-                                                            #region delete viewport
-                                                            if (checkBox_delete_vp.Checked == true)
+                                                            Delete_viewport_on_existing_alignment(Database2);
+
+                                                        }
+                                                        #endregion
+
+
+                                                        #region VP multi profiles the same page
+                                                        if (checkBox_mult_vp_prof.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+                                                            if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
                                                             {
-
-                                                                Delete_viewport_on_existing_alignment(Database2);
-
-                                                            }
-                                                            #endregion
-
-
-                                                            #region VP multi profiles the same page
-                                                            if (checkBox_mult_vp_prof.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
-                                                                {
-                                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                                    {
-
-                                                                        if (_AGEN_mainform.Data_Table_regular_bands.Rows.Count > 0)
-                                                                        {
-
-                                                                            if (_AGEN_mainform.Data_Table_regular_bands.Columns.Contains("drafted") == false) _AGEN_mainform.Data_Table_regular_bands.Columns.Add("drafted", typeof(bool));
-                                                                            for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
-                                                                            {
-                                                                                _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = false;
-                                                                            }
-
-                                                                            foreach (ObjectId odid in BtrecordPS)
-                                                                            {
-                                                                                Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
-
-                                                                                if (ent1 != null)
-                                                                                {
-                                                                                    if (ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_profband_Viewport.ToLower())
-                                                                                    {
-                                                                                        ent1.UpgradeOpen();
-                                                                                        ent1.Erase();
-                                                                                    }
-                                                                                }
-
-                                                                            }
-
-
-                                                                            for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
-                                                                            {
-                                                                                string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
-                                                                                if (nume_fara_ext.ToLower() == dwg_prof.ToLower())
-                                                                                {
-
-                                                                                    double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
-                                                                                    double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
-                                                                                    double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
-                                                                                    double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
-
-                                                                                    ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
-
-                                                                                    for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
-                                                                                    {
-                                                                                        if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["band_name"]) == _AGEN_mainform.tpage_viewport_settings.get_comboBox_bands_multiple_vp())
-                                                                                        {
-                                                                                            if ((bool)_AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] == false)
-                                                                                            {
-                                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_x"]);
-                                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_y"]);
-                                                                                                double width2 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_width"]);
-                                                                                                double height2 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_height"]);
-
-                                                                                                if (_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"] != DBNull.Value)
-                                                                                                {
-                                                                                                    string str_scale = Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"]);
-                                                                                                    if (Functions.IsNumeric(str_scale) == true)
-                                                                                                    {
-                                                                                                        _AGEN_mainform.Vw_scale = Convert.ToDouble(str_scale);
-                                                                                                    }
-                                                                                                }
-
-                                                                                                Polyline rect1 = new Polyline();
-                                                                                                rect1.AddVertexAt(0, new Point2d(ms_point.X - lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                                rect1.AddVertexAt(1, new Point2d(ms_point.X - lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                                rect1.AddVertexAt(2, new Point2d(ms_point.X + lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                                rect1.AddVertexAt(3, new Point2d(ms_point.X + lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                                                                rect1.Closed = true;
-
-                                                                                                lista_poly.Add(rect1);
-
-                                                                                                Point3d ps_point = new Point3d(xps, yps, 0);
-                                                                                                Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, width2, height2, _AGEN_mainform.Layer_name_profband_Viewport);
-
-                                                                                                _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = true;
-                                                                                                k = _AGEN_mainform.Data_Table_regular_bands.Rows.Count;
-
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-
-                                                                            _AGEN_mainform.Data_Table_regular_bands.Columns.Remove("drafted");
-                                                                        }
-
-
-                                                                    }
-                                                                }
-                                                            }
-                                                            #endregion
-
-
-
-                                                            #region VP plan view
-                                                            if (checkBox_plan_view.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-
-                                                                ms_pt = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
-                                                                double twist1 = 2 * Math.PI - (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_rot] * Math.PI / 180;
-                                                                if (_AGEN_mainform.Left_to_Right == false) twist1 = twist1 + Math.PI;
-                                                                Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_Main_Viewport, ms_pt,
-                                                                                                                                new Point3d(_AGEN_mainform.Vw_ps_x, _AGEN_mainform.Vw_ps_y, 0),
-                                                                                                                                _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_height, _AGEN_mainform.Vw_scale, twist1);
-                                                            }
-                                                            #endregion
-
-                                                            #region extra viewports
-                                                            if (_AGEN_mainform.Data_Table_extra_mainVP != null && _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count > 0 && checkBox_delete_vp.Checked == false)
-                                                            {
-
-                                                                ms_pt = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
-                                                                double twist1 = 2 * Math.PI - (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_rot] * Math.PI / 180;
-                                                                if (_AGEN_mainform.Left_to_Right == false) twist1 = twist1 + Math.PI;
-
-                                                                for (int j = 0; j < _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count; ++j)
-                                                                {
-                                                                    if (_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"] != DBNull.Value &&
-                                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"])) == true &&
-                                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"] != DBNull.Value &&
-                                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"])) == true &&
-                                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"] != DBNull.Value &&
-                                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"])) == true &&
-                                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"] != DBNull.Value &&
-                                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"])) == true &&
-                                                                        _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"] != DBNull.Value &&
-                                                                        Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"])) == true)
-                                                                    {
-
-                                                                        double scale1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"]);
-                                                                        double widthx1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"]);
-                                                                        double heightx1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"]);
-                                                                        double X_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"]);
-                                                                        double Y_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"]);
-
-                                                                        if (j == 0 && checkBoxx1.Checked == true)
-                                                                        {
-                                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra1_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
-                                                                        }
-                                                                        if (j == 1 && checkBoxx2.Checked == true)
-                                                                        {
-                                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra2_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
-                                                                        }
-                                                                        if (j == 2 && checkBoxx3.Checked == true)
-                                                                        {
-                                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra3_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
-                                                                        }
-                                                                        if (j == 3 && checkBoxx4.Checked == true)
-                                                                        {
-                                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra4_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
-                                                                        }
-                                                                        if (j == 4 && checkBoxx5.Checked == true)
-                                                                        {
-                                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra4_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
-                                                                        }
-
-                                                                    }
-                                                                }
-                                                            }
-                                                            #endregion
-
-                                                            #region XREF clip
-
-                                                            if (checkBox_xref_clip.Checked == true)
-                                                            {
-
-                                                                BlockTableRecord BtrecordMS = Functions.get_modelspace(Trans2, Database2);
-
-                                                                BlockTable BlockTable2 = Trans2.GetObject(Database2.BlockTableId, OpenMode.ForRead) as BlockTable;
-                                                                if (BlockTable2.Has(textBox_xref_name.Text) == true)
+                                                                if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                                 {
 
-                                                                    BlockTableRecord xref_rec = Trans2.GetObject(BlockTable2[textBox_xref_name.Text], OpenMode.ForRead) as BlockTableRecord;
-                                                                    if (xref_rec.IsFromExternalReference == true)
+                                                                    if (_AGEN_mainform.Data_Table_regular_bands.Rows.Count > 0)
                                                                     {
-                                                                        foreach (ObjectId id1 in BtrecordMS)
+
+                                                                        if (_AGEN_mainform.Data_Table_regular_bands.Columns.Contains("drafted") == false) _AGEN_mainform.Data_Table_regular_bands.Columns.Add("drafted", typeof(bool));
+                                                                        for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
                                                                         {
-                                                                            BlockReference xref1 = Trans2.GetObject(id1, OpenMode.ForRead) as BlockReference;
-                                                                            if (xref1 != null)
-                                                                            {
-                                                                                string numeXref = xref1.Name;
-                                                                                if (numeXref == textBox_xref_name.Text)
-                                                                                {
-                                                                                    ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x]),
-                                                                                                        Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y]), 0);
-
-                                                                                    double Rotation = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_rot]) * Math.PI / 180;
-
-                                                                                    Polyline poly_clip = _AGEN_mainform.tpage_sheetindex.creaza_rectangle_from_one_point(ms_pt, Rotation, _AGEN_mainform.Vw_width / _AGEN_mainform.Vw_scale,
-                                                                                                                                                                                _AGEN_mainform.Vw_height / _AGEN_mainform.Vw_scale, 1);
-
-                                                                                    // Set the clipping boundary and enable it
-                                                                                    using (Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilter filter = new Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilter())
-                                                                                    {
-
-                                                                                        Point2dCollection ptCol = new Point2dCollection();
-
-                                                                                        for (int n = 0; n < poly_clip.NumberOfVertices; ++n)
-                                                                                        {
-                                                                                            ptCol.Add(poly_clip.GetPoint2dAt(n));
-                                                                                        }
-
-                                                                                        // Define the normal and elevation for the clipping boundary 
-                                                                                        Vector3d Zaxis;
-                                                                                        double Zclip = 0;
-
-                                                                                        if (Database2.TileMode == true)
-                                                                                        {
-                                                                                            Zaxis = Database2.Ucsxdir.CrossProduct(Database2.Ucsydir);
-                                                                                            Zclip = Database2.Elevation;
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            Zaxis = Database2.Pucsxdir.CrossProduct(Database2.Pucsydir);
-                                                                                            Zclip = Database2.Pelevation;
-                                                                                        }
-
-                                                                                        Zclip = 30000;
-
-
-                                                                                        Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilterDefinition filterDef =
-                                                                                            new Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilterDefinition(ptCol, Zaxis, Zclip, 0, 0, true);
-                                                                                        filter.Definition = filterDef;
-
-                                                                                        // Define the name of the extension dictionary and entry name
-                                                                                        string dictName = "ACAD_FILTER";
-                                                                                        string spName = "SPATIAL";
-
-                                                                                        // Check to see if the Extension Dictionary exists, if not create it
-                                                                                        if (xref1.ExtensionDictionary.IsNull)
-                                                                                        {
-                                                                                            xref1.UpgradeOpen();
-                                                                                            xref1.CreateExtensionDictionary();
-                                                                                            xref1.DowngradeOpen();
-                                                                                        }
-
-                                                                                        // Open the Extension Dictionary for write
-                                                                                        DBDictionary extDict = Trans2.GetObject(xref1.ExtensionDictionary, OpenMode.ForWrite) as DBDictionary;
-
-                                                                                        // Check to see if the dictionary for clipped boundaries exists, 
-                                                                                        // and add the spatial filter to the dictionary
-                                                                                        if (extDict.Contains(dictName))
-                                                                                        {
-                                                                                            DBDictionary filterDict = Trans2.GetObject(extDict.GetAt(dictName), OpenMode.ForWrite) as DBDictionary;
-
-                                                                                            if (filterDict.Contains(spName))
-                                                                                            {
-                                                                                                filterDict.Remove(spName);
-                                                                                            }
-
-                                                                                            filterDict.SetAt(spName, filter);
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            using (DBDictionary filterDict = new DBDictionary())
-                                                                                            {
-                                                                                                extDict.SetAt(dictName, filterDict);
-
-                                                                                                Trans2.AddNewlyCreatedDBObject(filterDict, true);
-                                                                                                filterDict.SetAt(spName, filter);
-                                                                                            }
-                                                                                        }
-
-                                                                                        // Append the spatial filter to the drawing
-                                                                                        Trans2.AddNewlyCreatedDBObject(filter, true);
-                                                                                    }
-
-
-
-                                                                                }
-                                                                            }
+                                                                            _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = false;
                                                                         }
-                                                                    }
-
-
-
-                                                                }
-
-
-
-
-
-
-                                                            }
-
-                                                            #endregion
-
-                                                            #region VP ownership
-                                                            if (checkBox_ownership.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                ms_pt = new Point3d(_AGEN_mainform.Point0_prop.X, (_AGEN_mainform.Point0_prop.Y - _AGEN_mainform.Vw_prop_height / 2) - si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_prop_x, _AGEN_mainform.Vw_ps_prop_y, 0);
-                                                                Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_ownership_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_prop_height, 1, 0);
-                                                            }
-                                                            #endregion
-
-                                                            #region VP materials
-                                                            if (checkBox_materials.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                ms_pt = new Point3d(_AGEN_mainform.Point0_mat.X, (_AGEN_mainform.Point0_mat.Y - _AGEN_mainform.Vw_mat_height / 2) - si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_mat_x, _AGEN_mainform.Vw_ps_mat_y, 0);
-                                                                Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_material_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_mat_height, 1, 0);
-
-                                                            }
-                                                            #endregion
-
-
-                                                            #region VP crossing
-                                                            if (checkBox_crossing.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                ms_pt = new Point3d(_AGEN_mainform.Point0_cross.X, (_AGEN_mainform.Point0_cross.Y - _AGEN_mainform.Vw_cross_height / 2) - si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_cross_x, _AGEN_mainform.Vw_ps_cross_y, 0);
-                                                                Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_crossing_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_cross_height, 1, 0);
-                                                            }
-                                                            #endregion
-                                                            #region VP profile
-                                                            if (checkBox_profile.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                if (_AGEN_mainform.prof_width_lr > 0 && _AGEN_mainform.prof_texth > 0 && _AGEN_mainform.prof_x_left != _AGEN_mainform.prof_x_right &&
-                                                                    _AGEN_mainform.prof_x_right != -1.123 && _AGEN_mainform.prof_x_left != -1.123 && _AGEN_mainform.prof_y_down != -1.123 && _AGEN_mainform.prof_hexag != 0)
-                                                                {
-
-                                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                                    {
-
-                                                                        ms_point = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
-                                                                        double M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M1]);
-                                                                        double M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M2]);
-                                                                        Point3d PSpoint_prof = new Point3d(_AGEN_mainform.Vw_ps_prof_x, _AGEN_mainform.Vw_ps_prof_y, 0);
-                                                                        string Layer_name_prof_main_viewport_old = "VP_Prof_ON";
-                                                                        string Layer_name_prof_viewport_old = "VP_Prof_OFF";
-
-                                                                        foreach (ObjectId odid in BtrecordPS)
-                                                                        {
-                                                                            Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
-                                                                            if (checkBox_profile.Checked == true)
-                                                                            {
-                                                                                if (ent1 != null)
-                                                                                {
-                                                                                    if (ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_prof_side_viewport.ToLower() || ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_prof_main_viewport.ToLower()
-                                                                                        || ent1.Layer.ToLower() == Layer_name_prof_viewport_old.ToLower() || ent1.Layer.ToLower() == Layer_name_prof_main_viewport_old.ToLower())
-                                                                                    {
-                                                                                        ent1.UpgradeOpen();
-                                                                                        ent1.Erase();
-                                                                                    }
-                                                                                }
-                                                                            }
-
-
-                                                                        }
-                                                                        Creaza_viewports_profile(file1, Trans2, Database2, BtrecordPS, Data_table_poly, M1, M2, PSpoint_prof, si_index);
-
-                                                                    }
-                                                                }
-                                                            }
-                                                            #endregion
-                                                            #region VP profile_band
-                                                            if (checkBox_profile_band.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-
-
-
-                                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
-                                                                {
-
-                                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
-                                                                    {
-                                                                        double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["x0"]);
-                                                                        double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["y0"]);
-                                                                        double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["height"]);
-                                                                        double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["length"]);
-                                                                        double staY = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["Sta_Y"]);
-                                                                        double th = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["textH"]);
-
-
-                                                                        h_main = _AGEN_mainform.Vw_profband_height;
-
-
-                                                                        ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
-
-                                                                        Point3d ps_point = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y, 0);
-
-
-                                                                        Point3d ps_point_sta = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y - h_main / 2, 0);
-
-
 
                                                                         foreach (ObjectId odid in BtrecordPS)
                                                                         {
@@ -2615,93 +2375,320 @@ namespace Alignment_mdi
                                                                             }
 
                                                                         }
-                                                                        Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, l_main, h_main, _AGEN_mainform.Layer_name_profband_Viewport);
+
+
+                                                                        for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
+                                                                        {
+                                                                            string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
+                                                                            if (nume_fara_ext.ToLower() == dwg_prof.ToLower())
+                                                                            {
+
+                                                                                double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
+                                                                                double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
+                                                                                double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
+                                                                                double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
+
+                                                                                ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
+
+                                                                                for (int k = 0; k < _AGEN_mainform.Data_Table_regular_bands.Rows.Count; ++k)
+                                                                                {
+                                                                                    if (Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["band_name"]) == _AGEN_mainform.tpage_viewport_settings.get_comboBox_bands_multiple_vp())
+                                                                                    {
+                                                                                        if ((bool)_AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] == false)
+                                                                                        {
+                                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_x"]);
+                                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_ps_y"]);
+                                                                                            double width2 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_width"]);
+                                                                                            double height2 = Convert.ToDouble(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["viewport_height"]);
+
+                                                                                            if (_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"] != DBNull.Value)
+                                                                                            {
+                                                                                                string str_scale = Convert.ToString(_AGEN_mainform.Data_Table_regular_bands.Rows[k]["Custom_scale"]);
+                                                                                                if (Functions.IsNumeric(str_scale) == true)
+                                                                                                {
+                                                                                                    _AGEN_mainform.Vw_scale = Convert.ToDouble(str_scale);
+                                                                                                }
+                                                                                            }
+
+                                                                                            Polyline rect1 = new Polyline();
+                                                                                            rect1.AddVertexAt(0, new Point2d(ms_point.X - lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                            rect1.AddVertexAt(1, new Point2d(ms_point.X - lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                            rect1.AddVertexAt(2, new Point2d(ms_point.X + lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                            rect1.AddVertexAt(3, new Point2d(ms_point.X + lr * (width2 / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (height2 / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                                                            rect1.Closed = true;
+
+                                                                                            lista_poly.Add(rect1);
+
+                                                                                            Point3d ps_point = new Point3d(xps, yps, 0);
+                                                                                            Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, width2, height2, _AGEN_mainform.Layer_name_profband_Viewport);
+
+                                                                                            _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = true;
+                                                                                            k = _AGEN_mainform.Data_Table_regular_bands.Rows.Count;
+
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+
+                                                                        _AGEN_mainform.Data_Table_regular_bands.Columns.Remove("drafted");
                                                                     }
+
+
                                                                 }
                                                             }
-                                                            #endregion
+                                                        }
+                                                        #endregion
 
-                                                            #region VP no data band
-                                                            if (checkBox_no_data_band.Checked == true && checkBox_delete_vp.Checked == false)
+
+
+                                                        #region VP plan view
+                                                        if (checkBox_plan_view.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+
+                                                            ms_pt = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
+                                                            double twist1 = 2 * Math.PI - (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_rot] * Math.PI / 180;
+                                                            if (_AGEN_mainform.Left_to_Right == false) twist1 = twist1 + Math.PI;
+                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_Main_Viewport, ms_pt,
+                                                                                                                            new Point3d(_AGEN_mainform.Vw_ps_x, _AGEN_mainform.Vw_ps_y, 0),
+                                                                                                                            _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_height, _AGEN_mainform.Vw_scale, twist1);
+                                                        }
+                                                        #endregion
+
+                                                        #region extra viewports
+                                                        if (_AGEN_mainform.Data_Table_extra_mainVP != null && _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count > 0 && checkBox_delete_vp.Checked == false)
+                                                        {
+
+                                                            ms_pt = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
+                                                            double twist1 = 2 * Math.PI - (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_rot] * Math.PI / 180;
+                                                            if (_AGEN_mainform.Left_to_Right == false) twist1 = twist1 + Math.PI;
+
+                                                            for (int j = 0; j < _AGEN_mainform.Data_Table_extra_mainVP.Rows.Count; ++j)
+                                                            {
+                                                                if (_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"] != DBNull.Value &&
+                                                                    Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"])) == true &&
+                                                                    _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"] != DBNull.Value &&
+                                                                    Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"])) == true &&
+                                                                    _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"] != DBNull.Value &&
+                                                                    Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"])) == true &&
+                                                                    _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"] != DBNull.Value &&
+                                                                    Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"])) == true &&
+                                                                    _AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"] != DBNull.Value &&
+                                                                    Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"])) == true)
+                                                                {
+
+                                                                    double scale1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["Custom_scale"]);
+                                                                    double widthx1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_width"]);
+                                                                    double heightx1 = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_height"]);
+                                                                    double X_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_x"]);
+                                                                    double Y_ps = Convert.ToDouble(_AGEN_mainform.Data_Table_extra_mainVP.Rows[j]["viewport_ps_y"]);
+
+                                                                    if (j == 0 && checkBoxx1.Checked == true)
+                                                                    {
+                                                                        Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra1_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
+                                                                    }
+                                                                    if (j == 1 && checkBoxx2.Checked == true)
+                                                                    {
+                                                                        Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra2_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
+                                                                    }
+                                                                    if (j == 2 && checkBoxx3.Checked == true)
+                                                                    {
+                                                                        Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra3_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
+                                                                    }
+                                                                    if (j == 3 && checkBoxx4.Checked == true)
+                                                                    {
+                                                                        Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra4_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
+                                                                    }
+                                                                    if (j == 4 && checkBoxx5.Checked == true)
+                                                                    {
+                                                                        Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_extra4_Viewport, ms_pt, new Point3d(X_ps, Y_ps, 0), widthx1, heightx1, scale1, twist1);
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                        #endregion
+
+                                                        #region XREF clip
+
+                                                        if (checkBox_xref_clip.Checked == true)
+                                                        {
+
+                                                            BlockTableRecord BtrecordMS = Functions.get_modelspace(Trans2, Database2);
+
+                                                            BlockTable BlockTable2 = Trans2.GetObject(Database2.BlockTableId, OpenMode.ForRead) as BlockTable;
+                                                            if (BlockTable2.Has(textBox_xref_name.Text) == true)
                                                             {
 
-
-
-
-                                                                if (h_nd == 0 || w_nd == 0)
+                                                                BlockTableRecord xref_rec = Trans2.GetObject(BlockTable2[textBox_xref_name.Text], OpenMode.ForRead) as BlockTableRecord;
+                                                                if (xref_rec.IsFromExternalReference == true)
                                                                 {
-                                                                    MessageBox.Show("No data band height = 0, verify your viewport settings!");
-                                                                    set_enable_true();
-                                                                    return;
-                                                                }
-
-
-                                                                foreach (ObjectId odid in BtrecordPS)
-                                                                {
-                                                                    Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
-
-                                                                    if (ent1 != null)
+                                                                    foreach (ObjectId id1 in BtrecordMS)
                                                                     {
-                                                                        if (ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_no_data_band_Viewport.ToLower())
+                                                                        BlockReference xref1 = Trans2.GetObject(id1, OpenMode.ForRead) as BlockReference;
+                                                                        if (xref1 != null)
                                                                         {
-                                                                            ent1.UpgradeOpen();
-                                                                            ent1.Erase();
+                                                                            string numeXref = xref1.Name;
+                                                                            if (numeXref == textBox_xref_name.Text)
+                                                                            {
+                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x]),
+                                                                                                    Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y]), 0);
+
+                                                                                double Rotation = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_rot]) * Math.PI / 180;
+
+                                                                                Polyline poly_clip = _AGEN_mainform.tpage_sheetindex.creaza_rectangle_from_one_point(ms_pt, Rotation, _AGEN_mainform.Vw_width / _AGEN_mainform.Vw_scale,
+                                                                                                                                                                            _AGEN_mainform.Vw_height / _AGEN_mainform.Vw_scale, 1);
+
+                                                                                // Set the clipping boundary and enable it
+                                                                                using (Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilter filter = new Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilter())
+                                                                                {
+
+                                                                                    Point2dCollection ptCol = new Point2dCollection();
+
+                                                                                    for (int n = 0; n < poly_clip.NumberOfVertices; ++n)
+                                                                                    {
+                                                                                        ptCol.Add(poly_clip.GetPoint2dAt(n));
+                                                                                    }
+
+                                                                                    // Define the normal and elevation for the clipping boundary 
+                                                                                    Vector3d Zaxis;
+                                                                                    double Zclip = 0;
+
+                                                                                    if (Database2.TileMode == true)
+                                                                                    {
+                                                                                        Zaxis = Database2.Ucsxdir.CrossProduct(Database2.Ucsydir);
+                                                                                        Zclip = Database2.Elevation;
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        Zaxis = Database2.Pucsxdir.CrossProduct(Database2.Pucsydir);
+                                                                                        Zclip = Database2.Pelevation;
+                                                                                    }
+
+                                                                                    Zclip = 30000;
+
+
+                                                                                    Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilterDefinition filterDef =
+                                                                                        new Autodesk.AutoCAD.DatabaseServices.Filters.SpatialFilterDefinition(ptCol, Zaxis, Zclip, 0, 0, true);
+                                                                                    filter.Definition = filterDef;
+
+                                                                                    // Define the name of the extension dictionary and entry name
+                                                                                    string dictName = "ACAD_FILTER";
+                                                                                    string spName = "SPATIAL";
+
+                                                                                    // Check to see if the Extension Dictionary exists, if not create it
+                                                                                    if (xref1.ExtensionDictionary.IsNull)
+                                                                                    {
+                                                                                        xref1.UpgradeOpen();
+                                                                                        xref1.CreateExtensionDictionary();
+                                                                                        xref1.DowngradeOpen();
+                                                                                    }
+
+                                                                                    // Open the Extension Dictionary for write
+                                                                                    DBDictionary extDict = Trans2.GetObject(xref1.ExtensionDictionary, OpenMode.ForWrite) as DBDictionary;
+
+                                                                                    // Check to see if the dictionary for clipped boundaries exists, 
+                                                                                    // and add the spatial filter to the dictionary
+                                                                                    if (extDict.Contains(dictName))
+                                                                                    {
+                                                                                        DBDictionary filterDict = Trans2.GetObject(extDict.GetAt(dictName), OpenMode.ForWrite) as DBDictionary;
+
+                                                                                        if (filterDict.Contains(spName))
+                                                                                        {
+                                                                                            filterDict.Remove(spName);
+                                                                                        }
+
+                                                                                        filterDict.SetAt(spName, filter);
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        using (DBDictionary filterDict = new DBDictionary())
+                                                                                        {
+                                                                                            extDict.SetAt(dictName, filterDict);
+
+                                                                                            Trans2.AddNewlyCreatedDBObject(filterDict, true);
+                                                                                            filterDict.SetAt(spName, filter);
+                                                                                        }
+                                                                                    }
+
+                                                                                    // Append the spatial filter to the drawing
+                                                                                    Trans2.AddNewlyCreatedDBObject(filter, true);
+                                                                                }
+
+
+
+                                                                            }
                                                                         }
                                                                     }
-
                                                                 }
 
 
 
-
-                                                                ms_point = new Point3d(x_nd_ms, y_no_data_c, 0);
-                                                                Point3d ps_point = new Point3d(x_nd_ps, y_nd_ps, 0);
-                                                                Creaza_viewports_no_data_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, w_nd, h_nd, scale_nd, _AGEN_mainform.Layer_name_no_data_band_Viewport);
-
-
-
-
-
-
-
                                                             }
-                                                            #endregion
 
-                                                            #region VP TBLK
-                                                            if (checkBox_tblk.Checked == true && checkBox_delete_vp.Checked == false)
+
+
+
+
+
+                                                        }
+
+                                                        #endregion
+
+                                                        #region VP ownership
+                                                        if (checkBox_ownership.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+                                                            ms_pt = new Point3d(_AGEN_mainform.Point0_prop.X, (_AGEN_mainform.Point0_prop.Y - _AGEN_mainform.Vw_prop_height / 2) - si_index * _AGEN_mainform.Band_Separation, 0);
+                                                            Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_prop_x, _AGEN_mainform.Vw_ps_prop_y, 0);
+                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_ownership_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_prop_height, 1, 0);
+                                                        }
+                                                        #endregion
+
+                                                        #region VP materials
+                                                        if (checkBox_materials.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+                                                            ms_pt = new Point3d(_AGEN_mainform.Point0_mat.X, (_AGEN_mainform.Point0_mat.Y - _AGEN_mainform.Vw_mat_height / 2) - si_index * _AGEN_mainform.Band_Separation, 0);
+                                                            Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_mat_x, _AGEN_mainform.Vw_ps_mat_y, 0);
+                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_material_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_mat_height, 1, 0);
+
+                                                        }
+                                                        #endregion
+
+
+                                                        #region VP crossing
+                                                        if (checkBox_crossing.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+                                                            ms_pt = new Point3d(_AGEN_mainform.Point0_cross.X, (_AGEN_mainform.Point0_cross.Y - _AGEN_mainform.Vw_cross_height / 2) - si_index * _AGEN_mainform.Band_Separation, 0);
+                                                            Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_cross_x, _AGEN_mainform.Vw_ps_cross_y, 0);
+                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_crossing_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_width, _AGEN_mainform.Vw_cross_height, 1, 0);
+                                                        }
+                                                        #endregion
+                                                        #region VP profile
+                                                        if (checkBox_profile.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+                                                            if (_AGEN_mainform.prof_width_lr > 0 && _AGEN_mainform.prof_texth > 0 && _AGEN_mainform.prof_x_left != _AGEN_mainform.prof_x_right &&
+                                                                _AGEN_mainform.prof_x_right != -1.123 && _AGEN_mainform.prof_x_left != -1.123 && _AGEN_mainform.prof_y_down != -1.123 && _AGEN_mainform.prof_hexag != 0)
                                                             {
-                                                                ms_pt = new Point3d(_AGEN_mainform.Point0_tblk.X, (_AGEN_mainform.Point0_tblk.Y - _AGEN_mainform.Vw_tblk_height / 2) - si_index * _AGEN_mainform.tblk_separation, 0);
 
-                                                                if (_AGEN_mainform.tblk_twist == 90 * Math.PI / 180)
-                                                                {
-                                                                    ms_pt = new Point3d(_AGEN_mainform.Point0_tblk.X, (_AGEN_mainform.Point0_tblk.Y - _AGEN_mainform.Vw_tblk_width / 2) - si_index * _AGEN_mainform.tblk_separation, 0);
-                                                                }
-
-                                                                Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_tblk_x, _AGEN_mainform.Vw_ps_tblk_y, 0);
-                                                                Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_tblk_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_tblk_width, _AGEN_mainform.Vw_tblk_height, 1, _AGEN_mainform.tblk_twist);
-                                                            }
-                                                            #endregion
-                                                            #region VP slope
-                                                            if (checkBox_slope_band.Checked == true && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                if (_AGEN_mainform.Vw_slope_height > 0 && _AGEN_mainform.Vw_ps_slope_y > 0)
+                                                                if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                                 {
 
-                                                                    if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                                    ms_point = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
+                                                                    double M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M1]);
+                                                                    double M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M2]);
+                                                                    Point3d PSpoint_prof = new Point3d(_AGEN_mainform.Vw_ps_prof_x, _AGEN_mainform.Vw_ps_prof_y, 0);
+                                                                    string Layer_name_prof_main_viewport_old = "VP_Prof_ON";
+                                                                    string Layer_name_prof_viewport_old = "VP_Prof_OFF";
+
+                                                                    foreach (ObjectId odid in BtrecordPS)
                                                                     {
-                                                                        ms_point = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
-                                                                        double M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M1]);
-                                                                        double M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M2]);
-                                                                        Point3d PSpoint_slope = new Point3d(_AGEN_mainform.Vw_ps_slope_x, _AGEN_mainform.Vw_ps_slope_y, 0);
-
-                                                                        string Layer_name_prof_viewport_old = "VP_Slope";
-
-                                                                        foreach (ObjectId odid in BtrecordPS)
+                                                                        Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
+                                                                        if (checkBox_profile.Checked == true)
                                                                         {
-                                                                            Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
                                                                             if (ent1 != null)
                                                                             {
-                                                                                if (ent1.Layer.ToLower() == Layer_name_prof_viewport_old.ToLower())
+                                                                                if (ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_prof_side_viewport.ToLower() || ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_prof_main_viewport.ToLower()
+                                                                                    || ent1.Layer.ToLower() == Layer_name_prof_viewport_old.ToLower() || ent1.Layer.ToLower() == Layer_name_prof_main_viewport_old.ToLower())
                                                                                 {
                                                                                     ent1.UpgradeOpen();
                                                                                     ent1.Erase();
@@ -2709,644 +2696,112 @@ namespace Alignment_mdi
                                                                             }
                                                                         }
 
-                                                                        double Hexag = 1;
-                                                                        if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex()) == true)
-                                                                        {
-                                                                            Hexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex());
-                                                                        }
-                                                                        if (Hexag == 0) Hexag = 1;
 
-                                                                        double Sta_at_0 = Functions.Station_equation_of(0, _AGEN_mainform.dt_station_equation);
-                                                                        Creaza_viewport_slope(Trans2, Database2, BtrecordPS, Sta_at_0, Hexag, M1, M2, PSpoint_slope);
                                                                     }
+                                                                    Creaza_viewports_profile(file1, Trans2, Database2, BtrecordPS, Data_table_poly, M1, M2, PSpoint_prof, si_index);
+
                                                                 }
                                                             }
-
-                                                            #endregion
-
-                                                            #region VP custom bands
-                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count > 0 && checkBox_delete_vp.Checked == false)
-                                                            {
-                                                                if (checkBox1.Visible == true)
-                                                                {
-                                                                    if (checkBox1.Checked == true)
-                                                                    {
-
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 1)
-                                                                        {
-
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"]);
-
-                                                                                double y1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"]) -
-                                                                                                           0.5 * height1 / scale_cust - si_index * _AGEN_mainform.Band_Separation / scale_cust;
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"]), y1, 0);
-
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, scale_cust, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                if (checkBox2.Visible == true)
-                                                                {
-                                                                    if (checkBox2.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 2)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                if (checkBox3.Visible == true)
-                                                                {
-                                                                    if (checkBox3.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 3)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                if (checkBox4.Visible == true)
-                                                                {
-                                                                    if (checkBox4.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 4)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                if (checkBox5.Visible == true)
-                                                                {
-                                                                    if (checkBox5.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 5)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                                if (checkBox6.Visible == true)
-                                                                {
-                                                                    if (checkBox6.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 6)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox7.Visible == true)
-                                                                {
-                                                                    if (checkBox7.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 7)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox8.Visible == true)
-                                                                {
-                                                                    if (checkBox8.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 8)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox9.Visible == true)
-                                                                {
-                                                                    if (checkBox9.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 9)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox10.Visible == true)
-                                                                {
-                                                                    if (checkBox10.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 10)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox11.Visible == true)
-                                                                {
-                                                                    if (checkBox11.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 11)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox12.Visible == true)
-                                                                {
-                                                                    if (checkBox12.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 12)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox13.Visible == true)
-                                                                {
-                                                                    if (checkBox13.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 13)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox14.Visible == true)
-                                                                {
-                                                                    if (checkBox14.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 14)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox15.Visible == true)
-                                                                {
-                                                                    if (checkBox15.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 14)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-
-                                                                if (checkBox16.Visible == true)
-                                                                {
-                                                                    if (checkBox16.Checked == true)
-                                                                    {
-                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 16)
-                                                                        {
-                                                                            if (_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"] != DBNull.Value &&
-                                                                                _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"] != DBNull.Value)
-                                                                            {
-                                                                                string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"]) + "VP";
-
-                                                                                height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"]);
-                                                                                width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"]);
-
-                                                                                double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"]);
-                                                                                double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"]);
-
-
-                                                                                ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"]),
-                                                                                                    Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"]) - 0.5 * height1 -
-
-                                                                                                   si_index * _AGEN_mainform.Band_Separation, 0);
-                                                                                ps_pt = new Point3d(xps, yps, 0);
-
-                                                                                Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
-
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-
-                                                            }
-                                                            #endregion
-
-                                                            Trans2.Commit();
                                                         }
-                                                        HostApplicationServices.WorkingDatabase = ThisDrawing.Database;
-                                                        Database2.SaveAs(file1, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
-                                                        #region profile band vp rectangles
+                                                        #endregion
+                                                        #region VP profile_band
                                                         if (checkBox_profile_band.Checked == true && checkBox_delete_vp.Checked == false)
                                                         {
 
-                                                            Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
-                                                            Polyline polyVP1 = new Polyline();
 
-                                                            polyVP1.Layer = _AGEN_mainform.layer_no_plot;
-                                                            polyVP1.ColorIndex = 1;
 
-                                                            polyVP1.AddVertexAt(0, new Point2d(ms_point.X - lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                            polyVP1.AddVertexAt(1, new Point2d(ms_point.X - lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                            polyVP1.AddVertexAt(2, new Point2d(ms_point.X + lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                            polyVP1.AddVertexAt(3, new Point2d(ms_point.X + lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
-                                                            polyVP1.Closed = true;
+                                                            if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                            {
 
-                                                            Btrecord.AppendEntity(polyVP1);
-                                                            Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+                                                                if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
+                                                                {
+                                                                    double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["x0"]);
+                                                                    double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["y0"]);
+                                                                    double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["height"]);
+                                                                    double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["length"]);
+                                                                    double staY = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["Sta_Y"]);
+                                                                    double th = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["textH"]);
+
+
+                                                                    h_main = _AGEN_mainform.Vw_profband_height;
+
+
+                                                                    ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
+
+                                                                    Point3d ps_point = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y, 0);
+
+
+                                                                    Point3d ps_point_sta = new Point3d(_AGEN_mainform.Vw_ps_profband_x, _AGEN_mainform.Vw_ps_profband_y - h_main / 2, 0);
+
+
+
+                                                                    foreach (ObjectId odid in BtrecordPS)
+                                                                    {
+                                                                        Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
+
+                                                                        if (ent1 != null)
+                                                                        {
+                                                                            if (ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_profband_Viewport.ToLower())
+                                                                            {
+                                                                                ent1.UpgradeOpen();
+                                                                                ent1.Erase();
+                                                                            }
+                                                                        }
+
+                                                                    }
+                                                                    Creaza_viewports_profile_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, l_main, h_main, _AGEN_mainform.Layer_name_profband_Viewport);
+                                                                }
+                                                            }
+                                                        }
+                                                        #endregion
+
+                                                        #region VP no data band
+                                                        if (checkBox_no_data_band.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        {
+
+
+
+
+                                                            if (h_nd == 0 || w_nd == 0)
+                                                            {
+                                                                MessageBox.Show("No data band height = 0, verify your viewport settings!");
+                                                                set_enable_true();
+                                                                return;
+                                                            }
+
+
+                                                            foreach (ObjectId odid in BtrecordPS)
+                                                            {
+                                                                Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
+
+                                                                if (ent1 != null)
+                                                                {
+                                                                    if (ent1.Layer.ToLower() == _AGEN_mainform.Layer_name_no_data_band_Viewport.ToLower())
+                                                                    {
+                                                                        ent1.UpgradeOpen();
+                                                                        ent1.Erase();
+                                                                    }
+                                                                }
+
+                                                            }
+
+
+
+
+                                                            ms_point = new Point3d(x_nd_ms, y_no_data_c, 0);
+                                                            Point3d ps_point = new Point3d(x_nd_ps, y_nd_ps, 0);
+                                                            Creaza_viewports_no_data_band(Trans2, Database2, BtrecordPS, ms_point, ps_point, w_nd, h_nd, scale_nd, _AGEN_mainform.Layer_name_no_data_band_Viewport);
+
+
+
+
+
 
 
                                                         }
                                                         #endregion
 
-
-                                                        #region tblk band rectangles
+                                                        #region VP TBLK
                                                         if (checkBox_tblk.Checked == true && checkBox_delete_vp.Checked == false)
                                                         {
                                                             ms_pt = new Point3d(_AGEN_mainform.Point0_tblk.X, (_AGEN_mainform.Point0_tblk.Y - _AGEN_mainform.Vw_tblk_height / 2) - si_index * _AGEN_mainform.tblk_separation, 0);
@@ -3355,82 +2810,761 @@ namespace Alignment_mdi
                                                             {
                                                                 ms_pt = new Point3d(_AGEN_mainform.Point0_tblk.X, (_AGEN_mainform.Point0_tblk.Y - _AGEN_mainform.Vw_tblk_width / 2) - si_index * _AGEN_mainform.tblk_separation, 0);
                                                             }
-                                                            if (_AGEN_mainform.tblk_twist == 0)
-                                                            {
-                                                                draw_custom_vp_rectangles(Trans1, Btrecord, lr, ms_pt, _AGEN_mainform.Vw_tblk_width, _AGEN_mainform.Vw_tblk_height, nume_fara_ext);
-                                                            }
-                                                            if (_AGEN_mainform.tblk_twist == Math.PI / 2)
-                                                            {
-                                                                draw_custom_vp_rectangles(Trans1, Btrecord, lr, ms_pt, _AGEN_mainform.Vw_tblk_height, _AGEN_mainform.Vw_tblk_width, nume_fara_ext);
-                                                            }
+
+                                                            Point3d center_ps = new Point3d(_AGEN_mainform.Vw_ps_tblk_x, _AGEN_mainform.Vw_ps_tblk_y, 0);
+                                                            Creaza_viewport_on_alignment_on_existing(Database2, _AGEN_mainform.Layer_name_tblk_Viewport, ms_pt, center_ps, _AGEN_mainform.Vw_tblk_width, _AGEN_mainform.Vw_tblk_height, 1, _AGEN_mainform.tblk_twist);
                                                         }
                                                         #endregion
-
-
-                                                        #region MULTIPLE profile vp rectangles
-                                                        if (checkBox_mult_vp_prof.Checked == true && checkBox_delete_vp.Checked == false)
+                                                        #region VP slope
+                                                        if (checkBox_slope_band.Checked == true && checkBox_delete_vp.Checked == false)
                                                         {
-                                                            if (lista_poly.Count > 0)
+                                                            if (_AGEN_mainform.Vw_slope_height > 0 && _AGEN_mainform.Vw_ps_slope_y > 0)
                                                             {
-                                                                Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
 
-                                                                for (int m = 0; m < lista_poly.Count; ++m)
+                                                                if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                                 {
+                                                                    ms_point = new Point3d((double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_x], (double)_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_y], 0);
+                                                                    double M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M1]);
+                                                                    double M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[si_index][_AGEN_mainform.Col_M2]);
+                                                                    Point3d PSpoint_slope = new Point3d(_AGEN_mainform.Vw_ps_slope_x, _AGEN_mainform.Vw_ps_slope_y, 0);
 
-                                                                    Polyline polyVP1 = new Polyline();
-                                                                    polyVP1 = lista_poly[m];
-                                                                    polyVP1.Layer = _AGEN_mainform.layer_no_plot;
-                                                                    polyVP1.ColorIndex = 1;
-                                                                    Btrecord.AppendEntity(polyVP1);
-                                                                    Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+                                                                    string Layer_name_prof_viewport_old = "VP_Slope";
+
+                                                                    foreach (ObjectId odid in BtrecordPS)
+                                                                    {
+                                                                        Entity ent1 = Trans2.GetObject(odid, OpenMode.ForRead) as Entity;
+                                                                        if (ent1 != null)
+                                                                        {
+                                                                            if (ent1.Layer.ToLower() == Layer_name_prof_viewport_old.ToLower())
+                                                                            {
+                                                                                ent1.UpgradeOpen();
+                                                                                ent1.Erase();
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                    double Hexag = 1;
+                                                                    if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex()) == true)
+                                                                    {
+                                                                        Hexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex());
+                                                                    }
+                                                                    if (Hexag == 0) Hexag = 1;
+
+                                                                    double Sta_at_0 = Functions.Station_equation_of(0, _AGEN_mainform.dt_station_equation);
+                                                                    Creaza_viewport_slope(Trans2, Database2, BtrecordPS, Sta_at_0, Hexag, M1, M2, PSpoint_slope);
                                                                 }
                                                             }
                                                         }
+
                                                         #endregion
 
-
-                                                        #region nodata band vp rectangles
-                                                        if (checkBox_no_data_band.Checked == true)
+                                                        #region VP custom bands
+                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count > 0 && checkBox_delete_vp.Checked == false)
                                                         {
-                                                            Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
-                                                            Polyline polyVP1 = new Polyline();
+                                                            if (checkBox1.Visible == true)
+                                                            {
+                                                                if (checkBox1.Checked == true)
+                                                                {
 
-                                                            polyVP1.Layer = _AGEN_mainform.layer_no_plot;
-                                                            polyVP1.ColorIndex = 1;
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 1)
+                                                                    {
 
-                                                            polyVP1.AddVertexAt(0, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                            polyVP1.AddVertexAt(1, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                            polyVP1.AddVertexAt(2, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                            polyVP1.AddVertexAt(3, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
-                                                            polyVP1.Closed = true;
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["band_name"]) + "VP";
 
-                                                            Btrecord.AppendEntity(polyVP1);
-                                                            Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ps_y"]);
+
+                                                                            double y1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_y"]) -
+                                                                                                       0.5 * height1 / scale_cust - si_index * _AGEN_mainform.Band_Separation / scale_cust;
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[0]["viewport_ms_x"]), y1, 0);
+
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, scale_cust, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            if (checkBox2.Visible == true)
+                                                            {
+                                                                if (checkBox2.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 2)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[1]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            if (checkBox3.Visible == true)
+                                                            {
+                                                                if (checkBox3.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 3)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[2]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            if (checkBox4.Visible == true)
+                                                            {
+                                                                if (checkBox4.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 4)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[3]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            if (checkBox5.Visible == true)
+                                                            {
+                                                                if (checkBox5.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 5)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[4]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+                                                            if (checkBox6.Visible == true)
+                                                            {
+                                                                if (checkBox6.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 6)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[5]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox7.Visible == true)
+                                                            {
+                                                                if (checkBox7.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 7)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[6]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox8.Visible == true)
+                                                            {
+                                                                if (checkBox8.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 8)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[7]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox9.Visible == true)
+                                                            {
+                                                                if (checkBox9.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 9)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[8]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox10.Visible == true)
+                                                            {
+                                                                if (checkBox10.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 10)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[9]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox11.Visible == true)
+                                                            {
+                                                                if (checkBox11.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 11)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[10]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox12.Visible == true)
+                                                            {
+                                                                if (checkBox12.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 12)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[11]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox13.Visible == true)
+                                                            {
+                                                                if (checkBox13.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 13)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[12]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox14.Visible == true)
+                                                            {
+                                                                if (checkBox14.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 14)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[13]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox15.Visible == true)
+                                                            {
+                                                                if (checkBox15.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 14)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[14]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                            if (checkBox16.Visible == true)
+                                                            {
+                                                                if (checkBox16.Checked == true)
+                                                                {
+                                                                    if (_AGEN_mainform.Data_Table_custom_bands.Rows.Count >= 16)
+                                                                    {
+                                                                        if (_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"] != DBNull.Value &&
+                                                                            _AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"] != DBNull.Value)
+                                                                        {
+                                                                            string LN = "AGEN_" + Convert.ToString(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["band_name"]) + "VP";
+
+                                                                            height1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_height"]);
+                                                                            width1 = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_width"]);
+
+                                                                            double xps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_x"]);
+                                                                            double yps = Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ps_y"]);
+
+
+                                                                            ms_pt = new Point3d(Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_x"]),
+                                                                                                Convert.ToDouble(_AGEN_mainform.Data_Table_custom_bands.Rows[15]["viewport_ms_y"]) - 0.5 * height1 -
+
+                                                                                               si_index * _AGEN_mainform.Band_Separation, 0);
+                                                                            ps_pt = new Point3d(xps, yps, 0);
+
+                                                                            Creaza_viewport_on_alignment_at_generation(Database2, LN, ms_pt, ps_pt, width1, height1, 1, 0);
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
 
                                                         }
                                                         #endregion
 
+                                                        Trans2.Commit();
+                                                    }
+                                                    HostApplicationServices.WorkingDatabase = ThisDrawing.Database;
+                                                    Database2.SaveAs(file1, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
+                                                    #region profile band vp rectangles
+                                                    if (checkBox_profile_band.Checked == true && checkBox_delete_vp.Checked == false)
+                                                    {
+
+                                                        Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
+                                                        Polyline polyVP1 = new Polyline();
+
+                                                        polyVP1.Layer = _AGEN_mainform.layer_no_plot;
+                                                        polyVP1.ColorIndex = 1;
+
+                                                        polyVP1.AddVertexAt(0, new Point2d(ms_point.X - lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                        polyVP1.AddVertexAt(1, new Point2d(ms_point.X - lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                        polyVP1.AddVertexAt(2, new Point2d(ms_point.X + lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y + (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                        polyVP1.AddVertexAt(3, new Point2d(ms_point.X + lr * (l_main / 2) / _AGEN_mainform.Vw_scale, ms_point.Y - (h_main / 2) / _AGEN_mainform.Vw_scale), 0, 0, 0);
+                                                        polyVP1.Closed = true;
+
+                                                        Btrecord.AppendEntity(polyVP1);
+                                                        Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+
 
                                                     }
+                                                    #endregion
+
+
+                                                    #region tblk band rectangles
+                                                    if (checkBox_tblk.Checked == true && checkBox_delete_vp.Checked == false)
+                                                    {
+                                                        ms_pt = new Point3d(_AGEN_mainform.Point0_tblk.X, (_AGEN_mainform.Point0_tblk.Y - _AGEN_mainform.Vw_tblk_height / 2) - si_index * _AGEN_mainform.tblk_separation, 0);
+
+                                                        if (_AGEN_mainform.tblk_twist == 90 * Math.PI / 180)
+                                                        {
+                                                            ms_pt = new Point3d(_AGEN_mainform.Point0_tblk.X, (_AGEN_mainform.Point0_tblk.Y - _AGEN_mainform.Vw_tblk_width / 2) - si_index * _AGEN_mainform.tblk_separation, 0);
+                                                        }
+                                                        if (_AGEN_mainform.tblk_twist == 0)
+                                                        {
+                                                            draw_custom_vp_rectangles(Trans1, Btrecord, lr, ms_pt, _AGEN_mainform.Vw_tblk_width, _AGEN_mainform.Vw_tblk_height, nume_fara_ext);
+                                                        }
+                                                        if (_AGEN_mainform.tblk_twist == Math.PI / 2)
+                                                        {
+                                                            draw_custom_vp_rectangles(Trans1, Btrecord, lr, ms_pt, _AGEN_mainform.Vw_tblk_height, _AGEN_mainform.Vw_tblk_width, nume_fara_ext);
+                                                        }
+                                                    }
+                                                    #endregion
+
+
+                                                    #region MULTIPLE profile vp rectangles
+                                                    if (checkBox_mult_vp_prof.Checked == true && checkBox_delete_vp.Checked == false)
+                                                    {
+                                                        if (lista_poly.Count > 0)
+                                                        {
+                                                            Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
+
+                                                            for (int m = 0; m < lista_poly.Count; ++m)
+                                                            {
+
+                                                                Polyline polyVP1 = new Polyline();
+                                                                polyVP1 = lista_poly[m];
+                                                                polyVP1.Layer = _AGEN_mainform.layer_no_plot;
+                                                                polyVP1.ColorIndex = 1;
+                                                                Btrecord.AppendEntity(polyVP1);
+                                                                Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+                                                            }
+                                                        }
+                                                    }
+                                                    #endregion
+
+
+                                                    #region nodata band vp rectangles
+                                                    if (checkBox_no_data_band.Checked == true)
+                                                    {
+                                                        Functions.Creaza_layer(_AGEN_mainform.layer_no_plot, 30, false);
+                                                        Polyline polyVP1 = new Polyline();
+
+                                                        polyVP1.Layer = _AGEN_mainform.layer_no_plot;
+                                                        polyVP1.ColorIndex = 1;
+
+                                                        polyVP1.AddVertexAt(0, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                        polyVP1.AddVertexAt(1, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c + 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                        polyVP1.AddVertexAt(2, new Point2d(x_nd_ms + (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                        polyVP1.AddVertexAt(3, new Point2d(x_nd_ms - (w_nd / 2) / scale_nd, y_no_data_c - 0.5 * h_nd / scale_nd), 0, 0, 0);
+                                                        polyVP1.Closed = true;
+
+                                                        Btrecord.AppendEntity(polyVP1);
+                                                        Trans1.AddNewlyCreatedDBObject(polyVP1, true);
+
+                                                    }
+                                                    #endregion
+
+
                                                 }
                                             }
                                         }
                                     }
-                                    MessageBox.Show("done");
                                 }
-                                #endregion
-
-
-                                Trans1.Commit();
+                                MessageBox.Show("done");
                             }
+                            #endregion
+
+
+                            Trans1.Commit();
                         }
                     }
+
                 }
 
                 catch (System.Exception ex)
                 {
                     MessageBox.Show(ex.Message);
-
+                    Display_dt = null;
                 }
             }
             catch (System.AccessViolationException ex1)
@@ -3441,7 +3575,7 @@ namespace Alignment_mdi
 
 
             _AGEN_mainform.tpage_processing.Hide();
-            Freeze_operations = false;
+            set_enable_true();
 
         }
 
@@ -3527,51 +3661,51 @@ namespace Alignment_mdi
                 string anno_name = "xxx";
                 if (Math.Round(scale1, 1) == 0.1)
                 {
-                    anno_name = "_1:10";
+                    anno_name = "1:10";
                 }
                 if (Math.Round(scale1, 2) == 0.05)
                 {
-                    anno_name = "_1:20";
+                    anno_name = "1:20";
                 }
                 if (Math.Round(scale1, 3) == 0.033)
                 {
-                    anno_name = "_1:30";
+                    anno_name = "1:30";
                 }
                 if (Math.Round(scale1, 3) == 0.025)
                 {
-                    anno_name = "_1:40";
+                    anno_name = "1:40";
                 }
                 if (Math.Round(scale1, 2) == 0.02)
                 {
-                    anno_name = "_1:50";
+                    anno_name = "1:50";
                 }
                 if (Math.Round(scale1, 3) == 0.017)
                 {
-                    anno_name = "_1:60";
+                    anno_name = "1:60";
                 }
                 if (Math.Round(scale1, 2) == 0.01)
                 {
-                    anno_name = "_1:100";
+                    anno_name = "1:100";
                 }
                 if (Math.Round(scale1, 3) == 0.005)
                 {
-                    anno_name = "_1:200";
+                    anno_name = "1:200";
                 }
                 if (Math.Round(scale1, 4) == 0.0033)
                 {
-                    anno_name = "_1:300";
+                    anno_name = "1:300";
                 }
                 if (Math.Round(scale1, 4) == 0.0025)
                 {
-                    anno_name = "_1:400";
+                    anno_name = "1:400";
                 }
                 if (Math.Round(scale1, 3) == 0.002)
                 {
-                    anno_name = "_1:500";
+                    anno_name = "1:500";
                 }
                 if (Math.Round(scale1, 4) == 0.0017)
                 {
-                    anno_name = "_1:600";
+                    anno_name = "1:600";
                 }
 
                 foreach (var context1 in occ)
