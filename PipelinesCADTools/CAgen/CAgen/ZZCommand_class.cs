@@ -3779,7 +3779,7 @@ namespace Alignment_mdi
                 string col_rotationblock = "Block Rotation";
                 string col_blockscale = "Block Scale";
                 string col_area = "Area";
-
+                string col_sta2d = "Station2D";
 
                 dt1.Columns.Add(col_type, typeof(string));
                 dt1.Columns.Add(col_layer, typeof(string));
@@ -3804,6 +3804,7 @@ namespace Alignment_mdi
                 dt1.Columns.Add(col_Blockname, typeof(string));
                 dt1.Columns.Add(col_rotationblock, typeof(double));
                 dt1.Columns.Add(col_blockscale, typeof(double));
+                dt1.Columns.Add(col_sta2d, typeof(double));
 
 
                 using (DocumentLock lock1 = ThisDrawing.LockDocument())
@@ -4044,7 +4045,7 @@ namespace Alignment_mdi
                                     {
                                         Autodesk.AutoCAD.DatabaseServices.Polyline3d poly3D = ent1 as Autodesk.AutoCAD.DatabaseServices.Polyline3d;
                                         Polyline poly1 = Functions.Build_2dpoly_from_3d(poly3D);
-
+                                        dt1.Columns[col_sta2d].SetOrdinal(5);
                                         for (int j = 0; j < poly1.NumberOfVertices; j++)
                                         {
                                             double x1 = poly1.GetPoint2dAt(j).X;
@@ -4056,6 +4057,7 @@ namespace Alignment_mdi
                                             dt1.Rows[dt1.Rows.Count - 1][col_y] = y1;
                                             dt1.Rows[dt1.Rows.Count - 1][col_z] = poly3D.GetPointAtParameter(j).Z;
                                             dt1.Rows[dt1.Rows.Count - 1][col_sta] = poly3D.GetDistanceAtParameter(j);
+                                            dt1.Rows[dt1.Rows.Count - 1][col_sta2d] = poly1.GetDistanceAtParameter(j);
                                             dt1.Rows[dt1.Rows.Count - 1][col_layer] = poly3D.Layer;
                                             if (j == 0)
                                             {

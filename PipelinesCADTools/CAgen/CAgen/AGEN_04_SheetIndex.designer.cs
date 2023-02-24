@@ -90,6 +90,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.button_layer_alpha_beta = new System.Windows.Forms.Button();
             this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -745,6 +746,7 @@
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.checkBox_alpha_beta);
             this.panel4.Controls.Add(this.label5);
+            this.panel4.Controls.Add(this.button_layer_alpha_beta);
             this.panel4.Controls.Add(this.button_atp);
             this.panel4.Location = new System.Drawing.Point(568, 60);
             this.panel4.Name = "panel4";
@@ -756,7 +758,7 @@
             this.checkBox_alpha_beta.AutoSize = true;
             this.checkBox_alpha_beta.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_alpha_beta.ForeColor = System.Drawing.Color.White;
-            this.checkBox_alpha_beta.Location = new System.Drawing.Point(6, 23);
+            this.checkBox_alpha_beta.Location = new System.Drawing.Point(7, 25);
             this.checkBox_alpha_beta.Name = "checkBox_alpha_beta";
             this.checkBox_alpha_beta.Size = new System.Drawing.Size(166, 18);
             this.checkBox_alpha_beta.TabIndex = 2138;
@@ -784,7 +786,7 @@
             this.button_atp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_atp.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.button_atp.ForeColor = System.Drawing.Color.White;
-            this.button_atp.Location = new System.Drawing.Point(199, 57);
+            this.button_atp.Location = new System.Drawing.Point(199, 19);
             this.button_atp.Name = "button_atp";
             this.button_atp.Size = new System.Drawing.Size(76, 28);
             this.button_atp.TabIndex = 0;
@@ -945,6 +947,23 @@
             this.label3.Text = "Matchline Setup";
             this.label3.Click += new System.EventHandler(this.label_matchline_setup_Click);
             // 
+            // button_layer_alpha_beta
+            // 
+            this.button_layer_alpha_beta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_layer_alpha_beta.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_layer_alpha_beta.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_layer_alpha_beta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_layer_alpha_beta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_layer_alpha_beta.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_layer_alpha_beta.ForeColor = System.Drawing.Color.White;
+            this.button_layer_alpha_beta.Location = new System.Drawing.Point(89, 59);
+            this.button_layer_alpha_beta.Name = "button_layer_alpha_beta";
+            this.button_layer_alpha_beta.Size = new System.Drawing.Size(185, 28);
+            this.button_layer_alpha_beta.TabIndex = 0;
+            this.button_layer_alpha_beta.Text = "Change Layer to Alpha Beta";
+            this.button_layer_alpha_beta.UseVisualStyleBackColor = false;
+            this.button_layer_alpha_beta.Click += new System.EventHandler(this.button_layer_alpha_beta_Click);
+            // 
             // AGEN_SheetIndex
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1057,5 +1076,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button_atp;
         private System.Windows.Forms.CheckBox checkBox_alpha_beta;
+        private System.Windows.Forms.Button button_layer_alpha_beta;
     }
 }

@@ -7605,7 +7605,7 @@ namespace Alignment_mdi
                         BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                         BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
 
-                        Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1= Editor1.SelectImplied();
+                        Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1 = Editor1.SelectImplied();
 
                         if (Rezultat1.Status != PromptStatus.OK)
                         {
@@ -7623,20 +7623,20 @@ namespace Alignment_mdi
                             return;
                         }
 
-                        Functions.Creaza_layer("Alpha_labels", 2, true);
-                        Functions.Creaza_layer("Beta_labels", 2, true);
+                        Functions.Creaza_layer("Alpha_Label", 2, true);
+                        Functions.Creaza_layer("Beta_Label", 2, true);
 
-                        string ln = "Beta_labels";
+                        string ln = "Beta_Label";
 
                         for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; i++)
                         {
-                            if (ln == "Beta_labels")
+                            if (ln == "Beta_Label")
                             {
-                                ln = "Alpha_labels";
+                                ln = "Alpha_Label";
                             }
                             else
                             {
-                                ln = "Beta_labels";
+                                ln = "Beta_Label";
                             }
 
                             if (_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_x] != DBNull.Value &&
@@ -7741,6 +7741,183 @@ namespace Alignment_mdi
                                                             double rot_WCS = rot1 + rot5;
                                                             mleader1.TransformBy(Matrix3d.Rotation(rot - rot_WCS, Vector3d.ZAxis, pt1));
                                                             if (checkBox_alpha_beta.Checked == true) mleader1.Layer = ln;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        Trans1.Commit();
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Editor1.SetImpliedSelection(Empty_array);
+            Editor1.WriteMessage("\nCommand:");
+            set_enable_true();
+            this.MdiParent.WindowState = FormWindowState.Normal;
+        }
+
+        private void button_layer_alpha_beta_Click(object sender, EventArgs e)
+        {
+            if (_AGEN_mainform.dt_sheet_index == null || _AGEN_mainform.dt_sheet_index.Rows.Count == 0) return;
+
+            this.MdiParent.WindowState = FormWindowState.Minimized;
+
+            ObjectId[] Empty_array = null;
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+            Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            try
+            {
+                set_enable_false();
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                        BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+
+                        Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1 = Editor1.SelectImplied();
+
+                        if (Rezultat1.Status != PromptStatus.OK)
+                        {
+                            Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Prompt_rez = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
+                            Prompt_rez.MessageForAdding = "\nSelect the objects:";
+                            Prompt_rez.SingleOnly = false;
+                            Rezultat1 = ThisDrawing.Editor.GetSelection(Prompt_rez);
+                        }
+
+                        if (Rezultat1.Status != PromptStatus.OK)
+                        {
+                            set_enable_true();
+                            this.MdiParent.WindowState = FormWindowState.Normal;
+                            ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                            return;
+                        }
+
+                        Functions.Creaza_layer("Alpha_Label", 2, true);
+                        Functions.Creaza_layer("Beta_Label", 2, true);
+
+                        string ln = "Beta_Label";
+
+                        for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; i++)
+                        {
+                            if (ln == "Beta_Label")
+                            {
+                                ln = "Alpha_Label";
+                            }
+                            else
+                            {
+                                ln = "Beta_Label";
+                            }
+
+                            if (_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_x] != DBNull.Value &&
+                                _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_y] != DBNull.Value &&
+                                _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_rot] != DBNull.Value &&
+                                _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_Height] != DBNull.Value &&
+                                _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_Width] != DBNull.Value)
+                            {
+                                double x_cen = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_x]);
+                                double y_cen = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_y]);
+                                double rot = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_rot]) * Math.PI / 180;
+                                double h1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_Height]);
+                                double w1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_Width]);
+
+
+                                using (Polyline rect1 = creaza_rectangle_from_one_point(new Point3d(x_cen, y_cen, 0), rot, w1, h1, 1))
+                                {
+                                    rect1.Elevation = 0;
+
+                                    DBObjectCollection Poly_Colection = new DBObjectCollection();
+                                    Poly_Colection.Add(rect1);
+                                    DBObjectCollection Region_Colectionft = new DBObjectCollection();
+                                    Region_Colectionft = Autodesk.AutoCAD.DatabaseServices.Region.CreateFromCurves(Poly_Colection);
+
+                                    Autodesk.AutoCAD.DatabaseServices.Region reg1 = Region_Colectionft[0] as Autodesk.AutoCAD.DatabaseServices.Region;
+
+                                    Autodesk.AutoCAD.BoundaryRepresentation.PointContainment pc1 = Autodesk.AutoCAD.BoundaryRepresentation.PointContainment.Outside;
+
+                                    using (Autodesk.AutoCAD.BoundaryRepresentation.Brep Brep_obj = new Autodesk.AutoCAD.BoundaryRepresentation.Brep(reg1))
+                                    {
+                                        if (Brep_obj != null)
+                                        {
+                                            for (int j = 0; j < Rezultat1.Value.Count; j++)
+                                            {
+                                                Point3d pt1 = new Point3d();
+
+                                                DBText text1 = Trans1.GetObject(Rezultat1.Value[j].ObjectId, OpenMode.ForWrite) as DBText;
+                                                if (text1 != null)
+                                                {
+                                                    pt1 = new Point3d(text1.Position.X, text1.Position.Y, 0);
+                                                }
+
+                                                MText Mtext1 = Trans1.GetObject(Rezultat1.Value[j].ObjectId, OpenMode.ForWrite) as MText;
+                                                if (Mtext1 != null)
+                                                {
+                                                    pt1 = new Point3d(Mtext1.Location.X, Mtext1.Location.Y, 0);
+
+                                                }
+
+                                                BlockReference block1 = Trans1.GetObject(Rezultat1.Value[j].ObjectId, OpenMode.ForWrite) as BlockReference;
+                                                if (block1 != null)
+                                                {
+                                                    pt1 = new Point3d(block1.Position.X, block1.Position.Y, 0);
+                                                }
+
+                                                Dimension dim1 = Trans1.GetObject(Rezultat1.Value[j].ObjectId, OpenMode.ForWrite) as Dimension;
+                                                if (dim1 != null)
+                                                {
+                                                    pt1 = new Point3d(dim1.TextPosition.X, dim1.TextPosition.Y, 0);
+                                                }
+
+                                                MLeader mleader1 = Trans1.GetObject(Rezultat1.Value[j].ObjectId, OpenMode.ForWrite) as MLeader;
+                                                if (mleader1 != null)
+                                                {
+                                                    pt1 = new Point3d(mleader1.GetFirstVertex(0).X, mleader1.GetFirstVertex(0).Y, 0);
+                                                }
+
+                                                using (Autodesk.AutoCAD.BoundaryRepresentation.BrepEntity ent1 = Brep_obj.GetPointContainment(pt1, out pc1))
+                                                {
+                                                    if (ent1 is Autodesk.AutoCAD.BoundaryRepresentation.Face)
+                                                    {
+                                                        pc1 = Autodesk.AutoCAD.BoundaryRepresentation.PointContainment.Inside;
+                                                    }
+
+                                                    if (pc1 == Autodesk.AutoCAD.BoundaryRepresentation.PointContainment.Inside)
+                                                    {
+                                                        if (text1 != null)
+                                                        {
+
+                                                            text1.Layer = ln;
+                                                        }
+                                                        if (Mtext1 != null)
+                                                        {
+
+                                                            Mtext1.Layer = ln;
+                                                        }
+                                                        if (block1 != null)
+                                                        {
+
+                                                            block1.Layer = ln;
+                                                        }
+
+                                                        if (dim1 != null)
+                                                        {
+                                                            dim1.Layer = ln;
+                                                        }
+
+                                                        if (mleader1 != null)
+                                                        {
+                                                            mleader1.Layer = ln;
                                                         }
                                                     }
                                                 }

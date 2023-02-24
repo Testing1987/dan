@@ -2082,7 +2082,8 @@ namespace Alignment_mdi
         {
             _AGEN_mainform.current_segment = comboBox_segment_name.Text;
             _AGEN_mainform.tpage_setup.set_combobox_segment_name();
-
+            _AGEN_mainform.Data_Table_crossings = null;
+            dataGridView_xing.DataSource = _AGEN_mainform.Data_Table_crossings;
 
         }
 

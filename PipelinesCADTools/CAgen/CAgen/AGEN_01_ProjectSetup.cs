@@ -951,7 +951,7 @@ namespace Alignment_mdi
 
 
 
-                               
+
 
 
                                 if (b22 != null)
@@ -1318,7 +1318,7 @@ namespace Alignment_mdi
                                 lista_colxl.Add("E");
                                 lista_colxl.Add("F");
 
-                                _AGEN_mainform.dt_blocks = Functions.build_data_table_from_excel(_AGEN_mainform.dt_blocks,W1,2,1000,lista_col,lista_colxl);
+                                _AGEN_mainform.dt_blocks = Functions.build_data_table_from_excel(_AGEN_mainform.dt_blocks, W1, 2, 1000, lista_col, lista_colxl);
                                 _AGEN_mainform.tpage_viewport_settings.display_dt_blocks();
                             }
                             #endregion
@@ -2238,7 +2238,7 @@ namespace Alignment_mdi
         public void button_align_config_saveall_boolean(bool Close_dwt)
         {
             Ag = this.MdiParent as _AGEN_mainform;
-            
+
 
             string cfg1 = System.IO.Path.GetFileName(_AGEN_mainform.config_path);
             if (Functions.Get_if_workbook_is_open_in_Excel(cfg1) == true)
@@ -2680,7 +2680,7 @@ namespace Alignment_mdi
                 MessageBox.Show(ex.Message);
             }
 
-       
+
             _AGEN_mainform.tpage_processing.Hide();
             Ag.WindowState = FormWindowState.Normal;
 
@@ -3019,7 +3019,7 @@ namespace Alignment_mdi
                     bool is3d = false;
                     if (_AGEN_mainform.Project_type == "3D") is3d = true;
 
-                    dt2 = Functions.Build_Data_table_property_from_excel(W1, _AGEN_mainform.Start_row_property + 1,is3d);
+                    dt2 = Functions.Build_Data_table_property_from_excel(W1, _AGEN_mainform.Start_row_property + 1, is3d);
 
                     Workbook1.Save();
                     Workbook1.Close();
@@ -3597,7 +3597,7 @@ namespace Alignment_mdi
 
                     W1.Columns["A:XX"].Delete();
                     W1.Range["A:S"].ColumnWidth = 20;
-                 
+
                     int maxRows = _AGEN_mainform.dt_blocks.Rows.Count;
                     int maxCols = _AGEN_mainform.dt_blocks.Columns.Count;
 
@@ -6146,7 +6146,7 @@ namespace Alignment_mdi
                     }
                     else if (Functions.see_if_block_exists("STA_MAJOR") == true)
                     {
-                        
+
                         if (BlockTable1.Has("STA_MINOR") == false)
                         {
                             BlockTable1.UpgradeOpen();
@@ -7501,15 +7501,25 @@ namespace Alignment_mdi
 
                                 #endregion
 
-                                Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
-                                Polyline Poly2D = Functions.Build_2dpoly_from_3d(Poly3D);
+                                Polyline3d Poly3D = null;
+                                Polyline Poly2D = null;
+                                if (_AGEN_mainform.Project_type == "3D")
+                                {
+                                    Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                    Poly2D = Functions.Build_2dpoly_from_3d(Poly3D);
+                                }
+                                else
+                                {
+                                    Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                }
+
 
                                 string Col_x = "X";
                                 string Col_y = "Y";
                                 string Col_DeflAng = "DeflAng";
                                 string Col_DeflAngDMS = "DeflAngDMS";
 
-                                for (int i = 0; i < _AGEN_mainform.dt_centerline.Rows.Count; ++i)
+                                for (int i = 1; i < _AGEN_mainform.dt_centerline.Rows.Count - 1; ++i)
                                 {
                                     if (_AGEN_mainform.dt_centerline.Rows[i][Col_x] != DBNull.Value && _AGEN_mainform.dt_centerline.Rows[i][Col_y] != DBNull.Value)
                                     {
@@ -7524,8 +7534,15 @@ namespace Alignment_mdi
                                         string statie1 = "";
                                         string deflectie1 = "";
 
-                                        double param1 = Poly2D.GetParameterAtPoint(Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false));
-                                        double sta_meas = Poly3D.GetDistanceAtParameter(param1);
+                                        double sta_meas = Poly2D.GetDistAtPoint(Poly2D.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false));
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            double param1 = Poly2D.GetParameterAtDistance(sta_meas);
+                                            sta_meas = Poly3D.GetDistanceAtParameter(param1);
+                                        }
+
+
+
 
                                         double min_pi = -1;
                                         double Defl_pi = 0;
@@ -7629,7 +7646,7 @@ namespace Alignment_mdi
                                         }
                                     }
                                 }
-                                Poly3D.Erase();
+                                if (_AGEN_mainform.Project_type == "3D" && Poly3D.IsErased == false) Poly3D.Erase();
                                 Trans1.Commit();
                             }
                         }
@@ -9111,7 +9128,7 @@ namespace Alignment_mdi
 
         private void radioButton_2D_station_CheckedChanged(object sender, EventArgs e)
         {
-            if(radioButton_2D_station.Checked==true)
+            if (radioButton_2D_station.Checked == true)
             {
                 _AGEN_mainform.Project_type = "2D";
             }

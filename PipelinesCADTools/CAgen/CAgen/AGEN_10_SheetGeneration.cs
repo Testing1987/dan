@@ -58,6 +58,10 @@ namespace Alignment_mdi
             var toolStripMenuItem2 = new ToolStripMenuItem { Text = "Add drawings" };
             toolStripMenuItem2.Click += add_dwgs_Click;
 
+            var toolStripMenuItem22 = new ToolStripMenuItem { Text = "Add all drawings for the current segment" };
+            toolStripMenuItem22.Click += add_alldwgs_Click;
+
+
             var toolStripMenuItem3 = new ToolStripMenuItem { Text = "Remove drawing" };
             toolStripMenuItem3.Click += remove_selected_dwg_Click;
 
@@ -65,7 +69,7 @@ namespace Alignment_mdi
             toolStripMenuItem4.Click += remove_all_dwg_Click;
 
             ContextMenuStrip_open_alignment = new ContextMenuStrip();
-            ContextMenuStrip_open_alignment.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem3, toolStripMenuItem4 });
+            ContextMenuStrip_open_alignment.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2, toolStripMenuItem22, toolStripMenuItem3, toolStripMenuItem4 });
         }
 
         private void add_dwgs_Click(object sender, EventArgs e)
@@ -148,7 +152,64 @@ namespace Alignment_mdi
             }
 
         }
+        private void add_alldwgs_Click(object sender, EventArgs e)
+        {
+            if (Display_dt == null)
+            {
+                Display_dt = Functions.Creaza_display_datatable_structure();
+            }
+            else if (Display_dt.Rows.Count == 0)
+            {
+                Display_dt = Functions.Creaza_display_datatable_structure();
+            }
+            string Col_dwg_name = "DwgNo";
+            string Col_M1 = "StaBeg";
+            string Col_M2 = "StaEnd";
 
+            string Output_folder = _AGEN_mainform.tpage_setup.get_output_folder_from_text_box();
+            if (!Output_folder.EndsWith("\\"))
+            {
+                Output_folder += "\\";
+            }
+
+            if (_AGEN_mainform.dt_sheet_index != null)
+            {
+                if (_AGEN_mainform.dt_sheet_index.Rows.Count > 0)
+                {
+                    for (int j = 0; j < _AGEN_mainform.dt_sheet_index.Rows.Count; ++j)
+                    {
+                        if (_AGEN_mainform.dt_sheet_index.Rows[j][Col_dwg_name] != DBNull.Value)
+                        {
+                            if (_AGEN_mainform.dt_sheet_index.Rows[j][Col_M1] != DBNull.Value &&
+                                _AGEN_mainform.dt_sheet_index.Rows[j][Col_M2] != DBNull.Value)
+                            {
+                                Display_dt.Rows.Add();
+                                Display_dt.Rows[Display_dt.Rows.Count - 1][Col_dwg_name] = Output_folder+Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[j][Col_dwg_name])+".dwg";
+                                Display_dt.Rows[Display_dt.Rows.Count - 1][Col_M1] = _AGEN_mainform.dt_sheet_index.Rows[j][Col_M1];
+                                Display_dt.Rows[Display_dt.Rows.Count - 1][Col_M2] = _AGEN_mainform.dt_sheet_index.Rows[j][Col_M2];
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
+            Display_dt = Functions.Sort_data_table(Display_dt, Col_M1);
+
+            if (Display_dt.Rows.Count > 0)
+            {
+                dataGridView_align_created.DataSource = Display_dt;
+                dataGridView_align_created.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dataGridView_align_created.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+                dataGridView_align_created.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                dataGridView_align_created.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+                dataGridView_align_created.DefaultCellStyle.ForeColor = Color.White;
+                dataGridView_align_created.EnableHeadersVisualStyles = false;
+            }
+
+        }
 
         private void remove_selected_dwg_Click(object sender, EventArgs e)
         {
@@ -836,7 +897,7 @@ namespace Alignment_mdi
                                                 Layout Layout1 = Functions.get_first_layout(Trans2, New_doc2.Database);
                                                 Layout1.UpgradeOpen();
                                                 Layout1.LayoutName = _AGEN_mainform.dt_sheet_index.Rows[lista_generation[1]][_AGEN_mainform.Col_dwg_name].ToString();
-                                                Functions.creaza_anno_scales(New_doc.Database);
+                                                Functions.creaza_anno_scales(New_doc2.Database);
                                                 Trans2.Commit();
                                                 New_doc2.Database.SaveAs(fname2, true, DwgVersion.Current, ThisDrawing.Database.SecurityParameters);
                                             }
