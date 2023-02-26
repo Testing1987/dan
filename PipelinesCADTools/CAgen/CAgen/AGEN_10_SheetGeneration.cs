@@ -962,7 +962,7 @@ namespace Alignment_mdi
                                     string fisier_prof_band = ProjFolder + _AGEN_mainform.band_prof_excel_name;
                                     if (System.IO.File.Exists(fisier_prof_band) == true)
                                     {
-                                        _AGEN_mainform.Data_Table_profile_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
+                                        _AGEN_mainform.dt_prof_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
                                     }
                                 }
 
@@ -1005,7 +1005,7 @@ namespace Alignment_mdi
                                             #region VP multi profiles the same page
                                             if (checkBox_mult_vp_prof.Checked == true)
                                             {
-                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
                                                 {
                                                     if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                     {
@@ -1019,16 +1019,16 @@ namespace Alignment_mdi
                                                                 _AGEN_mainform.Data_Table_regular_bands.Rows[k]["drafted"] = false;
                                                             }
 
-                                                            for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
+                                                            for (int j = 0; j < _AGEN_mainform.dt_prof_band.Rows.Count; ++j)
                                                             {
-                                                                string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
+                                                                string dwg_prof = Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[j]["DwgNo"]);
                                                                 if (dwg_name.ToLower() == dwg_prof.ToLower())
                                                                 {
 
-                                                                    double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
-                                                                    double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
-                                                                    double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
-                                                                    double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
+                                                                    double x0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["x0"]);
+                                                                    double y0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["y0"]);
+                                                                    double h1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["height"]);
+                                                                    double l1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["length"]);
 
                                                                     ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
 
@@ -1275,22 +1275,22 @@ namespace Alignment_mdi
                                                     return;
                                                 }
 
-                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
                                                 {
                                                     if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                     {
-                                                        for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
+                                                        for (int j = 0; j < _AGEN_mainform.dt_prof_band.Rows.Count; ++j)
                                                         {
-                                                            string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
+                                                            string dwg_prof = Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[j]["DwgNo"]);
                                                             if (dwg_name.ToLower() == dwg_prof.ToLower())
                                                             {
 
-                                                                double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
-                                                                double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
-                                                                double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
-                                                                double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
-                                                                double staY = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["Sta_Y"]);
-                                                                double th = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["textH"]);
+                                                                double x0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["x0"]);
+                                                                double y0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["y0"]);
+                                                                double h1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["height"]);
+                                                                double l1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["length"]);
+                                                                double staY = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["Sta_Y"]);
+                                                                double th = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["textH"]);
 
 
                                                                 h_main = _AGEN_mainform.Vw_profband_height;
@@ -2327,15 +2327,15 @@ namespace Alignment_mdi
 
                                             if (checkBox_profile_band.Checked == true)
                                             {
-                                                if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
                                                 {
-                                                    for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
+                                                    for (int j = 0; j < _AGEN_mainform.dt_prof_band.Rows.Count; ++j)
                                                     {
-                                                        string si_name = _AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"].ToString();
+                                                        string si_name = _AGEN_mainform.dt_prof_band.Rows[j]["DwgNo"].ToString();
                                                         if (si_name.ToLower() == nume_fara_ext.ToLower())
                                                         {
                                                             prof_band_index = j;
-                                                            j = _AGEN_mainform.Data_Table_profile_band.Rows.Count;
+                                                            j = _AGEN_mainform.dt_prof_band.Rows.Count;
 
 
                                                         }
@@ -2369,7 +2369,7 @@ namespace Alignment_mdi
                                                 string fisier_prof_band = ProjFolder + _AGEN_mainform.band_prof_excel_name;
                                                 if (System.IO.File.Exists(fisier_prof_band) == true)
                                                 {
-                                                    _AGEN_mainform.Data_Table_profile_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
+                                                    _AGEN_mainform.dt_prof_band = _AGEN_mainform.tpage_profdraw.Load_existing_profile_band_data(fisier_prof_band);
                                                 }
                                             }
 
@@ -2408,7 +2408,7 @@ namespace Alignment_mdi
                                                         #region VP multi profiles the same page
                                                         if (checkBox_mult_vp_prof.Checked == true && checkBox_delete_vp.Checked == false)
                                                         {
-                                                            if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                            if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
                                                             {
                                                                 if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                                 {
@@ -2438,16 +2438,16 @@ namespace Alignment_mdi
                                                                         }
 
 
-                                                                        for (int j = 0; j < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++j)
+                                                                        for (int j = 0; j < _AGEN_mainform.dt_prof_band.Rows.Count; ++j)
                                                                         {
-                                                                            string dwg_prof = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[j]["DwgNo"]);
+                                                                            string dwg_prof = Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[j]["DwgNo"]);
                                                                             if (nume_fara_ext.ToLower() == dwg_prof.ToLower())
                                                                             {
 
-                                                                                double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["x0"]);
-                                                                                double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["y0"]);
-                                                                                double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["height"]);
-                                                                                double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[j]["length"]);
+                                                                                double x0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["x0"]);
+                                                                                double y0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["y0"]);
+                                                                                double h1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["height"]);
+                                                                                double l1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[j]["length"]);
 
                                                                                 ms_point = new Point3d(x0 + lr * l1 / 2, y0 + h1 / 2, 0);
 
@@ -2771,17 +2771,17 @@ namespace Alignment_mdi
 
 
 
-                                                            if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                                                            if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
                                                             {
 
                                                                 if (System.IO.File.Exists(_AGEN_mainform.config_path) == true)
                                                                 {
-                                                                    double x0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["x0"]);
-                                                                    double y0 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["y0"]);
-                                                                    double h1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["height"]);
-                                                                    double l1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["length"]);
-                                                                    double staY = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["Sta_Y"]);
-                                                                    double th = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[prof_band_index]["textH"]);
+                                                                    double x0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[prof_band_index]["x0"]);
+                                                                    double y0 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[prof_band_index]["y0"]);
+                                                                    double h1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[prof_band_index]["height"]);
+                                                                    double l1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[prof_band_index]["length"]);
+                                                                    double staY = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[prof_band_index]["Sta_Y"]);
+                                                                    double th = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[prof_band_index]["textH"]);
 
 
                                                                     h_main = _AGEN_mainform.Vw_profband_height;

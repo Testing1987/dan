@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AGEN_Viewport_Settings));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel5 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,6 +40,7 @@
             this.label_sheet_naming = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
+            this.dataGridView_blocks = new System.Windows.Forms.DataGridView();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
@@ -59,7 +60,6 @@
             this.radioButton_rot_0 = new System.Windows.Forms.RadioButton();
             this.button_close_template2 = new System.Windows.Forms.Button();
             this.button_add_block = new System.Windows.Forms.Button();
-            this.dataGridView_blocks = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox_block_space = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -97,13 +97,13 @@
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_blocks)).BeginInit();
             this.panel7.SuspendLayout();
             this.panel13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_bands)).BeginInit();
             this.panel11.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_blocks)).BeginInit();
             this.panel_sheet_naming.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel17.SuspendLayout();
@@ -217,6 +217,35 @@
             this.label9.Size = new System.Drawing.Size(151, 18);
             this.label9.TabIndex = 2033;
             this.label9.Text = "Alignment Direction";
+            // 
+            // dataGridView_blocks
+            // 
+            this.dataGridView_blocks.AllowUserToAddRows = false;
+            this.dataGridView_blocks.AllowUserToDeleteRows = false;
+            this.dataGridView_blocks.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.dataGridView_blocks.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.dataGridView_blocks.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dataGridView_blocks.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
+            this.dataGridView_blocks.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
+            this.dataGridView_blocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_blocks.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView_blocks.GridColor = System.Drawing.Color.LightGray;
+            this.dataGridView_blocks.Location = new System.Drawing.Point(376, 289);
+            this.dataGridView_blocks.Name = "dataGridView_blocks";
+            this.dataGridView_blocks.RowHeadersVisible = false;
+            this.dataGridView_blocks.Size = new System.Drawing.Size(471, 292);
+            this.dataGridView_blocks.TabIndex = 100;
+            this.dataGridView_blocks.TabStop = false;
+            this.dataGridView_blocks.VirtualMode = true;
+            this.dataGridView_blocks.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_blocks_CellMouseClick);
+            this.dataGridView_blocks.Click += new System.EventHandler(this.dataGridView_blocks_Click);
             // 
             // panel7
             // 
@@ -392,8 +421,8 @@
             this.dataGridView_bands.TabIndex = 100;
             this.dataGridView_bands.TabStop = false;
             this.dataGridView_bands.VirtualMode = true;
-            this.dataGridView_bands.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_CellMouseClick);
-            this.dataGridView_bands.Click += new System.EventHandler(this.dataGridView_Click);
+            this.dataGridView_bands.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView_bands_CellMouseClick);
+            this.dataGridView_bands.Click += new System.EventHandler(this.dataGridView_bands_Click);
             // 
             // panel11
             // 
@@ -528,33 +557,6 @@
             this.button_add_block.UseVisualStyleBackColor = false;
             this.button_add_block.Click += new System.EventHandler(this.button_add_block_Click);
             // 
-            // dataGridView_blocks
-            // 
-            this.dataGridView_blocks.AllowUserToAddRows = false;
-            this.dataGridView_blocks.AllowUserToDeleteRows = false;
-            this.dataGridView_blocks.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
-            this.dataGridView_blocks.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.dataGridView_blocks.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dataGridView_blocks.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
-            this.dataGridView_blocks.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
-            this.dataGridView_blocks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_blocks.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView_blocks.GridColor = System.Drawing.Color.LightGray;
-            this.dataGridView_blocks.Location = new System.Drawing.Point(376, 289);
-            this.dataGridView_blocks.Name = "dataGridView_blocks";
-            this.dataGridView_blocks.RowHeadersVisible = false;
-            this.dataGridView_blocks.Size = new System.Drawing.Size(471, 292);
-            this.dataGridView_blocks.TabIndex = 100;
-            this.dataGridView_blocks.TabStop = false;
-            this.dataGridView_blocks.VirtualMode = true;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -649,7 +651,7 @@
             this.button_browse_north_arrow.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button_browse_north_arrow.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button_browse_north_arrow.UseVisualStyleBackColor = false;
-            this.button_browse_north_arrow.Click += new System.EventHandler(this.button_pick_block_location_PS_Click);
+            this.button_browse_north_arrow.Click += new System.EventHandler(this.button_pick_all_blocks_location_PS_Click);
             // 
             // button_align_config_saveall
             // 
@@ -1018,6 +1020,7 @@
             this.panel2.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_blocks)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel13.ResumeLayout(false);
@@ -1029,7 +1032,6 @@
             this.panel10.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView_blocks)).EndInit();
             this.panel_sheet_naming.ResumeLayout(false);
             this.panel_sheet_naming.PerformLayout();
             this.panel6.ResumeLayout(false);

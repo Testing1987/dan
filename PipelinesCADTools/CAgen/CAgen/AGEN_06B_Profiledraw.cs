@@ -395,41 +395,21 @@ namespace Alignment_mdi
             }
 
             double Texth = Functions.Get_text_height_from_textstyle(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle());
+            
+            if(radioButton_user_parameters.Checked==true)
+            {
             if (checkBox_overwrite_text_height.Checked == true && Functions.IsNumeric(textBox_overwrite_text_height.Text) == true)
             {
                 Texth = Convert.ToDouble(textBox_overwrite_text_height.Text);
             }
+            }
+        
+
+
+
             if (Texth == 0)
             {
-                MessageBox.Show("the text style you specified does not have a set height\r\nOperation aborted");
-
-
-                _AGEN_mainform.tpage_processing.Hide();
-                _AGEN_mainform.tpage_blank.Hide();
-                _AGEN_mainform.tpage_setup.Hide();
-                _AGEN_mainform.tpage_viewport_settings.Hide();
-                _AGEN_mainform.tpage_tblk_attrib.Hide();
-                _AGEN_mainform.tpage_sheetindex.Hide();
-                _AGEN_mainform.tpage_layer_alias.Hide();
-                _AGEN_mainform.tpage_crossing_scan.Hide();
-                _AGEN_mainform.tpage_crossing_draw.Hide();
-                _AGEN_mainform.tpage_profilescan.Hide();
-
-                _AGEN_mainform.tpage_owner_scan.Hide();
-                _AGEN_mainform.tpage_owner_draw.Hide();
-                _AGEN_mainform.tpage_mat.Hide();
-                _AGEN_mainform.tpage_cust_scan.Hide();
-                _AGEN_mainform.tpage_cust_draw.Hide();
-                _AGEN_mainform.tpage_sheet_gen.Hide();
-
-
-                _AGEN_mainform.tpage_profdraw.Show();
-
-
-                Ag.WindowState = FormWindowState.Normal;
-                set_enable_true();
-                return;
-
+                Texth = 10;
             }
 
 
@@ -643,11 +623,12 @@ namespace Alignment_mdi
                                 bool draw_pipe = false;
 
                                 textBox_overwrite_text_height.Text = Convert.ToString(Texth);
-                                checkBox_overwrite_text_height.Checked = true;
+
+
 
                                 Functions.Draw_grid_profile(dt_prof, dt_top, Point_res1.Value, Hincr, vincr, Hexag, Vexag, Downelev, Upelev, elev_round,
                                                             _AGEN_mainform.layer_prof_grid, _AGEN_mainform.layer_prof_text, _AGEN_mainform.layer_prof_ground,
-                                                            _AGEN_mainform.layer_prof_pipe, Texth,
+                                                            _AGEN_mainform.layer_prof_pipe,  Texth,
                                                                     Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle()),
                                                                             Suff, L1, L2, _AGEN_mainform.config_path, _AGEN_mainform.ExcelVisible, _AGEN_mainform.Start_row_1,
                                                                                  _AGEN_mainform.units_of_measurement, _AGEN_mainform.dt_station_equation, draw_pipe, poly2d, poly3d);
@@ -680,38 +661,13 @@ namespace Alignment_mdi
             Ag.WindowState = FormWindowState.Normal;
 
         }
-        public bool get_checkbox_offset()
-        {
-            return checkBox_offset_top.Checked;
-        }
 
-        public double get_textbox_offset()
-        {
-            string val1 = textBox_offset.Text;
-            if (Functions.IsNumeric(val1) == true)
-            {
-                return Convert.ToDouble(val1);
-            }
-            else
-            {
-                return 0;
-            }
 
-        }
 
-        public void set_checkBox_overwrite_text_height(bool val1 = false)
-        {
-            checkBox_overwrite_text_height.Checked = val1;
-        }
 
         public void set_textBox_overwrite_text_height(string val1 = "5")
         {
             textBox_overwrite_text_height.Text = val1;
-        }
-
-        public bool get_checkBox_overwrite_text_height()
-        {
-            return checkBox_overwrite_text_height.Checked;
         }
 
         public string get_textBox_overwrite_text_height()
@@ -1696,7 +1652,7 @@ namespace Alignment_mdi
                     return;
                 }
 
-                _AGEN_mainform.Data_Table_profile_band = Load_existing_profile_band_data(fisier_prof_band);
+                _AGEN_mainform.dt_prof_band = Load_existing_profile_band_data(fisier_prof_band);
 
                 set_enable_true();
             }
@@ -1773,9 +1729,9 @@ namespace Alignment_mdi
 
         }
 
-        private void generate_profile_band_file_from_sheet_index()
+        private void generate_profile_band_file_and_dt_prof()
         {
-            Functions.Kill_excel();
+
 
             try
             {
@@ -1804,9 +1760,9 @@ namespace Alignment_mdi
                         {
                             _AGEN_mainform.dt_sheet_index = _AGEN_mainform.tpage_setup.Load_existing_sheet_index(fisier_si);
 
-                            if (_AGEN_mainform.Data_Table_profile_band == null || _AGEN_mainform.Data_Table_profile_band.Rows.Count == 0)
+                            if (_AGEN_mainform.dt_prof_band == null || _AGEN_mainform.dt_prof_band.Rows.Count == 0)
                             {
-                                _AGEN_mainform.Data_Table_profile_band = Functions.Creaza_profile_band_datatable_structure();
+                                _AGEN_mainform.dt_prof_band = Functions.Creaza_profile_band_datatable_structure();
 
                                 for (int i = 0; i < _AGEN_mainform.dt_sheet_index.Rows.Count; ++i)
                                 {
@@ -1824,10 +1780,10 @@ namespace Alignment_mdi
 
 
                                         string dwg = Convert.ToString(_AGEN_mainform.dt_sheet_index.Rows[i]["DwgNo"]);
-                                        _AGEN_mainform.Data_Table_profile_band.Rows.Add();
-                                        _AGEN_mainform.Data_Table_profile_band.Rows[_AGEN_mainform.Data_Table_profile_band.Rows.Count - 1]["DwgNo"] = dwg;
-                                        _AGEN_mainform.Data_Table_profile_band.Rows[_AGEN_mainform.Data_Table_profile_band.Rows.Count - 1]["StaBeg"] = M1;
-                                        _AGEN_mainform.Data_Table_profile_band.Rows[_AGEN_mainform.Data_Table_profile_band.Rows.Count - 1]["StaEnd"] = M2;
+                                        _AGEN_mainform.dt_prof_band.Rows.Add();
+                                        _AGEN_mainform.dt_prof_band.Rows[_AGEN_mainform.dt_prof_band.Rows.Count - 1]["DwgNo"] = dwg;
+                                        _AGEN_mainform.dt_prof_band.Rows[_AGEN_mainform.dt_prof_band.Rows.Count - 1]["StaBeg"] = M1;
+                                        _AGEN_mainform.dt_prof_band.Rows[_AGEN_mainform.dt_prof_band.Rows.Count - 1]["StaEnd"] = M2;
 
                                         double zero = 0;
 
@@ -1836,7 +1792,7 @@ namespace Alignment_mdi
                                             zero = (M1 + M2) / 2;
                                         }
 
-                                        _AGEN_mainform.Data_Table_profile_band.Rows[_AGEN_mainform.Data_Table_profile_band.Rows.Count - 1]["Zero_position"] = zero;
+                                        _AGEN_mainform.dt_prof_band.Rows[_AGEN_mainform.dt_prof_band.Rows.Count - 1]["Zero_position"] = zero;
 
                                     }
 
@@ -1846,7 +1802,7 @@ namespace Alignment_mdi
                     }
                     else
                     {
-                        _AGEN_mainform.Data_Table_profile_band = Load_existing_profile_band_data(fisier_prof_band);
+                        _AGEN_mainform.dt_prof_band = Load_existing_profile_band_data(fisier_prof_band);
 
                     }
 
@@ -1904,21 +1860,23 @@ namespace Alignment_mdi
 
 
             double Texth = Functions.Get_text_height_from_textstyle(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle());
+           
+            if(radioButton_user_parameters.Checked==true)
+            {
             if (checkBox_overwrite_text_height.Checked == true && Functions.IsNumeric(textBox_overwrite_text_height.Text) == true)
             {
                 Texth = Convert.ToDouble(textBox_overwrite_text_height.Text);
             }
+            }
+
             if (Texth <= 0) Texth = 10;
             set_enable_false();
 
 
+            generate_profile_band_file_and_dt_prof();
 
 
-            if (_AGEN_mainform.Data_Table_profile_band == null || _AGEN_mainform.Data_Table_profile_band.Rows.Count == 0)
-            {
-                generate_profile_band_file_from_sheet_index();
-            }
-            if (_AGEN_mainform.Data_Table_profile_band == null || _AGEN_mainform.Data_Table_profile_band.Rows.Count == 0)
+            if (_AGEN_mainform.dt_prof_band == null || _AGEN_mainform.dt_prof_band.Rows.Count == 0)
             {
                 MessageBox.Show("no sheet index defined");
                 set_enable_true();
@@ -2017,18 +1975,18 @@ namespace Alignment_mdi
 
             double Xmin = -1.234;
 
-            for (int i = 0; i < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++i)
+            for (int i = 0; i < _AGEN_mainform.dt_prof_band.Rows.Count; ++i)
             {
-                if (_AGEN_mainform.Data_Table_profile_band.Rows[i]["y0"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[i]["y0"])) == true)
+                if (_AGEN_mainform.dt_prof_band.Rows[i]["y0"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[i]["y0"])) == true)
                 {
-                    double y1 = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[i]["y0"]);
+                    double y1 = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[i]["y0"]);
                     if (y1 < Ymin)
                     {
                         Ymin = y1;
 
-                        if (_AGEN_mainform.Data_Table_profile_band.Rows[i]["x0"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[i]["x0"])) == true)
+                        if (_AGEN_mainform.dt_prof_band.Rows[i]["x0"] != DBNull.Value && Functions.IsNumeric(Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[i]["x0"])) == true)
                         {
-                            Xmin = Convert.ToDouble(_AGEN_mainform.Data_Table_profile_band.Rows[i]["x0"]);
+                            Xmin = Convert.ToDouble(_AGEN_mainform.dt_prof_band.Rows[i]["x0"]);
                         }
                     }
                 }
@@ -2169,7 +2127,7 @@ namespace Alignment_mdi
                         bool draw_pipe = false;
                         bool use_prof_height = false;
                         double hmax = 0;
-                        if (checkBox_prof_grid_height.Checked == true && Functions.IsNumeric(textBox_prof_grid_height.Text) == true)
+                        if (checkBox_user_prof_grid_height.Checked == true && Functions.IsNumeric(textBox_prof_grid_height.Text) == true)
                         {
                             hmax = Math.Abs(Convert.ToDouble(textBox_prof_grid_height.Text));
                             use_prof_height = true;
@@ -2182,20 +2140,37 @@ namespace Alignment_mdi
                         }
 
                         textBox_overwrite_text_height.Text = Convert.ToString(Texth);
-                        checkBox_overwrite_text_height.Checked = true;
+                      
 
+                        int spc_vert_below = 0;
+                        bool use_user_vert_spaces = false;
+                        bool use_custom_settings = false;
+                        if (radioButton_user_parameters.Checked == true)
+                        {
+                            if (checkBox_user_prof_grid_height.Checked == true && Functions.IsNumeric(textBox_no_vert_spc.Text) == true)
+                            {
+                                spc_vert_below = Convert.ToInt32(textBox_no_vert_spc.Text);
+                            }
+
+                            if (checkBox_user_vert_spaces.Checked == true) use_user_vert_spaces = true;
+
+                            use_custom_settings = true;
+                        }
+
+                        bool user_texth = false;
+                        if (checkBox_overwrite_text_height.Checked == true) user_texth = true;
 
                         Functions.Draw_band_profile(dt_prof_data, dt_top, pt_ins, Hincr, vincr, Hexag, Vexag,
-                                                                                   _AGEN_mainform.layer_prof_grid,
-                                                                                   _AGEN_mainform.layer_prof_text,
-                                                                                   _AGEN_mainform.layer_prof_ground,
-                                                                                   _AGEN_mainform.layer_prof_pipe,
-                                                                                   _AGEN_mainform.layer_prof_smys,
-                                                                                   Texth, elev_round, rot_sta,
-                                                                                   Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle()),
-                                                                                   Suff, left_label, right_label, _AGEN_mainform.units_of_measurement, _AGEN_mainform.Data_Table_profile_band, draw_from_start,
-                                                                                   Xmin, Ymin, hydro, _AGEN_mainform.dt_station_equation, draw_pipe, checkBox_smys.Checked,
-                                                                                   use_prof_height, hmax, display_match, _AGEN_mainform.config_path);
+                                                                                    _AGEN_mainform.layer_prof_grid,
+                                                                                    _AGEN_mainform.layer_prof_text,
+                                                                                    _AGEN_mainform.layer_prof_ground,
+                                                                                    _AGEN_mainform.layer_prof_pipe,
+                                                                                    _AGEN_mainform.layer_prof_smys,
+                                                                                    user_texth,Texth, elev_round, rot_sta,
+                                                                                    Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle()),
+                                                                                    Suff, left_label, right_label, _AGEN_mainform.units_of_measurement, _AGEN_mainform.dt_prof_band, draw_from_start,
+                                                                                    Xmin, Ymin, hydro, _AGEN_mainform.dt_station_equation, draw_pipe, checkBox_smys.Checked, use_custom_settings,
+                                                                                    use_prof_height, hmax, use_user_vert_spaces, spc_vert_below, display_match, _AGEN_mainform.config_path);
 
 
 
@@ -2215,13 +2190,13 @@ namespace Alignment_mdi
 
                         Trans1.Commit();
 
-                        if (_AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+                        if (_AGEN_mainform.dt_prof_band.Rows.Count > 0)
                         {
 
 
                             Populate_profile_band_file_with_data(fisier_prof_band, _AGEN_mainform.config_path);
 
-                            _AGEN_mainform.Data_Table_profile_band = null;
+                            _AGEN_mainform.dt_prof_band = null;
                         }
 
                         _AGEN_mainform.lista_gen_prof_band = null;
@@ -2286,7 +2261,7 @@ namespace Alignment_mdi
                     string segment1 = _AGEN_mainform.current_segment;
                     if (segment1 == "not defined") segment1 = "";
 
-                    Functions.Transfer_to_worksheet_Data_table(W1, _AGEN_mainform.Data_Table_profile_band, _AGEN_mainform.Start_row_profile_band, "General");
+                    Functions.Transfer_to_worksheet_Data_table(W1, _AGEN_mainform.dt_prof_band, _AGEN_mainform.Start_row_profile_band, "General");
                     Functions.Create_header_profile_band_file(W1, _AGEN_mainform.tpage_setup.Get_client_name(), _AGEN_mainform.tpage_setup.Get_project_name(), segment1);
 
                     if (System.IO.File.Exists(File1) == false)
@@ -2435,9 +2410,9 @@ namespace Alignment_mdi
 
         private void button_dwg_Click(object sender, EventArgs e)
         {
-            generate_profile_band_file_from_sheet_index();
+            generate_profile_band_file_and_dt_prof();
 
-            if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+            if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
             {
                 foreach (System.Windows.Forms.Form Forma1 in System.Windows.Forms.Application.OpenForms)
                 {
@@ -2521,1298 +2496,9 @@ namespace Alignment_mdi
             if (checkBox_elevation.Checked == true) checkBox_cover.Checked = false;
         }
 
-        private void button_calc_top_Click(object sender, EventArgs e)
-        {
-            double Vexag = 1;
-            if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
-            {
-                Vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
-            }
-            double Hexag = 1;
-            if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex()) == true)
-            {
-                Hexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex());
-            }
 
-            if (Vexag != 1)
-            {
-                if (MessageBox.Show("the vertical exaggeration is not 1\r\ndo you want to continue?", "AGEN", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
-            }
 
-            if (Hexag != 1)
-            {
-                if (MessageBox.Show("the horizontal exaggeration is not 1\r\ndo you want to continue?", "AGEN", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
-            }
 
-            string ProjF = _AGEN_mainform.tpage_setup.Get_project_database_folder();
-            if (ProjF.Substring(ProjF.Length - 1, 1) != "\\")
-            {
-                ProjF = ProjF + "\\";
-            }
-
-
-
-            string crossingxl = ProjF + _AGEN_mainform.crossing_excel_name;
-            string profxl = ProjF + _AGEN_mainform.prof_excel_name;
-
-
-
-            if (System.IO.File.Exists(crossingxl) == true && System.IO.File.Exists(profxl) == true)
-            {
-                System.Data.DataTable dt_null = null;
-                System.Data.DataTable dt_prof = Load_existing_profile_graph(profxl, ref dt_null);
-                if (dt_prof != null && dt_prof.Rows.Count > 0)
-                {
-
-                    ObjectId[] Empty_array = null;
-                    Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-                    Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
-                    Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
-                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
-                    try
-                    {
-                        set_enable_false();
-                        using (DocumentLock lock1 = ThisDrawing.LockDocument())
-                        {
-                            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
-                            {
-                                BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
-                                BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForRead) as BlockTableRecord;
-
-                                Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_ground;
-                                Autodesk.AutoCAD.EditorInput.PromptEntityOptions Prompt_ground;
-                                Prompt_ground = new Autodesk.AutoCAD.EditorInput.PromptEntityOptions("\nSelect the ground polyline:");
-                                Prompt_ground.SetRejectMessage("\nSelect a polyline!");
-                                Prompt_ground.AllowNone = true;
-                                Prompt_ground.AddAllowedClass(typeof(Autodesk.AutoCAD.DatabaseServices.Polyline), false);
-
-                                this.MdiParent.WindowState = FormWindowState.Minimized;
-
-                                Rezultat_ground = ThisDrawing.Editor.GetEntity(Prompt_ground);
-
-                                if (Rezultat_ground.Status != PromptStatus.OK)
-                                {
-                                    this.MdiParent.WindowState = FormWindowState.Normal;
-                                    set_enable_true();
-                                    ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                                    return;
-                                }
-
-                                Autodesk.AutoCAD.EditorInput.PromptEntityResult Rezultat_top;
-                                Autodesk.AutoCAD.EditorInput.PromptEntityOptions Prompt_top;
-                                Prompt_top = new Autodesk.AutoCAD.EditorInput.PromptEntityOptions("\nSelect the top of pipe polyline:");
-                                Prompt_top.SetRejectMessage("\nSelect a polyline!");
-                                Prompt_top.AllowNone = true;
-                                Prompt_top.AddAllowedClass(typeof(Autodesk.AutoCAD.DatabaseServices.Polyline), false);
-
-                                this.MdiParent.WindowState = FormWindowState.Minimized;
-
-                                Rezultat_top = ThisDrawing.Editor.GetEntity(Prompt_top);
-
-                                if (Rezultat_top.Status != PromptStatus.OK)
-                                {
-                                    this.MdiParent.WindowState = FormWindowState.Normal;
-                                    set_enable_true();
-                                    ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                                    return;
-                                }
-
-
-
-                                Polyline poly_ground = Trans1.GetObject(Rezultat_ground.ObjectId, OpenMode.ForRead) as Polyline;
-                                Polyline poly_top = Trans1.GetObject(Rezultat_top.ObjectId, OpenMode.ForRead) as Polyline;
-
-                                if (poly_ground != null && poly_top != null && poly_top.NumberOfVertices > 2)
-                                {
-                                    double Xstart = poly_ground.StartPoint.X;
-                                    double Xend = poly_ground.EndPoint.X;
-                                    double Ystart = poly_ground.StartPoint.Y;
-
-                                    if (dt_prof.Rows[0][_AGEN_mainform.Col_station] != DBNull.Value && dt_prof.Rows[dt_prof.Rows.Count - 1][_AGEN_mainform.Col_station] != DBNull.Value && dt_prof.Rows[0][_AGEN_mainform.Col_Elev] != DBNull.Value)
-                                    {
-                                        double Sta_start = Convert.ToDouble(dt_prof.Rows[0][_AGEN_mainform.Col_station]);
-                                        double Elev_start = Convert.ToDouble(dt_prof.Rows[0][_AGEN_mainform.Col_Elev]);
-                                        double Sta_end = Convert.ToDouble(dt_prof.Rows[dt_prof.Rows.Count - 1][_AGEN_mainform.Col_station]);
-
-                                        if (Math.Round(Math.Abs(Xstart - Xend) * Hexag, 2) == Math.Round(Sta_end - Sta_start, 2))
-                                        {
-                                            double max_bend = 1000;
-                                            if (Functions.IsNumeric(textBox_max_bend.Text) == true)
-                                            {
-                                                max_bend = Convert.ToDouble(textBox_max_bend.Text);
-                                            }
-
-                                            int round1 = 0;
-                                            if (Functions.IsNumeric(textBox_ang_round.Text) == true)
-                                            {
-                                                round1 = Convert.ToInt32(textBox_ang_round.Text);
-                                            }
-
-                                            System.Data.DataTable dt_xing = Functions.Creaza_crossing_datatable_structure();
-                                            System.Data.DataTable dt1 = dt_prof.Clone();
-
-                                            for (int i = 1; i < poly_top.NumberOfVertices - 1; ++i)
-                                            {
-                                                Point3d pt1 = poly_top.GetPointAtParameter(i - 1);
-                                                Point3d pt2 = poly_top.GetPointAtParameter(i);
-                                                Point3d pt3 = poly_top.GetPointAtParameter(i + 1);
-
-                                                if (i == 1)
-                                                {
-                                                    dt1.Rows.Add();
-                                                    dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_station] = Sta_start + Math.Abs(pt1.X - Xstart) / Hexag;
-                                                    dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_Elev] = Elev_start - (poly_ground.StartPoint.Y - pt1.Y) / Vexag;
-                                                    dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_Type] = "TOP";
-                                                }
-
-
-                                                double sta = Sta_start + Math.Abs(pt2.X - Xstart) / Hexag;
-                                                double elev = Elev_start - (poly_ground.StartPoint.Y - pt2.Y) / Vexag;
-
-                                                dt1.Rows.Add();
-                                                dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_station] = sta;
-                                                dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_Elev] = elev;
-                                                dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_Type] = "TOP";
-
-                                                if (i == poly_top.NumberOfVertices - 2)
-                                                {
-                                                    dt1.Rows.Add();
-                                                    dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_station] = Sta_start + Math.Abs(pt3.X - Xstart) / Hexag;
-                                                    dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_Elev] = Elev_start - (poly_ground.StartPoint.Y - pt3.Y) / Vexag;
-                                                    dt1.Rows[dt1.Rows.Count - 1][_AGEN_mainform.Col_Type] = "TOP";
-                                                }
-
-                                                double defl_rad = Functions.Get_deflection_angle_rad(Xstart + (pt1.X - Xstart) / Hexag, Ystart - (Ystart - pt1.Y) / Vexag,
-                                                                                                     Xstart + (pt2.X - Xstart) / Hexag, Ystart - (Ystart - pt2.Y) / Vexag,
-                                                                                                     Xstart + (pt3.X - Xstart) / Hexag, Ystart - (Ystart - pt3.Y) / Vexag);
-                                                string defl_side = Functions.Get_deflection_side(pt1.X, pt1.Y, pt2.X, pt2.Y, pt3.X, pt3.Y).Replace("LT", "SB").Replace("RT", "OB");
-                                                double d_dms = 180 * defl_rad / Math.PI;
-
-                                                string prefix = "P.I. < ";
-                                                if (d_dms > max_bend)
-                                                {
-                                                    prefix = "I.B. < ";
-                                                }
-
-                                                dt_xing.Rows.Add();
-                                                dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.col_desc] = prefix + Convert.ToString(Math.Round(d_dms, round1)) + "° " + defl_side;
-                                                dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.Col_Elev] = elev;
-                                                dt_xing.Rows[dt_xing.Rows.Count - 1]["DispProf"] = "YES";
-                                                if (_AGEN_mainform.Project_type == "2D")
-                                                {
-                                                    dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = sta;
-                                                }
-                                                else
-                                                {
-                                                    dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.Col_3DSta] = sta;
-                                                }
-                                            }
-
-
-                                            Microsoft.Office.Interop.Excel.Worksheet W_xing = null;
-                                            Microsoft.Office.Interop.Excel.Worksheet W_prof = null;
-                                            Microsoft.Office.Interop.Excel.Application Excel1 = null;
-                                            Microsoft.Office.Interop.Excel.Workbook Workboook_xing = null;
-                                            Microsoft.Office.Interop.Excel.Workbook Workboook_prof = null;
-
-                                            bool is_opened_xing = false;
-                                            bool save_and_close_xing = false;
-                                            bool is_opened_prof = false;
-                                            bool save_and_close_prof = false;
-                                            try
-                                            {
-                                                try
-                                                {
-                                                    Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-                                                    foreach (Microsoft.Office.Interop.Excel.Workbook Workbook2 in Excel1.Workbooks)
-                                                    {
-
-                                                        if (Workbook2.FullName == crossingxl)
-                                                        {
-                                                            Workboook_xing = Workbook2;
-                                                            is_opened_xing = true;
-                                                        }
-                                                        if (Workbook2.FullName == profxl)
-                                                        {
-                                                            Workboook_prof = Workbook2;
-                                                            is_opened_prof = true;
-                                                        }
-
-                                                    }
-                                                }
-                                                catch (System.Exception ex)
-                                                {
-                                                    Excel1 = new Microsoft.Office.Interop.Excel.Application();
-                                                }
-
-
-                                                if (is_opened_xing == false)
-                                                {
-
-                                                    Workboook_xing = Excel1.Workbooks.Open(crossingxl);
-                                                    save_and_close_xing = true;
-
-                                                }
-                                                if (is_opened_prof == false)
-                                                {
-                                                    Workboook_prof = Excel1.Workbooks.Open(profxl);
-                                                    save_and_close_prof = true;
-                                                }
-
-                                                List<string> lista_xing = new List<string>();
-                                                foreach (Microsoft.Office.Interop.Excel.Worksheet Wx in Workboook_xing.Worksheets)
-                                                {
-                                                    if (Wx.Name.Contains("prof_lab") == true)
-                                                    {
-                                                        lista_xing.Add(Wx.Name);
-                                                    }
-                                                }
-
-                                                List<string> lista_prof = new List<string>();
-                                                foreach (Microsoft.Office.Interop.Excel.Worksheet Wx in Workboook_prof.Worksheets)
-                                                {
-                                                    lista_prof.Add(Wx.Name);
-                                                }
-
-                                                string new_name_xing_orig = "prof_lab";
-                                                string new_xing_name = "prof_lab";
-                                                int index1 = 0;
-                                                if (lista_xing.Contains(new_xing_name) == true)
-                                                {
-                                                    do
-                                                    {
-                                                        ++index1;
-                                                        new_xing_name = new_name_xing_orig + Convert.ToString(index1);
-                                                    } while (lista_xing.Contains(new_xing_name) == true);
-                                                }
-                                                W_xing = Workboook_xing.Worksheets.Add(System.Reflection.Missing.Value, Workboook_xing.Worksheets[1], System.Reflection.Missing.Value, System.Reflection.Missing.Value);
-                                                W_xing.Name = new_xing_name;
-
-                                                string new_name_prof_orig = "TOP";
-                                                string new_prof_name = "TOP";
-                                                int index2 = 0;
-                                                if (lista_prof.Contains(new_prof_name) == true)
-                                                {
-                                                    do
-                                                    {
-                                                        ++index2;
-                                                        new_prof_name = new_name_prof_orig + Convert.ToString(index1);
-                                                    } while (lista_prof.Contains(new_prof_name) == true);
-                                                }
-
-                                                foreach (Microsoft.Office.Interop.Excel.Worksheet Wx in Workboook_prof.Worksheets)
-                                                {
-                                                    if (Wx.Name == new_name_prof_orig)
-                                                    {
-                                                        Wx.Name = new_prof_name;
-                                                    }
-                                                }
-
-                                                W_prof = Workboook_prof.Worksheets.Add(System.Reflection.Missing.Value, Workboook_prof.Worksheets[1], System.Reflection.Missing.Value, System.Reflection.Missing.Value);
-                                                W_prof.Name = new_name_prof_orig;
-
-                                                string segment1 = _AGEN_mainform.tpage_setup.Get_segment_name1();
-                                                if (segment1 == "not defined") segment1 = "";
-
-                                                if (dt_xing.Rows.Count > 0)
-                                                {
-
-                                                    Functions.Create_header_crossing_file(W_xing, _AGEN_mainform.tpage_setup.Get_client_name(), _AGEN_mainform.tpage_setup.Get_project_name(), segment1);
-
-                                                    W_xing.Cells.NumberFormat = "General";
-                                                    int maxRows = dt_xing.Rows.Count;
-                                                    int maxCols = dt_xing.Columns.Count;
-
-
-                                                    Microsoft.Office.Interop.Excel.Range range1 = W_xing.Range["A9:R" + (9 + maxRows - 1).ToString()];
-
-
-
-
-                                                    object[,] values1 = new object[maxRows, maxCols];
-
-                                                    for (int i = 0; i < maxRows; ++i)
-                                                    {
-                                                        for (int j = 0; j < maxCols; ++j)
-                                                        {
-                                                            if (dt_xing.Rows[i][j] != DBNull.Value)
-                                                            {
-                                                                values1[i, j] = dt_xing.Rows[i][j];
-                                                            }
-                                                        }
-                                                    }
-                                                    range1.Value2 = values1;
-                                                }
-
-
-                                                if (dt1.Rows.Count > 0)
-                                                {
-                                                    Functions.Create_header_graph_profile(W_prof, _AGEN_mainform.tpage_setup.Get_client_name(), _AGEN_mainform.tpage_setup.Get_project_name(), segment1);
-                                                    W_prof.Cells.NumberFormat = "General";
-                                                    int maxRows = dt1.Rows.Count;
-                                                    int maxCols = dt1.Columns.Count;
-
-
-                                                    Microsoft.Office.Interop.Excel.Range range0 = W_prof.Range["A8:G8"];
-                                                    object[,] values0 = new object[1, maxCols];
-
-
-                                                    for (int j = 0; j < maxCols; ++j)
-                                                    {
-                                                        values0[0, j] = dt1.Columns[j].ColumnName;
-                                                    }
-                                                    range0.Value2 = values0;
-
-
-
-                                                    Microsoft.Office.Interop.Excel.Range range1 = W_prof.Range["A9:G" + (9 + maxRows - 1).ToString()];
-                                                    object[,] values1 = new object[maxRows, maxCols];
-
-                                                    for (int i = 0; i < maxRows; ++i)
-                                                    {
-                                                        for (int j = 0; j < maxCols; ++j)
-                                                        {
-                                                            if (dt1.Rows[i][j] != DBNull.Value)
-                                                            {
-                                                                values1[i, j] = dt1.Rows[i][j];
-                                                            }
-                                                        }
-                                                    }
-                                                    range1.Value2 = values1;
-                                                }
-
-                                                Workboook_xing.Save();
-                                                Workboook_prof.Save();
-
-                                                if (save_and_close_xing == true)
-                                                {
-                                                    Workboook_xing.Close();
-                                                }
-
-
-                                                if (save_and_close_prof == true)
-                                                {
-                                                    Workboook_prof.Close();
-                                                }
-
-                                            }
-                                            catch (System.Exception ex)
-                                            {
-                                                System.Windows.Forms.MessageBox.Show(ex.Message);
-                                            }
-                                            finally
-                                            {
-                                                if (W_xing != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W_xing);
-                                                if (Workboook_xing != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workboook_xing);
-                                                if (Excel1 != null && Excel1.Workbooks.Count == 0) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-
-                    this.MdiParent.WindowState = FormWindowState.Normal;
-                    Editor1.SetImpliedSelection(Empty_array);
-                    Editor1.WriteMessage("\nCommand:");
-                    set_enable_true();
-
-                }
-            }
-
-        }
-
-        private void button_top_from_profile_band_Click(object sender, EventArgs e)
-        {
-
-            string xing_tab = comboBox_xing_tab.Text;
-            string prof_tab = comboBox_profile_tab.Text;
-
-            if (xing_tab == "" || prof_tab == "")
-            {
-                MessageBox.Show("no crossing/profile tab specifed", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            string Agen_profile_band_V2 = "Agen_profile_band_V2";
-            string Agen_profile_band_V3 = "Agen_profile_band_V3";
-            Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
-
-            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
-            if (Tables1.IsTableDefined(Agen_profile_band_V2) == false && Tables1.IsTableDefined(Agen_profile_band_V3) == false)
-            {
-                MessageBox.Show("no " + Agen_profile_band_V3 + " data table defined\r\noperation aborted", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                set_enable_true();
-                ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                return;
-            }
-
-
-            double Vexag = 1;
-            if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex()) == true)
-            {
-                Vexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Vex());
-            }
-            double Hexag = 1;
-            if (Functions.IsNumeric(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex()) == true)
-            {
-                Hexag = Convert.ToDouble(_AGEN_mainform.tpage_profdraw.get_textBox_prof_Hex());
-            }
-
-            if (Vexag != 1)
-            {
-                if (MessageBox.Show("the vertical exaggeration is not 1\r\ndo you want to continue?", "AGEN", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
-            }
-
-            if (Hexag != 1)
-            {
-                if (MessageBox.Show("the horizontal exaggeration is not 1\r\ndo you want to continue?", "AGEN", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No) return;
-            }
-
-            string ProjF = _AGEN_mainform.tpage_setup.Get_project_database_folder();
-            if (ProjF.Substring(ProjF.Length - 1, 1) != "\\")
-            {
-                ProjF = ProjF + "\\";
-            }
-
-
-
-            string crossingxl = ProjF + _AGEN_mainform.crossing_excel_name;
-            string profxl = ProjF + _AGEN_mainform.prof_excel_name;
-
-
-
-            if (System.IO.File.Exists(crossingxl) == true && System.IO.File.Exists(profxl) == true)
-            {
-                System.Data.DataTable dt_null = null;
-                System.Data.DataTable dt_prof = Load_existing_profile_graph(profxl, ref dt_null);
-                if (dt_prof != null && dt_prof.Rows.Count > 0)
-                {
-
-                    ObjectId[] Empty_array = null;
-
-                    Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
-                    Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
-                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
-                    try
-                    {
-                        set_enable_false();
-                        using (DocumentLock lock1 = ThisDrawing.LockDocument())
-                        {
-                            using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
-                            {
-                                BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
-                                BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForRead) as BlockTableRecord;
-
-
-
-
-
-                                Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat_ground;
-                                Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Prompt_ground = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
-                                Prompt_ground.MessageForAdding = "\nSelect the ground polylines:";
-                                Prompt_ground.SingleOnly = false;
-
-
-                                this.MdiParent.WindowState = FormWindowState.Minimized;
-
-                                Rezultat_ground = ThisDrawing.Editor.GetSelection(Prompt_ground);
-
-                                if (Rezultat_ground.Status != PromptStatus.OK)
-                                {
-                                    this.MdiParent.WindowState = FormWindowState.Normal;
-                                    set_enable_true();
-                                    ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                                    return;
-                                }
-
-                                Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat_top;
-                                Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Prompt_top = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
-                                Prompt_top.MessageForAdding = "\nSelect the top of pipe polyline:";
-                                Prompt_top.SingleOnly = false;
-
-                                Rezultat_top = ThisDrawing.Editor.GetSelection(Prompt_top);
-
-                                if (Rezultat_top.Status != PromptStatus.OK)
-                                {
-                                    this.MdiParent.WindowState = FormWindowState.Normal;
-                                    set_enable_true();
-                                    ThisDrawing.Editor.WriteMessage("\n" + "Command:");
-                                    return;
-                                }
-
-                                this.MdiParent.WindowState = FormWindowState.Normal;
-
-                                List<Polyline> lista_ground = new List<Polyline>();
-                                List<Polyline> lista_top = new List<Polyline>();
-
-
-                                for (int i = 0; i < Rezultat_ground.Value.Count; ++i)
-                                {
-                                    Polyline poly1 = Trans1.GetObject(Rezultat_ground.Value[i].ObjectId, OpenMode.ForRead) as Polyline;
-                                    if (poly1 != null)
-                                    {
-                                        lista_ground.Add(poly1);
-                                    }
-
-                                }
-                                for (int i = 0; i < Rezultat_top.Value.Count; ++i)
-                                {
-                                    Polyline poly1 = Trans1.GetObject(Rezultat_top.Value[i].ObjectId, OpenMode.ForRead) as Polyline;
-                                    if (poly1 != null)
-                                    {
-                                        lista_top.Add(poly1);
-                                    }
-
-                                    Line line1 = Trans1.GetObject(Rezultat_top.Value[i].ObjectId, OpenMode.ForRead) as Line;
-                                    if (line1 != null)
-                                    {
-                                        Polyline pl1 = new Polyline();
-                                        pl1.AddVertexAt(0, new Point2d(line1.StartPoint.X, line1.StartPoint.Y), 0, 0, 0);
-                                        pl1.AddVertexAt(1, new Point2d(line1.EndPoint.X, line1.EndPoint.Y), 0, 0, 0);
-                                        lista_top.Add(pl1);
-                                    }
-                                }
-
-                                string segm2 = _AGEN_mainform.tpage_setup.Get_segment_name1();
-                                if (_AGEN_mainform.tpage_setup.Get_segment_name1() == "not defined")
-                                {
-                                    segm2 = "";
-                                }
-
-
-                                for (int j = lista_ground.Count - 1; j >= 0; --j)
-                                {
-                                    Polyline poly2 = lista_ground[j];
-
-                                    double start1 = -123.4;
-                                    double end1 = -123.4;
-                                    string segm1 = "123456";
-
-                                    if (Tables1.GetTableNames().Contains(Agen_profile_band_V2) == true)
-                                    {
-                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
-                                        {
-
-                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
-                                            {
-                                                if (Records1.Count > 0)
-                                                {
-                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
-                                                    {
-
-                                                        for (int k = 0; k < Record1.Count; ++k)
-                                                        {
-                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                            string Nume_field = Field_def1.Name;
-                                                            string Valoare_field = Record1[k].StrValue;
-
-                                                            if (Nume_field.ToLower() == "beginsta")
-                                                            {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
-                                                                {
-                                                                    start1 = Convert.ToDouble(Valoare_field);
-                                                                }
-                                                            }
-
-                                                            if (Nume_field.ToLower() == "endsta")
-                                                            {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
-                                                                {
-                                                                    end1 = Convert.ToDouble(Valoare_field);
-                                                                }
-                                                            }
-                                                            if (Nume_field.ToLower() == "segment")
-                                                            {
-                                                                segm1 = Convert.ToString(Valoare_field);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                    }
-
-                                    if (Tables1.GetTableNames().Contains(Agen_profile_band_V3) == true)
-                                    {
-                                        using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
-                                        {
-
-                                            using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly2.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
-                                            {
-                                                if (Records1.Count > 0)
-                                                {
-                                                    Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                    foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
-                                                    {
-
-                                                        for (int k = 0; k < Record1.Count; ++k)
-                                                        {
-                                                            Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                            string Nume_field = Field_def1.Name;
-                                                            string Valoare_field = Record1[k].StrValue;
-
-                                                            if (Nume_field.ToLower() == "beginsta")
-                                                            {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
-                                                                {
-                                                                    start1 = Convert.ToDouble(Valoare_field);
-                                                                }
-                                                            }
-
-                                                            if (Nume_field.ToLower() == "endsta")
-                                                            {
-                                                                if (Functions.IsNumeric(Valoare_field) == true)
-                                                                {
-                                                                    end1 = Convert.ToDouble(Valoare_field);
-                                                                }
-                                                            }
-                                                            if (Nume_field.ToLower() == "segment")
-                                                            {
-                                                                segm1 = Convert.ToString(Valoare_field);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                    }
-                                    if (segm1.ToLower() != segm2.ToLower() || start1 == -123.4 || end1 == -123.4)
-                                    {
-                                        lista_ground.RemoveAt(j);
-                                    }
-
-                                }
-
-                                if (lista_ground.Count == 0)
-                                {
-                                    MessageBox.Show("no ground polyline selected", "AGEN", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-
-                                System.Data.DataTable dt_xing = Functions.Creaza_crossing_datatable_structure();
-                                System.Data.DataTable dt_top = dt_prof.Clone();
-
-
-                                for (int s = 0; s < lista_top.Count; ++s)
-                                {
-
-                                    Polyline poly_top = lista_top[s];
-                                    Point3d p1 = poly_top.StartPoint;
-
-                                    double dist1 = 200000;
-                                    Polyline poly_ground = null;
-
-                                    for (int j = 0; j < lista_ground.Count; ++j)
-                                    {
-                                        Polyline poly2 = lista_ground[j];
-                                        Point3d p2 = poly2.GetClosestPointTo(new Point3d(p1.X, p1.Y, poly2.Elevation), Vector3d.ZAxis, false);
-
-                                        double dist2 = Math.Pow(Math.Pow((p1.X - p2.X), 2) + Math.Pow((p1.Y - p2.Y), 2), 0.5);
-
-                                        if (dist2 < dist1)
-                                        {
-                                            poly_ground = poly2;
-                                            dist1 = dist2;
-                                        }
-
-                                    }
-
-                                    if (poly_ground != null && poly_top != null && poly_top.NumberOfVertices > 2)
-                                    {
-
-                                        double Sta_start = -123.4;
-                                        double Sta_end = -123.4;
-                                        if (Tables1.GetTableNames().Contains(Agen_profile_band_V2) == true)
-                                        {
-                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V2])
-                                            {
-
-                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
-                                                {
-                                                    if (Records1.Count > 0)
-                                                    {
-                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
-                                                        {
-
-                                                            for (int k = 0; k < Record1.Count; ++k)
-                                                            {
-                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                                string Nume_field = Field_def1.Name;
-                                                                string Valoare_field = Record1[k].StrValue;
-
-                                                                if (Nume_field.ToLower() == "beginsta")
-                                                                {
-                                                                    if (Functions.IsNumeric(Valoare_field) == true)
-                                                                    {
-                                                                        Sta_start = Convert.ToDouble(Valoare_field);
-                                                                    }
-                                                                }
-
-                                                                if (Nume_field.ToLower() == "endsta")
-                                                                {
-                                                                    if (Functions.IsNumeric(Valoare_field) == true)
-                                                                    {
-                                                                        Sta_end = Convert.ToDouble(Valoare_field);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                }
-                                            }
-                                        }
-                                        if (Tables1.GetTableNames().Contains(Agen_profile_band_V3) == true)
-                                        {
-                                            using (Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Agen_profile_band_V3])
-                                            {
-
-                                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tabla1.GetObjectTableRecords(Convert.ToUInt32(0), poly_ground.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, true))
-                                                {
-                                                    if (Records1.Count > 0)
-                                                    {
-                                                        Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
-                                                        foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
-                                                        {
-
-                                                            for (int k = 0; k < Record1.Count; ++k)
-                                                            {
-                                                                Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[k];
-                                                                string Nume_field = Field_def1.Name;
-                                                                string Valoare_field = Record1[k].StrValue;
-
-                                                                if (Nume_field.ToLower() == "beginsta")
-                                                                {
-                                                                    if (Functions.IsNumeric(Valoare_field) == true)
-                                                                    {
-                                                                        Sta_start = Convert.ToDouble(Valoare_field);
-                                                                    }
-                                                                }
-
-                                                                if (Nume_field.ToLower() == "endsta")
-                                                                {
-                                                                    if (Functions.IsNumeric(Valoare_field) == true)
-                                                                    {
-                                                                        Sta_end = Convert.ToDouble(Valoare_field);
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-
-                                                }
-                                            }
-                                        }
-                                        double Xstart = poly_ground.StartPoint.X;
-                                        double Xend = poly_ground.EndPoint.X;
-                                        double Ystart = poly_ground.StartPoint.Y;
-                                        double Elev_start = -1.234;
-
-
-                                        for (int j = 1; j < dt_prof.Rows.Count; ++j)
-                                        {
-                                            if (dt_prof.Rows[j][_AGEN_mainform.Col_station] != DBNull.Value && dt_prof.Rows[j][_AGEN_mainform.Col_Elev] != DBNull.Value)
-                                            {
-                                                double elev1 = Convert.ToDouble(dt_prof.Rows[j - 1][_AGEN_mainform.Col_Elev]);
-                                                double elev2 = Convert.ToDouble(dt_prof.Rows[j][_AGEN_mainform.Col_Elev]);
-
-                                                double sta1 = Convert.ToDouble(dt_prof.Rows[j - 1][_AGEN_mainform.Col_station]);
-                                                double sta2 = Convert.ToDouble(dt_prof.Rows[j][_AGEN_mainform.Col_station]);
-
-                                                if (sta1 <= Sta_start && Sta_start <= sta2)
-                                                {
-                                                    if (Math.Round(sta2, 2) == Math.Round(sta1, 2))
-                                                    {
-                                                        Elev_start = elev1;
-                                                    }
-                                                    else
-                                                    {
-                                                        Elev_start = elev1 + ((elev2 - elev1) * (Sta_start - sta1)) / (sta2 - sta1);
-                                                    }
-
-                                                    j = dt_prof.Rows.Count;
-                                                }
-
-
-                                            }
-                                        }
-
-                                        if (Elev_start != -1.234)
-                                        {
-
-
-
-                                            if (Math.Round(Math.Abs(Xstart - Xend) * Hexag, 2) == Math.Round(Sta_end - Sta_start, 2))
-                                            {
-                                                double max_bend = 1000;
-                                                if (Functions.IsNumeric(textBox_max_bend.Text) == true)
-                                                {
-                                                    max_bend = Convert.ToDouble(textBox_max_bend.Text);
-                                                }
-
-                                                int round1 = 0;
-                                                if (Functions.IsNumeric(textBox_ang_round.Text) == true)
-                                                {
-                                                    round1 = Convert.ToInt32(textBox_ang_round.Text);
-                                                }
-
-
-
-                                                for (int i = 1; i < poly_top.NumberOfVertices - 1; ++i)
-                                                {
-                                                    Point3d pt1 = poly_top.GetPointAtParameter(i - 1);
-                                                    Point3d pt2 = poly_top.GetPointAtParameter(i);
-                                                    Point3d pt3 = poly_top.GetPointAtParameter(i + 1);
-
-                                                    if (i == 1)
-                                                    {
-                                                        dt_top.Rows.Add();
-                                                        dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_station] = Sta_start + Math.Abs(pt1.X - Xstart) / Hexag;
-                                                        dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_Elev] = Elev_start - (poly_ground.StartPoint.Y - pt1.Y) / Vexag;
-                                                        dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_Type] = "TOP";
-                                                    }
-
-
-                                                    double sta = Sta_start + Math.Abs(pt2.X - Xstart) / Hexag;
-                                                    double elev = Elev_start - (poly_ground.StartPoint.Y - pt2.Y) / Vexag;
-
-                                                    dt_top.Rows.Add();
-                                                    dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_station] = sta;
-                                                    dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_Elev] = elev;
-                                                    dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_Type] = "TOP";
-
-                                                    if (i == poly_top.NumberOfVertices - 2)
-                                                    {
-                                                        dt_top.Rows.Add();
-                                                        dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_station] = Sta_start + Math.Abs(pt3.X - Xstart) / Hexag;
-                                                        dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_Elev] = Elev_start - (poly_ground.StartPoint.Y - pt3.Y) / Vexag;
-                                                        dt_top.Rows[dt_top.Rows.Count - 1][_AGEN_mainform.Col_Type] = "TOP";
-                                                    }
-
-                                                    double defl_rad = Functions.Get_deflection_angle_rad(Xstart + (pt1.X - Xstart) / Hexag, Ystart - (Ystart - pt1.Y) / Vexag,
-                                                                                                         Xstart + (pt2.X - Xstart) / Hexag, Ystart - (Ystart - pt2.Y) / Vexag,
-                                                                                                         Xstart + (pt3.X - Xstart) / Hexag, Ystart - (Ystart - pt3.Y) / Vexag);
-                                                    string defl_side = Functions.Get_deflection_side(pt1.X, pt1.Y, pt2.X, pt2.Y, pt3.X, pt3.Y).Replace("LT", "SB").Replace("RT", "OB");
-                                                    double d_dms = 180 * defl_rad / Math.PI;
-
-                                                    string prefix = "P.I. < ";
-                                                    if (d_dms > max_bend)
-                                                    {
-                                                        prefix = "I.B. < ";
-                                                    }
-
-                                                    dt_xing.Rows.Add();
-                                                    dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.col_desc] = prefix + Convert.ToString(Math.Round(d_dms, round1)) + "° " + defl_side;
-                                                    dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.Col_Elev] = elev;
-                                                    dt_xing.Rows[dt_xing.Rows.Count - 1]["DispProf"] = "YES";
-                                                    if (_AGEN_mainform.Project_type == "2D")
-                                                    {
-                                                        dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.Col_2DSta] = sta;
-                                                    }
-                                                    else
-                                                    {
-                                                        dt_xing.Rows[dt_xing.Rows.Count - 1][_AGEN_mainform.Col_3DSta] = sta;
-                                                    }
-                                                }
-
-
-                                            }
-                                        }
-                                    }
-
-
-                                }
-
-                                Microsoft.Office.Interop.Excel.Worksheet W_xing = null;
-                                Microsoft.Office.Interop.Excel.Worksheet W_prof = null;
-                                Microsoft.Office.Interop.Excel.Application Excel1 = null;
-                                Microsoft.Office.Interop.Excel.Workbook Workboook_xing = null;
-                                Microsoft.Office.Interop.Excel.Workbook Workboook_prof = null;
-
-                                bool is_opened_xing = false;
-                                bool save_and_close_xing = false;
-                                bool is_opened_prof = false;
-                                bool save_and_close_prof = false;
-                                try
-                                {
-                                    try
-                                    {
-                                        Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-                                        foreach (Microsoft.Office.Interop.Excel.Workbook Workbook2 in Excel1.Workbooks)
-                                        {
-                                            string workbookname = Workbook2.FullName;
-
-                                            if (workbookname.ToLower() == crossingxl.ToLower())
-                                            {
-                                                Workboook_xing = Workbook2;
-                                                is_opened_xing = true;
-                                            }
-                                            if (workbookname.ToLower() == profxl.ToLower())
-                                            {
-                                                Workboook_prof = Workbook2;
-                                                is_opened_prof = true;
-                                            }
-
-                                        }
-                                    }
-                                    catch (System.Exception ex)
-                                    {
-                                        Excel1 = new Microsoft.Office.Interop.Excel.Application();
-                                    }
-
-
-                                    if (is_opened_xing == false)
-                                    {
-
-                                        Workboook_xing = Excel1.Workbooks.Open(crossingxl);
-                                        save_and_close_xing = true;
-
-                                    }
-                                    if (is_opened_prof == false)
-                                    {
-                                        Workboook_prof = Excel1.Workbooks.Open(profxl);
-                                        save_and_close_prof = true;
-                                    }
-
-
-
-                                    W_xing = Workboook_xing.Worksheets[comboBox_xing_tab.Text];
-
-                                    //  Load crossigs and add them to the dt_xing
-
-                                    Functions.create_backup(crossingxl);
-                                    System.Data.DataTable dt_ex_xing = Load_existing_crossing(W_xing);
-
-                                    if (dt_ex_xing != null && dt_ex_xing.Rows.Count > 0)
-                                    {
-                                        for (int i = 0; i < dt_ex_xing.Rows.Count; ++i)
-                                        {
-                                            System.Data.DataRow row1 = dt_xing.NewRow();
-                                            System.Data.DataRow row2 = dt_ex_xing.Rows[i];
-                                            row1.ItemArray = row2.ItemArray;
-                                            dt_xing.Rows.Add(row1);
-                                        }
-
-                                        dt_ex_xing = null;
-                                    }
-
-
-                                    W_prof = Workboook_prof.Worksheets[comboBox_profile_tab.Text];
-                                    Functions.create_backup(profxl);
-                                    System.Data.DataTable dt_ex_prof = Load_existing_profile(W_prof);
-
-                                    if (dt_ex_prof != null && dt_ex_prof.Rows.Count > 0)
-                                    {
-                                        for (int i = 0; i < dt_ex_prof.Rows.Count; ++i)
-                                        {
-                                            System.Data.DataRow row1 = dt_top.NewRow();
-                                            System.Data.DataRow row2 = dt_ex_prof.Rows[i];
-                                            row1.ItemArray = row2.ItemArray;
-                                            dt_top.Rows.Add(row1);
-                                        }
-
-                                        dt_ex_prof = null;
-                                    }
-
-                                    if (comboBox_profile_tab.Text != "TOP")
-                                    {
-                                        List<string> lista_sheets = new List<string>();
-                                        foreach (Microsoft.Office.Interop.Excel.Worksheet sheet in Excel1.Worksheets)
-                                        {
-                                            string old_name = sheet.Name;
-                                            if (old_name.ToUpper().Contains("TOP") == true)
-                                            {
-                                                lista_sheets.Add(old_name);
-                                            }
-
-                                        }
-                                        if (lista_sheets.Count > 0)
-                                        {
-                                            for (int i = 0; i < lista_sheets.Count; ++i)
-                                            {
-                                                if (lista_sheets[i].ToUpper() == "TOP")
-                                                {
-                                                    int k = 1;
-                                                    string new_name = "OLD_TOP" + k.ToString();
-                                                    do
-                                                    {
-                                                        if (lista_sheets.Contains(new_name) == true)
-                                                        {
-                                                            ++k;
-                                                            new_name = "OLD_TOP" + k.ToString();
-                                                        }
-
-                                                    } while (lista_sheets.Contains(new_name) == true);
-
-                                                    Workboook_prof.Worksheets["TOP"].Name = new_name;
-                                                    comboBox_profile_tab.Items[comboBox_profile_tab.SelectedIndex] = new_name;
-                                                }
-                                            }
-                                        }
-
-
-
-                                    }
-
-
-
-
-
-
-                                    string segment1 = _AGEN_mainform.tpage_setup.Get_segment_name1();
-                                    if (segment1 == "not defined") segment1 = "";
-
-                                    if (dt_xing.Rows.Count > 0)
-                                    {
-
-                                        Microsoft.Office.Interop.Excel.Range range2 = W_xing.Range["A9:R50000"];
-                                        range2.ClearContents();
-                                        range2.ClearFormats();
-
-                                        Functions.Create_header_crossing_file(W_xing, _AGEN_mainform.tpage_setup.Get_client_name(), _AGEN_mainform.tpage_setup.Get_project_name(), segment1);
-
-                                        W_xing.Cells.NumberFormat = "General";
-                                        int maxRows = dt_xing.Rows.Count;
-                                        int maxCols = dt_xing.Columns.Count;
-
-
-                                        Microsoft.Office.Interop.Excel.Range range1 = W_xing.Range["A9:R" + (9 + maxRows - 1).ToString()];
-
-                                        object[,] values1 = new object[maxRows, maxCols];
-
-                                        for (int i = 0; i < maxRows; ++i)
-                                        {
-                                            for (int j = 0; j < maxCols; ++j)
-                                            {
-                                                if (dt_xing.Rows[i][j] != DBNull.Value)
-                                                {
-                                                    values1[i, j] = dt_xing.Rows[i][j];
-                                                }
-                                            }
-                                        }
-                                        range1.Value2 = values1;
-                                    }
-
-
-                                    if (dt_top.Rows.Count > 0)
-                                    {
-                                        Microsoft.Office.Interop.Excel.Range range2 = W_prof.Range["A9:G50000"];
-                                        range2.ClearContents();
-                                        range2.ClearFormats();
-                                        Functions.Create_header_graph_profile(W_prof, _AGEN_mainform.tpage_setup.Get_client_name(), _AGEN_mainform.tpage_setup.Get_project_name(), segment1);
-                                        W_prof.Cells.NumberFormat = "General";
-                                        W_prof.Name = "TOP";
-                                        int maxRows = dt_top.Rows.Count;
-                                        int maxCols = dt_top.Columns.Count;
-
-
-                                        Microsoft.Office.Interop.Excel.Range range0 = W_prof.Range["A8:G8"];
-                                        object[,] values0 = new object[1, maxCols];
-
-
-                                        for (int j = 0; j < maxCols; ++j)
-                                        {
-                                            values0[0, j] = dt_top.Columns[j].ColumnName;
-                                        }
-                                        range0.Value2 = values0;
-
-
-
-                                        Microsoft.Office.Interop.Excel.Range range1 = W_prof.Range["A9:G" + (9 + maxRows - 1).ToString()];
-                                        object[,] values1 = new object[maxRows, maxCols];
-
-                                        for (int i = 0; i < maxRows; ++i)
-                                        {
-                                            for (int j = 0; j < maxCols; ++j)
-                                            {
-                                                if (dt_top.Rows[i][j] != DBNull.Value)
-                                                {
-                                                    values1[i, j] = dt_top.Rows[i][j];
-                                                }
-                                            }
-                                        }
-                                        range1.Value2 = values1;
-                                    }
-
-
-                                    comboBox_profile_tab.Items.Clear();
-                                    comboBox_xing_tab.Items.Clear();
-
-                                    Workboook_xing.Save();
-                                    Workboook_prof.Save();
-
-                                    if (save_and_close_xing == true)
-                                    {
-                                        Workboook_xing.Close();
-                                    }
-
-
-                                    if (save_and_close_prof == true)
-                                    {
-                                        Workboook_prof.Close();
-                                    }
-
-                                }
-                                catch (System.Exception ex)
-                                {
-                                    System.Windows.Forms.MessageBox.Show(ex.Message);
-                                }
-                                finally
-                                {
-                                    if (W_xing != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W_xing);
-                                    if (Workboook_xing != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workboook_xing);
-                                    if (Excel1 != null && Excel1.Workbooks.Count == 0) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
-                                }
-
-
-
-
-                            }
-                        }
-                    }
-
-                    catch (System.Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-
-                    this.MdiParent.WindowState = FormWindowState.Normal;
-                    Editor1.SetImpliedSelection(Empty_array);
-                    Editor1.WriteMessage("\nCommand:");
-                    set_enable_true();
-
-                }
-            }
-
-        }
-
-        private void button_load_tabs_cross_and_xing_Click(object sender, EventArgs e)
-        {
-            string ProjF = _AGEN_mainform.tpage_setup.Get_project_database_folder();
-            if (ProjF.Substring(ProjF.Length - 1, 1) != "\\")
-            {
-                ProjF = ProjF + "\\";
-            }
-
-
-
-            string crossingxl = ProjF + _AGEN_mainform.crossing_excel_name;
-            string profxl = ProjF + _AGEN_mainform.prof_excel_name;
-
-
-
-            if (System.IO.File.Exists(crossingxl) == true && System.IO.File.Exists(profxl) == true)
-            {
-                Microsoft.Office.Interop.Excel.Worksheet W_xing = null;
-                Microsoft.Office.Interop.Excel.Worksheet W_prof = null;
-                Microsoft.Office.Interop.Excel.Application Excel1 = null;
-                Microsoft.Office.Interop.Excel.Workbook Workboook_xing = null;
-                Microsoft.Office.Interop.Excel.Workbook Workboook_prof = null;
-
-                bool is_opened_xing = false;
-                bool close_xing = false;
-                bool is_opened_prof = false;
-                bool close_prof = false;
-                try
-                {
-                    try
-                    {
-                        Excel1 = (Microsoft.Office.Interop.Excel.Application)System.Runtime.InteropServices.Marshal.GetActiveObject("Excel.Application");
-                        foreach (Microsoft.Office.Interop.Excel.Workbook Workbook2 in Excel1.Workbooks)
-                        {
-                            string workbookname = Workbook2.FullName;
-
-                            if (workbookname.ToLower() == crossingxl.ToLower())
-                            {
-                                Workboook_xing = Workbook2;
-                                is_opened_xing = true;
-                            }
-                            if (workbookname.ToLower() == profxl.ToLower())
-                            {
-                                Workboook_prof = Workbook2;
-                                is_opened_prof = true;
-                            }
-
-                        }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        Excel1 = new Microsoft.Office.Interop.Excel.Application();
-                    }
-
-
-                    if (is_opened_xing == false)
-                    {
-
-                        Workboook_xing = Excel1.Workbooks.Open(crossingxl);
-                        close_xing = true;
-
-                    }
-                    if (is_opened_prof == false)
-                    {
-                        Workboook_prof = Excel1.Workbooks.Open(profxl);
-                        close_prof = true;
-                    }
-
-                    comboBox_profile_tab.Items.Clear();
-                    comboBox_xing_tab.Items.Clear();
-
-                    for (int i = 1; i <= Workboook_prof.Worksheets.Count; ++i)
-                    {
-                        comboBox_profile_tab.Items.Add(Workboook_prof.Worksheets[i].Name);
-                    }
-                    for (int i = 1; i <= Workboook_xing.Worksheets.Count; ++i)
-                    {
-                        comboBox_xing_tab.Items.Add(Workboook_xing.Worksheets[i].Name);
-                    }
-
-                    if (close_prof == true)
-                    {
-                        Workboook_prof.Close();
-                    }
-                    if (close_xing == true)
-                    {
-                        Workboook_xing.Close();
-                    }
-
-                    if (Excel1.Workbooks.Count == 0) Excel1.Quit();
-
-                    if (comboBox_profile_tab.Items.Count > 0)
-                    {
-                        comboBox_profile_tab.SelectedIndex = 0;
-                    }
-
-                    if (comboBox_xing_tab.Items.Count > 0)
-                    {
-                        comboBox_xing_tab.SelectedIndex = 0;
-                    }
-
-                }
-                catch (System.Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    if (W_xing != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W_xing);
-                    if (W_prof != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(W_prof);
-                    if (Workboook_xing != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workboook_xing);
-                    if (Workboook_prof != null) System.Runtime.InteropServices.Marshal.ReleaseComObject(Workboook_prof);
-                    if (Excel1 != null && Excel1.Workbooks.Count == 0) System.Runtime.InteropServices.Marshal.ReleaseComObject(Excel1);
-                }
-            }
-        }
 
 
 
@@ -3826,11 +2512,20 @@ namespace Alignment_mdi
         {
 
             return Functions.Build_Data_table_profile_from_excel(W1, _AGEN_mainform.Start_row_graph_profile + 1);
-
-
-
-
         }
 
+        private void radioButton_default_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_default.Checked == true)
+            {
+                checkBox_user_vert_spaces.Checked = false;
+                checkBox_user_prof_grid_height.Checked = false;
+                panel_profile_band_height.Visible = false;
+            }
+            else
+            {
+                panel_profile_band_height.Visible = true;
+            }
+        }
     }
 }

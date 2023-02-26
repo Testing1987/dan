@@ -448,7 +448,7 @@ namespace Alignment_mdi
                     {
                         Template_is_open = true;
                         ThisDrawing = Doc;
-                        DocumentManager1.CurrentDocument = ThisDrawing;
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
                     }
                 }
 
@@ -589,7 +589,7 @@ namespace Alignment_mdi
                     {
                         Template_is_open = true;
                         ThisDrawing = Doc;
-                        DocumentManager1.CurrentDocument = ThisDrawing;
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
                     }
                 }
 
@@ -758,7 +758,7 @@ namespace Alignment_mdi
                     {
                        Template_is_open = true;
                         ThisDrawing = Doc;
-                        DocumentManager1.CurrentDocument = ThisDrawing;
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
                     }
                 }
 
@@ -938,7 +938,7 @@ namespace Alignment_mdi
                     {
                        Template_is_open = true;
                         ThisDrawing = Doc;
-                        DocumentManager1.CurrentDocument = ThisDrawing;
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
                     }
                 }
 
@@ -1129,7 +1129,7 @@ namespace Alignment_mdi
                     {
                        Template_is_open = true;
                         ThisDrawing = Doc;
-                        DocumentManager1.CurrentDocument = ThisDrawing;
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
                     }
                 }
 

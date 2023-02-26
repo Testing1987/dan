@@ -21,6 +21,7 @@ namespace Alignment_mdi
 
 
         private ContextMenuStrip ContextMenuStrip_bands;
+        private ContextMenuStrip ContextMenuStrip_blocks;
         bool is_main_view_picked = false;
         string col_bn = "Block Name";
         string col_rot = "Rotation";
@@ -31,9 +32,9 @@ namespace Alignment_mdi
         bool Template_is_open = false;
 
 
-        private void set_enable_false(object sender)
+        private void set_enable_false()
         {
-            List<System.Windows.Forms.Button> lista_butoane = new List<Button>();
+            List<System.Windows.Forms.Control> lista_butoane = new List<Control>();
             lista_butoane.Add(button_add_to_list);
             lista_butoane.Add(button_align_config_saveall);
             lista_butoane.Add(button_browser_dwt);
@@ -44,16 +45,13 @@ namespace Alignment_mdi
 
             foreach (System.Windows.Forms.Button bt1 in lista_butoane)
             {
-                if (sender as System.Windows.Forms.Button != bt1)
-                {
-                    bt1.Enabled = false;
-                }
+                bt1.Enabled = false;
             }
         }
 
         private void set_enable_true()
         {
-            List<System.Windows.Forms.Button> lista_butoane = new List<Button>();
+            List<System.Windows.Forms.Control> lista_butoane = new List<Control>();
             lista_butoane.Add(button_add_to_list);
             lista_butoane.Add(button_align_config_saveall);
             lista_butoane.Add(button_browser_dwt);
@@ -82,15 +80,25 @@ namespace Alignment_mdi
             var toolStripMenuItem1 = new ToolStripMenuItem { Text = "Pick band" };
             toolStripMenuItem1.Click += button_define_one_band_Click;
 
-            var toolStripMenuItem2 = new ToolStripMenuItem { Text = "Remove_band" };
+            var toolStripMenuItem2 = new ToolStripMenuItem { Text = "Remove band" };
             toolStripMenuItem2.Click += button_remove_band_Click;
 
             ContextMenuStrip_bands = new ContextMenuStrip();
             ContextMenuStrip_bands.Items.AddRange(new ToolStripItem[] { toolStripMenuItem1, toolStripMenuItem2 });
+
+            var toolStripMenuItem3 = new ToolStripMenuItem { Text = "Pick block" };
+            toolStripMenuItem3.Click += button_define_one_block_Click;
+
+            var toolStripMenuItem4 = new ToolStripMenuItem { Text = "Remove block" };
+            toolStripMenuItem4.Click += button_remove_one_block_Click;
+
+            ContextMenuStrip_blocks = new ContextMenuStrip();
+            ContextMenuStrip_blocks.Items.AddRange(new ToolStripItem[] { toolStripMenuItem3, toolStripMenuItem4 });
+
         }
 
 
-        private void dataGridView_Click(object sender, EventArgs e)
+        private void dataGridView_bands_Click(object sender, EventArgs e)
         {
             Type t = e.GetType();
             if (t.Equals(typeof(MouseEventArgs)))
@@ -115,7 +123,7 @@ namespace Alignment_mdi
             }
         }
 
-        private void dataGridView_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void dataGridView_bands_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Right && e.RowIndex >= 0)
             {
@@ -128,6 +136,47 @@ namespace Alignment_mdi
                 ContextMenuStrip_bands.Visible = false;
             }
         }
+
+
+        private void dataGridView_blocks_Click(object sender, EventArgs e)
+        {
+            Type t = e.GetType();
+            if (t.Equals(typeof(MouseEventArgs)))
+            {
+                MouseEventArgs mouse = (MouseEventArgs)e;
+                if (mouse.Button == MouseButtons.Right)
+                {
+
+
+
+                    ContextMenuStrip_blocks.Show(Cursor.Position);
+                    ContextMenuStrip_blocks.Visible = true;
+
+
+
+
+                }
+            }
+            else
+            {
+                ContextMenuStrip_blocks.Visible = false;
+            }
+        }
+
+        private void dataGridView_blocks_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right && e.RowIndex >= 0)
+            {
+                dataGridView_bands.CurrentCell = dataGridView_bands.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                ContextMenuStrip_blocks.Show(Cursor.Position);
+                ContextMenuStrip_blocks.Visible = true;
+            }
+            else
+            {
+                ContextMenuStrip_blocks.Visible = false;
+            }
+        }
+
 
         public string get_template_name_from_text_box()
         {
@@ -269,7 +318,7 @@ namespace Alignment_mdi
             {
 
 
-                set_enable_false(sender);
+                set_enable_false();
                 _AGEN_mainform.tpage_processing.Show();
                 // Ag.WindowState = FormWindowState.Minimized;
                 try
@@ -342,7 +391,7 @@ namespace Alignment_mdi
             }
         }
 
-        private void button_pick_block_location_PS_Click(object sender, EventArgs e)
+        private void button_pick_all_blocks_location_PS_Click(object sender, EventArgs e)
         {
             _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
 
@@ -379,7 +428,7 @@ namespace Alignment_mdi
 
                 bool Found1 = false;
 
-                set_enable_false(sender);
+                set_enable_false();
                 try
                 {
 
@@ -393,7 +442,7 @@ namespace Alignment_mdi
                         {
 
                             ThisDrawing = Doc;
-                            DocumentManager1.CurrentDocument = ThisDrawing;
+                            DocumentManager1.MdiActiveDocument = ThisDrawing;
                             Found1 = true;
                         }
                     }
@@ -403,7 +452,7 @@ namespace Alignment_mdi
 
 
                         ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
-                        DocumentManager1.CurrentDocument = ThisDrawing;
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
                     }
 
 
@@ -416,15 +465,15 @@ namespace Alignment_mdi
                         using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                         {
 
-
+                       
                             Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
                             Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
 
                             for (int i = 0; i < _AGEN_mainform.dt_blocks.Rows.Count; i++)
                             {
-                                if (_AGEN_mainform.dt_blocks.Rows[i][col_bn] != DBNull.Value &&  
+                                if (_AGEN_mainform.dt_blocks.Rows[i][col_bn] != DBNull.Value &&
                                     _AGEN_mainform.dt_blocks.Rows[i][col_pos] != DBNull.Value &&
-                                    Convert.ToString( _AGEN_mainform.dt_blocks.Rows[i][col_pos]) == "User Defined")
+                                    Convert.ToString(_AGEN_mainform.dt_blocks.Rows[i][col_pos]) == "User Defined")
                                 {
                                     string block_name = Convert.ToString(_AGEN_mainform.dt_blocks.Rows[i][col_bn]);
                                     Autodesk.AutoCAD.EditorInput.PromptPointResult Point_res1;
@@ -464,6 +513,201 @@ namespace Alignment_mdi
             }
         }
 
+        private void button_define_one_block_Click(object sender, EventArgs e)
+        {
+            _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
+
+            if (Ag != null && _AGEN_mainform.dt_blocks != null && _AGEN_mainform.dt_blocks.Rows.Count > 0)
+            {
+
+
+
+                if (System.IO.File.Exists(_AGEN_mainform.config_path) == false)
+                {
+                    MessageBox.Show("no config file loaded\r\nOperation aborted");
+                    return;
+                }
+
+
+                string strTemplatePath = get_template_name_from_text_box();
+                DocumentCollection DocumentManager1 = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager;
+                Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = null;
+
+                Document ThisDrawing2 = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                if (System.IO.File.Exists(strTemplatePath) == false)
+                {
+                    MessageBox.Show("template file not found");
+                    set_enable_true();
+                    return;
+                }
+
+
+
+                bool Found1 = false;
+
+                set_enable_false();
+
+                using (DocumentLock lock2 = ThisDrawing2.LockDocument())
+                {
+
+                try
+                {
+
+                    int selected_index = -1;
+                    string block_name = "";
+
+                    int selected_index_data_grid = dataGridView_blocks.CurrentCell.RowIndex;
+                    string data_grid_selected_block = Convert.ToString(dataGridView_blocks[0, selected_index_data_grid].Value);
+
+
+                    for (int i = 0; i < _AGEN_mainform.dt_blocks.Rows.Count; ++i)
+                    {
+                        if (_AGEN_mainform.dt_blocks.Rows[i][col_bn] != DBNull.Value)
+                        {
+                            string bn = Convert.ToString(_AGEN_mainform.dt_blocks.Rows[i][col_bn]);
+                            if (bn == data_grid_selected_block)
+                            {
+                                selected_index = i;
+                                block_name = bn;
+                            }
+                        }
+                    }
+
+                    if (selected_index == -1)
+                    {
+                        set_enable_true();
+                        ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                        Ag.WindowState = FormWindowState.Normal;
+                        return;
+                    }
+
+                    foreach (Document Doc in DocumentManager1)
+                    {
+                        if (Doc.Name == strTemplatePath)
+                        {
+
+                            ThisDrawing = Doc;
+                            DocumentManager1.MdiActiveDocument = Doc;
+                                
+                            Found1 = true;
+                            break;
+                        }
+                    }
+
+                    if (Found1 == false)
+                    {
+                        ThisDrawing = DocumentCollectionExtension.Open(DocumentManager1, strTemplatePath, false);
+                        DocumentManager1.MdiActiveDocument = ThisDrawing;
+                    }
+
+
+                    Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+                    Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+                    Ag.WindowState = FormWindowState.Minimized;
+
+                    using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
+                    {
+                        using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                        {
+
+
+                            Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                            Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+
+                            if (Convert.ToString(_AGEN_mainform.dt_blocks.Rows[selected_index][col_pos]) == "User Defined")
+                            {
+
+                                Autodesk.AutoCAD.EditorInput.PromptPointResult Point_res1;
+                                Autodesk.AutoCAD.EditorInput.PromptPointOptions PP1;
+                                PP1 = new Autodesk.AutoCAD.EditorInput.PromptPointOptions("\nPlease specify the " + block_name + " insertion point");
+                                PP1.AllowNone = false;
+                                Point_res1 = Editor1.GetPoint(PP1);
+
+
+                                if (Point_res1.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK)
+                                {
+                                    set_enable_true();
+                                    ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                                    Ag.WindowState = FormWindowState.Normal;
+                                    return;
+                                }
+                                _AGEN_mainform.dt_blocks.Rows[selected_index][col_x] = Point_res1.Value.X;
+                                _AGEN_mainform.dt_blocks.Rows[selected_index][col_y] = Point_res1.Value.Y;
+
+                            }
+
+
+                            Trans1.Commit();
+                        }
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+                set_enable_true();
+
+               
+
+
+                Ag.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void button_remove_one_block_Click(object sender, EventArgs e)
+        {
+            set_enable_false();
+            try
+            {
+                int selected_index = -1;
+                string block_name = "";
+
+                int selected_index_data_grid = dataGridView_blocks.CurrentCell.RowIndex;
+                string data_grid_selected_block = Convert.ToString(dataGridView_blocks[0, selected_index_data_grid].Value);
+
+
+                for (int i = 0; i < _AGEN_mainform.dt_blocks.Rows.Count; ++i)
+                {
+                    if (_AGEN_mainform.dt_blocks.Rows[i][col_bn] != DBNull.Value)
+                    {
+                        string bn = Convert.ToString(_AGEN_mainform.dt_blocks.Rows[i][col_bn]);
+                        if (bn == data_grid_selected_block)
+                        {
+                            selected_index = i;
+                            block_name = bn;
+                        }
+                    }
+                }
+
+                if (selected_index == -1)
+                {
+                    set_enable_true();
+
+                    return;
+                }
+
+
+                _AGEN_mainform.dt_blocks.Rows[selected_index].Delete();
+
+
+
+
+
+              
+
+
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+
+            }
+            set_enable_true();
+
+        }
 
 
         private void button_browser_dwt_Click(object sender, EventArgs e)
@@ -840,7 +1084,7 @@ namespace Alignment_mdi
         {
 
 
-            set_enable_false(sender);
+            set_enable_false();
             try
             {
                 int selected_index = -1;
@@ -1097,7 +1341,7 @@ namespace Alignment_mdi
         private void button_define_one_band_Click(object sender, EventArgs e)
         {
 
-            set_enable_false(sender);
+            set_enable_false();
             try
             {
                 int selected_index = -1;
@@ -1185,7 +1429,7 @@ namespace Alignment_mdi
                             {
                                 Template_is_open = true;
                                 ThisDrawing = Doc;
-                                DocumentManager1.CurrentDocument = ThisDrawing;
+                                DocumentManager1.MdiActiveDocument = ThisDrawing;
                                 Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
 
 
@@ -2146,7 +2390,7 @@ namespace Alignment_mdi
         private void button_define_bands_Click(object sender, EventArgs e)
         {
 
-            set_enable_false(sender);
+            set_enable_false();
             try
             {
 
@@ -2177,7 +2421,7 @@ namespace Alignment_mdi
                         {
                             Template_is_open = true;
                             ThisDrawing = Doc;
-                            DocumentManager1.CurrentDocument = ThisDrawing;
+                            DocumentManager1.MdiActiveDocument = ThisDrawing;
                             Functions.Incarca_existing_Blocks_to_combobox(comboBox_existing_blocks);
 
 

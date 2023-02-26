@@ -1871,18 +1871,18 @@ namespace Alignment_mdi
                 if (Functions.IsNumeric(b26) == true)
                 {
                     _AGEN_mainform.tpage_profdraw.set_textBox_overwrite_text_height(b26);
-                    _AGEN_mainform.tpage_profdraw.set_checkBox_overwrite_text_height(true);
+                   
                 }
                 else
                 {
                     _AGEN_mainform.tpage_profdraw.set_textBox_overwrite_text_height("");
-                    _AGEN_mainform.tpage_profdraw.set_checkBox_overwrite_text_height(false);
+                   
                 }
             }
             else
             {
                 _AGEN_mainform.tpage_profdraw.set_textBox_overwrite_text_height("");
-                _AGEN_mainform.tpage_profdraw.set_checkBox_overwrite_text_height(false);
+               
             }
 
         }

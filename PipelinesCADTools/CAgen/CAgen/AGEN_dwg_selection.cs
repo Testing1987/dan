@@ -51,11 +51,11 @@ namespace Alignment_mdi
 
         private void add_controls_to_custom_form()
         {
-            if (_AGEN_mainform.Data_Table_profile_band != null && _AGEN_mainform.Data_Table_profile_band.Rows.Count > 0)
+            if (_AGEN_mainform.dt_prof_band != null && _AGEN_mainform.dt_prof_band.Rows.Count > 0)
             {
-                if (_AGEN_mainform.Data_Table_profile_band.Rows[0]["DwgNo"] != DBNull.Value)
+                if (_AGEN_mainform.dt_prof_band.Rows[0]["DwgNo"] != DBNull.Value)
                 {
-                    string nume_dwg = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[0]["DwgNo"]);
+                    string nume_dwg = Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[0]["DwgNo"]);
                     label1.Text = nume_dwg;
                     if (_AGEN_mainform.lista_gen_prof_band != null && _AGEN_mainform.lista_gen_prof_band.Count > 0 && _AGEN_mainform.lista_gen_prof_band.Contains(0) == true)
                     {
@@ -69,13 +69,13 @@ namespace Alignment_mdi
                     comboBox2.Items.Add(nume_dwg);
                 }
 
-                if (_AGEN_mainform.Data_Table_profile_band.Rows.Count > 1)
+                if (_AGEN_mainform.dt_prof_band.Rows.Count > 1)
                 {
-                    for (int i = 1; i < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++i)
+                    for (int i = 1; i < _AGEN_mainform.dt_prof_band.Rows.Count; ++i)
                     {
-                        if (_AGEN_mainform.Data_Table_profile_band.Rows[i]["DwgNo"] != DBNull.Value)
+                        if (_AGEN_mainform.dt_prof_band.Rows[i]["DwgNo"] != DBNull.Value)
                         {
-                            string nume_dwg = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[i]["DwgNo"]);
+                            string nume_dwg = Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[i]["DwgNo"]);
 
                             bool checked1 = false;
                             if (_AGEN_mainform.lista_gen_prof_band != null && _AGEN_mainform.lista_gen_prof_band.Count > 0 && _AGEN_mainform.lista_gen_prof_band.Contains(i) == true)
@@ -186,11 +186,11 @@ namespace Alignment_mdi
                 string nume1 = comboBox1.Text;
                 string nume2 = comboBox2.Text;
                 bool colect1 = false;
-                for (int i = 0; i < _AGEN_mainform.Data_Table_profile_band.Rows.Count; ++i)
+                for (int i = 0; i < _AGEN_mainform.dt_prof_band.Rows.Count; ++i)
                 {
-                    if(_AGEN_mainform.Data_Table_profile_band.Rows[i]["DwgNo"]!=DBNull.Value)
+                    if(_AGEN_mainform.dt_prof_band.Rows[i]["DwgNo"]!=DBNull.Value)
                     {
-                        string nume = Convert.ToString(_AGEN_mainform.Data_Table_profile_band.Rows[i]["DwgNo"]);
+                        string nume = Convert.ToString(_AGEN_mainform.dt_prof_band.Rows[i]["DwgNo"]);
                         if(nume.ToLower()==nume1.ToLower())
                         {
                             colect1 = true;

@@ -188,7 +188,7 @@ namespace Alignment_mdi
 
         public static System.Data.DataTable dt_station_equation;
         public static System.Data.DataTable dt_prof;
-        public static System.Data.DataTable Data_Table_profile_band;
+        public static System.Data.DataTable dt_prof_band;
 
 
         public static System.Data.DataTable Data_Table_regular_bands;

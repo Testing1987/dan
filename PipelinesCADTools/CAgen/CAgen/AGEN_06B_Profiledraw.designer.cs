@@ -45,33 +45,15 @@
             this.label42 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.panel_dan = new System.Windows.Forms.Panel();
-            this.button_load_tabs_cross_and_xing = new System.Windows.Forms.Button();
             this.checkBox_sta_at_90 = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.checkBox_set_zero_at_middle_of_profile = new System.Windows.Forms.CheckBox();
             this.checkBox_draw_ver_at_start = new System.Windows.Forms.CheckBox();
             this.checkBox_smys = new System.Windows.Forms.CheckBox();
             this.checkBox_hydro_style = new System.Windows.Forms.CheckBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox_offset = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox_ang_round = new System.Windows.Forms.TextBox();
-            this.textBox_max_bend = new System.Windows.Forms.TextBox();
             this.textBox_elev_round = new System.Windows.Forms.TextBox();
-            this.checkBox_offset_top = new System.Windows.Forms.CheckBox();
             this.checkBox_add_matchline_label = new System.Windows.Forms.CheckBox();
-            this.button_top_from_band = new System.Windows.Forms.Button();
-            this.button_calc_top = new System.Windows.Forms.Button();
-            this.comboBox_xing_tab = new System.Windows.Forms.ComboBox();
-            this.comboBox_profile_tab = new System.Windows.Forms.ComboBox();
-            this.checkBox_prof_grid_height = new System.Windows.Forms.CheckBox();
+            this.checkBox_user_prof_grid_height = new System.Windows.Forms.CheckBox();
             this.textBox_prof_grid_height = new System.Windows.Forms.TextBox();
             this.checkBox_prof_use_default_grid_val = new System.Windows.Forms.CheckBox();
             this.button_dwg = new System.Windows.Forms.Button();
@@ -104,6 +86,14 @@
             this.button_show_scan_profile = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label_draw_profile = new System.Windows.Forms.Label();
+            this.textBox_no_vert_spc = new System.Windows.Forms.TextBox();
+            this.checkBox_user_vert_spaces = new System.Windows.Forms.CheckBox();
+            this.panel_profile_band_height = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.radioButton_user_parameters = new System.Windows.Forms.RadioButton();
+            this.radioButton_default = new System.Windows.Forms.RadioButton();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel_profile_parameters.SuspendLayout();
             this.panel6.SuspendLayout();
             this.panel8.SuspendLayout();
@@ -113,6 +103,9 @@
             this.panel9.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel_profile_band_height.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_profile_parameters
@@ -133,6 +126,8 @@
             this.panel6.Controls.Add(this.label8);
             this.panel6.Controls.Add(this.checkBox_no_station);
             this.panel6.Controls.Add(this.panel_prof_def_values);
+            this.panel6.Controls.Add(this.panel3);
+            this.panel6.Controls.Add(this.panel_profile_band_height);
             this.panel6.Controls.Add(this.panel_dan);
             this.panel6.Controls.Add(this.checkBox_prof_use_default_grid_val);
             this.panel6.Controls.Add(this.button_dwg);
@@ -141,9 +136,7 @@
             this.panel6.Controls.Add(this.label39);
             this.panel6.Controls.Add(this.Button_prof_draw);
             this.panel6.Controls.Add(this.textBox_prof_Hex);
-            this.panel6.Controls.Add(this.checkBox_overwrite_text_height);
             this.panel6.Controls.Add(this.label44);
-            this.panel6.Controls.Add(this.textBox_overwrite_text_height);
             this.panel6.Controls.Add(this.label36);
             this.panel6.Controls.Add(this.label38);
             this.panel6.Controls.Add(this.label40);
@@ -158,6 +151,7 @@
             this.panel6.Controls.Add(this.button_insert_label_on_prof);
             this.panel6.Controls.Add(this.label34);
             this.panel6.Controls.Add(this.panel9);
+            this.panel6.Controls.Add(this.panel4);
             this.panel6.Controls.Add(this.panel11);
             this.panel6.Controls.Add(this.button_show_scan_profile);
             this.panel6.Location = new System.Drawing.Point(3, 27);
@@ -325,119 +319,31 @@
             // 
             // panel_dan
             // 
-            this.panel_dan.Controls.Add(this.button_load_tabs_cross_and_xing);
             this.panel_dan.Controls.Add(this.checkBox_sta_at_90);
-            this.panel_dan.Controls.Add(this.label6);
-            this.panel_dan.Controls.Add(this.label1);
-            this.panel_dan.Controls.Add(this.label12);
-            this.panel_dan.Controls.Add(this.label3);
             this.panel_dan.Controls.Add(this.checkBox_set_zero_at_middle_of_profile);
             this.panel_dan.Controls.Add(this.checkBox_draw_ver_at_start);
             this.panel_dan.Controls.Add(this.checkBox_smys);
             this.panel_dan.Controls.Add(this.checkBox_hydro_style);
-            this.panel_dan.Controls.Add(this.label9);
-            this.panel_dan.Controls.Add(this.label15);
-            this.panel_dan.Controls.Add(this.label14);
-            this.panel_dan.Controls.Add(this.label13);
-            this.panel_dan.Controls.Add(this.label10);
-            this.panel_dan.Controls.Add(this.textBox_offset);
             this.panel_dan.Controls.Add(this.label7);
-            this.panel_dan.Controls.Add(this.textBox_ang_round);
-            this.panel_dan.Controls.Add(this.textBox_max_bend);
             this.panel_dan.Controls.Add(this.textBox_elev_round);
-            this.panel_dan.Controls.Add(this.checkBox_offset_top);
             this.panel_dan.Controls.Add(this.checkBox_add_matchline_label);
-            this.panel_dan.Controls.Add(this.button_top_from_band);
-            this.panel_dan.Controls.Add(this.button_calc_top);
-            this.panel_dan.Controls.Add(this.comboBox_xing_tab);
-            this.panel_dan.Controls.Add(this.comboBox_profile_tab);
-            this.panel_dan.Controls.Add(this.checkBox_prof_grid_height);
-            this.panel_dan.Controls.Add(this.textBox_prof_grid_height);
             this.panel_dan.Location = new System.Drawing.Point(271, 3);
             this.panel_dan.Name = "panel_dan";
-            this.panel_dan.Size = new System.Drawing.Size(569, 399);
+            this.panel_dan.Size = new System.Drawing.Size(569, 197);
             this.panel_dan.TabIndex = 2089;
             this.panel_dan.Visible = false;
-            // 
-            // button_load_tabs_cross_and_xing
-            // 
-            this.button_load_tabs_cross_and_xing.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_load_tabs_cross_and_xing.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button_load_tabs_cross_and_xing.BackgroundImage")));
-            this.button_load_tabs_cross_and_xing.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button_load_tabs_cross_and_xing.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.button_load_tabs_cross_and_xing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_load_tabs_cross_and_xing.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
-            this.button_load_tabs_cross_and_xing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_load_tabs_cross_and_xing.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button_load_tabs_cross_and_xing.ForeColor = System.Drawing.Color.White;
-            this.button_load_tabs_cross_and_xing.Location = new System.Drawing.Point(10, 284);
-            this.button_load_tabs_cross_and_xing.Name = "button_load_tabs_cross_and_xing";
-            this.button_load_tabs_cross_and_xing.Size = new System.Drawing.Size(35, 35);
-            this.button_load_tabs_cross_and_xing.TabIndex = 2152;
-            this.button_load_tabs_cross_and_xing.UseVisualStyleBackColor = false;
-            this.button_load_tabs_cross_and_xing.Click += new System.EventHandler(this.button_load_tabs_cross_and_xing_Click);
             // 
             // checkBox_sta_at_90
             // 
             this.checkBox_sta_at_90.AutoSize = true;
             this.checkBox_sta_at_90.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_sta_at_90.ForeColor = System.Drawing.Color.White;
-            this.checkBox_sta_at_90.Location = new System.Drawing.Point(328, 6);
+            this.checkBox_sta_at_90.Location = new System.Drawing.Point(4, 99);
             this.checkBox_sta_at_90.Name = "checkBox_sta_at_90";
             this.checkBox_sta_at_90.Size = new System.Drawing.Size(234, 18);
             this.checkBox_sta_at_90.TabIndex = 161;
             this.checkBox_sta_at_90.Text = "Display Bottom Stations at 90 Degrees";
             this.checkBox_sta_at_90.UseVisualStyleBackColor = true;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.Yellow;
-            this.label6.Location = new System.Drawing.Point(222, 183);
-            this.label6.MaximumSize = new System.Drawing.Size(260, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(235, 14);
-            this.label6.TabIndex = 2151;
-            this.label6.Text = "** offsets TOP and creates bottom of pipe\r\n";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Yellow;
-            this.label1.Location = new System.Drawing.Point(186, 122);
-            this.label1.MaximumSize = new System.Drawing.Size(260, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(159, 14);
-            this.label1.TabIndex = 2151;
-            this.label1.Text = "** max value for a field bend\r\n";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.Yellow;
-            this.label12.Location = new System.Drawing.Point(273, 345);
-            this.label12.MaximumSize = new System.Drawing.Size(500, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(291, 28);
-            this.label12.TabIndex = 2151;
-            this.label12.Text = "** creates TOP in profile.xlx - absorbs TOP definition\r\n** creates new tab in cro" +
-    "ssing.xlx - SB and OB labels\r\n";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Yellow;
-            this.label3.Location = new System.Drawing.Point(271, 221);
-            this.label3.MaximumSize = new System.Drawing.Size(500, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(291, 28);
-            this.label3.TabIndex = 2151;
-            this.label3.Text = "** creates TOP in profile.xlx - absorbs TOP definition\r\n** creates new tab in cro" +
-    "ssing.xlx - SB and OB labels\r\n";
             // 
             // checkBox_set_zero_at_middle_of_profile
             // 
@@ -489,233 +395,60 @@
             this.checkBox_hydro_style.Text = "Hydrostatic style";
             this.checkBox_hydro_style.UseVisualStyleBackColor = true;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Transparent;
-            this.label9.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(11, 123);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(117, 14);
-            this.label9.TabIndex = 124;
-            this.label9.Text = "Max Allowable Bend";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(275, 310);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(100, 14);
-            this.label15.TabIndex = 124;
-            this.label15.Text = "Crossing.xlx TAB";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.BackColor = System.Drawing.Color.Transparent;
-            this.label14.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label14.ForeColor = System.Drawing.Color.White;
-            this.label14.Location = new System.Drawing.Point(273, 283);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(85, 14);
-            this.label14.TabIndex = 124;
-            this.label14.Text = "Profile.xlx TAB";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label13.ForeColor = System.Drawing.Color.White;
-            this.label13.Location = new System.Drawing.Point(186, 183);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(30, 14);
-            this.label13.TabIndex = 124;
-            this.label13.Text = "inch";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(34, 151);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(94, 14);
-            this.label10.TabIndex = 124;
-            this.label10.Text = "Angle Rounding";
-            // 
-            // textBox_offset
-            // 
-            this.textBox_offset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.textBox_offset.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_offset.ForeColor = System.Drawing.Color.White;
-            this.textBox_offset.Location = new System.Drawing.Point(149, 181);
-            this.textBox_offset.Name = "textBox_offset";
-            this.textBox_offset.Size = new System.Drawing.Size(31, 20);
-            this.textBox_offset.TabIndex = 5;
-            this.textBox_offset.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.Transparent;
             this.label7.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.label7.ForeColor = System.Drawing.Color.White;
-            this.label7.Location = new System.Drawing.Point(328, 27);
+            this.label7.Location = new System.Drawing.Point(3, 148);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(111, 28);
             this.label7.TabIndex = 124;
             this.label7.Text = "Elevation Rounding\r\n(No of decimals)";
-            // 
-            // textBox_ang_round
-            // 
-            this.textBox_ang_round.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.textBox_ang_round.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_ang_round.ForeColor = System.Drawing.Color.White;
-            this.textBox_ang_round.Location = new System.Drawing.Point(149, 149);
-            this.textBox_ang_round.Name = "textBox_ang_round";
-            this.textBox_ang_round.Size = new System.Drawing.Size(31, 20);
-            this.textBox_ang_round.TabIndex = 5;
-            this.textBox_ang_round.Text = "0";
-            this.textBox_ang_round.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
-            // 
-            // textBox_max_bend
-            // 
-            this.textBox_max_bend.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.textBox_max_bend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_max_bend.ForeColor = System.Drawing.Color.White;
-            this.textBox_max_bend.Location = new System.Drawing.Point(149, 120);
-            this.textBox_max_bend.Name = "textBox_max_bend";
-            this.textBox_max_bend.Size = new System.Drawing.Size(31, 20);
-            this.textBox_max_bend.TabIndex = 5;
-            this.textBox_max_bend.Text = "18";
-            this.textBox_max_bend.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
             // 
             // textBox_elev_round
             // 
             this.textBox_elev_round.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
             this.textBox_elev_round.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_elev_round.ForeColor = System.Drawing.Color.White;
-            this.textBox_elev_round.Location = new System.Drawing.Point(467, 35);
+            this.textBox_elev_round.Location = new System.Drawing.Point(130, 153);
             this.textBox_elev_round.Name = "textBox_elev_round";
             this.textBox_elev_round.Size = new System.Drawing.Size(31, 20);
             this.textBox_elev_round.TabIndex = 5;
             this.textBox_elev_round.Text = "0";
             this.textBox_elev_round.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
             // 
-            // checkBox_offset_top
-            // 
-            this.checkBox_offset_top.AutoSize = true;
-            this.checkBox_offset_top.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_offset_top.ForeColor = System.Drawing.Color.White;
-            this.checkBox_offset_top.Location = new System.Drawing.Point(14, 181);
-            this.checkBox_offset_top.Name = "checkBox_offset_top";
-            this.checkBox_offset_top.Size = new System.Drawing.Size(135, 18);
-            this.checkBox_offset_top.TabIndex = 161;
-            this.checkBox_offset_top.Text = "Offset TOP Distance";
-            this.checkBox_offset_top.UseVisualStyleBackColor = true;
-            // 
             // checkBox_add_matchline_label
             // 
             this.checkBox_add_matchline_label.AutoSize = true;
             this.checkBox_add_matchline_label.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_add_matchline_label.ForeColor = System.Drawing.Color.White;
-            this.checkBox_add_matchline_label.Location = new System.Drawing.Point(331, 91);
+            this.checkBox_add_matchline_label.Location = new System.Drawing.Point(6, 123);
             this.checkBox_add_matchline_label.Name = "checkBox_add_matchline_label";
             this.checkBox_add_matchline_label.Size = new System.Drawing.Size(137, 18);
             this.checkBox_add_matchline_label.TabIndex = 161;
             this.checkBox_add_matchline_label.Text = "Add Matchline Label";
             this.checkBox_add_matchline_label.UseVisualStyleBackColor = true;
             // 
-            // button_top_from_band
+            // checkBox_user_prof_grid_height
             // 
-            this.button_top_from_band.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_top_from_band.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.button_top_from_band.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_top_from_band.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_top_from_band.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_top_from_band.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_top_from_band.ForeColor = System.Drawing.Color.White;
-            this.button_top_from_band.Image = ((System.Drawing.Image)(resources.GetObject("button_top_from_band.Image")));
-            this.button_top_from_band.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_top_from_band.Location = new System.Drawing.Point(3, 339);
-            this.button_top_from_band.Name = "button_top_from_band";
-            this.button_top_from_band.Size = new System.Drawing.Size(264, 49);
-            this.button_top_from_band.TabIndex = 2088;
-            this.button_top_from_band.Text = "Calculate Top of PIpe parameters\r\n                       (profile as band)";
-            this.button_top_from_band.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button_top_from_band.UseVisualStyleBackColor = false;
-            this.button_top_from_band.Click += new System.EventHandler(this.button_top_from_profile_band_Click);
-            // 
-            // button_calc_top
-            // 
-            this.button_calc_top.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_calc_top.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.button_calc_top.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_calc_top.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_calc_top.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_calc_top.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_calc_top.ForeColor = System.Drawing.Color.White;
-            this.button_calc_top.Image = ((System.Drawing.Image)(resources.GetObject("button_calc_top.Image")));
-            this.button_calc_top.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_calc_top.Location = new System.Drawing.Point(6, 211);
-            this.button_calc_top.Name = "button_calc_top";
-            this.button_calc_top.Size = new System.Drawing.Size(259, 49);
-            this.button_calc_top.TabIndex = 2088;
-            this.button_calc_top.Text = "Calculate Top of PIpe parameters\r\n                                 (entire profil" +
-    "e)";
-            this.button_calc_top.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button_calc_top.UseVisualStyleBackColor = false;
-            this.button_calc_top.Click += new System.EventHandler(this.button_calc_top_Click);
-            // 
-            // comboBox_xing_tab
-            // 
-            this.comboBox_xing_tab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.comboBox_xing_tab.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_xing_tab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_xing_tab.ForeColor = System.Drawing.Color.White;
-            this.comboBox_xing_tab.FormattingEnabled = true;
-            this.comboBox_xing_tab.Location = new System.Drawing.Point(53, 307);
-            this.comboBox_xing_tab.Name = "comboBox_xing_tab";
-            this.comboBox_xing_tab.Size = new System.Drawing.Size(212, 21);
-            this.comboBox_xing_tab.TabIndex = 1;
-            this.comboBox_xing_tab.DropDown += new System.EventHandler(this.button_profile_refresh_Click);
-            // 
-            // comboBox_profile_tab
-            // 
-            this.comboBox_profile_tab.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.comboBox_profile_tab.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox_profile_tab.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox_profile_tab.ForeColor = System.Drawing.Color.White;
-            this.comboBox_profile_tab.FormattingEnabled = true;
-            this.comboBox_profile_tab.Location = new System.Drawing.Point(53, 277);
-            this.comboBox_profile_tab.Name = "comboBox_profile_tab";
-            this.comboBox_profile_tab.Size = new System.Drawing.Size(212, 21);
-            this.comboBox_profile_tab.TabIndex = 1;
-            // 
-            // checkBox_prof_grid_height
-            // 
-            this.checkBox_prof_grid_height.AutoSize = true;
-            this.checkBox_prof_grid_height.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.checkBox_prof_grid_height.ForeColor = System.Drawing.Color.White;
-            this.checkBox_prof_grid_height.Location = new System.Drawing.Point(331, 64);
-            this.checkBox_prof_grid_height.Name = "checkBox_prof_grid_height";
-            this.checkBox_prof_grid_height.Size = new System.Drawing.Size(126, 18);
-            this.checkBox_prof_grid_height.TabIndex = 161;
-            this.checkBox_prof_grid_height.Text = "Profile Grid Height";
-            this.checkBox_prof_grid_height.UseVisualStyleBackColor = true;
+            this.checkBox_user_prof_grid_height.AutoSize = true;
+            this.checkBox_user_prof_grid_height.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_user_prof_grid_height.ForeColor = System.Drawing.Color.White;
+            this.checkBox_user_prof_grid_height.Location = new System.Drawing.Point(3, 7);
+            this.checkBox_user_prof_grid_height.Name = "checkBox_user_prof_grid_height";
+            this.checkBox_user_prof_grid_height.Size = new System.Drawing.Size(425, 18);
+            this.checkBox_user_prof_grid_height.TabIndex = 161;
+            this.checkBox_user_prof_grid_height.Text = "Profile Grid Height - Multiple of Vertical Spacing and vertical exaggeration";
+            this.checkBox_user_prof_grid_height.UseVisualStyleBackColor = true;
             // 
             // textBox_prof_grid_height
             // 
             this.textBox_prof_grid_height.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
             this.textBox_prof_grid_height.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_prof_grid_height.ForeColor = System.Drawing.Color.White;
-            this.textBox_prof_grid_height.Location = new System.Drawing.Point(467, 63);
+            this.textBox_prof_grid_height.Location = new System.Drawing.Point(433, 6);
             this.textBox_prof_grid_height.Name = "textBox_prof_grid_height";
             this.textBox_prof_grid_height.Size = new System.Drawing.Size(38, 20);
             this.textBox_prof_grid_height.TabIndex = 3;
@@ -834,11 +567,9 @@
             // checkBox_overwrite_text_height
             // 
             this.checkBox_overwrite_text_height.AutoSize = true;
-            this.checkBox_overwrite_text_height.Checked = true;
-            this.checkBox_overwrite_text_height.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_overwrite_text_height.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
             this.checkBox_overwrite_text_height.ForeColor = System.Drawing.Color.White;
-            this.checkBox_overwrite_text_height.Location = new System.Drawing.Point(5, 445);
+            this.checkBox_overwrite_text_height.Location = new System.Drawing.Point(5, 89);
             this.checkBox_overwrite_text_height.Name = "checkBox_overwrite_text_height";
             this.checkBox_overwrite_text_height.Size = new System.Drawing.Size(87, 18);
             this.checkBox_overwrite_text_height.TabIndex = 161;
@@ -862,7 +593,7 @@
             this.textBox_overwrite_text_height.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
             this.textBox_overwrite_text_height.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox_overwrite_text_height.ForeColor = System.Drawing.Color.White;
-            this.textBox_overwrite_text_height.Location = new System.Drawing.Point(132, 444);
+            this.textBox_overwrite_text_height.Location = new System.Drawing.Point(433, 87);
             this.textBox_overwrite_text_height.Name = "textBox_overwrite_text_height";
             this.textBox_overwrite_text_height.Size = new System.Drawing.Size(38, 20);
             this.textBox_overwrite_text_height.TabIndex = 3;
@@ -1131,6 +862,104 @@
             this.label_draw_profile.Text = "Draw Profile";
             this.label_draw_profile.Click += new System.EventHandler(this.label_draw_profile_Click);
             // 
+            // textBox_no_vert_spc
+            // 
+            this.textBox_no_vert_spc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.textBox_no_vert_spc.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_no_vert_spc.ForeColor = System.Drawing.Color.White;
+            this.textBox_no_vert_spc.Location = new System.Drawing.Point(433, 32);
+            this.textBox_no_vert_spc.Name = "textBox_no_vert_spc";
+            this.textBox_no_vert_spc.Size = new System.Drawing.Size(38, 20);
+            this.textBox_no_vert_spc.TabIndex = 5;
+            this.textBox_no_vert_spc.Text = "0";
+            this.textBox_no_vert_spc.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox_keypress_only_doubles);
+            // 
+            // checkBox_user_vert_spaces
+            // 
+            this.checkBox_user_vert_spaces.AutoSize = true;
+            this.checkBox_user_vert_spaces.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.checkBox_user_vert_spaces.ForeColor = System.Drawing.Color.White;
+            this.checkBox_user_vert_spaces.Location = new System.Drawing.Point(3, 30);
+            this.checkBox_user_vert_spaces.Name = "checkBox_user_vert_spaces";
+            this.checkBox_user_vert_spaces.Size = new System.Drawing.Size(276, 18);
+            this.checkBox_user_vert_spaces.TabIndex = 161;
+            this.checkBox_user_vert_spaces.Text = "No of vert spacing situated below ground line";
+            this.checkBox_user_vert_spaces.UseVisualStyleBackColor = true;
+            // 
+            // panel_profile_band_height
+            // 
+            this.panel_profile_band_height.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel_profile_band_height.Controls.Add(this.checkBox_user_vert_spaces);
+            this.panel_profile_band_height.Controls.Add(this.textBox_prof_grid_height);
+            this.panel_profile_band_height.Controls.Add(this.checkBox_user_prof_grid_height);
+            this.panel_profile_band_height.Controls.Add(this.textBox_no_vert_spc);
+            this.panel_profile_band_height.Controls.Add(this.textBox_overwrite_text_height);
+            this.panel_profile_band_height.Controls.Add(this.checkBox_overwrite_text_height);
+            this.panel_profile_band_height.Location = new System.Drawing.Point(271, 302);
+            this.panel_profile_band_height.Name = "panel_profile_band_height";
+            this.panel_profile_band_height.Size = new System.Drawing.Size(569, 114);
+            this.panel_profile_band_height.TabIndex = 2089;
+            this.panel_profile_band_height.Visible = false;
+            // 
+            // panel3
+            // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.radioButton_user_parameters);
+            this.panel3.Controls.Add(this.radioButton_default);
+            this.panel3.Location = new System.Drawing.Point(271, 255);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(569, 46);
+            this.panel3.TabIndex = 2089;
+            // 
+            // radioButton_user_parameters
+            // 
+            this.radioButton_user_parameters.AutoSize = true;
+            this.radioButton_user_parameters.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_user_parameters.ForeColor = System.Drawing.Color.White;
+            this.radioButton_user_parameters.Location = new System.Drawing.Point(6, 22);
+            this.radioButton_user_parameters.Name = "radioButton_user_parameters";
+            this.radioButton_user_parameters.Size = new System.Drawing.Size(89, 18);
+            this.radioButton_user_parameters.TabIndex = 115;
+            this.radioButton_user_parameters.Text = "User height";
+            this.radioButton_user_parameters.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_default
+            // 
+            this.radioButton_default.AutoSize = true;
+            this.radioButton_default.Checked = true;
+            this.radioButton_default.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton_default.ForeColor = System.Drawing.Color.White;
+            this.radioButton_default.Location = new System.Drawing.Point(6, 3);
+            this.radioButton_default.Name = "radioButton_default";
+            this.radioButton_default.Size = new System.Drawing.Size(63, 18);
+            this.radioButton_default.TabIndex = 114;
+            this.radioButton_default.TabStop = true;
+            this.radioButton_default.Text = "Default";
+            this.radioButton_default.UseVisualStyleBackColor = true;
+            this.radioButton_default.CheckedChanged += new System.EventHandler(this.radioButton_default_CheckedChanged);
+            // 
+            // panel4
+            // 
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Controls.Add(this.label1);
+            this.panel4.Location = new System.Drawing.Point(271, 230);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(569, 25);
+            this.panel4.TabIndex = 2149;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Arial Black", 9.75F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.label1.Location = new System.Drawing.Point(3, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(118, 18);
+            this.label1.TabIndex = 2054;
+            this.label1.Text = "Profile Settings";
+            // 
             // AGEN_Profile_draw
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -1158,6 +987,12 @@
             this.panel11.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.panel_profile_band_height.ResumeLayout(false);
+            this.panel_profile_band_height.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1209,7 +1044,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox_prof_grid_height;
+        private System.Windows.Forms.CheckBox checkBox_user_prof_grid_height;
         private System.Windows.Forms.TextBox textBox_prof_grid_height;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox checkBox_add_matchline_label;
@@ -1219,25 +1054,15 @@
         private System.Windows.Forms.CheckBox checkBox_cover;
         private System.Windows.Forms.CheckBox checkBox_elevation;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button_calc_top;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox_max_bend;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox_ang_round;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox textBox_offset;
-        private System.Windows.Forms.CheckBox checkBox_offset_top;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button button_top_from_band;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox_xing_tab;
-        private System.Windows.Forms.ComboBox comboBox_profile_tab;
-        private System.Windows.Forms.Button button_load_tabs_cross_and_xing;
         private System.Windows.Forms.CheckBox checkBox_no_station;
         private System.Windows.Forms.CheckBox checkBox_pipes;
+        private System.Windows.Forms.TextBox textBox_no_vert_spc;
+        private System.Windows.Forms.CheckBox checkBox_user_vert_spaces;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel_profile_band_height;
+        private System.Windows.Forms.RadioButton radioButton_user_parameters;
+        private System.Windows.Forms.RadioButton radioButton_default;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label1;
     }
 }
