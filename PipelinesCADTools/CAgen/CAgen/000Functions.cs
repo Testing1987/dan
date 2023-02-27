@@ -18309,10 +18309,10 @@ namespace Alignment_mdi
         static public void Draw_band_profile(System.Data.DataTable dt_prof, System.Data.DataTable dt_top, Point3d Point0,
                                             double Hincr, double Vincr, double Hexag, double Vexag,
                                             string Layer_grid, string Layer_text, string Layer_poly, string Layer_pipe, string Layer_smys,
-                                            bool use_custom_texth, double Texth, int elev_round, bool rot_sta, ObjectId Textstyleid, string Elev_suffix,
+                                            bool overwrite_texth, double Texth, int elev_round, bool rot_sta, ObjectId Textstyleid, string Elev_suffix,
                                             bool leftElev, bool rightElev, string units, System.Data.DataTable dt_prof_band, bool draw_from_start, double Xmin, double Ymin, bool hydro_style, System.Data.DataTable dt_eq,
-                                            bool draw_pipe, bool draw_smys, bool custom_settings,
-                                            bool use_user_height, double userH, bool use_vert_spaces, int no_vert_spc_below,
+                                            bool draw_pipe, bool draw_smys,
+                                            bool custom_settings, bool read_from_profband, double userH, int no_vert_spc_below,
                                             bool add_matchline_labels, string File1)
         {
 
@@ -18764,7 +18764,7 @@ namespace Alignment_mdi
 
                                     if (custom_settings == true)
                                     {
-                                        if (use_custom_texth == false)
+                                        if (read_from_profband == true)
                                         {
                                             if (dt_prof_band.Rows[i]["textH"] != DBNull.Value)
                                             {
@@ -18784,15 +18784,12 @@ namespace Alignment_mdi
                                     if (custom_settings == true)
                                     {
 
-                                        if (use_user_height == false)
+                                        if (read_from_profband == true)
                                         {
                                             if (dt_prof_band.Rows[i]["grid_height"] != DBNull.Value)
                                             {
                                                 userH = Convert.ToDouble(dt_prof_band.Rows[i]["grid_height"]);
                                             }
-                                        }
-                                        if (use_vert_spaces == false)
-                                        {
                                             if (dt_prof_band.Rows[i]["no_v_incr_below"] != DBNull.Value)
                                             {
                                                 no_vert_spc_below = Convert.ToInt32(dt_prof_band.Rows[i]["no_v_incr_below"]);

@@ -1533,7 +1533,7 @@ namespace Alignment_mdi
                                     Lista_val.Add("Alignment Sheet");
                                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
-                                    Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute);
+                                    Lista_val.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " + System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToString());
                                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
                                     Lista_val.Add("");
@@ -4036,7 +4036,7 @@ namespace Alignment_mdi
                                             clid = poly3d.ObjectId;
                                         }
 
-                                        #region USA - add MEASURED dt_station eq
+                                        #region St-eq USA - add MEASURED dt_station eq
                                         if (_AGEN_mainform.COUNTRY == "USA" && _AGEN_mainform.dt_station_equation != null)
                                         {
                                             if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
@@ -4095,6 +4095,10 @@ namespace Alignment_mdi
                                             string col_M2 = "StaEnd";
                                             string col_eq2 = "Disp_StaEnd";
 
+                                            string col_x1 = "X_Beg";
+                                            string col_y1 = "Y_Beg";
+                                            string col_x2 = "X_End";
+                                            string col_y2 = "Y_End";
 
                                             double Cx = 0;
                                             double Cy = 0;
@@ -4298,6 +4302,8 @@ namespace Alignment_mdi
                                                         _AGEN_mainform.dt_sheet_index.Rows[i][col_M1] = mdist1;
                                                     }
                                                     #endregion
+
+
                                                     #region CANADA
                                                     if (_AGEN_mainform.COUNTRY == "CANADA")
                                                     {
@@ -4584,6 +4590,7 @@ namespace Alignment_mdi
                                                                         _AGEN_mainform.dt_sheet_index.Rows[i][col_M2] = mdist2;
                                                                     }
                                                                     #endregion
+
                                                                     #region CANADA
                                                                     if (_AGEN_mainform.COUNTRY == "CANADA")
                                                                     {
@@ -7941,5 +7948,437 @@ namespace Alignment_mdi
             set_enable_true();
             this.MdiParent.WindowState = FormWindowState.Normal;
         }
+
+        private void button_recover_matclines_new_version_Click(object sender, EventArgs e)
+        {
+
+            _AGEN_mainform Ag = this.MdiParent as _AGEN_mainform;
+            if (Ag != null)
+            {
+
+                if (System.IO.File.Exists(_AGEN_mainform.config_path) == false)
+                {
+                    MessageBox.Show("no config file loaded\r\nOperation aborted");
+                    return;
+                }
+            }
+
+            set_enable_false();
+            _AGEN_mainform.tpage_processing.Show();
+            if (_AGEN_mainform.dt_sheet_index != null && _AGEN_mainform.dt_centerline != null)
+            {
+                if (_AGEN_mainform.dt_sheet_index.Rows.Count > 0 && _AGEN_mainform.dt_centerline.Rows.Count > 0)
+                {
+                    if (_AGEN_mainform.dt_centerline != null)
+                    {
+                        if (_AGEN_mainform.dt_centerline.Rows.Count > 0)
+                        {
+
+
+
+                            try
+                            {
+                                Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                                Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+                                Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+
+                                #region object data for centerline
+                                Functions.Create_stationing_od_table();
+                                string od_name = "STA_V1";
+                                ObjectId clid = ObjectId.Null;
+
+                                string ProjFolder = _AGEN_mainform.tpage_setup.Get_project_database_folder();
+
+                                if (ProjFolder.Substring(ProjFolder.Length - 1, 1) != "\\")
+                                {
+                                    ProjFolder = ProjFolder + "\\";
+                                }
+                                string fisier_cl = ProjFolder + _AGEN_mainform.cl_excel_name;
+
+                                List<object> Lista_val_CL = new List<object>();
+                                List<Autodesk.Gis.Map.Constants.DataType> Lista_type_CL = new List<Autodesk.Gis.Map.Constants.DataType>();
+
+                                Lista_val_CL.Add(comboBox_segment_name.Text);
+                                Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+                                Lista_val_CL.Add(System.DateTime.Today.Year + "-" + System.DateTime.Today.Month + "-" + System.DateTime.Today.Day + " at " +
+                                                System.DateTime.Now.Hour + ":" + System.DateTime.Now.Minute + " by " + Environment.UserName.ToUpper());
+                                Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+                                Lista_val_CL.Add(fisier_cl);
+                                Lista_type_CL.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+
+                                Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+                                _AGEN_mainform.layer_centerline = _AGEN_mainform.layer_centerline_original + "_" + _AGEN_mainform.current_segment;
+                                #endregion
+
+
+                                using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
+                                {
+
+
+                                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                                    {
+                                        Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                                        Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+
+
+                                        delete_polyline_with_OD(_AGEN_mainform.Layer_name_ML_rectangle, "Agen_SheetIndex_ML");
+                                        delete_mtext_with_OD(_AGEN_mainform.Layer_name_ML_rectangle, "Agen_SheetIndex_ML");
+                                        Functions.delete_entities_with_OD(_AGEN_mainform.layer_centerline, od_name);
+                                        Functions.Creaza_layer(_AGEN_mainform.layer_centerline, _AGEN_mainform.color_index_cl, true);
+
+
+                                        Polyline poly2d = null;
+                                        Polyline3d poly3d = null;
+                                        double poly_len = 0;
+
+
+                                        if (_AGEN_mainform.Project_type == "2D")
+                                        {
+                                            poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline, true);
+                                            poly_len = poly2d.Length;
+                                            poly2d.Layer = _AGEN_mainform.layer_centerline;
+                                            poly2d.ColorIndex = 256;
+                                            clid = poly2d.ObjectId;
+                                        }
+                                        else
+                                        {
+                                            poly3d = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                            poly2d = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
+                                            poly_len = poly3d.Length;
+                                            poly3d.Layer = _AGEN_mainform.layer_centerline;
+                                            poly3d.ColorIndex = 256;
+                                            clid = poly3d.ObjectId;
+                                        }
+
+                                        #region St-eq USA - add MEASURED dt_station eq
+                                        if (_AGEN_mainform.COUNTRY == "USA" && _AGEN_mainform.dt_station_equation != null)
+                                        {
+                                            if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                            {
+                                                if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false)
+                                                {
+                                                    _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
+                                                }
+
+                                                for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
+                                                {
+                                                    if (_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"] != DBNull.Value)
+                                                    {
+                                                        double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
+                                                        double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
+
+
+                                                        Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+                                                        if (_AGEN_mainform.Project_type == "3D")
+                                                        {
+                                                            double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
+
+                                                            if (param1 >= poly3d.EndParam)
+                                                            {
+                                                                _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = poly3d.Length;
+                                                            }
+                                                            else
+                                                            {
+                                                                double eq_meas = poly3d.GetDistanceAtParameter(param1);
+                                                                _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
+                                                            }
+
+                                                        }
+                                                        else
+                                                        {
+                                                            _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = poly2d.GetDistAtPoint(pt_on_2d);
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                        }
+                                        #endregion
+
+
+
+                                        int CI = 1;
+                                        Functions.Creaza_layer(_AGEN_mainform.Layer_name_ML_rectangle, 4, false);
+
+
+                                        for (int i = _AGEN_mainform.dt_sheet_index.Rows.Count - 1; i >= 0; --i)
+                                        {
+                                            string col_M1 = "StaBeg";
+                                            string col_eq1 = "Disp_StaBeg";
+                                            string col_M2 = "StaEnd";
+                                            string col_eq2 = "Disp_StaEnd";
+
+                                            string col_x1 = "X_Beg";
+                                            string col_y1 = "Y_Beg";
+                                            string col_x2 = "X_End";
+                                            string col_y2 = "Y_End";
+
+                                            double x1 = 0;
+                                            double y1 = 0;
+                                            double x2 = 0;
+                                            double y2 = 0;
+
+
+                                            string col_x = "X";
+                                            string col_y = "Y";
+
+                                            double x = 0;
+                                            double y = 0;
+
+                                            string col_width = "Width";
+                                            string col_height = "Height";
+                                            string col_rot = "Rotation";
+
+
+                                            double w = 0;
+                                            double h = 0;
+                                            double r = 0;
+
+                                            double M1 = -1;
+                                            double M2 = -1;
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_x1] != DBNull.Value)
+                                            {
+                                                x1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_x1]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_x2] != DBNull.Value)
+                                            {
+                                                x2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_x2]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_y1] != DBNull.Value)
+                                            {
+                                                y1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_y1]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_y2] != DBNull.Value)
+                                            {
+                                                y2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_y2]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_x] != DBNull.Value)
+                                            {
+                                                x = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_x]);
+                                            }
+
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_y] != DBNull.Value)
+                                            {
+                                                y = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_y]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_width] != DBNull.Value)
+                                            {
+                                                w = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_width]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_height] != DBNull.Value)
+                                            {
+                                                h = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_height]);
+                                            }
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_rot] != DBNull.Value)
+                                            {
+                                                r = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_rot]);
+                                            }
+
+
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_M1] != DBNull.Value)
+                                            {
+                                                M1 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_M1]);
+                                            }
+                                            if (_AGEN_mainform.dt_sheet_index.Rows[i][col_M2] != DBNull.Value)
+                                            {
+                                                M2 = Convert.ToDouble(_AGEN_mainform.dt_sheet_index.Rows[i][col_M2]);
+                                            }
+
+
+                                            Point3d pt_on_poly1 = poly2d.GetClosestPointTo(new Point3d(x1, y1, 0), Vector3d.ZAxis, false);
+                                            Point3d pt_on_poly2 = poly2d.GetClosestPointTo(new Point3d(x2, y2, 0), Vector3d.ZAxis, false);
+
+                                            double d1 = Math.Pow(Math.Pow(x1 - pt_on_poly1.X, 2) + Math.Pow(y1 - pt_on_poly1.Y, 2), 0.5);
+                                            double d2 = Math.Pow(Math.Pow(x2 - pt_on_poly2.X, 2) + Math.Pow(y2 - pt_on_poly2.Y, 2), 0.5);
+
+                                            if (d1 < 0.1 && d2 < 0.1)
+                                            {
+
+
+                                                Point3d center_pt = new Point3d(x, y, 0);
+
+                                                if (_AGEN_mainform.Project_type == "2D")
+                                                {
+                                                    M1 = poly2d.GetDistAtPoint(pt_on_poly1);
+                                                    M2 = poly2d.GetDistAtPoint(pt_on_poly2);
+                                                }
+                                                else
+                                                {
+                                                    double param1 = poly2d.GetParameterAtPoint(pt_on_poly1);
+                                                    double param2 = poly2d.GetParameterAtPoint(pt_on_poly2);
+                                                    M1 = poly3d.GetDistanceAtParameter(param1);
+                                                    M2 = poly3d.GetDistanceAtParameter(param2);
+                                                }
+
+                                                Polyline polym = new Polyline();
+                                                polym.AddVertexAt(0, new Point2d(pt_on_poly1.X, pt_on_poly1.Y), 0, 0, 0);
+                                                polym.AddVertexAt(1, new Point2d(pt_on_poly2.X, pt_on_poly2.Y), 0, 0, 0);
+
+                                                Point3d pt_on_polym = polym.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
+
+                                                double d = polym.GetDistAtPoint(pt_on_polym);
+
+                                                if (Math.Round(polym.Length, 0) == Math.Round(2 * d, 0))
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    x = (polym.StartPoint.X + polym.EndPoint.X) / 2;
+                                                    y = (polym.StartPoint.Y + polym.EndPoint.Y) / 2;
+                                                }
+                                                center_pt = new Point3d(x, y, 0);
+                                                w = polym.Length;
+                                                r = Functions.GET_Bearing_rad(polym.StartPoint.X, polym.StartPoint.Y, polym.EndPoint.X, polym.EndPoint.Y) ;
+
+                                               
+                                                Polyline Rectangle1 = creaza_rectangle_from_one_point(new Point3d(x, y, 0), r, w, h, CI);
+                                                Rectangle1.Layer = _AGEN_mainform.Layer_name_ML_rectangle;
+
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][col_x] = x;
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][col_y] = y;
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][col_width] = w;
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][col_rot] = r * 180 / Math.PI;
+
+                                                double div1 = 10;
+                                                if (_AGEN_mainform.round1 == 1) div1 = 100;
+                                                if (_AGEN_mainform.round1 == 2) div1 = 1000;
+                                                if (_AGEN_mainform.round1 == 3) div1 = 10000;
+
+                                                double val1 = Math.Round(M1, _AGEN_mainform.round1);
+                                                double val2 = Math.Round(M2, _AGEN_mainform.round1);
+                                                    if (val2 > poly_len)
+                                                    {
+                                                        val2 = Math.Floor(Math.Round(M2 * div1, _AGEN_mainform.round1 + 1)) / div1;
+                                                    }
+
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][col_M1] = val1;
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][col_M2] = val2;
+
+
+                                                #region USA - populate sta eq columns
+                                                if (_AGEN_mainform.COUNTRY == "USA")
+                                                {
+
+
+                                                    if (_AGEN_mainform.dt_station_equation != null)
+                                                    {
+                                                        if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                        {
+                                                            _AGEN_mainform.dt_sheet_index.Rows[i][col_eq1] = Math.Round(Functions.Station_equation_ofV2(M1, _AGEN_mainform.dt_station_equation), _AGEN_mainform.round1);
+                                                        }
+                                                        else
+                                                        {
+                                                            _AGEN_mainform.dt_sheet_index.Rows[i][col_eq1] = DBNull.Value;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        _AGEN_mainform.dt_sheet_index.Rows[i][col_eq1] = DBNull.Value;
+                                                    }
+
+
+
+
+                                                    if (_AGEN_mainform.dt_station_equation != null)
+                                                    {
+                                                        if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
+                                                        {
+                                                            _AGEN_mainform.dt_sheet_index.Rows[i][col_eq2] = Math.Round(Functions.Station_equation_ofV2(M2, _AGEN_mainform.dt_station_equation), _AGEN_mainform.round1);
+                                                        }
+                                                        else
+                                                        {
+                                                            _AGEN_mainform.dt_sheet_index.Rows[i][col_eq2] = DBNull.Value;
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        _AGEN_mainform.dt_sheet_index.Rows[i][col_eq2] = DBNull.Value;
+                                                    }
+
+                                                }
+                                                #endregion
+
+
+                                                BTrecord.AppendEntity(Rectangle1);
+                                                Trans1.AddNewlyCreatedDBObject(Rectangle1, true);
+
+                                                _AGEN_mainform.dt_sheet_index.Rows[i][_AGEN_mainform.Col_handle] = Rectangle1.ObjectId.Handle.Value.ToString();
+                                                CI = CI + 1;
+                                                if (CI > 7) CI = 1;
+
+
+                                            }
+
+
+                                            else
+                                            {
+                                                _AGEN_mainform.dt_sheet_index.Rows[i].Delete();
+                                            }
+
+
+
+
+
+
+
+
+
+
+                                        }
+
+
+
+
+
+                                        Create_ML_object_data();
+                                        Append_ML_object_data();
+                                        Functions.Populate_object_data_table_from_objectid(Tables1, clid, od_name, Lista_val_CL, Lista_type_CL);
+
+
+                                        Trans1.Commit();
+                                        dataGridView_sheet_index.DataSource = _AGEN_mainform.dt_sheet_index;
+                                        dataGridView_sheet_index.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                                        dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+                                        dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                                        dataGridView_sheet_index.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+                                        dataGridView_sheet_index.DefaultCellStyle.ForeColor = Color.White;
+                                        dataGridView_sheet_index.EnableHeadersVisualStyles = false;
+
+
+                                        label_not_saved.Visible = true;
+
+
+
+
+                                    }
+                                }
+                            }
+                            catch (System.Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+                        }
+                        _AGEN_mainform.tpage_processing.Hide();
+                        set_enable_true();
+                    }
+                }
+            }
+
+        }
+
     }
 }

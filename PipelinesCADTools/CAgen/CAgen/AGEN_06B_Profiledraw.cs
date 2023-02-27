@@ -395,15 +395,15 @@ namespace Alignment_mdi
             }
 
             double Texth = Functions.Get_text_height_from_textstyle(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle());
-            
-            if(radioButton_user_parameters.Checked==true)
+
+            if (radioButton_user_parameters.Checked == true)
             {
-            if (checkBox_overwrite_text_height.Checked == true && Functions.IsNumeric(textBox_overwrite_text_height.Text) == true)
-            {
-                Texth = Convert.ToDouble(textBox_overwrite_text_height.Text);
+                if (checkBox_overwrite_text_height.Checked == true && Functions.IsNumeric(textBox_overwrite_text_height.Text) == true)
+                {
+                    Texth = Convert.ToDouble(textBox_overwrite_text_height.Text);
+                }
             }
-            }
-        
+
 
 
 
@@ -628,7 +628,7 @@ namespace Alignment_mdi
 
                                 Functions.Draw_grid_profile(dt_prof, dt_top, Point_res1.Value, Hincr, vincr, Hexag, Vexag, Downelev, Upelev, elev_round,
                                                             _AGEN_mainform.layer_prof_grid, _AGEN_mainform.layer_prof_text, _AGEN_mainform.layer_prof_ground,
-                                                            _AGEN_mainform.layer_prof_pipe,  Texth,
+                                                            _AGEN_mainform.layer_prof_pipe, Texth,
                                                                     Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle()),
                                                                             Suff, L1, L2, _AGEN_mainform.config_path, _AGEN_mainform.ExcelVisible, _AGEN_mainform.Start_row_1,
                                                                                  _AGEN_mainform.units_of_measurement, _AGEN_mainform.dt_station_equation, draw_pipe, poly2d, poly3d);
@@ -1860,14 +1860,16 @@ namespace Alignment_mdi
 
 
             double Texth = Functions.Get_text_height_from_textstyle(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle());
-           
-            if(radioButton_user_parameters.Checked==true)
-            {
+
+
+            bool overwrite_texth = false;
+
             if (checkBox_overwrite_text_height.Checked == true && Functions.IsNumeric(textBox_overwrite_text_height.Text) == true)
             {
                 Texth = Convert.ToDouble(textBox_overwrite_text_height.Text);
+                overwrite_texth = true;
             }
-            }
+
 
             if (Texth <= 0) Texth = 10;
             set_enable_false();
@@ -2125,13 +2127,9 @@ namespace Alignment_mdi
                         }
 
                         bool draw_pipe = false;
-                        bool use_prof_height = false;
+
                         double hmax = 0;
-                        if (checkBox_user_prof_grid_height.Checked == true && Functions.IsNumeric(textBox_prof_grid_height.Text) == true)
-                        {
-                            hmax = Math.Abs(Convert.ToDouble(textBox_prof_grid_height.Text));
-                            use_prof_height = true;
-                        }
+
 
                         bool display_match = false;
                         if (checkBox_add_matchline_label.Checked == true)
@@ -2140,25 +2138,28 @@ namespace Alignment_mdi
                         }
 
                         textBox_overwrite_text_height.Text = Convert.ToString(Texth);
-                      
+
 
                         int spc_vert_below = 0;
-                        bool use_user_vert_spaces = false;
+
                         bool use_custom_settings = false;
+                        bool read_from_profile_band = false;
+
                         if (radioButton_user_parameters.Checked == true)
                         {
-                            if (checkBox_user_prof_grid_height.Checked == true && Functions.IsNumeric(textBox_no_vert_spc.Text) == true)
+                            if (Functions.IsNumeric(textBox_no_vert_spc.Text) == true)
                             {
                                 spc_vert_below = Convert.ToInt32(textBox_no_vert_spc.Text);
                             }
+                            if (Functions.IsNumeric(textBox_prof_grid_height.Text) == true)
+                            {
+                                hmax = Math.Abs(Convert.ToDouble(textBox_prof_grid_height.Text));
+                            }
 
-                            if (checkBox_user_vert_spaces.Checked == true) use_user_vert_spaces = true;
-
+                            if (checkBox_use_prof_band_data.Checked == true) read_from_profile_band = true;
                             use_custom_settings = true;
                         }
 
-                        bool user_texth = false;
-                        if (checkBox_overwrite_text_height.Checked == true) user_texth = true;
 
                         Functions.Draw_band_profile(dt_prof_data, dt_top, pt_ins, Hincr, vincr, Hexag, Vexag,
                                                                                     _AGEN_mainform.layer_prof_grid,
@@ -2166,11 +2167,11 @@ namespace Alignment_mdi
                                                                                     _AGEN_mainform.layer_prof_ground,
                                                                                     _AGEN_mainform.layer_prof_pipe,
                                                                                     _AGEN_mainform.layer_prof_smys,
-                                                                                    user_texth,Texth, elev_round, rot_sta,
+                                                                                    overwrite_texth, Texth, elev_round, rot_sta,
                                                                                     Functions.Get_textstyle_id(_AGEN_mainform.tpage_profdraw.get_comboBox_prof_textstyle()),
                                                                                     Suff, left_label, right_label, _AGEN_mainform.units_of_measurement, _AGEN_mainform.dt_prof_band, draw_from_start,
-                                                                                    Xmin, Ymin, hydro, _AGEN_mainform.dt_station_equation, draw_pipe, checkBox_smys.Checked, use_custom_settings,
-                                                                                    use_prof_height, hmax, use_user_vert_spaces, spc_vert_below, display_match, _AGEN_mainform.config_path);
+                                                                                    Xmin, Ymin, hydro, _AGEN_mainform.dt_station_equation, draw_pipe, checkBox_smys.Checked,
+                                                                                    use_custom_settings, read_from_profile_band, hmax, spc_vert_below, display_match, _AGEN_mainform.config_path);
 
 
 
@@ -2518,13 +2519,31 @@ namespace Alignment_mdi
         {
             if (radioButton_default.Checked == true)
             {
-                checkBox_user_vert_spaces.Checked = false;
-                checkBox_user_prof_grid_height.Checked = false;
+                checkBox_use_prof_band_data.Checked = false;
                 panel_profile_band_height.Visible = false;
+
             }
             else
             {
                 panel_profile_band_height.Visible = true;
+                checkBox_use_prof_band_data.Checked = true;
+            }
+        }
+
+        private void checkBox_use_prof_band_data_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_use_prof_band_data.Checked == true)
+            {
+
+                textBox_prof_grid_height.Text = "";
+                textBox_prof_grid_height.Enabled = false;
+                textBox_no_vert_spc.Text = "0";
+                textBox_no_vert_spc.Enabled = false;
+            }
+            else
+            {
+                textBox_prof_grid_height.Enabled = true;
+                textBox_no_vert_spc.Enabled = true;
             }
         }
     }

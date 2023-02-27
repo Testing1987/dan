@@ -29,41 +29,41 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(_AGEN_mainform));
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Settings");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("Border Definition");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Block Attributes");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Station Equations");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3,
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Sheet Index Setup");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Plan View", new System.Windows.Forms.TreeNode[] {
-            treeNode6});
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Ownership");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Crossing");
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Material");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Profile");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Custom");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("Band Builder", new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode9,
-            treeNode10,
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("Create Alignment Sheets");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("Sheet Generation", new System.Windows.Forms.TreeNode[] {
-            treeNode14});
-            System.Windows.Forms.TreeNode treeNode16 = new System.Windows.Forms.TreeNode("Rename Layout");
-            System.Windows.Forms.TreeNode treeNode17 = new System.Windows.Forms.TreeNode("Viewport to poly");
-            System.Windows.Forms.TreeNode treeNode18 = new System.Windows.Forms.TreeNode("IMAGERY");
-            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("Convert Coordinates");
-            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("Extra tools", new System.Windows.Forms.TreeNode[] {
-            treeNode16,
-            treeNode17,
-            treeNode18,
-            treeNode19});
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("Settings");
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("Border Definition");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("Block Attributes");
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("Station Equations");
+            System.Windows.Forms.TreeNode treeNode25 = new System.Windows.Forms.TreeNode("Project", new System.Windows.Forms.TreeNode[] {
+            treeNode21,
+            treeNode22,
+            treeNode23,
+            treeNode24});
+            System.Windows.Forms.TreeNode treeNode26 = new System.Windows.Forms.TreeNode("Sheet Index Setup");
+            System.Windows.Forms.TreeNode treeNode27 = new System.Windows.Forms.TreeNode("Plan View", new System.Windows.Forms.TreeNode[] {
+            treeNode26});
+            System.Windows.Forms.TreeNode treeNode28 = new System.Windows.Forms.TreeNode("Ownership");
+            System.Windows.Forms.TreeNode treeNode29 = new System.Windows.Forms.TreeNode("Crossing");
+            System.Windows.Forms.TreeNode treeNode30 = new System.Windows.Forms.TreeNode("Material");
+            System.Windows.Forms.TreeNode treeNode31 = new System.Windows.Forms.TreeNode("Profile");
+            System.Windows.Forms.TreeNode treeNode32 = new System.Windows.Forms.TreeNode("Custom");
+            System.Windows.Forms.TreeNode treeNode33 = new System.Windows.Forms.TreeNode("Band Builder", new System.Windows.Forms.TreeNode[] {
+            treeNode28,
+            treeNode29,
+            treeNode30,
+            treeNode31,
+            treeNode32});
+            System.Windows.Forms.TreeNode treeNode34 = new System.Windows.Forms.TreeNode("Create Alignment Sheets");
+            System.Windows.Forms.TreeNode treeNode35 = new System.Windows.Forms.TreeNode("Sheet Generation", new System.Windows.Forms.TreeNode[] {
+            treeNode34});
+            System.Windows.Forms.TreeNode treeNode36 = new System.Windows.Forms.TreeNode("Rename Layout");
+            System.Windows.Forms.TreeNode treeNode37 = new System.Windows.Forms.TreeNode("Viewport to poly");
+            System.Windows.Forms.TreeNode treeNode38 = new System.Windows.Forms.TreeNode("IMAGERY");
+            System.Windows.Forms.TreeNode treeNode39 = new System.Windows.Forms.TreeNode("Convert Coordinates");
+            System.Windows.Forms.TreeNode treeNode40 = new System.Windows.Forms.TreeNode("Extra tools", new System.Windows.Forms.TreeNode[] {
+            treeNode36,
+            treeNode37,
+            treeNode38,
+            treeNode39});
             this.label_projectpath = new System.Windows.Forms.Label();
             this.textBox_config_file_path = new System.Windows.Forms.TextBox();
             this.panel_header = new System.Windows.Forms.Panel();
@@ -210,7 +210,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(65, 23);
             this.label16.TabIndex = 2055;
-            this.label16.Text = "V 5.03";
+            this.label16.Text = "V 5.04";
             // 
             // treeView1
             // 
@@ -222,82 +222,82 @@
             this.treeView1.ItemHeight = 30;
             this.treeView1.Location = new System.Drawing.Point(0, 27);
             this.treeView1.Name = "treeView1";
-            treeNode1.ForeColor = System.Drawing.Color.White;
-            treeNode1.Name = "Node0";
-            treeNode1.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            treeNode1.Text = "Settings";
-            treeNode2.ForeColor = System.Drawing.Color.White;
-            treeNode2.Name = "Node1";
-            treeNode2.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode2.Text = "Border Definition";
-            treeNode3.ForeColor = System.Drawing.Color.White;
-            treeNode3.Name = "Node2";
-            treeNode3.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode3.Text = "Block Attributes";
-            treeNode4.ForeColor = System.Drawing.Color.White;
-            treeNode4.Name = "Node4";
-            treeNode4.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode4.Text = "Station Equations";
-            treeNode5.Name = "Node0";
-            treeNode5.Text = "Project";
-            treeNode6.ForeColor = System.Drawing.Color.White;
-            treeNode6.Name = "Node0";
-            treeNode6.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode6.Text = "Sheet Index Setup";
-            treeNode7.Name = "Node1";
-            treeNode7.Text = "Plan View";
-            treeNode8.ForeColor = System.Drawing.Color.White;
-            treeNode8.Name = "Node0";
-            treeNode8.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode8.Text = "Ownership";
-            treeNode9.ForeColor = System.Drawing.Color.White;
-            treeNode9.Name = "Node1";
-            treeNode9.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode9.Text = "Crossing";
-            treeNode10.ForeColor = System.Drawing.Color.White;
-            treeNode10.Name = "Node2";
-            treeNode10.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode10.Text = "Material";
-            treeNode11.ForeColor = System.Drawing.Color.White;
-            treeNode11.Name = "Node3";
-            treeNode11.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode11.Text = "Profile";
-            treeNode12.ForeColor = System.Drawing.Color.White;
-            treeNode12.Name = "Node4";
-            treeNode12.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode12.Text = "Custom";
-            treeNode13.Name = "Node2";
-            treeNode13.Text = "Band Builder";
-            treeNode14.ForeColor = System.Drawing.Color.White;
-            treeNode14.Name = "Node31";
-            treeNode14.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode14.Text = "Create Alignment Sheets";
-            treeNode15.Name = "Node3";
-            treeNode15.Text = "Sheet Generation";
-            treeNode16.ForeColor = System.Drawing.Color.White;
-            treeNode16.Name = "Node41";
-            treeNode16.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode16.Text = "Rename Layout";
-            treeNode17.ForeColor = System.Drawing.Color.White;
-            treeNode17.Name = "Node42";
-            treeNode17.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode17.Text = "Viewport to poly";
-            treeNode18.ForeColor = System.Drawing.Color.White;
-            treeNode18.Name = "Node43";
-            treeNode18.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode18.Text = "IMAGERY";
-            treeNode19.ForeColor = System.Drawing.Color.White;
-            treeNode19.Name = "Node44";
-            treeNode19.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            treeNode19.Text = "Convert Coordinates";
-            treeNode20.Name = "Node4";
-            treeNode20.Text = "Extra tools";
+            treeNode21.ForeColor = System.Drawing.Color.White;
+            treeNode21.Name = "Node0";
+            treeNode21.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            treeNode21.Text = "Settings";
+            treeNode22.ForeColor = System.Drawing.Color.White;
+            treeNode22.Name = "Node1";
+            treeNode22.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode22.Text = "Border Definition";
+            treeNode23.ForeColor = System.Drawing.Color.White;
+            treeNode23.Name = "Node2";
+            treeNode23.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode23.Text = "Block Attributes";
+            treeNode24.ForeColor = System.Drawing.Color.White;
+            treeNode24.Name = "Node4";
+            treeNode24.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode24.Text = "Station Equations";
+            treeNode25.Name = "Node0";
+            treeNode25.Text = "Project";
+            treeNode26.ForeColor = System.Drawing.Color.White;
+            treeNode26.Name = "Node0";
+            treeNode26.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode26.Text = "Sheet Index Setup";
+            treeNode27.Name = "Node1";
+            treeNode27.Text = "Plan View";
+            treeNode28.ForeColor = System.Drawing.Color.White;
+            treeNode28.Name = "Node0";
+            treeNode28.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode28.Text = "Ownership";
+            treeNode29.ForeColor = System.Drawing.Color.White;
+            treeNode29.Name = "Node1";
+            treeNode29.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode29.Text = "Crossing";
+            treeNode30.ForeColor = System.Drawing.Color.White;
+            treeNode30.Name = "Node2";
+            treeNode30.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode30.Text = "Material";
+            treeNode31.ForeColor = System.Drawing.Color.White;
+            treeNode31.Name = "Node3";
+            treeNode31.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode31.Text = "Profile";
+            treeNode32.ForeColor = System.Drawing.Color.White;
+            treeNode32.Name = "Node4";
+            treeNode32.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode32.Text = "Custom";
+            treeNode33.Name = "Node2";
+            treeNode33.Text = "Band Builder";
+            treeNode34.ForeColor = System.Drawing.Color.White;
+            treeNode34.Name = "Node31";
+            treeNode34.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode34.Text = "Create Alignment Sheets";
+            treeNode35.Name = "Node3";
+            treeNode35.Text = "Sheet Generation";
+            treeNode36.ForeColor = System.Drawing.Color.White;
+            treeNode36.Name = "Node41";
+            treeNode36.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode36.Text = "Rename Layout";
+            treeNode37.ForeColor = System.Drawing.Color.White;
+            treeNode37.Name = "Node42";
+            treeNode37.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode37.Text = "Viewport to poly";
+            treeNode38.ForeColor = System.Drawing.Color.White;
+            treeNode38.Name = "Node43";
+            treeNode38.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode38.Text = "IMAGERY";
+            treeNode39.ForeColor = System.Drawing.Color.White;
+            treeNode39.Name = "Node44";
+            treeNode39.NodeFont = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            treeNode39.Text = "Convert Coordinates";
+            treeNode40.Name = "Node4";
+            treeNode40.Text = "Extra tools";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode5,
-            treeNode7,
-            treeNode13,
-            treeNode15,
-            treeNode20});
+            treeNode25,
+            treeNode27,
+            treeNode33,
+            treeNode35,
+            treeNode40});
             this.treeView1.ShowLines = false;
             this.treeView1.Size = new System.Drawing.Size(201, 482);
             this.treeView1.TabIndex = 47;

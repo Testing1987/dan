@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AGEN_SheetIndex));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.button_recover_matchlines = new System.Windows.Forms.Button();
@@ -76,6 +76,7 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.checkBox_alpha_beta = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.button_layer_alpha_beta = new System.Windows.Forms.Button();
             this.button_atp = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.comboBox_segment_name = new System.Windows.Forms.ComboBox();
@@ -90,7 +91,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
-            this.button_layer_alpha_beta = new System.Windows.Forms.Button();
             this.panel9.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -150,7 +150,7 @@
             this.button_recover_matchlines.TabIndex = 0;
             this.button_recover_matchlines.Text = "Recover";
             this.button_recover_matchlines.UseVisualStyleBackColor = false;
-            this.button_recover_matchlines.Click += new System.EventHandler(this.button_recover_matclines_Click);
+            this.button_recover_matchlines.Click += new System.EventHandler(this.button_recover_matclines_new_version_Click);
             // 
             // panel8
             // 
@@ -593,14 +593,14 @@
             this.dataGridView_sheet_index.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableWithoutHeaderText;
             this.dataGridView_sheet_index.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.dataGridView_sheet_index.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView_sheet_index.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView_sheet_index.GridColor = System.Drawing.Color.LightGray;
             this.dataGridView_sheet_index.Location = new System.Drawing.Point(3, 355);
             this.dataGridView_sheet_index.Name = "dataGridView_sheet_index";
@@ -777,6 +777,23 @@
             this.label5.TabIndex = 2142;
             this.label5.Text = "Aligns existing objects to Sheet Index";
             // 
+            // button_layer_alpha_beta
+            // 
+            this.button_layer_alpha_beta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_layer_alpha_beta.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_layer_alpha_beta.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_layer_alpha_beta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_layer_alpha_beta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_layer_alpha_beta.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_layer_alpha_beta.ForeColor = System.Drawing.Color.White;
+            this.button_layer_alpha_beta.Location = new System.Drawing.Point(89, 59);
+            this.button_layer_alpha_beta.Name = "button_layer_alpha_beta";
+            this.button_layer_alpha_beta.Size = new System.Drawing.Size(185, 28);
+            this.button_layer_alpha_beta.TabIndex = 0;
+            this.button_layer_alpha_beta.Text = "Change Layer to Alpha Beta";
+            this.button_layer_alpha_beta.UseVisualStyleBackColor = false;
+            this.button_layer_alpha_beta.Click += new System.EventHandler(this.button_layer_alpha_beta_Click);
+            // 
             // button_atp
             // 
             this.button_atp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
@@ -946,23 +963,6 @@
             this.label3.TabIndex = 2054;
             this.label3.Text = "Matchline Setup";
             this.label3.Click += new System.EventHandler(this.label_matchline_setup_Click);
-            // 
-            // button_layer_alpha_beta
-            // 
-            this.button_layer_alpha_beta.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_layer_alpha_beta.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.button_layer_alpha_beta.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_layer_alpha_beta.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_layer_alpha_beta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_layer_alpha_beta.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_layer_alpha_beta.ForeColor = System.Drawing.Color.White;
-            this.button_layer_alpha_beta.Location = new System.Drawing.Point(89, 59);
-            this.button_layer_alpha_beta.Name = "button_layer_alpha_beta";
-            this.button_layer_alpha_beta.Size = new System.Drawing.Size(185, 28);
-            this.button_layer_alpha_beta.TabIndex = 0;
-            this.button_layer_alpha_beta.Text = "Change Layer to Alpha Beta";
-            this.button_layer_alpha_beta.UseVisualStyleBackColor = false;
-            this.button_layer_alpha_beta.Click += new System.EventHandler(this.button_layer_alpha_beta_Click);
             // 
             // AGEN_SheetIndex
             // 
