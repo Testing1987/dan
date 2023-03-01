@@ -2329,6 +2329,18 @@ namespace Alignment_mdi
 
                                                         }
 
+                                                        if (desc.ToUpper() == "MH")
+                                                        {
+                                                            add_pattern_MH(bltrec1, scale1, poly1, BTrecord, Trans1);
+
+                                                        }
+
+                                                        if (desc.ToUpper() == "CH")
+                                                        {
+                                                            add_pattern_CH(bltrec1, scale1, poly1, BTrecord, Trans1);
+
+                                                        }
+
                                                         #endregion
 
                                                         MText string_desc = new MText();
@@ -3320,6 +3332,14 @@ namespace Alignment_mdi
                                                     if (lista_legend[i] == "SC-SM")
                                                     {
                                                         add_pattern_SCSM(bltrec1, 1, 1, 1, poly1, BTrecord, Trans1);
+                                                    }
+                                                    if (lista_legend[i] == "MH")
+                                                    {
+                                                        add_pattern_MH(bltrec1, 1, poly1, BTrecord, Trans1);
+                                                    }
+                                                    if (lista_legend[i] == "CH")
+                                                    {
+                                                        add_pattern_CH(bltrec1, 1, poly1, BTrecord, Trans1);
                                                     }
 
                                                 }
@@ -17924,6 +17944,81 @@ namespace Alignment_mdi
 
         }
 
+        private void add_pattern_MH(BlockTableRecord bltrec1, double scale1, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(250, 230, 5);
+
+            double spc_linie = 0.025 * scale1;
+            double lw = 0.005 * scale1;
+            int nr_col = 0;
+            int nr_rows = 1;
+            double spc_h_edge = 0;
+            double spc_v_edge = 0;
+
+            double x1 = poly1.GetPoint2dAt(3).X + spc_h_edge;
+            double y1 = poly1.GetPoint2dAt(3).Y + spc_v_edge;
+            double stick_width = poly1.GetPoint2dAt(1).X - poly1.GetPoint2dAt(0).X;
+            double stick_height = poly1.GetPoint2dAt(1).Y - poly1.GetPoint2dAt(2).Y;
+
+            if (stick_width < spc_linie)
+            {
+                nr_col = 1;
+            }
+            else
+            {
+                double nr2 = Math.Ceiling(stick_width / spc_linie);
+
+                nr_col = Convert.ToInt32(nr2);
+            }
+
+            double dif_len = stick_width - ((nr_col - 1) * spc_linie);
+
+            if (nr_rows > 0 && nr_col > 0)
+            {
+                for (int m = 0; m < nr_col; ++m)
+                {
+                    for (int n = 0; n < nr_rows; ++n)
+                    {
+                        double x2 = x1 + m * spc_linie + dif_len / 2;
+                        double y2 = y1;
+
+                        double x3 = x2;
+                        double y3 = y2 + stick_height;
+
+                        Polyline poly_up_down = new Polyline();
+                        poly_up_down.AddVertexAt(0, new Point2d(x2, y2), 0, 0, 0);
+                        poly_up_down.AddVertexAt(1, new Point2d(x3, y3), 0, 0, 0);
+                        poly_up_down.Layer = "0";
+                        poly_up_down.Color = color1;
+                        poly_up_down.ConstantWidth = lw;
+                        bltrec1.AppendEntity(poly_up_down);
+                    }
+                }
+            }
+
+        }
+
+
+        private void add_pattern_CH(BlockTableRecord bltrec1, double scale1, Polyline poly1, BlockTableRecord BTrecord, Autodesk.AutoCAD.DatabaseServices.Transaction Trans1)
+        {
+            string nume_hatch = "ANSI31";
+            double hatch_scale = scale1 *0.3;
+            double hatch_angle = 0;
+            Autodesk.AutoCAD.Colors.Color color1 = Autodesk.AutoCAD.Colors.Color.FromRgb(255, 127, 159);
+
+            Polyline poly2 = new Polyline();
+            poly2 = poly1.Clone() as Polyline;
+            BTrecord.AppendEntity(poly2);
+            Trans1.AddNewlyCreatedDBObject(poly2, true);
+
+            Hatch hatch1 = CreateHatch(poly2, nume_hatch, hatch_scale, hatch_angle * Math.PI / 180);
+            hatch1.Layer = "0";
+            hatch1.LineWeight = LineWeight.LineWeight053;
+            hatch1.Color = color1;
+            bltrec1.AppendEntity(hatch1);
+            poly2.Erase();
+
+        }
 
 
         #region Build Extra Polylines 
