@@ -193,7 +193,7 @@ namespace Alignment_mdi
 
 
 
-                            if (radioButton_OD.Checked == true || radioButton_mtext.Checked == true)
+                            if (radioButton_OD.Checked == true || radioButton_mtext.Checked == true || radioButton_mleader.Checked == true)
                             {
                                 Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
 
@@ -202,7 +202,7 @@ namespace Alignment_mdi
 
                                 for (int i = 0; i < Nume_tables.Count; i = i + 1)
                                 {
-                                    String Tabla1 = Nume_tables[i];
+                                    string Tabla1 = Nume_tables[i];
                                     if (comboBox_od_existing_tables.Items.Contains(Tabla1) == false)
                                     {
                                         comboBox_od_existing_tables.Items.Add(Tabla1);
@@ -1002,7 +1002,206 @@ namespace Alignment_mdi
 
 
             }
+            if (radioButton_mleader.Checked == true)
+            {
 
+
+                if (this.comboBox_layers_blocks_geomanager.Text == "")
+                {
+                    MessageBox.Show("Please select a layer!");
+                    label_processing1.Visible = false;
+                    return;
+                }
+
+
+                if (Update_data == true)
+                {
+
+                    set_enable_false();
+                    try
+                    {
+                        DataGridView_data.DataSource = null;
+                        DataGridView_data.Refresh();
+                        textBox_no_rows.Text = "";
+                        textBox_no_od_2.Text = "";
+                        textBox_no_od_zero.Text = "";
+                        textBox_no_tables.Text = "";
+                        textBox_no_wrong_od.Text = "";
+
+                        Data_table_OD_attrib_existing = new System.Data.DataTable();
+
+                        {
+
+                            List_all_objId = new List<string>();
+                            List_update_objId = new List<ObjectId>();
+                            List_update_row_index = new List<int>();
+
+                            Data_table_OD_attrib_existing.Columns.Add("OBJECT_ID", typeof(ObjectId));
+                            Data_table_OD_attrib_existing.Columns.Add("TextString", typeof(string));
+                            Data_table_OD_attrib_existing.Columns.Add("x", typeof(double));
+                            Data_table_OD_attrib_existing.Columns.Add("y", typeof(double));
+
+                            label_processing1.Visible = true;
+                            this.Refresh();
+
+
+
+                            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+
+                            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+
+                            using (Autodesk.AutoCAD.ApplicationServices.DocumentLock Lock1 = ThisDrawing.LockDocument())
+                            {
+                                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                                {
+                                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForRead);
+
+                                    if (checkBox_user_selection == false)
+                                    {
+                                        foreach (ObjectId Obj_ID1 in BTrecord)
+                                        {
+                                            Entity Ent1 = (Entity)Trans1.GetObject(Obj_ID1, OpenMode.ForRead);
+                                            if (Ent1 != null)
+                                            {
+                                                bool Add_to_table = false;
+
+                                                MLeader ml1 = null;
+
+                                                try
+                                                {
+                                                    ml1 = (MLeader)Ent1;
+                                                }
+                                                catch (System.Exception )
+                                                {
+
+                                                }
+
+
+
+                                                if (ml1 != null)
+                                                {
+                                                    if (ml1.Layer == comboBox_layers_blocks_geomanager.Text)
+                                                    {
+                                                        Add_to_table = true;
+                                                    }
+                                                }
+
+
+
+                                                if (Add_to_table == true)
+                                                {
+                                                    Data_table_OD_attrib_existing.Rows.Add();
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["OBJECT_ID"] = ml1.ObjectId;
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["TextString"] = ml1.MText.Contents;
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["x"] =  ml1.GetFirstVertex(0).X;
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["y"] = ml1.GetFirstVertex(0).Y;
+
+
+                                                    List_all_objId.Add(ml1.ObjectId.ToString());
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Editor1.SetImpliedSelection(Empty_array);
+
+                                        Autodesk.AutoCAD.EditorInput.PromptSelectionResult Rezultat1;
+                                        Autodesk.AutoCAD.EditorInput.PromptSelectionOptions Prompt_rez = new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions();
+                                        Prompt_rez.MessageForAdding = "\nSelect Mtext:";
+                                        Prompt_rez.SingleOnly = false;
+                                        Rezultat1 = ThisDrawing.Editor.GetSelection(Prompt_rez);
+
+                                        if (Rezultat1.Status != PromptStatus.OK)
+                                        {
+                                            set_enable_true();
+                                            label_processing1.Visible = false;
+                                            ThisDrawing.Editor.WriteMessage("\n" + "Command:");
+                                            return;
+                                        }
+
+
+                                        for (int k = 0; k < Rezultat1.Value.Count; ++k)
+                                        {
+                                            Entity Ent1 = Trans1.GetObject(Rezultat1.Value[k].ObjectId, OpenMode.ForRead) as Entity;
+                                            if (Ent1 != null)
+                                            {
+                                                bool Add_to_table = false;
+
+                                                MLeader ml1 = null;
+
+                                                try
+                                                {
+                                                    ml1 = (MLeader)Ent1;
+                                                }
+                                                catch (System.Exception ex)
+                                                {
+
+                                                }
+
+
+
+                                                if (ml1 != null)
+                                                {
+                                                    if (ml1.Layer == comboBox_layers_blocks_geomanager.Text)
+                                                    {
+                                                        Add_to_table = true;
+                                                    }
+                                                }
+
+
+
+                                                if (Add_to_table == true)
+                                                {
+                                                    Data_table_OD_attrib_existing.Rows.Add();
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["OBJECT_ID"] = ml1.ObjectId;
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["TextString"] = ml1.MText.Contents;
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["x"] = ml1.GetFirstVertex(0).X;
+                                                    Data_table_OD_attrib_existing.Rows[Data_table_OD_attrib_existing.Rows.Count - 1]["y"] = ml1.GetFirstVertex(0).Y;
+
+
+                                                    List_all_objId.Add(ml1.ObjectId.ToString());
+                                                }
+                                            }
+                                        }
+                                    }
+                                    Trans1.Commit();
+                                }
+                            }
+
+                            if (Data_table_OD_attrib_existing.Rows.Count > 0)
+                            {
+
+                                DataGridView_data.DataSource = Data_table_OD_attrib_existing;
+
+                                DataGridView_data.Columns[0].ReadOnly = true;
+                                DataGridView_data.Columns[0].DefaultCellStyle.BackColor = Color.LightGray;
+                                DataGridView_data.Columns[0].DefaultCellStyle.ForeColor = Color.White;
+                                DataGridView_data.Columns[1].DefaultCellStyle.ForeColor = Color.White;
+
+                                DataGridView_data.AllowUserToAddRows = false;
+                                DataGridView_OD_data_Sorted(sender, e);
+                                DataGridView_data.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+
+                                textBox_no_rows.Text = DataGridView_data.Rows.Count.ToString();
+
+
+
+                            }
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+
+
+
+                }
+
+
+
+            }
 
             set_enable_true();
             label_processing1.Visible = false;
@@ -1196,6 +1395,47 @@ namespace Alignment_mdi
 
                                                 Mtxt1.Location = new Point3d(x, y, 0);
                                                 Mtxt1.Contents = new_string;
+
+                                            }
+
+                                        }
+
+
+                                    }
+
+                                    if (radioButton_mleader.Checked == true)
+                                    {
+
+
+
+
+                                        MLeader ml1 = null;
+                                        try
+                                        {
+                                            ml1 = (MLeader)Ent1;
+                                        }
+                                        catch (System.Exception )
+                                        {
+
+                                        }
+
+                                        if (ml1 != null)
+                                        {
+
+                                            if (Data_table_OD_attrib_existing.Rows[List_update_row_index[i]]["TextString"] != null &&
+                                                Data_table_OD_attrib_existing.Rows[List_update_row_index[i]]["x"] != null &&
+                                                Data_table_OD_attrib_existing.Rows[List_update_row_index[i]]["y"] != null)
+                                            {
+                                                string new_string = Convert.ToString(Data_table_OD_attrib_existing.Rows[List_update_row_index[i]]["TextString"]);
+                                                double x = Convert.ToDouble(Data_table_OD_attrib_existing.Rows[List_update_row_index[i]]["x"]);
+                                                double y = Convert.ToDouble(Data_table_OD_attrib_existing.Rows[List_update_row_index[i]]["y"]);
+
+                                                ml1.SetFirstVertex(0,new Point3d(x, y, 0));
+
+                                                MText mtxt1 = ml1.MText;
+                                                mtxt1.Contents = new_string;
+
+                                                ml1.MText=mtxt1;
 
                                             }
 

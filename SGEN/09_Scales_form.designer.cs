@@ -32,28 +32,29 @@
             this.panel_gray = new System.Windows.Forms.Panel();
             this.panel_scales = new System.Windows.Forms.Panel();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton6000 = new System.Windows.Forms.RadioButton();
+            this.radioButton600 = new System.Windows.Forms.RadioButton();
+            this.radioButton60 = new System.Windows.Forms.RadioButton();
+            this.radioButton5000 = new System.Windows.Forms.RadioButton();
+            this.radioButton500 = new System.Windows.Forms.RadioButton();
+            this.radioButton50 = new System.Windows.Forms.RadioButton();
+            this.radioButton4000 = new System.Windows.Forms.RadioButton();
+            this.radioButton3000 = new System.Windows.Forms.RadioButton();
+            this.radioButton400 = new System.Windows.Forms.RadioButton();
+            this.radioButton300 = new System.Windows.Forms.RadioButton();
+            this.radioButton2000 = new System.Windows.Forms.RadioButton();
+            this.radioButton40 = new System.Windows.Forms.RadioButton();
+            this.radioButton200 = new System.Windows.Forms.RadioButton();
+            this.radioButton1000 = new System.Windows.Forms.RadioButton();
+            this.radioButton30 = new System.Windows.Forms.RadioButton();
+            this.radioButton100 = new System.Windows.Forms.RadioButton();
             this.radioButton20 = new System.Windows.Forms.RadioButton();
             this.radioButton10 = new System.Windows.Forms.RadioButton();
-            this.radioButton30 = new System.Windows.Forms.RadioButton();
-            this.radioButton40 = new System.Windows.Forms.RadioButton();
-            this.radioButton50 = new System.Windows.Forms.RadioButton();
-            this.radioButton60 = new System.Windows.Forms.RadioButton();
-            this.radioButton100 = new System.Windows.Forms.RadioButton();
-            this.radioButton200 = new System.Windows.Forms.RadioButton();
-            this.radioButton300 = new System.Windows.Forms.RadioButton();
-            this.radioButton400 = new System.Windows.Forms.RadioButton();
-            this.radioButton500 = new System.Windows.Forms.RadioButton();
-            this.radioButton600 = new System.Windows.Forms.RadioButton();
-            this.radioButton1000 = new System.Windows.Forms.RadioButton();
-            this.radioButton2000 = new System.Windows.Forms.RadioButton();
-            this.radioButton3000 = new System.Windows.Forms.RadioButton();
-            this.radioButton4000 = new System.Windows.Forms.RadioButton();
-            this.radioButton5000 = new System.Windows.Forms.RadioButton();
-            this.radioButton6000 = new System.Windows.Forms.RadioButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button_minimize = new System.Windows.Forms.Button();
             this.button_close = new System.Windows.Forms.Button();
             this.label_header1 = new System.Windows.Forms.Label();
+            this.button_place_rectangles = new System.Windows.Forms.Button();
             this.panel_gray.SuspendLayout();
             this.panel_scales.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -109,6 +110,198 @@
             this.radioButton1.Text = "1:1";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
+            // radioButton6000
+            // 
+            this.radioButton6000.AutoSize = true;
+            this.radioButton6000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton6000.ForeColor = System.Drawing.Color.White;
+            this.radioButton6000.Location = new System.Drawing.Point(138, 147);
+            this.radioButton6000.Name = "radioButton6000";
+            this.radioButton6000.Size = new System.Drawing.Size(58, 18);
+            this.radioButton6000.TabIndex = 2202;
+            this.radioButton6000.Text = "1:6000";
+            this.radioButton6000.UseVisualStyleBackColor = true;
+            // 
+            // radioButton600
+            // 
+            this.radioButton600.AutoSize = true;
+            this.radioButton600.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton600.ForeColor = System.Drawing.Color.White;
+            this.radioButton600.Location = new System.Drawing.Point(68, 147);
+            this.radioButton600.Name = "radioButton600";
+            this.radioButton600.Size = new System.Drawing.Size(52, 18);
+            this.radioButton600.TabIndex = 2202;
+            this.radioButton600.Text = "1:600";
+            this.radioButton600.UseVisualStyleBackColor = true;
+            // 
+            // radioButton60
+            // 
+            this.radioButton60.AutoSize = true;
+            this.radioButton60.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton60.ForeColor = System.Drawing.Color.White;
+            this.radioButton60.Location = new System.Drawing.Point(3, 147);
+            this.radioButton60.Name = "radioButton60";
+            this.radioButton60.Size = new System.Drawing.Size(46, 18);
+            this.radioButton60.TabIndex = 2202;
+            this.radioButton60.Text = "1:60";
+            this.radioButton60.UseVisualStyleBackColor = true;
+            // 
+            // radioButton5000
+            // 
+            this.radioButton5000.AutoSize = true;
+            this.radioButton5000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton5000.ForeColor = System.Drawing.Color.White;
+            this.radioButton5000.Location = new System.Drawing.Point(138, 123);
+            this.radioButton5000.Name = "radioButton5000";
+            this.radioButton5000.Size = new System.Drawing.Size(58, 18);
+            this.radioButton5000.TabIndex = 2202;
+            this.radioButton5000.Text = "1:5000";
+            this.radioButton5000.UseVisualStyleBackColor = true;
+            // 
+            // radioButton500
+            // 
+            this.radioButton500.AutoSize = true;
+            this.radioButton500.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton500.ForeColor = System.Drawing.Color.White;
+            this.radioButton500.Location = new System.Drawing.Point(68, 123);
+            this.radioButton500.Name = "radioButton500";
+            this.radioButton500.Size = new System.Drawing.Size(52, 18);
+            this.radioButton500.TabIndex = 2202;
+            this.radioButton500.Text = "1:500";
+            this.radioButton500.UseVisualStyleBackColor = true;
+            // 
+            // radioButton50
+            // 
+            this.radioButton50.AutoSize = true;
+            this.radioButton50.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton50.ForeColor = System.Drawing.Color.White;
+            this.radioButton50.Location = new System.Drawing.Point(3, 123);
+            this.radioButton50.Name = "radioButton50";
+            this.radioButton50.Size = new System.Drawing.Size(46, 18);
+            this.radioButton50.TabIndex = 2202;
+            this.radioButton50.Text = "1:50";
+            this.radioButton50.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4000
+            // 
+            this.radioButton4000.AutoSize = true;
+            this.radioButton4000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton4000.ForeColor = System.Drawing.Color.White;
+            this.radioButton4000.Location = new System.Drawing.Point(138, 99);
+            this.radioButton4000.Name = "radioButton4000";
+            this.radioButton4000.Size = new System.Drawing.Size(58, 18);
+            this.radioButton4000.TabIndex = 2202;
+            this.radioButton4000.Text = "1:4000";
+            this.radioButton4000.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3000
+            // 
+            this.radioButton3000.AutoSize = true;
+            this.radioButton3000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton3000.ForeColor = System.Drawing.Color.White;
+            this.radioButton3000.Location = new System.Drawing.Point(138, 75);
+            this.radioButton3000.Name = "radioButton3000";
+            this.radioButton3000.Size = new System.Drawing.Size(58, 18);
+            this.radioButton3000.TabIndex = 2202;
+            this.radioButton3000.Text = "1:3000";
+            this.radioButton3000.UseVisualStyleBackColor = true;
+            // 
+            // radioButton400
+            // 
+            this.radioButton400.AutoSize = true;
+            this.radioButton400.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton400.ForeColor = System.Drawing.Color.White;
+            this.radioButton400.Location = new System.Drawing.Point(68, 99);
+            this.radioButton400.Name = "radioButton400";
+            this.radioButton400.Size = new System.Drawing.Size(52, 18);
+            this.radioButton400.TabIndex = 2202;
+            this.radioButton400.Text = "1:400";
+            this.radioButton400.UseVisualStyleBackColor = true;
+            // 
+            // radioButton300
+            // 
+            this.radioButton300.AutoSize = true;
+            this.radioButton300.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton300.ForeColor = System.Drawing.Color.White;
+            this.radioButton300.Location = new System.Drawing.Point(68, 75);
+            this.radioButton300.Name = "radioButton300";
+            this.radioButton300.Size = new System.Drawing.Size(52, 18);
+            this.radioButton300.TabIndex = 2202;
+            this.radioButton300.Text = "1:300";
+            this.radioButton300.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2000
+            // 
+            this.radioButton2000.AutoSize = true;
+            this.radioButton2000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton2000.ForeColor = System.Drawing.Color.White;
+            this.radioButton2000.Location = new System.Drawing.Point(138, 51);
+            this.radioButton2000.Name = "radioButton2000";
+            this.radioButton2000.Size = new System.Drawing.Size(58, 18);
+            this.radioButton2000.TabIndex = 2202;
+            this.radioButton2000.Text = "1:2000";
+            this.radioButton2000.UseVisualStyleBackColor = true;
+            // 
+            // radioButton40
+            // 
+            this.radioButton40.AutoSize = true;
+            this.radioButton40.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton40.ForeColor = System.Drawing.Color.White;
+            this.radioButton40.Location = new System.Drawing.Point(3, 99);
+            this.radioButton40.Name = "radioButton40";
+            this.radioButton40.Size = new System.Drawing.Size(46, 18);
+            this.radioButton40.TabIndex = 2202;
+            this.radioButton40.Text = "1:40";
+            this.radioButton40.UseVisualStyleBackColor = true;
+            // 
+            // radioButton200
+            // 
+            this.radioButton200.AutoSize = true;
+            this.radioButton200.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton200.ForeColor = System.Drawing.Color.White;
+            this.radioButton200.Location = new System.Drawing.Point(68, 51);
+            this.radioButton200.Name = "radioButton200";
+            this.radioButton200.Size = new System.Drawing.Size(52, 18);
+            this.radioButton200.TabIndex = 2202;
+            this.radioButton200.Text = "1:200";
+            this.radioButton200.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1000
+            // 
+            this.radioButton1000.AutoSize = true;
+            this.radioButton1000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton1000.ForeColor = System.Drawing.Color.White;
+            this.radioButton1000.Location = new System.Drawing.Point(138, 27);
+            this.radioButton1000.Name = "radioButton1000";
+            this.radioButton1000.Size = new System.Drawing.Size(58, 18);
+            this.radioButton1000.TabIndex = 2202;
+            this.radioButton1000.Text = "1:1000";
+            this.radioButton1000.UseVisualStyleBackColor = true;
+            // 
+            // radioButton30
+            // 
+            this.radioButton30.AutoSize = true;
+            this.radioButton30.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton30.ForeColor = System.Drawing.Color.White;
+            this.radioButton30.Location = new System.Drawing.Point(3, 75);
+            this.radioButton30.Name = "radioButton30";
+            this.radioButton30.Size = new System.Drawing.Size(46, 18);
+            this.radioButton30.TabIndex = 2202;
+            this.radioButton30.Text = "1:30";
+            this.radioButton30.UseVisualStyleBackColor = true;
+            // 
+            // radioButton100
+            // 
+            this.radioButton100.AutoSize = true;
+            this.radioButton100.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.radioButton100.ForeColor = System.Drawing.Color.White;
+            this.radioButton100.Location = new System.Drawing.Point(68, 27);
+            this.radioButton100.Name = "radioButton100";
+            this.radioButton100.Size = new System.Drawing.Size(52, 18);
+            this.radioButton100.TabIndex = 2202;
+            this.radioButton100.Text = "1:100";
+            this.radioButton100.UseVisualStyleBackColor = true;
+            // 
             // radioButton20
             // 
             this.radioButton20.AutoSize = true;
@@ -132,198 +325,6 @@
             this.radioButton10.TabIndex = 2202;
             this.radioButton10.Text = "1:10";
             this.radioButton10.UseVisualStyleBackColor = true;
-            // 
-            // radioButton30
-            // 
-            this.radioButton30.AutoSize = true;
-            this.radioButton30.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton30.ForeColor = System.Drawing.Color.White;
-            this.radioButton30.Location = new System.Drawing.Point(3, 75);
-            this.radioButton30.Name = "radioButton30";
-            this.radioButton30.Size = new System.Drawing.Size(46, 18);
-            this.radioButton30.TabIndex = 2202;
-            this.radioButton30.Text = "1:30";
-            this.radioButton30.UseVisualStyleBackColor = true;
-            // 
-            // radioButton40
-            // 
-            this.radioButton40.AutoSize = true;
-            this.radioButton40.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton40.ForeColor = System.Drawing.Color.White;
-            this.radioButton40.Location = new System.Drawing.Point(3, 99);
-            this.radioButton40.Name = "radioButton40";
-            this.radioButton40.Size = new System.Drawing.Size(46, 18);
-            this.radioButton40.TabIndex = 2202;
-            this.radioButton40.Text = "1:40";
-            this.radioButton40.UseVisualStyleBackColor = true;
-            // 
-            // radioButton50
-            // 
-            this.radioButton50.AutoSize = true;
-            this.radioButton50.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton50.ForeColor = System.Drawing.Color.White;
-            this.radioButton50.Location = new System.Drawing.Point(3, 123);
-            this.radioButton50.Name = "radioButton50";
-            this.radioButton50.Size = new System.Drawing.Size(46, 18);
-            this.radioButton50.TabIndex = 2202;
-            this.radioButton50.Text = "1:50";
-            this.radioButton50.UseVisualStyleBackColor = true;
-            // 
-            // radioButton60
-            // 
-            this.radioButton60.AutoSize = true;
-            this.radioButton60.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton60.ForeColor = System.Drawing.Color.White;
-            this.radioButton60.Location = new System.Drawing.Point(3, 147);
-            this.radioButton60.Name = "radioButton60";
-            this.radioButton60.Size = new System.Drawing.Size(46, 18);
-            this.radioButton60.TabIndex = 2202;
-            this.radioButton60.Text = "1:60";
-            this.radioButton60.UseVisualStyleBackColor = true;
-            // 
-            // radioButton100
-            // 
-            this.radioButton100.AutoSize = true;
-            this.radioButton100.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton100.ForeColor = System.Drawing.Color.White;
-            this.radioButton100.Location = new System.Drawing.Point(68, 27);
-            this.radioButton100.Name = "radioButton100";
-            this.radioButton100.Size = new System.Drawing.Size(52, 18);
-            this.radioButton100.TabIndex = 2202;
-            this.radioButton100.Text = "1:100";
-            this.radioButton100.UseVisualStyleBackColor = true;
-            // 
-            // radioButton200
-            // 
-            this.radioButton200.AutoSize = true;
-            this.radioButton200.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton200.ForeColor = System.Drawing.Color.White;
-            this.radioButton200.Location = new System.Drawing.Point(68, 51);
-            this.radioButton200.Name = "radioButton200";
-            this.radioButton200.Size = new System.Drawing.Size(52, 18);
-            this.radioButton200.TabIndex = 2202;
-            this.radioButton200.Text = "1:200";
-            this.radioButton200.UseVisualStyleBackColor = true;
-            // 
-            // radioButton300
-            // 
-            this.radioButton300.AutoSize = true;
-            this.radioButton300.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton300.ForeColor = System.Drawing.Color.White;
-            this.radioButton300.Location = new System.Drawing.Point(68, 75);
-            this.radioButton300.Name = "radioButton300";
-            this.radioButton300.Size = new System.Drawing.Size(52, 18);
-            this.radioButton300.TabIndex = 2202;
-            this.radioButton300.Text = "1:300";
-            this.radioButton300.UseVisualStyleBackColor = true;
-            // 
-            // radioButton400
-            // 
-            this.radioButton400.AutoSize = true;
-            this.radioButton400.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton400.ForeColor = System.Drawing.Color.White;
-            this.radioButton400.Location = new System.Drawing.Point(68, 99);
-            this.radioButton400.Name = "radioButton400";
-            this.radioButton400.Size = new System.Drawing.Size(52, 18);
-            this.radioButton400.TabIndex = 2202;
-            this.radioButton400.Text = "1:400";
-            this.radioButton400.UseVisualStyleBackColor = true;
-            // 
-            // radioButton500
-            // 
-            this.radioButton500.AutoSize = true;
-            this.radioButton500.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton500.ForeColor = System.Drawing.Color.White;
-            this.radioButton500.Location = new System.Drawing.Point(68, 123);
-            this.radioButton500.Name = "radioButton500";
-            this.radioButton500.Size = new System.Drawing.Size(52, 18);
-            this.radioButton500.TabIndex = 2202;
-            this.radioButton500.Text = "1:500";
-            this.radioButton500.UseVisualStyleBackColor = true;
-            // 
-            // radioButton600
-            // 
-            this.radioButton600.AutoSize = true;
-            this.radioButton600.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton600.ForeColor = System.Drawing.Color.White;
-            this.radioButton600.Location = new System.Drawing.Point(68, 147);
-            this.radioButton600.Name = "radioButton600";
-            this.radioButton600.Size = new System.Drawing.Size(52, 18);
-            this.radioButton600.TabIndex = 2202;
-            this.radioButton600.Text = "1:600";
-            this.radioButton600.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1000
-            // 
-            this.radioButton1000.AutoSize = true;
-            this.radioButton1000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton1000.ForeColor = System.Drawing.Color.White;
-            this.radioButton1000.Location = new System.Drawing.Point(138, 27);
-            this.radioButton1000.Name = "radioButton1000";
-            this.radioButton1000.Size = new System.Drawing.Size(58, 18);
-            this.radioButton1000.TabIndex = 2202;
-            this.radioButton1000.Text = "1:1000";
-            this.radioButton1000.UseVisualStyleBackColor = true;
-            // 
-            // radioButton2000
-            // 
-            this.radioButton2000.AutoSize = true;
-            this.radioButton2000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton2000.ForeColor = System.Drawing.Color.White;
-            this.radioButton2000.Location = new System.Drawing.Point(138, 51);
-            this.radioButton2000.Name = "radioButton2000";
-            this.radioButton2000.Size = new System.Drawing.Size(58, 18);
-            this.radioButton2000.TabIndex = 2202;
-            this.radioButton2000.Text = "1:2000";
-            this.radioButton2000.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3000
-            // 
-            this.radioButton3000.AutoSize = true;
-            this.radioButton3000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton3000.ForeColor = System.Drawing.Color.White;
-            this.radioButton3000.Location = new System.Drawing.Point(138, 75);
-            this.radioButton3000.Name = "radioButton3000";
-            this.radioButton3000.Size = new System.Drawing.Size(58, 18);
-            this.radioButton3000.TabIndex = 2202;
-            this.radioButton3000.Text = "1:3000";
-            this.radioButton3000.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4000
-            // 
-            this.radioButton4000.AutoSize = true;
-            this.radioButton4000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton4000.ForeColor = System.Drawing.Color.White;
-            this.radioButton4000.Location = new System.Drawing.Point(138, 99);
-            this.radioButton4000.Name = "radioButton4000";
-            this.radioButton4000.Size = new System.Drawing.Size(58, 18);
-            this.radioButton4000.TabIndex = 2202;
-            this.radioButton4000.Text = "1:4000";
-            this.radioButton4000.UseVisualStyleBackColor = true;
-            // 
-            // radioButton5000
-            // 
-            this.radioButton5000.AutoSize = true;
-            this.radioButton5000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton5000.ForeColor = System.Drawing.Color.White;
-            this.radioButton5000.Location = new System.Drawing.Point(138, 123);
-            this.radioButton5000.Name = "radioButton5000";
-            this.radioButton5000.Size = new System.Drawing.Size(58, 18);
-            this.radioButton5000.TabIndex = 2202;
-            this.radioButton5000.Text = "1:5000";
-            this.radioButton5000.UseVisualStyleBackColor = true;
-            // 
-            // radioButton6000
-            // 
-            this.radioButton6000.AutoSize = true;
-            this.radioButton6000.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.radioButton6000.ForeColor = System.Drawing.Color.White;
-            this.radioButton6000.Location = new System.Drawing.Point(138, 147);
-            this.radioButton6000.Name = "radioButton6000";
-            this.radioButton6000.Size = new System.Drawing.Size(58, 18);
-            this.radioButton6000.TabIndex = 2202;
-            this.radioButton6000.Text = "1:6000";
-            this.radioButton6000.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -389,12 +390,30 @@
             this.label_header1.TabIndex = 3;
             this.label_header1.Text = "Scales:";
             // 
+            // button_place_rectangles
+            // 
+            this.button_place_rectangles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_place_rectangles.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_place_rectangles.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_place_rectangles.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_place_rectangles.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_place_rectangles.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_place_rectangles.ForeColor = System.Drawing.Color.White;
+            this.button_place_rectangles.Location = new System.Drawing.Point(51, 232);
+            this.button_place_rectangles.Name = "button_place_rectangles";
+            this.button_place_rectangles.Size = new System.Drawing.Size(100, 36);
+            this.button_place_rectangles.TabIndex = 2060;
+            this.button_place_rectangles.Text = "Draw";
+            this.button_place_rectangles.UseVisualStyleBackColor = false;
+            this.button_place_rectangles.Click += new System.EventHandler(this.button_place_rectangles_Click);
+            // 
             // scales_form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(62)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(221, 227);
+            this.ClientSize = new System.Drawing.Size(221, 277);
+            this.Controls.Add(this.button_place_rectangles);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel_gray);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -439,5 +458,6 @@
         private System.Windows.Forms.Button button_minimize;
         private System.Windows.Forms.Button button_close;
         private System.Windows.Forms.Label label_header1;
+        private System.Windows.Forms.Button button_place_rectangles;
     }
 }

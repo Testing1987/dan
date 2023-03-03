@@ -4147,7 +4147,7 @@ namespace Alignment_mdi
                     using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                     {
                         BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
-
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
                         Matrix3d CurentUCSmatrix = Editor1.CurrentUserCoordinateSystem;
 
 
@@ -4199,12 +4199,18 @@ namespace Alignment_mdi
                             }
 
                             BlockReference block1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForWrite) as BlockReference;
+
                             if (block1 != null)
                             {
-                                double r1 = block1.Rotation;
-                                double rot1_deg = r1 * 180 / Math.PI;
-
-                                block1.Rotation = r1 + Math.PI;
+                                string blockname = Functions.get_block_name(block1);
+                                BlockTableRecord btr = Trans1.GetObject(BlockTable1[blockname], OpenMode.ForRead) as BlockTableRecord;
+                                if (btr != null && btr.IsFromExternalReference == false && btr.IsLayout == false
+                                    && btr.IsFromOverlayReference == false && btr.IsAnonymous == false )
+                                {
+                                    double r1 = block1.Rotation;
+                                    double rot1_deg = r1 * 180 / Math.PI;
+                                    block1.Rotation = r1 + Math.PI;
+                                }
                             }
 
                             MText mt1 = Trans1.GetObject(Rezultat1.Value[i].ObjectId, OpenMode.ForWrite) as MText;
@@ -4612,6 +4618,8 @@ namespace Alignment_mdi
         }
 
 
+
+
         [CommandMethod("drop1", CommandFlags.UsePickSet)]
         public void drop1()
         {
@@ -4628,6 +4636,7 @@ namespace Alignment_mdi
                     using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
                     {
                         BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
 
                         bool was_selected = false;
                         Polyline poly1 = null;
@@ -5970,18 +5979,18 @@ namespace Alignment_mdi
                                         dt1.Rows[dt1.Rows.Count - 1]["Distance"] = pt1.Y - y1;
                                     }
 
-                                    if (block1.AttributeCollection.Count>0)
+                                    if (block1.AttributeCollection.Count > 0)
                                     {
-                                        foreach(ObjectId id1 in block1.AttributeCollection)
+                                        foreach (ObjectId id1 in block1.AttributeCollection)
                                         {
                                             AttributeReference atr1 = Trans1.GetObject(id1, OpenMode.ForRead) as AttributeReference;
-                                            if(atr1!=null)
+                                            if (atr1 != null)
                                             {
-                                                if(dt1.Columns.Contains("BlockAttribute: " + atr1.Tag)==false)
+                                                if (dt1.Columns.Contains("BlockAttribute: " + atr1.Tag) == false)
                                                 {
                                                     dt1.Columns.Add("BlockAttribute: " + atr1.Tag, typeof(string));
                                                 }
-                                               dt1.Rows[dt1.Rows.Count - 1]["BlockAttribute: " + atr1.Tag] = atr1.TextString;
+                                                dt1.Rows[dt1.Rows.Count - 1]["BlockAttribute: " + atr1.Tag] = atr1.TextString;
                                             }
                                         }
                                     }
@@ -5990,7 +5999,7 @@ namespace Alignment_mdi
                                 }
                             }
                         }
-                        Functions.Transfer_datatable_to_new_excel_spreadsheet(dt1, Convert.ToString(DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "hr" + DateTime.Now.Minute + "min" + DateTime.Now.Second) + "sec");                       
+                        Functions.Transfer_datatable_to_new_excel_spreadsheet(dt1, Convert.ToString(DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "_" + DateTime.Now.Hour + "hr" + DateTime.Now.Minute + "min" + DateTime.Now.Second) + "sec");
                     }
                 }
             }

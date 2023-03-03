@@ -32,6 +32,7 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.radioButton_mtext = new System.Windows.Forms.RadioButton();
             this.radioButton_BLOCKS = new System.Windows.Forms.RadioButton();
             this.radioButton_OD = new System.Windows.Forms.RadioButton();
             this.label_drawing_name = new System.Windows.Forms.Label();
@@ -70,7 +71,7 @@
             this.textBox_OD_TABLES = new System.Windows.Forms.TextBox();
             this.label_processing1 = new System.Windows.Forms.Label();
             this.DataGridView_data = new System.Windows.Forms.DataGridView();
-            this.radioButton_mtext = new System.Windows.Forms.RadioButton();
+            this.radioButton_mleader = new System.Windows.Forms.RadioButton();
             this.panel6.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -109,6 +110,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.radioButton_mleader);
             this.panel1.Controls.Add(this.radioButton_mtext);
             this.panel1.Controls.Add(this.radioButton_BLOCKS);
             this.panel1.Controls.Add(this.radioButton_OD);
@@ -124,6 +126,21 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(970, 94);
             this.panel1.TabIndex = 2153;
+            // 
+            // radioButton_mtext
+            // 
+            this.radioButton_mtext.AutoSize = true;
+            this.radioButton_mtext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.radioButton_mtext.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.radioButton_mtext.ForeColor = System.Drawing.Color.White;
+            this.radioButton_mtext.Location = new System.Drawing.Point(91, 9);
+            this.radioButton_mtext.Name = "radioButton_mtext";
+            this.radioButton_mtext.Size = new System.Drawing.Size(56, 19);
+            this.radioButton_mtext.TabIndex = 1;
+            this.radioButton_mtext.TabStop = true;
+            this.radioButton_mtext.Text = "Mtext";
+            this.radioButton_mtext.UseVisualStyleBackColor = true;
+            this.radioButton_mtext.CheckedChanged += new System.EventHandler(this.radioButton_OD_blocks_CheckedChanged);
             // 
             // radioButton_BLOCKS
             // 
@@ -651,20 +668,20 @@
             this.DataGridView_data.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_data_CellValueChanged);
             this.DataGridView_data.Sorted += new System.EventHandler(this.DataGridView_OD_data_Sorted);
             // 
-            // radioButton_mtext
+            // radioButton_mleader
             // 
-            this.radioButton_mtext.AutoSize = true;
-            this.radioButton_mtext.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.radioButton_mtext.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
-            this.radioButton_mtext.ForeColor = System.Drawing.Color.White;
-            this.radioButton_mtext.Location = new System.Drawing.Point(112, 9);
-            this.radioButton_mtext.Name = "radioButton_mtext";
-            this.radioButton_mtext.Size = new System.Drawing.Size(56, 19);
-            this.radioButton_mtext.TabIndex = 1;
-            this.radioButton_mtext.TabStop = true;
-            this.radioButton_mtext.Text = "Mtext";
-            this.radioButton_mtext.UseVisualStyleBackColor = true;
-            this.radioButton_mtext.CheckedChanged += new System.EventHandler(this.radioButton_OD_blocks_CheckedChanged);
+            this.radioButton_mleader.AutoSize = true;
+            this.radioButton_mleader.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.radioButton_mleader.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold);
+            this.radioButton_mleader.ForeColor = System.Drawing.Color.White;
+            this.radioButton_mleader.Location = new System.Drawing.Point(153, 9);
+            this.radioButton_mleader.Name = "radioButton_mleader";
+            this.radioButton_mleader.Size = new System.Drawing.Size(74, 19);
+            this.radioButton_mleader.TabIndex = 1;
+            this.radioButton_mleader.TabStop = true;
+            this.radioButton_mleader.Text = "MLeader";
+            this.radioButton_mleader.UseVisualStyleBackColor = true;
+            this.radioButton_mleader.CheckedChanged += new System.EventHandler(this.radioButton_OD_blocks_CheckedChanged);
             // 
             // Geo_tools_form
             // 
@@ -744,5 +761,6 @@
         private System.Windows.Forms.Label label_processing1;
         private System.Windows.Forms.DataGridView DataGridView_data;
         private System.Windows.Forms.RadioButton radioButton_mtext;
+        private System.Windows.Forms.RadioButton radioButton_mleader;
     }
 }

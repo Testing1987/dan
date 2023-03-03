@@ -44,11 +44,12 @@
             this.panel_dan = new System.Windows.Forms.Panel();
             this.checkBox_pick_name_from_OD = new System.Windows.Forms.CheckBox();
             this.comboBox_od_field = new System.Windows.Forms.ComboBox();
+            this.button_highlight = new System.Windows.Forms.Button();
+            this.button_open_sheet_index_xl = new System.Windows.Forms.Button();
             this.checkBox_plat_mode = new System.Windows.Forms.CheckBox();
             this.button_place_rectangles = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
-            this.button_open_sheet_index_xl = new System.Windows.Forms.Button();
             this.button_copy_sheet_index = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_sheet_index)).BeginInit();
@@ -239,6 +240,7 @@
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.panel_dan);
+            this.panel3.Controls.Add(this.button_highlight);
             this.panel3.Controls.Add(this.button_scan);
             this.panel3.Controls.Add(this.button_open_sheet_index_xl);
             this.panel3.Controls.Add(this.checkBox_plat_mode);
@@ -285,6 +287,43 @@
             this.comboBox_od_field.Size = new System.Drawing.Size(354, 21);
             this.comboBox_od_field.TabIndex = 2091;
             this.comboBox_od_field.DropDown += new System.EventHandler(this.button_load_od_field_to_combobox_Click);
+            // 
+            // button_highlight
+            // 
+            this.button_highlight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_highlight.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(37)))), ((int)(((byte)(38)))));
+            this.button_highlight.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_highlight.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_highlight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_highlight.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_highlight.ForeColor = System.Drawing.Color.White;
+            this.button_highlight.Location = new System.Drawing.Point(487, 78);
+            this.button_highlight.Name = "button_highlight";
+            this.button_highlight.Size = new System.Drawing.Size(100, 30);
+            this.button_highlight.TabIndex = 0;
+            this.button_highlight.Text = "Highlight";
+            this.button_highlight.UseVisualStyleBackColor = false;
+            this.button_highlight.Click += new System.EventHandler(this.button_highlight_Click);
+            // 
+            // button_open_sheet_index_xl
+            // 
+            this.button_open_sheet_index_xl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
+            this.button_open_sheet_index_xl.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+            this.button_open_sheet_index_xl.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button_open_sheet_index_xl.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
+            this.button_open_sheet_index_xl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_open_sheet_index_xl.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
+            this.button_open_sheet_index_xl.ForeColor = System.Drawing.Color.White;
+            this.button_open_sheet_index_xl.Image = ((System.Drawing.Image)(resources.GetObject("button_open_sheet_index_xl.Image")));
+            this.button_open_sheet_index_xl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button_open_sheet_index_xl.Location = new System.Drawing.Point(813, 34);
+            this.button_open_sheet_index_xl.Name = "button_open_sheet_index_xl";
+            this.button_open_sheet_index_xl.Size = new System.Drawing.Size(143, 26);
+            this.button_open_sheet_index_xl.TabIndex = 2145;
+            this.button_open_sheet_index_xl.Text = "Open Sheet Index";
+            this.button_open_sheet_index_xl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button_open_sheet_index_xl.UseVisualStyleBackColor = false;
+            this.button_open_sheet_index_xl.Click += new System.EventHandler(this.button_open_sheet_index_xl_Click);
             // 
             // checkBox_plat_mode
             // 
@@ -339,26 +378,6 @@
             this.label7.TabIndex = 2054;
             this.label7.Text = "Model Space Viewport Location Setup";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // button_open_sheet_index_xl
-            // 
-            this.button_open_sheet_index_xl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(55)))));
-            this.button_open_sheet_index_xl.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-            this.button_open_sheet_index_xl.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
-            this.button_open_sheet_index_xl.FlatAppearance.MouseOverBackColor = System.Drawing.Color.DarkOrange;
-            this.button_open_sheet_index_xl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_open_sheet_index_xl.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold);
-            this.button_open_sheet_index_xl.ForeColor = System.Drawing.Color.White;
-            this.button_open_sheet_index_xl.Image = ((System.Drawing.Image)(resources.GetObject("button_open_sheet_index_xl.Image")));
-            this.button_open_sheet_index_xl.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button_open_sheet_index_xl.Location = new System.Drawing.Point(813, 34);
-            this.button_open_sheet_index_xl.Name = "button_open_sheet_index_xl";
-            this.button_open_sheet_index_xl.Size = new System.Drawing.Size(143, 26);
-            this.button_open_sheet_index_xl.TabIndex = 2145;
-            this.button_open_sheet_index_xl.Text = "Open Sheet Index";
-            this.button_open_sheet_index_xl.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button_open_sheet_index_xl.UseVisualStyleBackColor = false;
-            this.button_open_sheet_index_xl.Click += new System.EventHandler(this.button_open_sheet_index_xl_Click);
             // 
             // button_copy_sheet_index
             // 
@@ -440,5 +459,6 @@
         private System.Windows.Forms.CheckBox checkBox_pick_name_from_OD;
         private System.Windows.Forms.ComboBox comboBox_od_field;
         private System.Windows.Forms.CheckBox checkBox_plat_mode;
+        private System.Windows.Forms.Button button_highlight;
     }
 }

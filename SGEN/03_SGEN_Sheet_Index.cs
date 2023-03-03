@@ -45,6 +45,7 @@ namespace Alignment_mdi
         string Col_Y2 = "Y_End";
 
         string col_scale = "Scale";
+        string col_ODscaleName = "Scale";
         string col_scaleName = "ScaleName";
         public scales_form forma3 = null;
 
@@ -64,6 +65,7 @@ namespace Alignment_mdi
             lista_butoane.Add(button_delete_sheet_index);
             lista_butoane.Add(button_open_sheet_index_xl);
             lista_butoane.Add(dataGridView_sheet_index);
+            lista_butoane.Add(button_highlight);
 
 
             foreach (System.Windows.Forms.Control bt1 in lista_butoane)
@@ -84,6 +86,7 @@ namespace Alignment_mdi
             lista_butoane.Add(button_delete_sheet_index);
             lista_butoane.Add(button_open_sheet_index_xl);
             lista_butoane.Add(dataGridView_sheet_index);
+            lista_butoane.Add(button_highlight);
 
             foreach (System.Windows.Forms.Control bt1 in lista_butoane)
             {
@@ -219,6 +222,20 @@ namespace Alignment_mdi
                         object Valoare = values[i + 1, j + 1];
                         if (Valoare == null) Valoare = DBNull.Value;
                         Data_table_sheet_index.Rows[i][j] = Valoare;
+                    }
+                }
+            }
+            if (Data_table_sheet_index != null && Data_table_sheet_index.Rows.Count > 0)
+            {
+                for (int i = 0; i < Data_table_sheet_index.Rows.Count; i++)
+                {
+                    if (Data_table_sheet_index.Rows[i][col_scale] != DBNull.Value)
+                    {
+                        if (Data_table_sheet_index.Rows[i][col_scaleName] != DBNull.Value)
+                        {
+                            string scalename2 = Convert.ToString(Data_table_sheet_index.Rows[i][col_scaleName]).Replace("'", "");
+                            Data_table_sheet_index.Rows[i][col_scaleName] = scalename2;
+                        }
                     }
                 }
             }
@@ -367,7 +384,7 @@ namespace Alignment_mdi
             try
             {
 
-                _SGEN_mainform.dt_sheet_index = Creaza_sheet_index_datatable_structure();
+                _SGEN_mainform.dt_sheet_index = null;
                 dataGridView_sheet_index.DataSource = _SGEN_mainform.dt_sheet_index;
                 dataGridView_sheet_index.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
                 dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
@@ -386,9 +403,9 @@ namespace Alignment_mdi
                     string fisier_si = ProjF + _SGEN_mainform.sheet_index_excel_name;
 
                     Functions.create_backup(fisier_si);
-                    Populate_sheet_index_file(fisier_si);
+                    System.IO.File.Delete(fisier_si);
 
-                    Erase_matchlines_templates();
+                   
 
 
                     label_not_saved.Visible = false;
@@ -459,61 +476,61 @@ namespace Alignment_mdi
                             {
                                 if (_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] != DBNull.Value)
                                 {
-                                    string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName]);
-                                    if (scalename2.Contains(":") == true)
+                                    string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName]).Replace("'", "");
+
+                                    if (Functions.IsNumeric(scalename2.Replace("1:", "")) == true)
                                     {
-                                        string[] text_array1 = scalename2.Split(Convert.ToChar(":"));
-                                        if (text_array1.Length == 2)
-                                        {
-                                            string numarator = text_array1[0];
-                                            string numitor = text_array1[1];
-                                            if (Functions.IsNumeric(numarator) == true && Functions.IsNumeric(numitor) == true)
-                                            {
-                                                double nr2 = Convert.ToDouble(numarator);
-                                                double nrr2 = Convert.ToDouble(numitor);
-                                                if (nr2 > 0 && nrr2 > 0)
-                                                {
-                                                    _SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] = "'" + scalename2;
-                                                }
-                                            }
-                                        }
+                                        _SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] = "'" + scalename2;
                                     }
+
                                 }
                             }
-
-
-
-
                         }
-                    }
+
+                        Functions.Transfer_to_worksheet_Data_table(W1, _SGEN_mainform.dt_sheet_index, _SGEN_mainform.Start_row_Sheet_index, "General");
+
+                        for (int i = 0; i < _SGEN_mainform.dt_sheet_index.Rows.Count; i++)
+                        {
+                            if (_SGEN_mainform.dt_sheet_index.Rows[i][col_scale] != DBNull.Value)
+                            {
+                                if (_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] != DBNull.Value)
+                                {
+                                    string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName]).Replace("'", "");
+                                    _SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] = scalename2;
+                                }
+                            }
+                        }
 
 
-                    Functions.Transfer_to_worksheet_Data_table(W1, _SGEN_mainform.dt_sheet_index, _SGEN_mainform.Start_row_Sheet_index, "General");
-                    Create_header_sheet_index_file(W1, _SGEN_mainform.tpage_settings.Get_client_name(), _SGEN_mainform.tpage_settings.Get_project_name(), segment1);
 
-                    W1.Range["A:A"].ColumnWidth = 15;
-                    W1.Range["B:C"].ColumnWidth = 20;
-                    W1.Range["D:H"].ColumnWidth = 2;
-                    W1.Range["I:M"].ColumnWidth = 15;
-                    W1.Range["N:Q"].ColumnWidth = 2;
-                    W1.Range["R:S"].ColumnWidth = 10;
-                    W1.Name = "SI_" + System.DateTime.Now.Year.ToString() + "_" + System.DateTime.Now.Month.ToString() + "_" + System.DateTime.Now.Day.ToString();
-                    if (System.IO.File.Exists(File1) == false)
-                    {
-                        Workbook1.SaveAs(File1);
-                    }
-                    else
-                    {
-                        Workbook1.Save();
-                    }
-                    if (is_file_open == false) Workbook1.Close();
-                    if (Excel1.Workbooks.Count == 0)
-                    {
-                        Excel1.Quit();
-                    }
-                    else
-                    {
-                        Excel1.Visible = true;
+
+
+                        Create_header_sheet_index_file(W1, _SGEN_mainform.tpage_settings.Get_client_name(), _SGEN_mainform.tpage_settings.Get_project_name(), segment1);
+
+                        W1.Range["A:A"].ColumnWidth = 15;
+                        W1.Range["B:C"].ColumnWidth = 20;
+                        W1.Range["D:H"].ColumnWidth = 2;
+                        W1.Range["I:M"].ColumnWidth = 15;
+                        W1.Range["N:Q"].ColumnWidth = 2;
+                        W1.Range["R:S"].ColumnWidth = 10;
+                        W1.Name = "SI_" + System.DateTime.Now.Year.ToString() + "_" + System.DateTime.Now.Month.ToString() + "_" + System.DateTime.Now.Day.ToString();
+                        if (System.IO.File.Exists(File1) == false)
+                        {
+                            Workbook1.SaveAs(File1);
+                        }
+                        else
+                        {
+                            Workbook1.Save();
+                        }
+                        if (is_file_open == false) Workbook1.Close();
+                        if (Excel1.Workbooks.Count == 0)
+                        {
+                            Excel1.Quit();
+                        }
+                        else
+                        {
+                            Excel1.Visible = true;
+                        }
                     }
                 }
                 catch (System.Exception ex)
@@ -770,13 +787,25 @@ namespace Alignment_mdi
 
 
                         _SGEN_mainform.dt_sheet_index = Build_Data_table_sheet_index_from_excel(W1, _SGEN_mainform.Start_row_Sheet_index + 1);
+                        if (_SGEN_mainform.dt_sheet_index != null && _SGEN_mainform.dt_sheet_index.Rows.Count > 0)
+                        {
+                            for (int i = 0; i < _SGEN_mainform.dt_sheet_index.Rows.Count; i++)
+                            {
+                                if (_SGEN_mainform.dt_sheet_index.Rows[i][col_scale] != DBNull.Value)
+                                {
+                                    if (_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] != DBNull.Value)
+                                    {
+                                        string scalename2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName]).Replace("'", "");
+                                        _SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] = scalename2;
+                                    }
+                                }
+                            }
+                        }
                         _SGEN_mainform.tpage_sheetindex.set_dataGridView_sheet_index();
                         if (excel_is_opened == false)
                         {
                             Workbook1.Close();
                         }
-
-
                     }
 
 
@@ -1221,7 +1250,7 @@ namespace Alignment_mdi
 
 
 
-        private void Append_ML_object_data()
+        public void Append_ML_object_data()
         {
 
             {
@@ -1249,12 +1278,12 @@ namespace Alignment_mdi
                                 List<object> Lista_val = new List<object>();
                                 List<Autodesk.Gis.Map.Constants.DataType> Lista_type = new List<Autodesk.Gis.Map.Constants.DataType>();
 
-                                string ObjID = _SGEN_mainform.dt_sheet_index.Rows[i][Col_handle].ToString();
+                                string rect_ID = _SGEN_mainform.dt_sheet_index.Rows[i][Col_handle].ToString();
 
-                                ObjectId id_poly = Functions.GetObjectId(ThisDrawing.Database, ObjID);
+                                ObjectId id_poly = Functions.GetObjectId(ThisDrawing.Database, rect_ID);
                                 if (id_poly != ObjectId.Null)
                                 {
-                                    Lista_val.Add(ObjID);
+                                    Lista_val.Add(rect_ID);
                                     Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
                                     Polyline Poly1 = Trans1.GetObject(id_poly, OpenMode.ForWrite) as Polyline;
                                     if (Poly1 != null)
@@ -1291,6 +1320,15 @@ namespace Alignment_mdi
                                         Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
 
+                                        if (_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName] != DBNull.Value)
+                                        {
+                                            Lista_val.Add(Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[i][col_scaleName]).Replace("'", ""));
+                                        }
+                                        else
+                                        {
+                                            Lista_val.Add("no scale");
+                                        }
+                                        Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
                                         if (_SGEN_mainform.dt_sheet_index.Rows[i][Col_M1] != DBNull.Value)
                                         {
@@ -1348,7 +1386,7 @@ namespace Alignment_mdi
                                         Lista_type.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
 
-                                        Functions.Populate_object_data_table_from_handle_string(Tables1, ObjID, _SGEN_mainform.od_table_sheet_index, Lista_val, Lista_type);
+                                        Functions.Populate_object_data_table_from_handle_string(Tables1, rect_ID, _SGEN_mainform.od_table_sheet_index, Lista_val, Lista_type);
                                         Functions.Populate_object_data_table_from_objectid(Tables1, Mt1_label.ObjectId, _SGEN_mainform.od_table_sheet_index, Lista_val, Lista_type);
                                     }
 
@@ -1499,7 +1537,7 @@ namespace Alignment_mdi
                             #endregion
 
 
-
+                          
 
                             for (int i = 0; i < Rezultat1.Value.Count; ++i)
                             {
@@ -1644,7 +1682,7 @@ namespace Alignment_mdi
                                             }
 
                                             string dwg_name = "";
-
+                                            string scale_name = "";
                                             #region object data
                                             using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tables1.GetObjectRecords(Convert.ToUInt32(0), rect1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, false))
                                             {
@@ -1665,7 +1703,12 @@ namespace Alignment_mdi
                                                                 if (Nume_field.ToLower() == "drawingnum")
                                                                 {
                                                                     dwg_name = Convert.ToString(valoare1);
-                                                                    j = Record1.Count;
+
+                                                                }
+                                                                if (Nume_field == col_ODscaleName)
+                                                                {
+                                                                    scale_name = Convert.ToString(valoare1);
+
                                                                 }
                                                             }
                                                         }
@@ -1720,6 +1763,18 @@ namespace Alignment_mdi
                                             _SGEN_mainform.dt_sheet_index.Rows[index_si]["DwgNo"] = dwg_name;
 
                                             _SGEN_mainform.dt_sheet_index.Rows[index_si]["Height"] = h1;
+                                            _SGEN_mainform.dt_sheet_index.Rows[index_si]["Width"] = l1;
+                                            _SGEN_mainform.dt_sheet_index.Rows[index_si][col_scaleName] = scale_name;
+
+                                            if (scale_name.Contains("1:") == true)
+                                            {
+                                                string scale_string = scale_name.Replace("1:", "");
+                                                if (Functions.IsNumeric(scale_string) == true)
+                                                {
+                                                    _SGEN_mainform.dt_sheet_index.Rows[index_si][col_scale] = 1 / Convert.ToDouble(scale_string);
+                                                }
+                                            }
+
                                             _SGEN_mainform.dt_sheet_index.Rows[index_si]["Width"] = l1;
 
                                         }
@@ -1833,7 +1888,7 @@ namespace Alignment_mdi
                     {
                         if (Scale1.Contains(":") == true)
                         {
-                            Scale1 = Scale1.Replace("1:", "");
+                            Scale1 = Scale1.Replace("1:", "").Replace("'", "");
                             if (Functions.IsNumeric(Scale1) == true)
                             {
                                 _SGEN_mainform.Vw_scale = 1000 / Convert.ToDouble(Scale1);
@@ -1997,7 +2052,7 @@ namespace Alignment_mdi
 
                                 }
 
-                                Trans1.Commit();
+
 
 
 
@@ -2058,6 +2113,10 @@ namespace Alignment_mdi
 
                                                     _SGEN_mainform.dt_sheet_index.Rows[_SGEN_mainform.dt_sheet_index.Rows.Count - 1][_SGEN_mainform.Col_dwg_name] = Name_of_sheet;
 
+                                                    Entity ent1 = Trans1.GetObject(Rezultat_entity.ObjectId, OpenMode.ForWrite) as Entity;
+                                                    ent1.ColorIndex = 30;
+
+
                                                 }
 
                                             }
@@ -2081,7 +2140,7 @@ namespace Alignment_mdi
                                     }
                                 }
 
-
+                                Trans1.Commit();
 
                             }
                         }
@@ -2110,16 +2169,7 @@ namespace Alignment_mdi
                                 string fisier_si = ProjF + _SGEN_mainform.sheet_index_excel_name;
 
                                 Append_ML_object_data();
-                                dataGridView_sheet_index.DataSource = _SGEN_mainform.dt_sheet_index;
-                                dataGridView_sheet_index.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-                                dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                                dataGridView_sheet_index.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
-                                dataGridView_sheet_index.DefaultCellStyle.ForeColor = Color.White;
-                                dataGridView_sheet_index.EnableHeadersVisualStyles = false;
-
-
-                                label_not_saved.Visible = true;
+                                populate_dataGridView_sheet_index();
                             }
                         }
                     }
@@ -2135,6 +2185,21 @@ namespace Alignment_mdi
 
             this.MdiParent.WindowState = FormWindowState.Normal;
         }
+
+        public void populate_dataGridView_sheet_index()
+        {
+            dataGridView_sheet_index.DataSource = _SGEN_mainform.dt_sheet_index;
+            dataGridView_sheet_index.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+            dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+            dataGridView_sheet_index.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            dataGridView_sheet_index.DefaultCellStyle.BackColor = Color.FromArgb(37, 37, 38);
+            dataGridView_sheet_index.DefaultCellStyle.ForeColor = Color.White;
+            dataGridView_sheet_index.EnableHeadersVisualStyles = false;
+
+
+            label_not_saved.Visible = true;
+        }
+
 
         private void Populate_data_table_matchline_file_names()
         {
@@ -2237,6 +2302,17 @@ namespace Alignment_mdi
             return poly1;
         }
 
+        public bool get_checkBox_pick_name_from_OD()
+        {
+
+            return checkBox_pick_name_from_OD.Checked;
+
+        }
+
+        public string Get_comboBox_od_field()
+        {
+            return comboBox_od_field.Text;
+        }
 
         private void Create_ML_object_data()
         {
@@ -2380,7 +2456,7 @@ namespace Alignment_mdi
 
         }
 
-        private void Create_ML_object_dataTABLE()
+        public void Create_ML_object_dataTABLE()
         {
             Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
 
@@ -2412,6 +2488,10 @@ namespace Alignment_mdi
 
                     List1.Add("DrawingNum");
                     List2.Add("Alignment_number");
+                    List3.Add(Autodesk.Gis.Map.Constants.DataType.Character);
+
+                    List1.Add("Scale");
+                    List2.Add("Scale");
                     List3.Add(Autodesk.Gis.Map.Constants.DataType.Character);
 
                     List1.Add("BeginSta");
@@ -2690,7 +2770,7 @@ namespace Alignment_mdi
 
         private void button_load_od_field_to_combobox_Click(object sender, EventArgs e)
         {
-            if (checkBox_pick_name_from_OD.Checked==false)
+            if (checkBox_pick_name_from_OD.Checked == false)
             {
                 comboBox_od_field.Items.Clear();
                 return;
@@ -2769,6 +2849,102 @@ namespace Alignment_mdi
                 panel_dan.Visible = false;
                 //_SGEN_mainform.tpage_scales.Hide();
             }
+        }
+
+        private void button_highlight_Click(object sender, EventArgs e)
+        {
+            if (_SGEN_mainform.dt_sheet_index == null || _SGEN_mainform.dt_sheet_index.Rows.Count == 0) return;
+
+
+            ObjectId[] Empty_array = null;
+            Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            Autodesk.AutoCAD.EditorInput.Editor Editor1 = ThisDrawing.Editor;
+            Matrix3d curent_ucs_matrix = Editor1.CurrentUserCoordinateSystem;
+            Autodesk.AutoCAD.Internal.Utils.SetFocusToDwgView();
+            try
+            {
+                set_enable_false();
+                using (DocumentLock lock1 = ThisDrawing.LockDocument())
+                {
+                    using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                    {
+                        BlockTable BlockTable1 = ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead) as BlockTable;
+                        BlockTableRecord BTrecord = Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, OpenMode.ForWrite) as BlockTableRecord;
+                        Autodesk.Gis.Map.ObjectData.Tables Tables1 = Autodesk.Gis.Map.HostMapApplicationServices.Application.ActiveProject.ODTables;
+                        foreach (ObjectId id1 in BTrecord)
+                        {
+                            Polyline parcel1 = Trans1.GetObject(id1, OpenMode.ForRead) as Polyline;
+
+                            string nume1 = "";
+
+                            if (parcel1 != null)
+                            {
+                                #region object data
+
+                                using (Autodesk.Gis.Map.ObjectData.Records Records1 = Tables1.GetObjectRecords(Convert.ToUInt32(0), parcel1.ObjectId, Autodesk.Gis.Map.Constants.OpenMode.OpenForRead, false))
+                                {
+                                    if (Records1 != null)
+                                    {
+                                        if (Records1.Count > 0)
+                                        {
+
+                                            foreach (Autodesk.Gis.Map.ObjectData.Record Record1 in Records1)
+                                            {
+                                                Autodesk.Gis.Map.ObjectData.Table Tabla1 = Tables1[Record1.TableName];
+                                                Autodesk.Gis.Map.ObjectData.FieldDefinitions Field_defs1 = Tabla1.FieldDefinitions;
+                                                for (int j = 0; j < Record1.Count; ++j)
+                                                {
+                                                    Autodesk.Gis.Map.ObjectData.FieldDefinition Field_def1 = Field_defs1[j];
+                                                    string Nume_field = Field_def1.Name;
+                                                    object valoare1 = Record1[j].StrValue;
+                                                    if (Nume_field == comboBox_od_field.Text)
+                                                    {
+                                                        nume1 = Convert.ToString(valoare1);
+                                                        j = Record1.Count;
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        for (int i = 0; i < _SGEN_mainform.dt_sheet_index.Rows.Count; i++)
+                                        {
+                                            if (_SGEN_mainform.dt_sheet_index.Rows[i][_SGEN_mainform.Col_dwg_name] != DBNull.Value)
+                                            {
+                                                string nume2 = Convert.ToString(_SGEN_mainform.dt_sheet_index.Rows[i][_SGEN_mainform.Col_dwg_name]);
+                                                if (nume1.ToLower() == nume2.ToLower())
+                                                {
+                                                    parcel1.UpgradeOpen();
+                                                    parcel1.ColorIndex = 30;
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
+                                #endregion
+
+
+                            }
+
+                        }
+
+
+
+
+
+                        Trans1.Commit();
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            Editor1.SetImpliedSelection(Empty_array);
+            Editor1.WriteMessage("\nCommand:");
+            set_enable_true();
+
         }
     }
 }

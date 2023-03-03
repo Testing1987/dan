@@ -70,7 +70,7 @@ namespace Alignment_mdi
         public static string block_attributes_excel_name = "TBLK_attributes.xlsx";
         public static int Start_row_block_attributes = 7;
 
-        public static string od_table_sheet_index = "SheetIndex";
+        public static string od_table_sheet_index = "SheetIndexV2";
         public static string project_main_folder = "";
 
 

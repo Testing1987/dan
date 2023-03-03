@@ -184,13 +184,13 @@
             this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label16.Font = new System.Drawing.Font("Arial Black", 9.75F);
-            this.label16.ForeColor = System.Drawing.Color.Red;
+            this.label16.ForeColor = System.Drawing.Color.Yellow;
             this.label16.Location = new System.Drawing.Point(100, 23);
             this.label16.Margin = new System.Windows.Forms.Padding(0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(97, 19);
             this.label16.TabIndex = 2142;
-            this.label16.Text = "v-2.5";
+            this.label16.Text = "v-2.7";
             this.label16.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // panel11
