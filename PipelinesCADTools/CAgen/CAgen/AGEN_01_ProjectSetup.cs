@@ -1871,18 +1871,18 @@ namespace Alignment_mdi
                 if (Functions.IsNumeric(b26) == true)
                 {
                     _AGEN_mainform.tpage_profdraw.set_textBox_overwrite_text_height(b26);
-                   
+
                 }
                 else
                 {
                     _AGEN_mainform.tpage_profdraw.set_textBox_overwrite_text_height("");
-                   
+
                 }
             }
             else
             {
                 _AGEN_mainform.tpage_profdraw.set_textBox_overwrite_text_height("");
-               
+
             }
 
         }
@@ -5161,6 +5161,8 @@ namespace Alignment_mdi
             }
         }
 
+
+
         private void button_draw_stationing_Click(object sender, EventArgs e)
         {
             Ag = this.MdiParent as _AGEN_mainform;
@@ -7782,7 +7784,12 @@ namespace Alignment_mdi
                                 string suf_at_start = "";
                                 string suf_at_end = "";
 
-                                Polyline3d Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                Polyline3d Poly3D = null;
+
+                                if (_AGEN_mainform.Project_type == "3D")
+                                {
+                                    Poly3D = Functions.Build_3d_poly_for_scanning(_AGEN_mainform.dt_centerline);
+                                }
                                 Polyline Poly2D = Functions.Build_2D_CL_from_dt_cl(_AGEN_mainform.dt_centerline);
 
                                 #region USA     
@@ -7792,9 +7799,12 @@ namespace Alignment_mdi
 
                                     bool is_equated = false;
                                     bool is_last_inserted = false;
-                                    double sta_end = Poly3D.Length;
+                                    double sta_end = Poly2D.Length;
 
-
+                                    if (_AGEN_mainform.Project_type == "3D")
+                                    {
+                                        sta_end = Poly3D.Length;
+                                    }
 
 
 
@@ -7803,6 +7813,10 @@ namespace Alignment_mdi
                                     {
                                         if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
                                         {
+                                            Functions.add_meas_to_station_eq(Poly2D, Poly3D);
+
+                                            is_equated = true;
+
                                             double param1p = 0;
                                             double SAp = 0;
 
@@ -7842,40 +7856,49 @@ namespace Alignment_mdi
                                                     double param1 = Poly2D.GetParameterAtPoint(Poly2D.GetClosestPointTo(new Point3d(pt_end.X, pt_end.Y, Poly2D.Elevation), Vector3d.ZAxis, false));
                                                     if (SB != 0)
                                                     {
-                                                        is_equated = true;
+                                                       
+                                                        Polyline p2d = null;
 
-
-
-                                                        Polyline3d Poly3D_eq = new Polyline3d();
-                                                        BTrecord.AppendEntity(Poly3D_eq);
-                                                        Trans1.AddNewlyCreatedDBObject(Poly3D_eq, true);
-
-                                                        if (Math.Ceiling(param1p) != param1p)
+                                                        if (_AGEN_mainform.Project_type == "3D")
                                                         {
-                                                            PolylineVertex3d Vertex_last = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(param1p).X, Poly3D.GetPointAtParameter(param1p).Y, Poly3D.GetPointAtParameter(param1p).Z));
-                                                            Poly3D_eq.AppendVertex(Vertex_last);
-                                                            Trans1.AddNewlyCreatedDBObject(Vertex_last, true);
+                                                            Polyline3d Poly3D_eq = new Polyline3d();
+                                                            BTrecord.AppendEntity(Poly3D_eq);
+                                                            Trans1.AddNewlyCreatedDBObject(Poly3D_eq, true);
+
+                                                            if (Math.Ceiling(param1p) != param1p)
+                                                            {
+                                                                PolylineVertex3d Vertex_last = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(param1p).X, Poly3D.GetPointAtParameter(param1p).Y, Poly3D.GetPointAtParameter(param1p).Z));
+                                                                Poly3D_eq.AppendVertex(Vertex_last);
+                                                                Trans1.AddNewlyCreatedDBObject(Vertex_last, true);
+                                                            }
+
+                                                            for (int k = Convert.ToInt32(Math.Ceiling(param1p)); k <= Math.Floor(param1); ++k)
+                                                            {
+                                                                PolylineVertex3d Vertex_eq = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(k).X, Poly3D.GetPointAtParameter(k).Y, Poly3D.GetPointAtParameter(k).Z));
+                                                                Poly3D_eq.AppendVertex(Vertex_eq);
+                                                                Trans1.AddNewlyCreatedDBObject(Vertex_eq, true);
+
+                                                            }
+                                                            if (Math.Floor(param1) != param1)
+                                                            {
+                                                                PolylineVertex3d Vertex_last = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(param1).X, Poly3D.GetPointAtParameter(param1).Y, Poly3D.GetPointAtParameter(param1).Z));
+                                                                Poly3D_eq.AppendVertex(Vertex_last);
+                                                                Trans1.AddNewlyCreatedDBObject(Vertex_last, true);
+                                                            }
+                                                            p2d = Functions.Build_2dpoly_from_3d(Poly3D_eq);
+                                                            double paramA = p2d.GetParameterAtPoint(p2d.GetClosestPointTo(new Point3d(pt_start.X, pt_start.Y, p2d.Elevation), Vector3d.ZAxis, false));
+                                                            double paramB = p2d.GetParameterAtPoint(p2d.GetClosestPointTo(new Point3d(pt_end.X, pt_end.Y, p2d.Elevation), Vector3d.ZAxis, false));
+
+                                                            Insert_kpmp_blocks_3D(Poly3D_eq, SAp, spacing, Suffix1, paramA, paramB, Tables1, Lista_val, Lista_type);
+                                                        }
+                                                        else
+                                                        {
+                                                            Polyline poly_part = Functions.get_part_of_poly(Poly2D, param1p, param1);
+                                                            Insert_kpmp_blocks_2D(Poly2D, SAp, spacing, Suffix1, param1p, param1, Tables1, Lista_val, Lista_type);
                                                         }
 
-                                                        for (int k = Convert.ToInt32(Math.Ceiling(param1p)); k <= Math.Floor(param1); ++k)
-                                                        {
-                                                            PolylineVertex3d Vertex_eq = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(k).X, Poly3D.GetPointAtParameter(k).Y, Poly3D.GetPointAtParameter(k).Z));
-                                                            Poly3D_eq.AppendVertex(Vertex_eq);
-                                                            Trans1.AddNewlyCreatedDBObject(Vertex_eq, true);
 
-                                                        }
-                                                        if (Math.Floor(param1) != param1)
-                                                        {
-                                                            PolylineVertex3d Vertex_last = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(param1).X, Poly3D.GetPointAtParameter(param1).Y, Poly3D.GetPointAtParameter(param1).Z));
-                                                            Poly3D_eq.AppendVertex(Vertex_last);
-                                                            Trans1.AddNewlyCreatedDBObject(Vertex_last, true);
-                                                        }
 
-                                                        Polyline p2d = Functions.Build_2dpoly_from_3d(Poly3D_eq);
-                                                        double paramA = p2d.GetParameterAtPoint(p2d.GetClosestPointTo(new Point3d(pt_start.X, pt_start.Y, p2d.Elevation), Vector3d.ZAxis, false));
-                                                        double paramB = p2d.GetParameterAtPoint(p2d.GetClosestPointTo(new Point3d(pt_end.X, pt_end.Y, p2d.Elevation), Vector3d.ZAxis, false));
-
-                                                        Insert_kpmp_blocks(Poly3D_eq, SAp, spacing, Suffix1, paramA, paramB, Tables1, Lista_val, Lista_type);
 
                                                         if (i == _AGEN_mainform.dt_station_equation.Rows.Count - 1)
                                                         {
@@ -7886,8 +7909,17 @@ namespace Alignment_mdi
                                                             if (Math.Abs(Math.Round(dist1 - len1, 0)) <= 1)
                                                             {
                                                                 suf_at_end = Suffix1;
+                                                                BlockReference Block2 = null;
+                                                                if (_AGEN_mainform.Project_type == "3D")
+                                                                {
+                                                                    Block2 = Insert_kpmp_block_at_end_3D(Poly3D, sta_end, suf_at_end);
+                                                                }
+                                                                else
+                                                                {
+                                                                    Block2 = Insert_kpmp_block_at_end_2D(Poly2D, sta_end, suf_at_end);
 
-                                                                BlockReference Block2 = Insert_kpmp_block_at_end(Poly3D, sta_end, suf_at_end);
+                                                                }
+
                                                                 Functions.Populate_object_data_table_from_objectid(Tables1, Block2.ObjectId, "Agen_mp_block", Lista_val, Lista_type);
                                                                 is_last_inserted = true;
                                                             }
@@ -7907,39 +7939,51 @@ namespace Alignment_mdi
                                                 }
                                             }
 
-                                            if (param1p < Poly3D.EndParam)
+
+
+                                            if (param1p < Poly2D.EndParam)
                                             {
 
-                                                double param1 = Poly3D.EndParam;
-
-
-                                                Polyline3d Poly3D_eq = new Polyline3d();
-                                                BTrecord.AppendEntity(Poly3D_eq);
-                                                Trans1.AddNewlyCreatedDBObject(Poly3D_eq, true);
-
-                                                if (Math.Ceiling(param1p) != param1p)
+                                                if (_AGEN_mainform.Project_type == "3D")
                                                 {
-                                                    PolylineVertex3d Vertex_last = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(param1p).X, Poly3D.GetPointAtParameter(param1p).Y, Poly3D.GetPointAtParameter(param1p).Z));
-                                                    Poly3D_eq.AppendVertex(Vertex_last);
-                                                    Trans1.AddNewlyCreatedDBObject(Vertex_last, true);
+                                                    double param1 = Poly3D.EndParam;
+
+
+                                                    Polyline3d Poly3D_eq = new Polyline3d();
+                                                    BTrecord.AppendEntity(Poly3D_eq);
+                                                    Trans1.AddNewlyCreatedDBObject(Poly3D_eq, true);
+
+                                                    if (Math.Ceiling(param1p) != param1p)
+                                                    {
+                                                        PolylineVertex3d Vertex_last = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(param1p).X, Poly3D.GetPointAtParameter(param1p).Y, Poly3D.GetPointAtParameter(param1p).Z));
+                                                        Poly3D_eq.AppendVertex(Vertex_last);
+                                                        Trans1.AddNewlyCreatedDBObject(Vertex_last, true);
+                                                    }
+
+                                                    for (int k = Convert.ToInt32(Math.Ceiling(param1p)); k <= param1; ++k)
+                                                    {
+                                                        PolylineVertex3d Vertex_eq = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(k).X, Poly3D.GetPointAtParameter(k).Y, Poly3D.GetPointAtParameter(k).Z));
+                                                        Poly3D_eq.AppendVertex(Vertex_eq);
+                                                        Trans1.AddNewlyCreatedDBObject(Vertex_eq, true);
+
+                                                    }
+
+
+                                                    Insert_kpmp_blocks_3D(Poly3D_eq, SAp, spacing, "", 0, param1, Tables1, Lista_val, Lista_type);
+
+                                                    if (is_last_inserted == false)
+                                                    {
+                                                        BlockReference Block2 = Insert_kpmp_block_at_end_3D(Poly3D, sta_end, suf_at_end);
+                                                        Functions.Populate_object_data_table_from_objectid(Tables1, Block2.ObjectId, "Agen_mp_block", Lista_val, Lista_type);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    double param1 = Poly2D.EndParam;
+                                                    Polyline poly_part = Functions.get_part_of_poly(Poly2D, param1p, param1);
+                                                    Insert_kpmp_blocks_2D(Poly2D, SAp, spacing, "", 0, param1, Tables1, Lista_val, Lista_type);
                                                 }
 
-                                                for (int k = Convert.ToInt32(Math.Ceiling(param1p)); k <= param1; ++k)
-                                                {
-                                                    PolylineVertex3d Vertex_eq = new PolylineVertex3d(new Point3d(Poly3D.GetPointAtParameter(k).X, Poly3D.GetPointAtParameter(k).Y, Poly3D.GetPointAtParameter(k).Z));
-                                                    Poly3D_eq.AppendVertex(Vertex_eq);
-                                                    Trans1.AddNewlyCreatedDBObject(Vertex_eq, true);
-
-                                                }
-
-
-                                                Insert_kpmp_blocks(Poly3D_eq, SAp, spacing, "", 0, param1, Tables1, Lista_val, Lista_type);
-
-                                                if (is_last_inserted == false)
-                                                {
-                                                    BlockReference Block2 = Insert_kpmp_block_at_end(Poly3D, sta_end, suf_at_end);
-                                                    Functions.Populate_object_data_table_from_objectid(Tables1, Block2.ObjectId, "Agen_mp_block", Lista_val, Lista_type);
-                                                }
 
                                             }
 
@@ -7950,19 +7994,34 @@ namespace Alignment_mdi
 
                                     if (is_equated == false)
                                     {
-                                        bool is_2d = true;
-                                        if (_AGEN_mainform.Project_type == "3D") is_2d = false;
-                                        Insert_kpmp_blocks_with_curves(Poly3D, Poly2D, is_2d, start1, spacing, "", 0, Poly3D.EndParam, Tables1, Lista_val, Lista_type);
-                                        BlockReference Block2 = Insert_kpmp_block_at_end(Poly3D, Poly3D.Length, suf_at_end);
+
+                                        if (_AGEN_mainform.Project_type == "3D")
+                                        {
+                                            Insert_kpmp_blocks_3D(Poly3D, 0, spacing, "", 0, Poly2D.EndParam, Tables1, Lista_val, Lista_type);
+                                        }
+                                        else
+                                        {
+                                            Insert_kpmp_blocks_2D(Poly2D, start1, spacing, "", 0, Poly2D.EndParam, Tables1, Lista_val, Lista_type);
+                                        }
+
+                                        BlockReference Block2 = Insert_kpmp_block_at_end_3D(Poly3D, Poly3D.Length, suf_at_end);
                                         Functions.Populate_object_data_table_from_objectid(Tables1, Block2.ObjectId, "Agen_mp_block", Lista_val, Lista_type);
                                     }
 
-                                    BlockReference Block1 = Insert_kpmp_block_at_start(Poly3D, start1, suf_at_start);
+                                    BlockReference Block1 = null;
+                                    if(_AGEN_mainform.Project_type=="3D")
+                                    {
+                                        Block1 = Insert_kpmp_block_at_start_3D(Poly3D, start1, suf_at_start);
+                                    }
+                                    else
+                                    {
+                                        Block1 = Insert_kpmp_block_at_start_2D(Poly2D, start1, suf_at_start);
+                                    }
                                     Functions.Populate_object_data_table_from_objectid(Tables1, Block1.ObjectId, "Agen_mp_block", Lista_val, Lista_type);
 
 
 
-                                    Poly3D.Erase();
+                                    if (Poly3D != null) Poly3D.Erase();
                                 }
                                 #endregion
 
@@ -8188,7 +8247,7 @@ namespace Alignment_mdi
 
         }
 
-        private void Insert_kpmp_blocks(Polyline3d Poly3D, double start1, double spacing1, string Suffix1, double rrstart_param, double rrend_param,
+        private void Insert_kpmp_blocks_3D(Polyline3d Poly3D, double start1, double spacing1, string Suffix1, double rrstart_param, double rrend_param,
                                                                                     Autodesk.Gis.Map.ObjectData.Tables Tables1, List<object> Lista_val, List<Autodesk.Gis.Map.Constants.DataType> Lista_type)
         {
             try
@@ -8290,7 +8349,8 @@ namespace Alignment_mdi
             }
         }
 
-        private void Insert_kpmp_blocks_with_curves(Polyline3d Poly3D, Polyline poly1, bool is_2d, double start1, double spacing1, string Suffix1, double rrstart_param, double rrend_param,
+
+        private void Insert_kpmp_blocks_2D(Polyline poly1, double start1, double spacing1, string Suffix1, double rrstart_param, double rrend_param,
                                                                             Autodesk.Gis.Map.ObjectData.Tables Tables1, List<object> Lista_val, List<Autodesk.Gis.Map.Constants.DataType> Lista_type)
         {
             try
@@ -8304,9 +8364,9 @@ namespace Alignment_mdi
 
                     double first_lbl = Math.Floor((start1 + spacing1) / spacing1) * spacing1;
 
-                    if (start1 + Poly3D.Length >= first_lbl)
+                    if (start1 + poly1.Length >= first_lbl)
                     {
-                        int no_blocks = Convert.ToInt32(Math.Ceiling((start1 + Poly3D.Length - first_lbl) / spacing1));
+                        int no_blocks = Convert.ToInt32(Math.Ceiling((start1 + poly1.Length - first_lbl) / spacing1));
 
                         if (no_blocks > 0)
                         {
@@ -8316,25 +8376,12 @@ namespace Alignment_mdi
                                 double sta_meas = first_lbl - start1 + i * spacing1;
 
 
-                                Point3d pt_ins = new Point3d();
-                                if (is_2d == false)
-                                {
-                                    pt_ins = Poly3D.GetPointAtDist(sta_meas);
-                                }
-                                else
-                                {
-                                    pt_ins = poly1.GetPointAtDist(sta_meas);
-                                }
+                                Point3d pt_ins = poly1.GetPointAtDist(sta_meas);
 
-                                double paramx = 0;
-                                if (is_2d == true)
-                                {
-                                    paramx = poly1.GetParameterAtDistance(sta_meas);
-                                }
-                                else
-                                {
-                                    paramx = Poly3D.GetParameterAtDistance(sta_meas);
-                                }
+
+                                double paramx = poly1.GetParameterAtDistance(sta_meas);
+
+
 
                                 int param1 = Convert.ToInt32(Math.Floor(paramx));
 
@@ -8370,12 +8417,6 @@ namespace Alignment_mdi
                                     point2 = pt_ins;
                                     extra1 = -Math.PI / 2;
 
-                                    //Polyline poly_del = new Polyline();
-                                    //poly_del.AddVertexAt(0, new Point2d(point1.X, point1.Y), 0, 0, 0);
-                                    //poly_del.AddVertexAt(1, new Point2d(point2.X, point2.Y), 0, 0, 0);
-                                    //poly_del.ColorIndex = 4;
-                                    //BTrecord.AppendEntity(poly_del);
-                                    //Trans1.AddNewlyCreatedDBObject(poly_del, true);
 
                                 }
 
@@ -8429,7 +8470,7 @@ namespace Alignment_mdi
                             }
                         }
                     }
-                    Poly3D.Erase();
+
                     Trans1.Commit();
 
                 }
@@ -8442,7 +8483,7 @@ namespace Alignment_mdi
         }
 
 
-        private BlockReference Insert_kpmp_block_at_start(Polyline3d Poly3D, double start1, string Suffix1)
+        private BlockReference Insert_kpmp_block_at_start_3D(Polyline3d Poly3D, double start1, string Suffix1)
         {
             try
             {
@@ -8505,7 +8546,71 @@ namespace Alignment_mdi
 
         }
 
-        private BlockReference Insert_kpmp_block_at_end(Polyline3d Poly3D, double sta_end, string Suffix1)
+        private BlockReference Insert_kpmp_block_at_start_2D(Polyline Poly2D, double start1, string Suffix1)
+        {
+            try
+            {
+                Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                {
+                    Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+
+                    Point3d pt_ins = Poly2D.StartPoint;
+                    Point3d point1 = Poly2D.GetPointAtParameter(0);
+                    Point3d point2 = Poly2D.GetPointAtParameter(1);
+                    double bear1 = Functions.GET_Bearing_rad(point1.X, point1.Y, point2.X, point2.Y);
+
+                    System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+                    System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
+
+                    BlockReference Block1 = null;
+
+                    col_atr.Add(comboBox_mpkp_attribute.Text);
+
+                    int round1 = 0;
+
+                    if (comboBox_kpmp_units_precision.Text == "0.0")
+                    {
+                        round1 = 1;
+                    }
+                    else if (comboBox_kpmp_units_precision.Text == "0.00")
+                    {
+                        round1 = 2;
+                    }
+                    else if (comboBox_kpmp_units_precision.Text == "0.000")
+                    {
+                        round1 = 3;
+                    }
+
+                    string val1 = Functions.Get_String_Rounded(start1, round1) + Suffix1;
+
+                    col_val.Add(val1);
+
+                    double scale1 = 1 / _AGEN_mainform.Vw_scale;
+                    if (Functions.IsNumeric(textBox_scale_mp.Text) == true)
+                    {
+                        scale1 = Convert.ToDouble(textBox_scale_mp.Text);
+                    }
+                    Block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "",
+                        comboBox_mpkp_blocks.Text, pt_ins, scale1, bear1, _AGEN_mainform.layer_mp_blocks, col_atr, col_val);
+
+                    
+                    Trans1.Commit();
+                    return Block1;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+
+
+        }
+
+
+        private BlockReference Insert_kpmp_block_at_end_3D(Polyline3d Poly3D, double sta_end, string Suffix1)
         {
             try
             {
@@ -8568,6 +8673,80 @@ namespace Alignment_mdi
                         comboBox_mpkp_blocks.Text, pt_ins, scale1, bear1, _AGEN_mainform.layer_mp_blocks, col_atr, col_val);
 
                     Poly3D.Erase();
+                    Trans1.Commit();
+                    return Block1;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+        }
+
+        private BlockReference Insert_kpmp_block_at_end_2D(Polyline poly1, double sta_end, string Suffix1)
+        {
+            try
+            {
+                Autodesk.AutoCAD.ApplicationServices.Document ThisDrawing = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                using (Autodesk.AutoCAD.DatabaseServices.Transaction Trans1 = ThisDrawing.TransactionManager.StartTransaction())
+                {
+                    Autodesk.AutoCAD.DatabaseServices.BlockTable BlockTable_data1 = (BlockTable)ThisDrawing.Database.BlockTableId.GetObject(OpenMode.ForRead);
+                    Autodesk.AutoCAD.DatabaseServices.BlockTableRecord BTrecord = (BlockTableRecord)Trans1.GetObject(ThisDrawing.Database.CurrentSpaceId, Autodesk.AutoCAD.DatabaseServices.OpenMode.ForWrite);
+
+                    Point3d pt_ins = poly1.EndPoint;
+
+
+                    BlockReference Block1 = null;
+
+
+
+                    Point3d point1 = poly1.GetPoint3dAt(Convert.ToInt32(poly1.EndParam) - 1);
+
+                    Point3d point2 = poly1.EndPoint;
+
+                    double bear1 = Functions.GET_Bearing_rad(point1.X, point1.Y, point2.X, point2.Y);
+
+                    System.Collections.Specialized.StringCollection col_atr = new System.Collections.Specialized.StringCollection();
+                    System.Collections.Specialized.StringCollection col_val = new System.Collections.Specialized.StringCollection();
+
+                    col_atr.Add(comboBox_mpkp_attribute.Text);
+
+                    int round1 = 0;
+
+                    if (comboBox_kpmp_units_precision.Text == "0.0")
+                    {
+                        round1 = 1;
+                    }
+                    else if (comboBox_kpmp_units_precision.Text == "0.00")
+                    {
+                        round1 = 2;
+                    }
+                    else if (comboBox_kpmp_units_precision.Text == "0.000")
+                    {
+                        round1 = 3;
+                    }
+
+
+                    double fact1 = 5280;
+                    if (_AGEN_mainform.units_of_measurement == "m") fact1 = 1000;
+
+                    string val1 = Functions.Get_String_Rounded((sta_end / fact1), round1) + Suffix1;
+
+
+
+                    col_val.Add(val1);
+
+                    double scale1 = 1 / _AGEN_mainform.Vw_scale;
+                    if (Functions.IsNumeric(textBox_scale_mp.Text) == true)
+                    {
+                        scale1 = Convert.ToDouble(textBox_scale_mp.Text);
+                    }
+
+                    Block1 = Functions.InsertBlock_with_multiple_atributes_with_database(ThisDrawing.Database, BTrecord, "",
+                        comboBox_mpkp_blocks.Text, pt_ins, scale1, bear1, _AGEN_mainform.layer_mp_blocks, col_atr, col_val);
+
+                    poly1.Erase();
                     Trans1.Commit();
                     return Block1;
                 }

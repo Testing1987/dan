@@ -1931,36 +1931,8 @@ namespace Alignment_mdi
             {
                 if (_AGEN_mainform.dt_station_equation.Rows.Count > 0)
                 {
-
-                    if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false)
-                    {
-                        _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
-                    }
-
-                    for (int i = 0; i < _AGEN_mainform.dt_station_equation.Rows.Count; ++i)
-                    {
-                        if (_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"] != DBNull.Value)
-                        {
-                            double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End X"]);
-                            double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[i]["Reroute End Y"]);
-
-
-                            Point3d pt_on_2d = poly2d.GetClosestPointTo(new Point3d(x, y, 0), Vector3d.ZAxis, false);
-                            double eq_meas = poly2d.GetDistAtPoint(pt_on_2d);
-                            if (_AGEN_mainform.Project_type == "3D")
-                            {
-                                double param1 = poly2d.GetParameterAtPoint(pt_on_2d);
-                                eq_meas = poly3d.GetDistanceAtParameter(param1);
-                            }
-
-
-                            _AGEN_mainform.dt_station_equation.Rows[i]["measured"] = eq_meas;
-
-                        }
-                    }
-
+                    Functions.add_meas_to_station_eq(poly2d, poly3d);
                 }
-
             }
 
 

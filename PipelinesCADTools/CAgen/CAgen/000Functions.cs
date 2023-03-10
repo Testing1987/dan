@@ -8674,9 +8674,8 @@ namespace Alignment_mdi
                     System.IO.Directory.CreateDirectory(backup2);
                 }
 
-                string new_name = name1 + "-[" + System.DateTime.Now.Year.ToString() + "_" + System.DateTime.Now.Month.ToString() + "_" + System.DateTime.Now.Day.ToString() +
-                    "_" + System.DateTime.Now.Hour.ToString() + "_" + System.DateTime.Now.Minute.ToString() + "_" + System.DateTime.Now.Second.ToString() +
-                  "]-" + Environment.UserName.ToUpper() + ".xlsx";
+                string new_name = $"{name1}-[{DateTime.Now:yyyy_MM_dd_HH_mm_ss}]-{Environment.UserName.ToUpper()}.xlsx";
+
                 backup1 = backup1 + "\\" + new_name;
                 backup2 = backup2 + "\\" + new_name;
 
@@ -20504,6 +20503,63 @@ namespace Alignment_mdi
                 dt1.Columns.Add(Lista1[i], Lista2[i]);
             }
             return dt1;
+        }
+
+        public static void add_meas_to_station_eq(Polyline Poly2D, Polyline3d Poly3D)
+        {
+            if (_AGEN_mainform.dt_station_equation != null && _AGEN_mainform.dt_station_equation.Rows.Count > 0)
+            {
+                bool output_to_excel = false;
+                if (_AGEN_mainform.dt_station_equation.Columns.Contains("measured") == false) _AGEN_mainform.dt_station_equation.Columns.Add("measured", typeof(double));
+
+                for (int k = 0; k < _AGEN_mainform.dt_station_equation.Rows.Count; ++k)
+                {
+
+                    if (_AGEN_mainform.dt_station_equation.Rows[k][rr_end_x] != DBNull.Value && _AGEN_mainform.dt_station_equation.Rows[k][rr_end_y] != DBNull.Value)
+                    {
+
+                        double x = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[k][rr_end_x]);
+                        double y = Convert.ToDouble(_AGEN_mainform.dt_station_equation.Rows[k][rr_end_y]);
+
+                        Point3d pt_eq = new Point3d(x, y, 0);
+                        Point3d pt_on_poly = Poly2D.GetClosestPointTo(pt_eq, Vector3d.ZAxis, false);
+                        double meas1 = Poly2D.GetDistAtPoint(pt_on_poly);
+
+                        _AGEN_mainform.dt_station_equation.Rows[k][rr_end_x] = pt_on_poly.X;
+                        _AGEN_mainform.dt_station_equation.Rows[k][rr_end_y] = pt_on_poly.Y;
+
+
+                        if (_AGEN_mainform.Project_type == "2D")
+                        {
+                            _AGEN_mainform.dt_station_equation.Rows[k]["measured"] = meas1;
+                        }
+                        else
+                        {
+                            double param1 = Poly2D.GetParameterAtPoint(pt_on_poly);
+                            _AGEN_mainform.dt_station_equation.Rows[k]["measured"] = Poly3D.GetDistanceAtParameter(param1);
+                        }
+
+                        double dist1 = Math.Pow(Math.Pow(pt_eq.X - pt_on_poly.X, 2) + Math.Pow(pt_eq.Y - pt_on_poly.Y, 2), 0.5);
+                        if (dist1 < 0.01)
+                        {
+
+                        }
+                        else
+                        {
+                            output_to_excel = true;
+                        }
+                    }
+
+
+
+                }
+
+                _AGEN_mainform.dt_station_equation = Functions.Sort_data_table(_AGEN_mainform.dt_station_equation, "measured");
+                if (output_to_excel == true)
+                {
+                    Functions.Transfer_datatable_to_new_excel_spreadsheet_formated_general(_AGEN_mainform.dt_station_equation);
+                }
+            }
         }
 
     }
